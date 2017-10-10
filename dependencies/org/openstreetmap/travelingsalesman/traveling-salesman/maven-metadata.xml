@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.openstreetmap.travelingsalesman</groupId>
+  <artifactId>traveling-salesman</artifactId>
+  <version>1.0.2</version>
+  <versioning>
+    <versions>
+      <version>1.0.2</version>
+    </versions>
+    <lastUpdated>20141203114729</lastUpdated>
+  </versioning>
+</metadata>
