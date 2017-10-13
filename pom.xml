@@ -62,7 +62,7 @@
             <version>${geotools.version}</version>
         </dependency>
         <dependency>
-            <groupId>uk.ac.leeds.ccg.andyt.moses</groupId>
+            <groupId>uk.ac.leeds.ccg.andyt</groupId>
             <artifactId>moses</artifactId>
             <version>1.0</version>
         </dependency>
