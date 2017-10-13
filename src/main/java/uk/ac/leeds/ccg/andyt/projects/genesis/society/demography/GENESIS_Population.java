@@ -27,10 +27,10 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Collections;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 import uk.ac.leeds.ccg.andyt.projects.genesis.visualisation.GENESIS_AgeGenderBarChart;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.AbstractCASDataRecord;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CAS001DataHandler;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CAS001DataRecord;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CASDataHandler;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.AbstractCASDataRecord;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CAS001DataHandler;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CAS001DataRecord;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASDataHandler;
 
 /**
  * A class for storing population count statistics. The statistics are stored in

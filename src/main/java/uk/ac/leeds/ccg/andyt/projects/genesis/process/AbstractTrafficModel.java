@@ -29,7 +29,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Male;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_PersonFactory;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Person;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CASAreaEastingNorthingDataRecord;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataRecord;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Envelope2D;
 import uk.ac.leeds.ccg.andyt.vector.visualisation.VectorImageManipulation;
 import uk.ac.leeds.ccg.andyt.vector.visualisation.VectorOverlayComponent_Network2D;

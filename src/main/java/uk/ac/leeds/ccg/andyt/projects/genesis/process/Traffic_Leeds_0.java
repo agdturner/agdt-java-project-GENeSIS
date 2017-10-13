@@ -18,10 +18,10 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.Household;
 import uk.ac.leeds.ccg.andyt.projects.genesis.travelingsalesman.TSMisc;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CASAreaEastingNorthingDataHandler;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.CASAreaEastingNorthingDataRecord;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.SWSDataHandler;
-import uk.ac.leeds.ccg.andyt.projects.moses.io.SWSDataRecord;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataHandler;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataRecord;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.SWSDataHandler;
+import uk.ac.leeds.ccg.andyt.agdtcensus.cas.SWSDataRecord;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 
