@@ -37,7 +37,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Populat
 public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
 
     public File resultsDirectory;
-    public GENESIS_Environment _GENESIS_Environment;
+    public GENESIS_Environment ge;
 
     public GENESIS_AgeGenderBoxPlot() {
     }
@@ -75,7 +75,7 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
                 decimalPlacePrecisionForDisplay,
                 aRoundingMode);
         this.resultsDirectory = resultsDirectory;
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
     }
 
     protected final void init(
@@ -111,7 +111,7 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
                 decimalPlacePrecisionForDisplay,
                 aRoundingMode);
         this.resultsDirectory = resultsDirectory;
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
     }
 
     public static void main(String[] args) {
@@ -150,8 +150,7 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
 //                "DemographicModel_Aspatial_1");
         File resultsDirectory = new File(
                 workspaceDirectory.getParentFile().toString() + "/data/testXML/");
-        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment();
-        a_GENESIS_Environment._Directory = workspaceDirectory;
+        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment(workspaceDirectory);
         int dataWidth = 700;//250;
         int dataHeight = 600;
         String xAxisLabel = "Population";
@@ -261,12 +260,11 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
         BigDecimal maxPop = BigDecimal.ZERO;
         while (ite.hasNext()) {
             GENESIS_Population pop = ite.next();
-            Object[] aggregatedPop = GENESIS_Population.getAggregateGENESIS_Population(
-                    pop,
+            Object[] aggregatedPop = GENESIS_Population.getAggregateGENESIS_Population(pop,
                     minAge,
                     maxAge,
                     interval,
-                    pop._GENESIS_Environment);
+                    pop.ge);
             indexedAggregatedPops.put(index, (GENESIS_Population) aggregatedPop[0]);
             index++;
             maxPop = maxPop.max((BigDecimal) aggregatedPop[1]);

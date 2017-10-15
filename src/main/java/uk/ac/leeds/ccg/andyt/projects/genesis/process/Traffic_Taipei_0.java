@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDouble;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDoubleFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Environment;
 import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
@@ -50,7 +50,7 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
         int a_NCols = (int) scaleNew * 366;//183;//640;//1280;//2048;//1024;//2048;//4096;//768;//512;//128;//512;//256;//1024;//128;//256;//512;//1024;
         Grids_Grid2DSquareCellDoubleFactory a_Grid2DSquareCellDoubleFactory = new Grids_Grid2DSquareCellDoubleFactory(
                 _Directory,
-                new Grids_Environment(),
+                new Grids_Environment(_Directory),
                 handleOutOfMemoryError);
         //cellsize, minx, miny, maxx, maxy
 //BigDecimal cellsize_BigDecimal = new BigDecimal("0.00100");//new BigDecimal("1.00");
@@ -72,42 +72,42 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
                 0,
                 0L,
                 1L);
-        _GENESIS_Environment = new GENESIS_Environment(
+        ge = new GENESIS_Environment(
+                _Directory,
                 this,
                 new GENESIS_Time());
-        _GENESIS_Environment.init_MemoryReserve(false);
-        _GENESIS_Environment._DecimalPlacePrecisionForCalculations = 10;
+        ge.init_MemoryReserve(false);
+        ge._DecimalPlacePrecisionForCalculations = 10;
         init_Rounding(cellsize_BigDecimal, minx, miny);
-        _GENESIS_Environment._DecimalPlacePrecisionForNetwork = Math.min(
-                _GENESIS_Environment._DecimalPlacePrecisionForCalculations,
-                Math.max(_GENESIS_Environment._ToRoundToX_BigDecimal.scale(),
-                        _GENESIS_Environment._ToRoundToY_BigDecimal.scale()));
-        _GENESIS_Environment._DecimalPlacePrecisionForNetworkCalculations = _GENESIS_Environment._DecimalPlacePrecisionForNetwork + 2;
+        ge._DecimalPlacePrecisionForNetwork = Math.min(
+                ge._DecimalPlacePrecisionForCalculations,
+                Math.max(ge._ToRoundToX_BigDecimal.scale(),
+                        ge._ToRoundToY_BigDecimal.scale()));
+        ge._DecimalPlacePrecisionForNetworkCalculations = ge._DecimalPlacePrecisionForNetwork + 2;
 
         _SpeedDefault_BigDecimal = new BigDecimal(3.0 * _Dimensions[0].doubleValue());
 
-        _GENESIS_Environment = new GENESIS_Environment(
+        ge = new GENESIS_Environment(
+                _Directory,
                 this,
                 _Time,
                 a_Grid2DSquareCellDoubleFactory,
                 handleOutOfMemoryError);
-        _GENESIS_Environment._Directory = _Directory;
-        _GENESIS_Environment._Directory = _Directory;
-        _GENESIS_Environment._HandleOutOfMemoryError_boolean = handleOutOfMemoryError;
-        _GENESIS_Environment.init_MemoryReserve(
-                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+        ge._HandleOutOfMemoryError_boolean = handleOutOfMemoryError;
+        ge.init_MemoryReserve(
+                ge._HandleOutOfMemoryError_boolean);
         GENESIS_AgentEnvironment a_GENESIS_AgentEnvironment
-                = new GENESIS_AgentEnvironment(_GENESIS_Environment);
-        _GENESIS_Environment._GENESIS_AgentEnvironment = a_GENESIS_AgentEnvironment;
+                = new GENESIS_AgentEnvironment(ge);
+        ge._GENESIS_AgentEnvironment = a_GENESIS_AgentEnvironment;
         GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
                 = new GENESIS_AgentCollectionManager(
-                        _GENESIS_Environment,
+                        ge,
                         _Directory);
         a_GENESIS_AgentEnvironment.set_AgentCollectionManager(
                 a_GENESIS_AgentCollectionManager,
                 handleOutOfMemoryError);
         _PersonFactory = new GENESIS_PersonFactory(
-                _GENESIS_Environment,
+                ge,
                 _GENESIS_AgentCollectionManager);
 //        a_GENESIS_AgentCollectionManager._MaximumNumberOfAgents = 100000000000L;
 //        a_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection = 10000;
@@ -115,18 +115,18 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
         a_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection = 10000; //1000;
         a_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory = 100;
 
-        _GENESIS_Environment._Directory = _Directory;
+        ge._Directory = _Directory;
         //File map_File = new File("C:/Work/data/OpenStreetMap/Taipei/map.osm");
         File map_File = new File("C:/Work/data/Open/OSM/Taipei/map.osm");
-        _GENESIS_Environment._TSMisc = new TSMisc(
-                _GENESIS_Environment,
+        ge._TSMisc = new TSMisc(
+                ge,
                 map_File);
         //_GENESIS_AgentEnvironment._TSMisc.
 
         Long a_AgentCollection_ID = 0L;
         String a_Agent_Type = GENESIS_Agent.class.getName();
         GENESIS_FemaleCollection a_FemaleCollection = new GENESIS_FemaleCollection(
-                _GENESIS_Environment,
+                ge,
                 a_AgentCollection_ID,
                 GENESIS_Person.getTypeLivingFemale_String());
         a_GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.put(
@@ -153,12 +153,12 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 
         // Initialise Grids
         // PopulationDensity
-        _GENESIS_Environment._reportingPopulationDensity_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) _GENESIS_Environment._network_Grid2DSquareCellDoubleFactory.create(
+        ge._reportingPopulationDensity_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) ge._network_Grid2DSquareCellDoubleFactory.create(
                 new File(_Directory, "PopulationDensity"),
                 a_NRows,
                 a_NCols);
         // A grid of aggregatePopulationDensity
-        _GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) _GENESIS_Environment._network_Grid2DSquareCellDoubleFactory.create(
+        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) ge._network_Grid2DSquareCellDoubleFactory.create(
                 new File(_Directory, "AggregatePopulationDensity"),
                 a_NRows,
                 a_NCols);
@@ -174,16 +174,16 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 //                _NCols);
         for (long row = 0; row < a_NRows; row++) {
             for (long col = 0; col < a_NCols; col++) {
-                _GENESIS_Environment._reportingPopulationDensity_Grid2DSquareCellDouble.setCell(
+                ge._reportingPopulationDensity_Grid2DSquareCellDouble.setCell(
                         row,
                         col,
                         0,
-                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
-                _GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.setCell(
+                        ge._HandleOutOfMemoryError_boolean);
+                ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.setCell(
                         row,
                         col,
                         0,
-                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                        ge._HandleOutOfMemoryError_boolean);
 //                _Accessibility_Grid2DSquareCellDouble.setCell(
 //                        row,
 //                        col,
@@ -196,8 +196,8 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 //                        _GENESIS_AgentEnvironment._HandleOutOfMemoryError);
             }
         }
-        cellsize = _GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellsizeDouble(
-                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+        cellsize = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellsizeDouble(
+                ge._HandleOutOfMemoryError_boolean);
 
         //BigDecimal a_CellXBigDecimal = _GENESIS_AgentEnvironment._World_Grid2DSquareCellDouble.getCellXBigDecimal(0L, handleOutOfMemoryError);
         //BigDecimal a_CellYBigDecimal = _GENESIS_AgentEnvironment._World_Grid2DSquareCellDouble.getCellYBigDecimal(0L, handleOutOfMemoryError);
@@ -213,7 +213,7 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 //        accessibilityMax_int = 100;
 //        accessibilityMin_int = 1;
 //        initialiseAccessibility();
-        _ImageExporter = new Grids_ImageExporter(_GENESIS_Environment._Grids_Environment);
+        _ImageExporter = new Grids_ImageExporter(ge.ge);
 
         int numberOfHouseholds = 10;//100;
         int populationPerHousehold = 2;
@@ -228,7 +228,7 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
         while (a_Iterator.hasNext()) {
             a_Person = getFemale(
                     a_Iterator.next(),
-                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                    ge._HandleOutOfMemoryError_boolean);
             a_Network2D_HashSet.add(a_Person._Network2D);
         }
 
@@ -278,7 +278,7 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 //            }
             System.out.println("simulate iteration " + i + " out of " + maxite);
             simulateMovement(tollerance);
-            _GENESIS_Environment._Time.addSecond();
+            ge._Time.addSecond();
             //for (int t = 0; t < 10; t++) {
             //_GENESIS_AgentEnvironment._Time.addMinute();
             //}
@@ -298,7 +298,7 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
             while (a_Iterator.hasNext()) {
                 a_Person = getFemale(
                         a_Iterator.next(),
-                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                        ge._HandleOutOfMemoryError_boolean);
                 a_Network2D_HashSet.add(a_Person._Network2D);
             }
 
@@ -329,21 +329,21 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
             }
             Household a_Household = new Household(
                     StaticGrids.getRandomCellCentroid_Point2D(
-                            _GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble,
+                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble,
                             _RandomArray[0],
-                            _GENESIS_Environment._DecimalPlacePrecisionForNetwork,
-                            _GENESIS_Environment._HandleOutOfMemoryError_boolean));
+                            ge._DecimalPlacePrecisionForNetwork,
+                            ge._HandleOutOfMemoryError_boolean));
             for (int i = 0; i < populationPerHousehold; i++) {
                 aBirth_Time = GENESIS_Time.getRandomTime(
                         aBirthMin_Time,
                         aBirthMax_Time,
                         _RandomArray[0],
                         _RandomArray[1]);
-                a_Female = _GENESIS_Environment._PersonFactory.createFemale(
-                        new GENESIS_Age(_GENESIS_Environment, aBirth_Time),
+                a_Female = ge._PersonFactory.createFemale(
+                        new GENESIS_Age(ge, aBirth_Time),
                         a_Household,
                         a_Household._Point2D,
-                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                        ge._HandleOutOfMemoryError_boolean);
 //                a_Female._resource_double = resourcePersonInitial_double;
 //                a_Female._resourceMax_double = resourcePersonMax_double;
                 a_Female.set_Previous_Point2D(a_Female._Point2D);
@@ -358,10 +358,10 @@ public class Traffic_Taipei_0 extends AbstractTrafficModel {
 //                        a_DecimalPlacePrecision,//Point2D.DefaultDecimalPlacePrecision,
 //                        _GENESIS_AgentEnvironment._HandleOutOfMemoryError);
                 a_Female._Heading_Point2D = StaticGrids.getRandomCellCentroid_Point2D(
-                        _GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble,
+                        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble,
                         _RandomArray[0],
-                        _GENESIS_Environment._DecimalPlacePrecisionForNetwork,
-                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                        ge._DecimalPlacePrecisionForNetwork,
+                        ge._HandleOutOfMemoryError_boolean);
 
                 a_Female._Work_Point2D = a_Female._Heading_Point2D;
 

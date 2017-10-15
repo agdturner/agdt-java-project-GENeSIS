@@ -1598,7 +1598,7 @@ public class GENESIS_Demographics implements Serializable {
             int decimalPlacePrecisionForDisplay,
             RoundingMode a_RoundingMode) {
         GENESIS_Mortality annual_Mortality = new GENESIS_Mortality();
-        annual_Mortality._GENESIS_Environment = _GENESIS_Environment;
+        annual_Mortality.ge = _GENESIS_Environment;
         annual_Mortality._FemaleAnnualMortalityAgeBoundRate_TreeMap =
                 new TreeMap<GENESIS_AgeBound, BigDecimal>();
         annual_Mortality._MaleAnnualMortalityAgeBoundRate_TreeMap =
@@ -3197,7 +3197,7 @@ public class GENESIS_Demographics implements Serializable {
                 pop = new GENESIS_Population(
                         a_GENESIS_Environment,
                         a_PopulationType);
-                pop._GENESIS_Environment = a_GENESIS_Environment;
+                pop.ge = a_GENESIS_Environment;
                 regionPopulationMap.put(outputAreaCode, pop);
                 regionTotalPop.addPopulation(pop);
             }

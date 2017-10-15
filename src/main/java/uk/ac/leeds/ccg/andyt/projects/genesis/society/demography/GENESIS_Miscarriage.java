@@ -51,7 +51,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
      * If a serialised instance is on disk it will only load in here if the 
      * serialVersionUID is the same. 
      */
-    static final long serialVersionUID = 1L;
+    //static final long serialVersionUID = 1L;
     /**
      * Used for Logging
      */
@@ -60,7 +60,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
     /**
      * GENESIS_Environment reference
      */
-    public transient GENESIS_Environment _GENESIS_Environment;
+    public transient GENESIS_Environment ge;
     /**
      * For storing the number of days expected in early stage pregnancy. In
      * first implementation, this value was fixed at 42 days.
@@ -88,11 +88,11 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
 
     public GENESIS_Miscarriage(
             GENESIS_Environment a_GENESIS_Environment) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
     }
 
     public GENESIS_Miscarriage(GENESIS_Miscarriage a_Miscarriage) {
-        this(a_Miscarriage._GENESIS_Environment,
+        this(a_Miscarriage.ge,
                 a_Miscarriage);
     }
 
@@ -127,7 +127,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
         String sourceMethod = "GENESIS_Miscarriage(GENESIS_Environment,File)";
         getLogger().entering(sourceClass, sourceMethod);
         MiscarriageFactory.init();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         if (miscarriage_File.getName().endsWith("csv")) {
             /**
                  * The file is expected to be along the following lines: Number
@@ -354,8 +354,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
             String[] args,
             File directory) {
         GENESIS_Miscarriage instance = new GENESIS_Miscarriage();
-        instance._GENESIS_Environment = new GENESIS_Environment();
-        instance._GENESIS_Environment._Directory = directory;
+        instance.ge = new GENESIS_Environment(directory);
         File miscarriageRate_File = new File(
                 directory.toString() + "/InputData/DemographicData/"
                 + "MiscarriageRate/MiscarriageRate_Leeds_1991.csv");
@@ -363,7 +362,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                 directory.toString() + "/InputData/DemographicData/"
                 + "MortalityRate/MortalityRate_Leeds_1991.xml");
         GENESIS_Mortality mortality = new GENESIS_Mortality(
-                instance._GENESIS_Environment,
+                instance.ge,
                 mortalityRate_File);
         instance.processCSVtoXML(
                 miscarriageRate_File,
@@ -373,8 +372,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
     public static void run(String[] args,
             File directory) {
         GENESIS_Miscarriage instance = new GENESIS_Miscarriage();
-        instance._GENESIS_Environment = new GENESIS_Environment();
-        instance._GENESIS_Environment._Directory = directory;
+        instance.ge = new GENESIS_Environment(directory);
         instance.formatData(directory);
     }
 
@@ -390,7 +388,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                     directory.toString() + "/InputData/DemographicData/"
                     + "MortalityRate/MortalityRate_Leeds_" + i + ".xml");
             GENESIS_Mortality mortality = new GENESIS_Mortality(
-                    _GENESIS_Environment,
+                    ge,
                     mortalityRate_File);
             processCSVtoXML(miscarriageRate_File,
                     mortality);
@@ -403,16 +401,14 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
             GENESIS_Mortality mortality) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        _GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
-        _GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        //_GENESIS_Environment._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
-        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment();
-        a_GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
-        a_GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
+        ge._Time = new GENESIS_Time(1991, 0);
+        ge._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
+        ge._Time = new GENESIS_Time(1991, 0);
+        ge._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         //a_GENESIS_Environment._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         String[] a_Filename_String_prefixSuffix = miscarriageRate_File.getName().split("\\.");
         GENESIS_Miscarriage a_Miscarriage = new GENESIS_Miscarriage(
-                a_GENESIS_Environment,
+                ge,
                 miscarriageRate_File);
         TreeMap<GENESIS_AgeBound, BigDecimal> dailyCMP = a_Miscarriage._DailyClinicalMiscarriageAgeBoundProbability_TreeMap;
         TreeMap<GENESIS_AgeBound, BigDecimal> newDailyCMP = new TreeMap<GENESIS_AgeBound, BigDecimal>();
@@ -451,14 +447,14 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                 a_Filename_String_prefixSuffix[0] + "YearAges.csv");
         a_Miscarriage.writeToCSV(b_File);
         GENESIS_Miscarriage b_Miscarriage = new GENESIS_Miscarriage(
-                a_GENESIS_Environment,
+                ge,
                 b_File);
         File c_File = new File(
                 miscarriageRate_File.getParentFile(),
                 a_Filename_String_prefixSuffix[0] + ".xml");
         XMLConverter.saveMiscarriageToXMLFile(c_File, b_Miscarriage);
         GENESIS_Miscarriage c_Miscarriage = new GENESIS_Miscarriage(
-                a_GENESIS_Environment,
+                ge,
                 c_File);
         log(Level.FINE, c_Miscarriage.toString());
         getLogger().exiting(sourceClass, sourceMethod);

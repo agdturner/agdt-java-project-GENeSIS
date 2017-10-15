@@ -9,20 +9,13 @@ import java.io.Serializable;
  * store. The File can be found from a numerical identifier _Agent_ID. So if the
  * Agent does not exist in memory it can be loaded from a File.
  */
-public abstract class GENESIS_Agent implements Serializable {
+public abstract class GENESIS_Agent extends GENESIS_Object implements Serializable {
 
-    static final long serialVersionUID = 1L;
     /**
      * A reference to the main AgentCollection that registers this.
      */
     //protected transient AgentCollection _GENESIS_AgentCollection;
-    /**
-     * A reference to the _GENESIS_Environment of this simulation. Declared
- transient so that Object can be swapped to file and reloaded without
- swapping _GENESIS_Environment. When reloading, care is needed to
- initialise this...
-     */
-    public transient GENESIS_Environment _GENESIS_Environment;
+    
 //    /**
 //     * A reference to an AgentCollection that holds a reference to this.
 //     * This might sensibly be made a collection if agents change so as to belong
@@ -106,10 +99,10 @@ public abstract class GENESIS_Agent implements Serializable {
 
     protected GENESIS_AgentCollectionManager get_AgentCollectionManager() {
         if (_GENESIS_AgentCollectionManager == null) {
-            _GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+            _GENESIS_AgentCollectionManager = ge._GENESIS_AgentEnvironment._AgentCollectionManager;
         }
         if (_GENESIS_AgentCollectionManager._GENESIS_Environment == null) {
-            _GENESIS_AgentCollectionManager._GENESIS_Environment = _GENESIS_Environment;
+            _GENESIS_AgentCollectionManager._GENESIS_Environment = ge;
         }
         return _GENESIS_AgentCollectionManager;
     }

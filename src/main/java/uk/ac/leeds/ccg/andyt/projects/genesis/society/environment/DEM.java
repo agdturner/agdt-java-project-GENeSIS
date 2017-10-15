@@ -1,6 +1,6 @@
 package uk.ac.leeds.ccg.andyt.projects.genesis.society.environment;
 
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
 
 public class DEM {
 

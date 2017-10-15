@@ -16,10 +16,8 @@ import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
  * contains methods for creating and deleting the file store/cache. Contains
  * methods and collections for managing access to Agents with this store.
  */
-public abstract class GENESIS_AgentCollection implements Serializable {
+public abstract class GENESIS_AgentCollection extends GENESIS_Object implements Serializable {
 
-    static final long serialVersionUID = 1L;
-    public transient GENESIS_Environment _GENESIS_Environment;
     /**
      * The File which is used to swap data.
      */
@@ -45,10 +43,7 @@ public abstract class GENESIS_AgentCollection implements Serializable {
     }
 
     public boolean isInMemory() {
-        if (_Agent_ID_Agent_HashMap == null) {
-            return false;
-        }
-        return true;
+        return _Agent_ID_Agent_HashMap != null;
     }
 
     public File get_AgentCollectionManager_Directory() {
@@ -58,10 +53,10 @@ public abstract class GENESIS_AgentCollection implements Serializable {
     public GENESIS_AgentCollectionManager get_AgentCollectionManager() {
         if (_GENESIS_AgentCollectionManager == null) {
             _GENESIS_AgentCollectionManager =
-                    _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+                    ge._GENESIS_AgentEnvironment._AgentCollectionManager;
         }
         if (_GENESIS_AgentCollectionManager._GENESIS_Environment == null) {
-            _GENESIS_AgentCollectionManager._GENESIS_Environment = _GENESIS_Environment;
+            _GENESIS_AgentCollectionManager._GENESIS_Environment = ge;
         }
         return _GENESIS_AgentCollectionManager;
     }
@@ -81,7 +76,7 @@ public abstract class GENESIS_AgentCollection implements Serializable {
     }
 
     protected void init_AgentID_Agent_HashMap() {
-        _Agent_ID_Agent_HashMap = new HashMap<Long, GENESIS_Agent>();
+        _Agent_ID_Agent_HashMap = new HashMap<>();
     }
 
     /**
@@ -99,11 +94,7 @@ public abstract class GENESIS_AgentCollection implements Serializable {
      */
     public boolean remove(Long a_AgentID) {
         _Agent_ID_Agent_HashMap.remove(a_AgentID);
-        if (_Agent_ID_Agent_HashMap.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return _Agent_ID_Agent_HashMap.isEmpty();
     }
 
 //    public abstract GENESIS_Agent getAgent(

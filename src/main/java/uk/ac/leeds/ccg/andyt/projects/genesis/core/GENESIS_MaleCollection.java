@@ -26,11 +26,11 @@ public class GENESIS_MaleCollection
             GENESIS_Environment a_GENESIS_Environment,
             Long _AgentCollection_ID,
             String _Type) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         this._AgentCollection_ID = _AgentCollection_ID;
         this._Type = _Type;
         this._GENESIS_AgentCollectionManager =
-                _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+                ge._GENESIS_AgentEnvironment._AgentCollectionManager;
         init_AgentID_Agent_HashMap();
     }
 
@@ -38,12 +38,12 @@ public class GENESIS_MaleCollection
             GENESIS_Environment a_GENESIS_Environment,
             long a_AgentCollection_ID,
             String a_Type) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         this._AgentCollection_ID = a_AgentCollection_ID;
         _Type = a_Type;
         if (a_Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
             this._GENESIS_AgentCollectionManager =
-                    _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+                    ge._GENESIS_AgentEnvironment._AgentCollectionManager;
             this._GENESIS_AgentCollectionManager._GENESIS_Environment = a_GENESIS_Environment;
             this._GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.put(
                     _AgentCollection_ID,
@@ -115,28 +115,28 @@ public class GENESIS_MaleCollection
                     a_GENESIS_AgentCollectionManager.getMaleCollection(
                     a_MaleCollection_ID,
                     _Type);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clear_MemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
                         get_AgentCollectionManager();
                 Long a_MaleCollection_ID =
                         a_GENESIS_AgentCollectionManager.getMaleCollection_ID(
                         a_Agent_ID,
                         _Type,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.HandleOutOfMemoryErrorFalse);
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
                         a_GENESIS_AgentCollectionManager.getMaleCollection(
                         a_MaleCollection_ID,
                         _Type);
-                _GENESIS_Environment.swapToFile_DataAnyExcept(a_GENESIS_MaleCollection);
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.swapToFile_DataAnyExcept(a_GENESIS_MaleCollection);
+                ge.init_MemoryReserve(
                         a_GENESIS_MaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.HandleOutOfMemoryErrorFalse);
                 return getMale(
                         a_Agent_ID,
                         handleOutOfMemoryError);
@@ -151,7 +151,7 @@ public class GENESIS_MaleCollection
         _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
         if (_Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)) {
             GENESIS_Male result = (GENESIS_Male) _Agent_ID_Agent_HashMap.get(a_Agent_ID);
-            result._GENESIS_Environment = _GENESIS_Environment;
+            result.ge = ge;
 
             // Debug
             if (result == null) {
@@ -191,17 +191,17 @@ public class GENESIS_MaleCollection
         try {
             write();
             if (handleOutOfMemoryError) {
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     this,
                     handleOutOfMemoryError);
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAnyExcept(this);
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAnyExcept(this);
+                ge.init_MemoryReserve(
                         this,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.HandleOutOfMemoryErrorFalse);
                 write(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;

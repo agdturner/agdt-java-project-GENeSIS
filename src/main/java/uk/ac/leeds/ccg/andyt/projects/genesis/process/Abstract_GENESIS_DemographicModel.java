@@ -80,8 +80,8 @@ public abstract class Abstract_GENESIS_DemographicModel
     @Override
     public void init_Environment(GENESIS_Environment a_GENESIS_Environment) {
         super.init_Environment(a_GENESIS_Environment);
-        _GENESIS_Environment._PersonFactory = new GENESIS_PersonFactory(
-                _GENESIS_Environment,
+        ge._PersonFactory = new GENESIS_PersonFactory(
+                ge,
                 _GENESIS_AgentCollectionManager);
         get_Demographics()._GENESIS_Environment = a_GENESIS_Environment;
     }
@@ -101,7 +101,7 @@ public abstract class Abstract_GENESIS_DemographicModel
         }
         result = subregionFertilityMap.get(subregionID);
         if (result == null) {
-            result = new GENESIS_Fertility(_GENESIS_Environment);
+            result = new GENESIS_Fertility(ge);
             subregionFertilityMap.put(subregionID, result);
         }
         return result;
@@ -122,7 +122,7 @@ public abstract class Abstract_GENESIS_DemographicModel
         }
         result = subregionMortalityMap.get(subregionID);
         if (result == null) {
-            result = new GENESIS_Mortality(_GENESIS_Environment);
+            result = new GENESIS_Mortality(ge);
             subregionMortalityMap.put(subregionID, result);
         }
         return result;
@@ -131,14 +131,14 @@ public abstract class Abstract_GENESIS_DemographicModel
     public GENESIS_Migration get_Migration() {
         GENESIS_Migration result = get_Demographics()._Migration;
         if (result == null) {
-            result = new GENESIS_Migration(_GENESIS_Environment);
+            result = new GENESIS_Migration(ge);
         }
         return result;
     }
 
     public GENESIS_Demographics get_Demographics() {
         if (_Demographics == null) {
-            _Demographics = new GENESIS_Demographics(_GENESIS_Environment);
+            _Demographics = new GENESIS_Demographics(ge);
         }
         return _Demographics;
     }

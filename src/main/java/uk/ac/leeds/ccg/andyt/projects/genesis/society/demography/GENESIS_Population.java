@@ -52,7 +52,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
      */
     private static final String sourceClass = GENESIS_Population.class.getName();
     private static final String sourcePackage = GENESIS_Population.class.getPackage().getName();
-    public transient GENESIS_Environment _GENESIS_Environment;
+    public transient GENESIS_Environment ge;
     /**
      * Female GENESIS_Population Key Integer are Age in Years Value Long are
      * counts, this could be the number of people of an ageBound at a given time
@@ -81,7 +81,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
     }
 
     public GENESIS_Population(GENESIS_Population a_Population) {
-        this(a_Population._GENESIS_Environment,
+        this(a_Population.ge,
                 a_Population);
     }
 
@@ -90,7 +90,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             PopulationType a_PopulationType) {
         String sourceMethod = "GENESIS_Population(GENESIS_Environment,PopulationType)";
         Logger.getLogger(sourcePackage).entering(sourceClass, sourceMethod);
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         PopulationFactory.init();
         PopulationType newPop = GENESIS_Collections.deepCopy(a_PopulationType);
         this.genderedAgeBoundPopulation = newPop.getGenderedAgeBoundPopulation();
@@ -149,7 +149,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         Logger.getLogger(sourcePackage).entering(sourceClass, sourceMethod);
         PopulationFactory.init();
         this.genderedAgeBoundPopulation = CommonFactory.newGenderedAgeBoundPopulation();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         if (file.getName().endsWith("csv")) {
             BufferedReader br = null;
             try {
@@ -307,8 +307,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                             long ageMax = ageBound.getAgeMax().getYear();
                             for (long age = ageMin; age < ageMax; age++) {
                                 GENESIS_AgeBound aAgeBound = new GENESIS_AgeBound(ageMin + age);
-                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(
-                                        _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                                         0,
                                         BigDecimal.ZERO,
                                         remainingPopulation);
@@ -337,8 +336,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                             long ageMax = ageBound.getAgeMax().getYear();
                             for (long age = ageMin; age < ageMax; age++) {
                                 GENESIS_AgeBound aAgeBound = new GENESIS_AgeBound(ageMin + age);
-                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(
-                                        _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                                         0,
                                         BigDecimal.ZERO,
                                         remainingPopulation);
@@ -364,7 +362,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             GENESIS_Environment a_GENESIS_Environment) {
         String sourceMethod = "GENESIS_Population(GENESIS_Environment)";
         Logger.getLogger(sourcePackage).entering(sourceClass, sourceMethod);
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         init();
         Logger.getLogger(sourcePackage).exiting(sourceClass, sourceMethod);
     }
@@ -537,8 +535,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             File theGENESISWorkspace = new File(
                     theGENESISDir,
                     "workspace");
-            _GENESIS_Environment = new GENESIS_Environment();
-            _GENESIS_Environment._Directory = theGENESISWorkspace;
+            ge = new GENESIS_Environment(theGENESISDir);
+            ge._Directory = theGENESISWorkspace;
             File theGENESISUKCensusDataDir = new File(
                     theGENESISWorkspace,
                     "UKCensusData");
@@ -637,8 +635,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                chart.setFile(popFile);
 //                chart.run();
             }
-            GENESIS_Demographics.loadInputPopulation(
-                    _GENESIS_Environment,
+            GENESIS_Demographics.loadInputPopulation(ge,
                     theGENESISUKCensusDataDir);
         } catch (Error e) {
             System.err.println(e.getMessage());
@@ -668,8 +665,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             File theGENESISWorkspace = new File(
                     theGENESISDir,
                     "workspace");
-            _GENESIS_Environment = new GENESIS_Environment();
-            _GENESIS_Environment._Directory = theGENESISWorkspace;
+            ge = new GENESIS_Environment(theGENESISDir);
+            ge._Directory = theGENESISWorkspace;
             File theGENESISUKCensusDataDir = new File(
                     theGENESISWorkspace,
                     "2001UKCensusDataTest");
@@ -782,8 +779,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                chart.run();
                 a_ID++;
             }
-            GENESIS_Demographics.loadInputPopulation(
-                    _GENESIS_Environment,
+            GENESIS_Demographics.loadInputPopulation(ge,
                     theGENESISUKCensusDataDir);
         } catch (Error e) {
             System.err.println(e.getMessage());
@@ -858,7 +854,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         Long maxAge = Long.valueOf(startAgeOfEndYearInterval);
         Long minAge = null;
         chart.setData(this, minAge, maxAge);
@@ -1399,12 +1395,11 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                directory.toString()
 //                + "/InputData/DemographicData/Population/
 //                + "GenderAgeCount_Test.csv");
-        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment();
-        a_GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
-        a_GENESIS_Environment._Directory = directory;
+        GENESIS_Environment ge = new GENESIS_Environment(directory);
+        ge._Time = new GENESIS_Time(1991, 0);
         String[] a_Filename_String_prefixSuffix = a_File.getName().split("\\.");
         GENESIS_Population a_Population = new GENESIS_Population(
-                a_GENESIS_Environment,
+                ge,
                 a_File,
                 BigDecimal.ONE,
                 false);
@@ -1416,9 +1411,9 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                 a_File.getParentFile(),
                 a_Filename_String_prefixSuffix[0] + ".xml");
         XMLConverter.savePopulationToXMLFile(c_File, a_Population);
-        a_GENESIS_Environment._Generic_BigDecimal = new Generic_BigDecimal(100);
+        ge._Generic_BigDecimal = new Generic_BigDecimal(100);
         GENESIS_Population c_Population = new GENESIS_Population(
-                a_GENESIS_Environment,
+                ge,
                 c_File,
                 BigDecimal.ONE,
                 false);
@@ -1698,7 +1693,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             GENESIS_Population populationToDivideBy,
             int decimalPlaces,
             RoundingMode roundingMode) {
-        GENESIS_Population result = new GENESIS_Population(_GENESIS_Environment);
+        GENESIS_Population result = new GENESIS_Population(ge);
         Iterator<Entry<GENESIS_AgeBound, BigDecimal>> ite;
         Entry<GENESIS_AgeBound, BigDecimal> entry;
         GENESIS_AgeBound ageBound;

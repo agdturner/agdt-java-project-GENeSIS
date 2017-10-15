@@ -7,8 +7,8 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.society.demography;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_AbstractGrid2DSquareCell;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
 import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -29,7 +29,7 @@ public class Mapping {
             GENESIS_Environment _Environment) {
         _ImageExporter.toGreyScaleImage(
                 _Grid2DSquareCell,
-                _Environment._Grids_Environment.get_Grid2DSquareCellProcessor(),
+                _Environment.ge.get_Grid2DSquareCellProcessor(),
                 _File,
                 _Type,
                 _Environment._HandleOutOfMemoryError_boolean);
@@ -86,7 +86,7 @@ public class Mapping {
         }
         _ImageExporter.toGreyScaleImage(
                 _Denisty_Map_Population,
-                _Environment._Grids_Environment.get_Grid2DSquareCellProcessor(),
+                _Environment.ge.get_Grid2DSquareCellProcessor(),
                 _File, _Type, _HandleOutOfMemoryError);
 
     }

@@ -212,14 +212,13 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //        }
 
         long range = 100L;
-        _GENESIS_Environment = new GENESIS_Environment();
-        _GENESIS_Environment._Directory = comparisonResultsDirectory;
-        _GENESIS_Environment._Directory = Generic_StaticIO.initialiseArchive(
-                _GENESIS_Environment._Directory,
+        ge._Directory = comparisonResultsDirectory;
+        ge._Directory = Generic_StaticIO.initialiseArchive(
+                ge._Directory,
                 range);
         executorService = getExecutorService();
         futures = new HashSet<Future>();
-        _GENESIS_Environment._AbstractModel = this;
+        ge._AbstractModel = this;
 
         _StartYear = getStartYearForResult(resultsToCompare[0], underscore);
         _EndYear = _StartYear + 1L;
@@ -294,7 +293,6 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
             String fileSeparator,
             String underscore) throws IOException {
         log(Level.FINE, "<doLocalPCRun>");
-        _GENESIS_Environment = new GENESIS_Environment();
         File t_GENESIS_Environment_Directory_File = new File(args[0]);
         if (!t_GENESIS_Environment_Directory_File.exists()) {
             t_GENESIS_Environment_Directory_File.mkdirs();
@@ -304,17 +302,17 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 "Compare_GENESIS_DemographicModel");
         theCompare_DemographicModel_Aspatial_File.mkdirs();
         long range = 100;
-        _GENESIS_Environment._Directory = theCompare_DemographicModel_Aspatial_File;
-        if (_GENESIS_Environment._Directory.list().length == 0) {
-            _GENESIS_Environment._Directory = Generic_StaticIO.initialiseArchive(
-                    _GENESIS_Environment._Directory,
+        ge._Directory = theCompare_DemographicModel_Aspatial_File;
+        if (ge._Directory.list().length == 0) {
+            ge._Directory = Generic_StaticIO.initialiseArchive(
+                    ge._Directory,
                     range);
         } else {
-            _GENESIS_Environment._Directory = Generic_StaticIO.addToArchive(
-                    _GENESIS_Environment._Directory,
+            ge._Directory = Generic_StaticIO.addToArchive(
+                    ge._Directory,
                     range);
         }
-        _GENESIS_Environment._Directory.mkdirs();
+        ge._Directory.mkdirs();
         executorService = getExecutorService();
         futures = new HashSet<Future>();
 
@@ -367,12 +365,12 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
         message = "</list of results to compare>";
         log(Level.INFO, message);
         System.out.println(message);
-        _GENESIS_Environment._AbstractModel = this;
+        ge._AbstractModel = this;
         //_HandleOutOfMemoryError = false;
         // Generate comparison plots
         generateComparisonPlots();
         File comparisonTest_File = new File(
-                _GENESIS_Environment._Directory,
+                ge._Directory,
                 "comparison.out");
         comparisonTest_PrintWriter = new PrintWriter(comparisonTest_File);
         File bestFile = compare(fileSeparator, underscore);
@@ -431,7 +429,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
         TreeMap<Long, File> areaCode_TreeMap = null;
         try {
             areaCode_TreeMap = Generic_StaticIO.initialiseArchiveReturnTreeMapLongFile(
-                    _GENESIS_Environment._Directory,
+                    ge._Directory,
                     range,
                     highestLeaf);
         } catch (IOException ex) {
@@ -702,7 +700,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         HashSet<GENESIS_Population> pops = new HashSet<GENESIS_Population>();
         Iterator<Entry<Long, File>> ite = resultsToCompare_TreeMap.entrySet().iterator();
         Entry<Long, File> entry;
@@ -743,7 +741,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                     popDir,
                     filename);
             GENESIS_Population pop = new GENESIS_Population(
-                    _GENESIS_Environment,
+                    ge,
                     popFile);
             pops.add(pop);
         }
@@ -810,7 +808,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         pops = new HashSet<GENESIS_Population>();
         ite = resultsToCompare_TreeMap.entrySet().iterator();
         while (ite.hasNext()) {
@@ -853,9 +851,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //                    _GENESIS_Environment,
 //                    popFile);
 //            pops.add(pop);
-            GENESIS_Miscarriage miscarriage = new GENESIS_Miscarriage(_GENESIS_Environment, popFile);
+            GENESIS_Miscarriage miscarriage = new GENESIS_Miscarriage(ge, popFile);
             TreeMap<GENESIS_AgeBound, BigDecimal> female = miscarriage._DailyClinicalMiscarriageAgeBoundProbability_TreeMap;
-            GENESIS_Population pop = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population pop = new GENESIS_Population(ge);
             pop._FemaleAgeBoundPopulationCount_TreeMap = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(female);
             pop.updateGenderedAgePopulation();
             pops.add(pop);
@@ -896,7 +894,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         pops = new HashSet<GENESIS_Population>();
         ite = resultsToCompare_TreeMap.entrySet().iterator();
         while (ite.hasNext()) {
@@ -939,9 +937,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //                    _GENESIS_Environment,
 //                    popFile);
 //            pops.add(pop);
-            GENESIS_Miscarriage miscarriage = new GENESIS_Miscarriage(_GENESIS_Environment, popFile);
+            GENESIS_Miscarriage miscarriage = new GENESIS_Miscarriage(ge, popFile);
             TreeMap<GENESIS_AgeBound, BigDecimal> female = miscarriage._DailyEarlyPregnancyLossAgeBoundProbability_TreeMap;
-            GENESIS_Population pop = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population pop = new GENESIS_Population(ge);
             pop._FemaleAgeBoundPopulationCount_TreeMap = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(female);
             pop.updateGenderedAgePopulation();
             pops.add(pop);
@@ -1009,7 +1007,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         pops = new HashSet<GENESIS_Population>();
         ite = resultsToCompare_TreeMap.entrySet().iterator();
         while (ite.hasNext()) {
@@ -1052,10 +1050,10 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //                    _GENESIS_Environment,
 //                    popFile);
 //            pops.add(pop);
-            GENESIS_Mortality mortality = new GENESIS_Mortality(_GENESIS_Environment, popFile);
+            GENESIS_Mortality mortality = new GENESIS_Mortality(ge, popFile);
             TreeMap<GENESIS_AgeBound, BigDecimal> female = mortality._FemaleAnnualMortalityAgeBoundRate_TreeMap;
             TreeMap<GENESIS_AgeBound, BigDecimal> male = mortality._MaleAnnualMortalityAgeBoundRate_TreeMap;
-            GENESIS_Population pop = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population pop = new GENESIS_Population(ge);
             pop._FemaleAgeBoundPopulationCount_TreeMap = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(female);
             pop._MaleAgeBoundPopulationCount_TreeMap = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(male);
             pop.updateGenderedAgePopulation();
@@ -1123,7 +1121,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                _GENESIS_Environment);
+                ge);
         pops = new HashSet<GENESIS_Population>();
         ite = resultsToCompare_TreeMap.entrySet().iterator();
         while (ite.hasNext()) {
@@ -1167,9 +1165,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //                    popFile);
 //            pops.add(pop);
             FertilityType fertilityType = XMLConverter.loadFertilityFromXMLFile(popFile);
-            GENESIS_Fertility fertility = new GENESIS_Fertility(_GENESIS_Environment, fertilityType);
+            GENESIS_Fertility fertility = new GENESIS_Fertility(ge, fertilityType);
             TreeMap<GENESIS_AgeBound, BigDecimal> female = fertility._AnnualLiveBirthFertilityAgeBoundRate_TreeMap;
-            GENESIS_Population pop = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population pop = new GENESIS_Population(ge);
             pop._FemaleAgeBoundPopulationCount_TreeMap = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(female);
             pop.updateGenderedAgePopulation();
             pops.add(pop);
@@ -1686,26 +1684,26 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 new Integer(parameters.getStartYear()),
                 new Integer(parameters.getStartDay()));
         a_Time.addYears(parameters.getYears());
-        _GENESIS_Environment._Time = a_Time;
+        ge._Time = a_Time;
 
         // Initialise _GENESIS_Environment
         //String fileSeparator = System.getProperty("file.separator");
         int lastYear = metadata_Metadata.getEndYear();
-        _GENESIS_Environment._Time = new GENESIS_Time(lastYear, 0);
-        _GENESIS_Environment._AbstractModel._GENESIS_Environment = _GENESIS_Environment;
+        ge._Time = new GENESIS_Time(lastYear, 0);
+        ge._AbstractModel.ge = ge;
 
         // Initialise start GENESIS_Demographics
         message = "Initialise start Demographics";
         log(Level.INFO, message);
         System.out.println(message);
-        GENESIS_Demographics startDemographics = getStartDemographics(_GENESIS_Environment,
+        GENESIS_Demographics startDemographics = getStartDemographics(ge,
                 metadataDirectory_File);
 
         // Initialise end GENESIS_Demographics
         message = "Initialise end Demographics";
         log(Level.INFO, message);
         System.out.println(message);
-        GENESIS_Demographics endDemographics = getEndDemographics(_GENESIS_Environment,
+        GENESIS_Demographics endDemographics = getEndDemographics(ge,
                 dataDirectory_File,
                 startDemographics._Population.keySet(),
                 underscore,
@@ -1723,11 +1721,11 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
         while (ite.hasNext()) {
             areaCode = ite.next();
             sse = sse.add(CompareProbabilities.compare(areaCode,
-                    _GENESIS_Environment,
+                    ge,
                     startDemographics,
                     endDemographics,
                     dataDirectory_File,
-                    _GENESIS_Environment._DecimalPlacePrecisionForCalculations));
+                    ge._DecimalPlacePrecisionForCalculations));
             message = "Similarity (sum of squared differences between simulated "
                     + "and theoretical results) for area " + areaCode + " is " + sse;
         }
@@ -1891,15 +1889,15 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
          * Set a_GENESIS_Environment.GENESIS_Time and
          * b_GENESIS_Environment.GENESIS_Time
          */
-        _GENESIS_Environment._Time = new GENESIS_Time(
+        ge._Time = new GENESIS_Time(
                 new Integer(a_Metadata.getEndYear()),
                 new Integer(a_Metadata.getEndDay()));
-        _GENESIS_Environment._Time = new GENESIS_Time(
+        ge._Time = new GENESIS_Time(
                 new Integer(b_Metadata.getEndYear()),
                 new Integer(b_Metadata.getEndDay()));
 
         GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                new GENESIS_AgentCollectionManager(_GENESIS_Environment);
+                new GENESIS_AgentCollectionManager(ge);
         a_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection =
                 new Integer(a_MaximumNumberOfAgentsPerAgentCollection);
         a_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory =
@@ -1942,7 +1940,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 a_LastLivingMaleCollection.getMaxAgentID();
 
         GENESIS_AgentCollectionManager b_GENESIS_AgentCollectionManager =
-                new GENESIS_AgentCollectionManager(_GENESIS_Environment);
+                new GENESIS_AgentCollectionManager(ge);
         b_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection =
                 new Integer(b_MaximumNumberOfAgentsPerAgentCollection);
         b_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory =
@@ -2069,7 +2067,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_FemaleCollection.thisFile"));
-        a_GENESIS_AgentCollectionManager._DeadFemaleCollection._GENESIS_Environment = _GENESIS_Environment;
+        a_GENESIS_AgentCollectionManager._DeadFemaleCollection.ge = ge;
         /**
          * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection
          */
@@ -2077,7 +2075,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_MaleCollection.thisFile"));
-        a_GENESIS_AgentCollectionManager._DeadMaleCollection._GENESIS_Environment = _GENESIS_Environment;
+        a_GENESIS_AgentCollectionManager._DeadMaleCollection.ge = ge;
         /**
          * Initialise
          * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap
@@ -2158,7 +2156,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_FemaleCollection.thisFile"));
-        b_GENESIS_AgentCollectionManager._DeadFemaleCollection._GENESIS_Environment = _GENESIS_Environment;
+        b_GENESIS_AgentCollectionManager._DeadFemaleCollection.ge = ge;
         /**
          * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection
          */
@@ -2166,7 +2164,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_MaleCollection.thisFile"));
-        b_GENESIS_AgentCollectionManager._DeadMaleCollection._GENESIS_Environment = _GENESIS_Environment;
+        b_GENESIS_AgentCollectionManager._DeadMaleCollection.ge = ge;
         /**
          * Initialise
          * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap

@@ -47,7 +47,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
     /**
      * GENESIS_Environment reference
      */
-    public transient GENESIS_Environment _GENESIS_Environment;
+    public transient GENESIS_Environment ge;
     // References
     //
     // Probability of having twins by mother's age:
@@ -140,7 +140,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
     }
 
     public GENESIS_Fertility(GENESIS_Fertility a_Fertility) {
-        this(a_Fertility._GENESIS_Environment,
+        this(a_Fertility.ge,
                 a_Fertility);
     }
 
@@ -149,7 +149,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             FertilityType fertility) {
         String sourceMethod = "GENESIS_Fertility(GENESIS_Environment,FertilityType)";
         getLogger().entering(sourceClass, sourceMethod);
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         _AnnualLiveBirthFertilityAgeBoundRate_TreeMap =
                 GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Rate(
                 fertility.getLiveBirthFertilityRates());
@@ -172,7 +172,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
         String sourceMethod = "GENESIS_Fertility(GENESIS_Environment,GENESIS_Fertility)";
         getLogger().entering(sourceClass, sourceMethod);
         FertilityFactory.init();
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         log(Level.FINER, "<Contruct Fertility>");
         this._Mortality = a_Fertility._Mortality;
         this._Miscarriage = a_Fertility._Miscarriage;
@@ -219,7 +219,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
         String sourceMethod = "GENESIS_Fertility(GENESIS_Environment,GENESIS_Mortality,GENESIS_Miscarriage,File)";
         getLogger().entering(sourceClass, sourceMethod);
         FertilityFactory.init();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         this._Mortality = a_Mortality;
         this._Miscarriage = a_Miscarriage;
         log(Level.FINER, "<Contruct Fertility>");
@@ -424,7 +424,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 
     public GENESIS_Fertility(
             GENESIS_Environment a_GENESIS_Environment) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
     }
 
     public static void main(String[] args) {
@@ -443,8 +443,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
                     logname);
             // Run main processing task
             GENESIS_Fertility instance = new GENESIS_Fertility();
-            instance._GENESIS_Environment = new GENESIS_Environment();
-            instance._GENESIS_Environment._Directory = directory;
+            instance.ge = new GENESIS_Environment(directory);
+            instance.ge._Directory = directory;
             instance.formatData(directory);
             GENESIS_Log.reset();
         } catch (Error e) {
@@ -484,21 +484,19 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             File fertilityRate_File) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        _GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
+        ge._Time = new GENESIS_Time(1991, 0);
         //a_GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        _GENESIS_Environment._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
-        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment();
-        a_GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
-        a_GENESIS_Environment._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+        ge._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+        ge._Time = new GENESIS_Time(1991, 0);
         String[] a_Filename_String_prefixSuffix = fertilityRate_File.getName().split("\\.");
         GENESIS_Mortality a_Mortality = new GENESIS_Mortality(
-                a_GENESIS_Environment,
+                ge,
                 mortalityRate_File);
         GENESIS_Miscarriage a_Miscarriage = new GENESIS_Miscarriage(
-                a_GENESIS_Environment,
+                ge,
                 miscarriageRate_File);
         GENESIS_Fertility a_Fertility = new GENESIS_Fertility(
-                a_GENESIS_Environment,
+                ge,
                 a_Mortality,
                 a_Miscarriage,
                 fertilityRate_File);
@@ -508,7 +506,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
         a_Fertility.writeToCSV(b_File);
         //XMLConverter.saveFertilityToXMLFile(b_File, a_Fertility);
         GENESIS_Fertility b_Fertility = new GENESIS_Fertility(
-                a_GENESIS_Environment,
+                ge,
                 a_Mortality,
                 a_Miscarriage,
                 b_File);
@@ -517,7 +515,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
                 a_Filename_String_prefixSuffix[0] + ".xml");
         XMLConverter.saveFertilityToXMLFile(c_File, b_Fertility);
         GENESIS_Fertility c_Fertility = new GENESIS_Fertility(
-                a_GENESIS_Environment,
+                ge,
                 a_Mortality,
                 a_Miscarriage,
                 c_File);
@@ -870,7 +868,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             GENESIS_Female a_Female) {
         // If age at birth would be greater than we allow then return zero!
         GENESIS_Age age = a_Female.getAge();
-        Time time = age.getAge_Time(_GENESIS_Environment._Time);
+        Time time = age.getAge_Time(ge._Time);
         GENESIS_Time age_Time = new GENESIS_Time(time);
         age_Time.addDays(GENESIS_Female.NormalGestationPeriod_int);
         long ageInYearsAtDueDate = age_Time.getYear();

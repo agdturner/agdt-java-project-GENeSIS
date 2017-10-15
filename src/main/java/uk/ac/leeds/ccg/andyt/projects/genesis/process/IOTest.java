@@ -34,11 +34,16 @@ public class IOTest {
     }
 
     public void run() {
-        GENESIS_Environment aGENESIS_Environment = new GENESIS_Environment();
+        File Directory;
+        Directory = new File("/scratch01/Work/Projects/GENESIS/");
+        GENESIS_Environment aGENESIS_Environment = new GENESIS_Environment(Directory);
 
-        File miscariageXML = new File("/scratch01/Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.xml");
+        File miscariageXML = new File(Directory,
+                "/workspace/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.xml");
 //        File miscariageXML = new File("C://Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/0_99/27/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.xml");
-        File miscariageOutputFile = new File("/scratch01/Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.PNG");
+        File miscariageOutputFile = new File(
+                Directory,
+                "/workspace/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.PNG");
 //        File miscariageOutputFile = new File("C://Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/0_99/27/data/Demographics/0_99/0/Total/Total_Clinical_Miscarriage_1992.PNG");
 //        MiscarriageFactory.init();
 //        MiscarriageType miscarriageType = null;

@@ -135,8 +135,7 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
                 "/scratch01/Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/0_99/0/");
 //        File workspaceDirectory = new File(
 //                "/nfs/see-fs-02_users/geoagdt/src/andyt/java/projects/genesis/genesis_1/workspace/");
-        GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment();
-        a_GENESIS_Environment._Directory = workspaceDirectory;
+        GENESIS_Environment ge = new GENESIS_Environment(workspaceDirectory);
 //        File resultsDirectory = new File(
 //                workspaceDirectory,
 //                "DemographicModel_Aspatial_1");
@@ -147,7 +146,7 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
                 workspaceDirectory.toString()
                 + "/data/Demographics/0_99/0/Total/Total_Population__Theoretically_Expected_Living__Year_1991.xml");
         GENESIS_Population pop = new GENESIS_Population(
-                a_GENESIS_Environment,
+                ge,
                 populationFile);
         int dataWidth = 700;//250;
         int dataHeight = 600;
@@ -172,7 +171,7 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 roundingMode,
-                a_GENESIS_Environment);
+                ge);
         chart.setData(pop, null, null);
         chart.run();
     }

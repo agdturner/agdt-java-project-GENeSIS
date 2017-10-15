@@ -74,7 +74,7 @@ public class Family
     }
 
     public Family(GENESIS_Person a_Person) {
-        this._GENESIS_Environment = a_Person._GENESIS_Environment;
+        this._GENESIS_Environment = a_Person.ge;
     }
 
     /**

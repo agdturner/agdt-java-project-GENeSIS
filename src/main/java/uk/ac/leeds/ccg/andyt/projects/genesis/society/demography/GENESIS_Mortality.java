@@ -26,7 +26,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 public class GENESIS_Mortality extends MortalityType implements Serializable {
 
     protected static final long serialVersionUID = 1L;
-    public transient GENESIS_Environment _GENESIS_Environment;
+    public transient GENESIS_Environment ge;
     /**
      * Used for Logging
      */
@@ -58,7 +58,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     }
 
     public GENESIS_Mortality(GENESIS_Mortality a_Mortality) {
-        this(a_Mortality._GENESIS_Environment,
+        this(a_Mortality.ge,
                 a_Mortality);
     }
 
@@ -67,7 +67,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
             MortalityType mortality) {
         String sourceMethod = "GENESIS_Mortality(GENESIS_Environment,MortalityType)";
         getLogger().entering(sourceClass, sourceMethod);
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         _FemaleAnnualMortalityAgeBoundRate_TreeMap =
                 GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Rate(
                 mortality.getGenderedAgeBoundRates().getFemale());
@@ -90,7 +90,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
         String sourceMethod = "GENESIS_Mortality(GENESIS_Environment,GENESIS_Mortality)";
         getLogger().entering(sourceClass, sourceMethod);
         MortalityFactory.init();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         _FemaleAnnualMortalityAgeBoundRate_TreeMap =
                 GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_BigDecimal(
                 a_Mortality._FemaleAnnualMortalityAgeBoundRate_TreeMap);
@@ -122,7 +122,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
         String sourceMethod = "GENESIS_Mortality(GENESIS_Environment,File)";
         getLogger().entering(sourceClass, sourceMethod);
         MortalityFactory.init();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         if (mortality_File.getName().endsWith("csv")) {
             BufferedReader br = null;
             try {
@@ -315,7 +315,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
         String sourceMethod = "GENESIS_Mortality(GENESIS_Environment)";
         getLogger().entering(sourceClass, sourceMethod);
         MortalityFactory.init();
-        _GENESIS_Environment = a_GENESIS_Environment;
+        ge = a_GENESIS_Environment;
         init();
         getLogger().exiting(sourceClass, sourceMethod);
     }
@@ -347,8 +347,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                     logname);
             // Run main processing task
             GENESIS_Mortality instance = new GENESIS_Mortality();
-            instance._GENESIS_Environment = new GENESIS_Environment();
-            instance._GENESIS_Environment._Directory = directory;
+            instance.ge = new GENESIS_Environment(directory);
             instance.formatData(directory);
             GENESIS_Log.reset();
         } catch (Error e) {
@@ -376,20 +375,20 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public void processCSVtoXML(File a_File) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        _GENESIS_Environment._Time = new GENESIS_Time(1991, 0);
+        ge._Time = new GENESIS_Time(1991, 0);
         //a_GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        _GENESIS_Environment._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+        ge._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         String a_Filename_String = a_File.getName();
         String[] a_Filename_String_prefixSuffix = a_Filename_String.split("\\.");
         GENESIS_Mortality a_Mortality = new GENESIS_Mortality(
-                _GENESIS_Environment,
+                ge,
                 a_File);
         File b_File = new File(
                 a_File.getParentFile(),
                 a_Filename_String_prefixSuffix[0] + "YearAges.csv");
         a_Mortality.writeToCSV(b_File);
         GENESIS_Mortality b_Mortality = new GENESIS_Mortality(
-                _GENESIS_Environment,
+                ge,
                 b_File);
         File c_File = new File(
                 a_File.getParentFile(),
@@ -398,7 +397,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                 c_File,
                 b_Mortality);
         GENESIS_Mortality c_Mortality = new GENESIS_Mortality(
-                _GENESIS_Environment,
+                ge,
                 c_File);
         log(Level.FINE, c_Mortality.toString());
         getLogger().exiting(sourceClass, sourceMethod);
@@ -775,7 +774,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public BigDecimal getDailyMortality(
             GENESIS_Female female) {
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(
-                female.get_Age().getAgeInYears_long(_GENESIS_Environment._Time));
+                female.get_Age().getAgeInYears_long(ge._Time));
         //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
         return getDailyMortalityFemale(ageBound);
     }
@@ -793,7 +792,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public BigDecimal getDailyMortality(
             GENESIS_Male male) {
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(
-                male.get_Age().getAgeInYears_long(_GENESIS_Environment._Time));
+                male.get_Age().getAgeInYears_long(ge._Time));
         //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Male.getAge().getAgeInYears());
         return getDailyMortalityMale(ageBound);
     }

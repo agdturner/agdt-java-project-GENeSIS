@@ -929,7 +929,7 @@ public class GENESIS_AgentCollectionManager
                         int debug = 1;
                     }
                 }
-                result._GENESIS_Environment = this._GENESIS_Environment;
+                result.ge = this._GENESIS_Environment;
                 result._GENESIS_AgentCollectionManager = this._GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager();
                 return result;
             }
@@ -972,7 +972,7 @@ public class GENESIS_AgentCollectionManager
             return null;
         }
         //a_Male._GENESIS_Environment = _GENESIS_Environment;
-        a_Male._GENESIS_Environment = a_GENESIS_MaleCollection._GENESIS_Environment;
+        a_Male.ge = a_GENESIS_MaleCollection.ge;
         return a_Male;
     }
 
@@ -1023,7 +1023,7 @@ public class GENESIS_AgentCollectionManager
                         int debug = 1;
                     }
                 }
-                result._GENESIS_Environment = this._GENESIS_Environment;
+                result.ge = this._GENESIS_Environment;
                 result._GENESIS_AgentCollectionManager = this._GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager();
                 return result;
             }
@@ -1067,7 +1067,7 @@ public class GENESIS_AgentCollectionManager
             return null;
         }
         //a_Female._GENESIS_Environment = _GENESIS_Environment;
-        a_Female._GENESIS_Environment = a_GENESIS_FemaleCollection._GENESIS_Environment;
+        a_Female.ge = a_GENESIS_FemaleCollection.ge;
         return a_Female;
     }
 
@@ -1395,14 +1395,14 @@ public class GENESIS_AgentCollectionManager
 //                            a_AgentCollection_ID,
 //                            result);
             }
-            if (result._GENESIS_Environment == null) {
-                result._GENESIS_Environment = _GENESIS_Environment;
+            if (result.ge == null) {
+                result.ge = _GENESIS_Environment;
             }
             if (result._GENESIS_AgentCollectionManager == null) {
                 result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
             }
         }
-        result._GENESIS_Environment = _GENESIS_Environment;
+        result.ge = _GENESIS_Environment;
         result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
         return result;
     }
@@ -1509,14 +1509,14 @@ public class GENESIS_AgentCollectionManager
 //                            a_AgentCollection_ID,
 //                            result);
             }
-            if (result._GENESIS_Environment == null) {
-                result._GENESIS_Environment = _GENESIS_Environment;
+            if (result.ge == null) {
+                result.ge = _GENESIS_Environment;
             }
             if (result._GENESIS_AgentCollectionManager == null) {
                 result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
             }
         }
-        result._GENESIS_Environment = _GENESIS_Environment;
+        result.ge = _GENESIS_Environment;
         result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
         return result;
     }

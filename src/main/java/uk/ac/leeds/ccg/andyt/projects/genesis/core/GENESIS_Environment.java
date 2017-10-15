@@ -9,10 +9,11 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_AbstractGrid2DSquareCell;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDouble;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Grid2DSquareCellDoubleFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Environment;
+import uk.ac.leeds.ccg.andyt.projects.genesis.io.GENESIS_Files;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.process.AbstractTrafficModel;
 import uk.ac.leeds.ccg.andyt.projects.genesis.process.Abstract_GENESIS_Model;
@@ -39,6 +40,10 @@ public class GENESIS_Environment
     private static final String sourceClass = GENESIS_Environment.class.getName();
     private static final String sourcePackage = GENESIS_Environment.class.getPackage().getName();
     //= Logger.getLogger(sourcePackage);
+
+    protected GENESIS_Files gf;
+
+    
     public File _Directory;
     /**
      * Always initialised
@@ -62,7 +67,7 @@ public class GENESIS_Environment
     /**
      * A store and reference for all AbstractGrid2DSquareCell
      */
-    public transient Grids_Environment _Grids_Environment;
+    public transient Grids_Environment ge;
     //public AbstractGrid2DSquareCellFactory _AbstractGrid2DSquareCellFactory;
     /**
      * A factory for creating Grid2DSquareCellDouble of reporting dimensions
@@ -125,30 +130,28 @@ public class GENESIS_Environment
     //private static long Memory_Threshold_TenThousand = 10000L;
     //private static long Memory_Threshold_TwoMillion = 2000000L;
     public Vector_Environment ve;
-    public GENESIS_Environment() {
-//        if (logger == null){
-//            logger = Logger.getAnonymousLogger();
-//        }
+
+    private GENESIS_Environment() {
     }
 
-    public GENESIS_Environment(Logger logger) {
-        init_GENESIS_Environment();
+    public GENESIS_Environment(File Directory) {
+        init_GENESIS_Environment(Directory);
     }
 
     /**
-     * Creates a new _GENESIS_Environment based on a_GENESIS_Environment. Because
- an instance of _GENESIS_Environment holds a references to all the data in
- a simulation this does not deep copy everything. Also most GENESIS
- Objects contain references to a _GENESIS_Environment instance, so that
- duplication is necessarily a multi stage process that has to use dummies
- to get all the references set up. This can be implemented more
- comprehensively as needed, but the depth of the copy is unlikely to go to
- the rootRoundIfNecessary of everything.
+     * Creates a new _GENESIS_Environment based on a_GENESIS_Environment.
+     * Because an instance of _GENESIS_Environment holds a references to all the
+     * data in a simulation this does not deep copy everything. Also most
+     * GENESIS Objects contain references to a _GENESIS_Environment instance, so
+     * that duplication is necessarily a multi stage process that has to use
+     * dummies to get all the references set up. This can be implemented more
+     * comprehensively as needed, but the depth of the copy is unlikely to go to
+     * the rootRoundIfNecessary of everything.
      *
-     * @param a_GENESIS_Environment The _GENESIS_Environment to deep copy.
+     * @param ge The _GENESIS_Environment to deep copy.
      */
-    public GENESIS_Environment(GENESIS_Environment a_GENESIS_Environment) {
-        this._AbstractModel = a_GENESIS_Environment._AbstractModel;
+    public GENESIS_Environment(GENESIS_Environment ge) {
+        this._AbstractModel = ge._AbstractModel;
 //        this._DecimalPlacePrecisionForCalculations = a_GENESIS_Environment._DecimalPlacePrecisionForCalculations;
 //        this._DecimalPlacePrecisionForNetwork = a_GENESIS_Environment._DecimalPlacePrecisionForNetwork;
 //        this._DecimalPlacePrecisionForNetworkCalculations = a_GENESIS_Environment._DecimalPlacePrecisionForNetworkCalculations;
@@ -167,39 +170,45 @@ public class GENESIS_Environment
 //        this._MemoryReserve = a_GENESIS_Environment._MemoryReserve;
 //        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
-        this._Time = new GENESIS_Time(a_GENESIS_Environment._Time);
+        this._Time = new GENESIS_Time(ge._Time);
 //        this = a_GENESIS_Environment.;
     }
 
-    private void init_GENESIS_Environment() {
+    private void init_GENESIS_Environment(File Directory) {
+        gf = new GENESIS_Files(Directory);
         _GENESIS_AgentEnvironment = new GENESIS_AgentEnvironment(this);
-        _Grids_Environment = new Grids_Environment();
+        ge = new Grids_Environment(gf.getGridsDirectory());
         _Generic_BigDecimal = new Generic_BigDecimal();
     }
 
     public GENESIS_Environment(
+            File Directory,
             Abstract_GENESIS_Model a_Model,
             GENESIS_Time a_Time) {
         init_GENESIS_Environment(
+                Directory,
                 a_Model,
                 a_Time);
     }
 
     private void init_GENESIS_Environment(
+            File Directory,
             Abstract_GENESIS_Model a_Model,
             GENESIS_Time a_Time) {
-        init_GENESIS_Environment();
+        init_GENESIS_Environment(Directory);
         this._AbstractModel = a_Model;
         this._Time = new GENESIS_Time(a_Time);
     }
 
     public GENESIS_Environment(
+            File Directory,
             Abstract_GENESIS_Model a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
             Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
+                Directory,
                 a_Model,
                 a_Time,
                 network_Grid2DSquareCellDoubleFactory,
@@ -208,12 +217,14 @@ public class GENESIS_Environment
     }
 
     private void init_GENESIS_Environment(
+            File Directory,
             Abstract_GENESIS_Model a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
             Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
+                Directory,
                 a_Model,
                 a_Time);
         this._network_Grid2DSquareCellDoubleFactory = network_Grid2DSquareCellDoubleFactory;
@@ -234,11 +245,13 @@ public class GENESIS_Environment
      */
     @Deprecated
     public GENESIS_Environment(
+            File Directory,
             Abstract_GENESIS_Model a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory a_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
+                Directory,
                 a_Model,
                 a_Time,
                 a_Grid2DSquareCellDoubleFactory,
@@ -379,7 +392,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             init_MemoryReserve();
-            a_GENESIS_FemaleCollection._GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            a_GENESIS_FemaleCollection.ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -400,7 +413,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             init_MemoryReserve();
-            a_GENESIS_MaleCollection._GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            a_GENESIS_MaleCollection.ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -638,7 +651,7 @@ public class GENESIS_Environment
     }
 
     protected void swapToFile_Grid2DSquareCellChunks() {
-        _Grids_Environment.swapToFile_Grid2DSquareCellChunks(
+        ge.swapToFile_Grid2DSquareCellChunks(
                 HandleOutOfMemoryErrorFalse);
     }
 
@@ -666,13 +679,13 @@ public class GENESIS_Environment
     }
 
     protected long swapToFile_Grid2DSquareCellChunks_Account() {
-        return _Grids_Environment.swapToFile_Grid2DSquareCellChunks_Account(
+        return ge.swapToFile_Grid2DSquareCellChunks_Account(
                 HandleOutOfMemoryErrorFalse);
     }
 
     protected long swapToFile_Grid2DSquareCellChunk_Account() {
-        if (_Grids_Environment.isDataToSwap()) {
-            return _Grids_Environment.swapToFile_Grid2DSquareCellChunk_Account(
+        if (ge.isDataToSwap()) {
+            return ge.swapToFile_Grid2DSquareCellChunk_Account(
                     HandleOutOfMemoryErrorFalse);
         } else {
             return 0;
@@ -703,7 +716,7 @@ public class GENESIS_Environment
      * overhead...
      */
     protected void swapToFile_Grid2DSquareCellChunk() {
-        _Grids_Environment.swapToFile_Grid2DSquareCellChunk(
+        ge.swapToFile_Grid2DSquareCellChunk(
                 HandleOutOfMemoryErrorFalse);
     }
 
@@ -778,7 +791,7 @@ public class GENESIS_Environment
      * A method to ensure there is enough memory to continue.
      *
      * @param handleOutOfMemoryError
-     * @return 
+     * @return
      */
     @Override
     public boolean tryToEnsureThereIsEnoughMemoryToContinue(
@@ -787,8 +800,8 @@ public class GENESIS_Environment
             if (tryToEnsureThereIsEnoughMemoryToContinue()) {
                 return true;
             } else {
-                String message =
-                        "Warning! Not enough data to swap in "
+                String message
+                        = "Warning! Not enough data to swap in "
                         + this.getClass().getName()
                         + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
                 log(message);
@@ -829,7 +842,8 @@ public class GENESIS_Environment
 
     /**
      * A method to try to ensure there is enough memory to continue.
-     * @return 
+     *
+     * @return
      */
     @Override
     protected boolean tryToEnsureThereIsEnoughMemoryToContinue() {
@@ -915,8 +929,8 @@ public class GENESIS_Environment
         try {
             if (!tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection)) {
-                String message =
-                        "Warning! Not enough data to swap in "
+                String message
+                        = "Warning! Not enough data to swap in "
                         + this.getClass().getName()
                         + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_FemaleCollection,boolean)";
                 log(message);
@@ -1042,7 +1056,7 @@ public class GENESIS_Environment
      * to disk a_GENESIS_FemaleCollection.
      *
      * @param a_FemaleCollection
-     * @return 
+     * @return
      */
     protected boolean tryToEnsureThereIsEnoughMemoryToContinue(
             GENESIS_FemaleCollection a_FemaleCollection) {
@@ -1077,7 +1091,7 @@ public class GENESIS_Environment
      * to disk a_GENESIS_MaleCollection.
      *
      * @param a_MaleCollection
-     * @return 
+     * @return
      */
     protected boolean tryToEnsureThereIsEnoughMemoryToContinue(
             GENESIS_MaleCollection a_MaleCollection) {
@@ -1251,7 +1265,7 @@ public class GENESIS_Environment
      * HashSet<Long> identifying any AgentCollections swapped in the process.
      *
      * @param handleOutOfMemoryError
-     * @return 
+     * @return
      */
     //public HashSet<Long> tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections(
     public Object[] tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections(
@@ -1287,9 +1301,9 @@ public class GENESIS_Environment
                         result = potentialPartResult;
                     }
                 }
-                Object[] potentialPartResult =
-                        tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections(
-                        handleOutOfMemoryError);
+                Object[] potentialPartResult
+                        = tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections(
+                                handleOutOfMemoryError);
                 GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                 return result;
             } else {
@@ -1310,7 +1324,8 @@ public class GENESIS_Environment
      * GENESIS_MaleCollections, the GENESIS_FemaleCollections, then
      * AbstractGrid2DSquareCellChunks if there are no GENESIS_AgentCollections
      * to be swapped.
-     * @return 
+     *
+     * @return
      */
     protected Object[] tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections() {
         if (getTotalFreeMemory() < Memory_Threshold) {
@@ -1374,5 +1389,9 @@ public class GENESIS_Environment
             Level level,
             String message) {
         Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+    }
+    
+    public GENESIS_Files getGENESIS_Files(){
+        return gf;
     }
 }

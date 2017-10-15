@@ -14,17 +14,16 @@ import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollectionManager;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
+import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Object;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 
-public abstract class Abstract_GENESIS_Model implements Serializable {
+public abstract class Abstract_GENESIS_Model extends GENESIS_Object implements Serializable {
 
-    static final long serialVersionUID = 1L;
     /**
      * Used for Logging
      */
     private static final String sourcePackage = Abstract_GENESIS_Model.class.getPackage().getName();
     //public GENESIS_Log _GENESIS_Log;
-    protected GENESIS_Environment _GENESIS_Environment;
     //protected transient HashMap<String,GENESIS_AgentCollectionManager> _GENESIS_AgentCollectionManager;
     protected transient GENESIS_AgentCollectionManager _GENESIS_AgentCollectionManager;
     protected File _Input_Parameter_File;
@@ -124,15 +123,15 @@ public abstract class Abstract_GENESIS_Model implements Serializable {
 
     public void init_Environment(
             GENESIS_Environment a_GENESIS_Environment) {
-        _GENESIS_Environment = a_GENESIS_Environment;
-        _GENESIS_Environment._AbstractModel = this;
+        ge = a_GENESIS_Environment;
+        ge._AbstractModel = this;
 //        _GENESIS_Environment._AbstractModel._GENESIS_Log = new GENESIS_Log(
 //                _GENESIS_Environment,
 //                GENESIS_Log.GENESIS_DefaultLogLevel,
 //                _GENESIS_Environment._Directory, 
 //                GENESIS_Log.GENESIS_DefaultLoggerName);
-        _GENESIS_Environment._GENESIS_AgentEnvironment._GENESIS_Environment = a_GENESIS_Environment;
-        _GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+        ge._GENESIS_AgentEnvironment._GENESIS_Environment = a_GENESIS_Environment;
+        _GENESIS_AgentCollectionManager = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse);
         _GENESIS_AgentCollectionManager._GENESIS_Environment = a_GENESIS_Environment;
     }
     

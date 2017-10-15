@@ -22,6 +22,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Male;
+import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Object;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.CommonFactory;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.common.Time;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
@@ -43,10 +44,9 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
  * the world. Anyone immigrating is newly created and their birth date and
  * pregnancy status are initialised.
  */
-public class GENESIS_Migration implements Serializable {
+public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 
-    static final long serialVersionUID = 1L;
-    public transient GENESIS_Environment _GENESIS_Environment;
+    //static final long serialVersionUID = 1L;
     public static final String RestOfUK_String = "ROU";
     public static final String RestOfTheWorld_String = "ROW";
     /**
@@ -72,9 +72,9 @@ public class GENESIS_Migration implements Serializable {
             return regionToRegionMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionToRegionMigration(boolean)");
                 return getRegionToRegionMigration(handleOutOfMemoryError);
             } else {
@@ -106,9 +106,9 @@ public class GENESIS_Migration implements Serializable {
             return regionInMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInMigration(boolean)");
                 return getRegionInMigration(handleOutOfMemoryError);
             } else {
@@ -139,9 +139,9 @@ public class GENESIS_Migration implements Serializable {
             return regionOutMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionOutMigration(boolean)");
                 return getRegionOutMigration(handleOutOfMemoryError);
             } else {
@@ -171,9 +171,9 @@ public class GENESIS_Migration implements Serializable {
             return regionInternalMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInternalMigration(boolean)");
                 return getRegionInternalMigration(handleOutOfMemoryError);
             } else {
@@ -203,9 +203,9 @@ public class GENESIS_Migration implements Serializable {
             return regionImmigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionImmigration(boolean)");
                 return getRegionInternalMigration(handleOutOfMemoryError);
             } else {
@@ -237,9 +237,9 @@ public class GENESIS_Migration implements Serializable {
             return subregionInMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInMigration(boolean)");
                 return getSubregionInMigration(handleOutOfMemoryError);
             } else {
@@ -271,9 +271,9 @@ public class GENESIS_Migration implements Serializable {
             return subregionOutMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionOutMigration(boolean)");
                 return getSubregionOutMigration(handleOutOfMemoryError);
             } else {
@@ -305,9 +305,9 @@ public class GENESIS_Migration implements Serializable {
             return subregionInternalInMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInternalInMigration(boolean)");
                 return getSubregionInternalInMigration(handleOutOfMemoryError);
             } else {
@@ -339,9 +339,9 @@ public class GENESIS_Migration implements Serializable {
             return subregionInternalOutMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAny();
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.clear_MemoryReserve();
+                ge.swapToFile_DataAny();
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInternalOutMigration(boolean)");
                 return getSubregionInternalOutMigration(handleOutOfMemoryError);
             } else {
@@ -378,11 +378,11 @@ public class GENESIS_Migration implements Serializable {
             return regionInMigrationRates;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (!_GENESIS_Environment.swapToFile_DataAny()) {
+                ge.clear_MemoryReserve();
+                if (!ge.swapToFile_DataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInMigrationRates(boolean)");
                 return getRegionInMigrationRates(handleOutOfMemoryError);
             } else {
@@ -416,11 +416,11 @@ public class GENESIS_Migration implements Serializable {
             return regionOutMigrationRates;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (!_GENESIS_Environment.swapToFile_DataAny()) {
+                ge.clear_MemoryReserve();
+                if (!ge.swapToFile_DataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionOutMigrationRates(boolean)");
                 return getRegionOutMigrationRates(handleOutOfMemoryError);
             } else {
@@ -454,11 +454,11 @@ public class GENESIS_Migration implements Serializable {
             return immigrationRates;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (!_GENESIS_Environment.swapToFile_DataAny()) {
+                ge.clear_MemoryReserve();
+                if (!ge.swapToFile_DataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.getImmigrationRates(boolean)");
                 return getImmigrationRates(handleOutOfMemoryError);
             } else {
@@ -491,11 +491,11 @@ public class GENESIS_Migration implements Serializable {
             return cumulativeSumRescaledRegionOutMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (!_GENESIS_Environment.swapToFile_DataAny()) {
+                ge.clear_MemoryReserve();
+                if (!ge.swapToFile_DataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.cumulativeSumRescaledRegionOutMigration(boolean)");
                 return getCumulativeSumRescaledRegionOutMigration(handleOutOfMemoryError);
             } else {
@@ -528,11 +528,11 @@ public class GENESIS_Migration implements Serializable {
             return cumulativeSumRescaledSubregionInMigration;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (!_GENESIS_Environment.swapToFile_DataAny()) {
+                ge.clear_MemoryReserve();
+                if (!ge.swapToFile_DataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                _GENESIS_Environment.init_MemoryReserve(handleOutOfMemoryError);
+                ge.init_MemoryReserve(handleOutOfMemoryError);
                 System.err.println(e.getMessage() + " GENESIS_Migration.cumulativeSumRescaledRegionInMigration(boolean)");
                 return getCumulativeSumRescaledSubregionInMigration(handleOutOfMemoryError);
             } else {
@@ -654,14 +654,14 @@ public class GENESIS_Migration implements Serializable {
     }
 
     public GENESIS_Migration(GENESIS_Environment a_GENESIS_Environment) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         init();
     }
 
     public GENESIS_Migration(
             GENESIS_Environment a_GENESIS_Environment,
             GENESIS_Migration a_GENESIS_Migration) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
         // region counts
         this.regionToRegionMigration = GENESIS_Collections.deepCopyTo_TreeMap_String_TreeMap_String_Population(
                 a_GENESIS_Migration.regionToRegionMigration);
@@ -733,7 +733,7 @@ public class GENESIS_Migration implements Serializable {
                     logDirectory,
                     logname);
             GENESIS_Environment _GENESIS_Environment =
-                    new GENESIS_Environment();
+                    new GENESIS_Environment(directory);
             _GENESIS_Environment._Directory = directory;
             _GENESIS_Environment._Time = new GENESIS_Time(CommonFactory.newTime(2001L));
             GENESIS_Migration instance = new GENESIS_Migration(
@@ -753,7 +753,7 @@ public class GENESIS_Migration implements Serializable {
     public void run() {
 //       init();
         File dir = new File(
-                _GENESIS_Environment._Directory,
+                ge._Directory,
                 "InputData");
         dir = new File(
                 dir,
@@ -768,7 +768,7 @@ public class GENESIS_Migration implements Serializable {
         Generic_StaticIO.writeObject(this, serialisedMigrationFile);
         Object obj = Generic_StaticIO.readObject(serialisedMigrationFile);
         GENESIS_Migration mig = (GENESIS_Migration) obj;
-        mig._GENESIS_Environment = _GENESIS_Environment;
+        mig.ge = ge;
 //        mig.runFormatData();
         String originRegionID = "00DA";
         String destinationRegionID = "00DB";
@@ -794,7 +794,7 @@ public class GENESIS_Migration implements Serializable {
     public void runTest() {
 //       init();
         File dir = new File(
-                _GENESIS_Environment._Directory,
+                ge._Directory,
                 "InputData");
         dir = new File(
                 dir,
@@ -809,7 +809,7 @@ public class GENESIS_Migration implements Serializable {
         Generic_StaticIO.writeObject(this, serialisedMigrationFile);
         Object obj = Generic_StaticIO.readObject(serialisedMigrationFile);
         GENESIS_Migration mig = (GENESIS_Migration) obj;
-        mig._GENESIS_Environment = _GENESIS_Environment;
+        mig.ge = ge;
 //        mig.runFormatData();
         String originRegionID = "00DA";
         String destinationRegionID = "00DB";
@@ -884,7 +884,7 @@ public class GENESIS_Migration implements Serializable {
      */
     public void runFormatData() {
         File dataDirectory = new File(
-                _GENESIS_Environment.get_Directory(true).getParentFile(),
+                ge.get_Directory(true).getParentFile(),
                 "data");
 //        // Load LUT
 //        File areaClassificationDataDirectory = new File(
@@ -2124,7 +2124,7 @@ public class GENESIS_Migration implements Serializable {
             TreeMap<String, GENESIS_Population> originCumulativeSumRescaledRegionOutMigration;
             originCumulativeSumRescaledRegionOutMigration = new TreeMap<String, GENESIS_Population>();
             cumulativeSumRescaledRegionOutMigration.put(originRegionID, originCumulativeSumRescaledRegionOutMigration);
-            GENESIS_Population total = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population total = new GENESIS_Population(ge);
             Iterator<String> ite2;
             ite2 = regionToRegionMigration.keySet().iterator();
             while (ite2.hasNext()) {
@@ -2166,7 +2166,7 @@ public class GENESIS_Migration implements Serializable {
             cumulativeSumRescaledSubregionInMigration.put(
                     destinationRegionID,
                     destinationCumulativeSumRescaledSubregionInMigration);
-            GENESIS_Population total = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population total = new GENESIS_Population(ge);
             Iterator<String> ite2;
             ite2 = subregionInternalInMigration.keySet().iterator();
             while (ite2.hasNext()) {
@@ -2235,7 +2235,7 @@ public class GENESIS_Migration implements Serializable {
         ite = regionIDs.iterator();
         while (ite.hasNext()) {
             String destinationRegionID = ite.next();
-            GENESIS_Population pop = new GENESIS_Population(_GENESIS_Environment);
+            GENESIS_Population pop = new GENESIS_Population(ge);
             TreeMap<String, GENESIS_Population> originRegionToRegionMigration;
             originRegionToRegionMigration = regionToRegionMigration.get(
                     destinationRegionID);
@@ -2307,13 +2307,12 @@ public class GENESIS_Migration implements Serializable {
             String result = originRegionID;
             TreeMap<String, GENESIS_Population> destinationMap;
             destinationMap = cumulativeSumRescaledRegionOutMigration.get(originRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(
-                    _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
                     BigDecimal.ONE);
-            Long ageInYears = female.get_Age().getAgeInYears(_GENESIS_Environment._Time);
+            Long ageInYears = female.get_Age().getAgeInYears(ge._Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             Iterator<String> ite;
             ite = destinationMap.keySet().iterator();
@@ -2359,7 +2358,7 @@ public class GENESIS_Migration implements Serializable {
             Random random) {
         try {
             String result;
-            Long ageInYears = female.get_Age().getAgeInYears(_GENESIS_Environment._Time);
+            Long ageInYears = female.get_Age().getAgeInYears(ge._Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             result = getInternalMigrationSubregionDestinationFromStudyRegionFemale(
                     ageBound,
@@ -2395,8 +2394,7 @@ public class GENESIS_Migration implements Serializable {
             destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(destinationRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(
-                    _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2447,7 +2445,7 @@ public class GENESIS_Migration implements Serializable {
             Random random) {
         try {
             String result;
-            Long ageInYears = male.get_Age().getAgeInYears(_GENESIS_Environment._Time);
+            Long ageInYears = male.get_Age().getAgeInYears(ge._Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             result = getInternalMigrationSubregionDestinationFromStudyRegionMale(
                     ageBound,
@@ -2483,8 +2481,7 @@ public class GENESIS_Migration implements Serializable {
             destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(destinationRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(
-                    _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2609,14 +2606,13 @@ public class GENESIS_Migration implements Serializable {
             String result = originRegionID;
             TreeMap<String, GENESIS_Population> destinationMap;
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(originRegionID);
-            destinationMap = getCumulativeSumRescaledRegionOutMigration(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(originRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(
-                    _GENESIS_Environment._Generic_BigDecimal._Generic_BigInteger,
+            destinationMap = getCumulativeSumRescaledRegionOutMigration(ge._HandleOutOfMemoryError_boolean).get(originRegionID);
+            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
                     BigDecimal.ONE);
-            Long ageInYears = male.get_Age().getAgeInYears(_GENESIS_Environment._Time);
+            Long ageInYears = male.get_Age().getAgeInYears(ge._Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             Iterator<String> ite;
             ite = destinationMap.keySet().iterator();
@@ -2644,7 +2640,7 @@ public class GENESIS_Migration implements Serializable {
         BigDecimal result;
         String regionID = female.getRegionID();
         //GENESIS_Population pop = regionOutMigrationRates.get(regionID);
-        GENESIS_Population pop = getRegionOutMigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID);
+        GENESIS_Population pop = getRegionOutMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2660,7 +2656,7 @@ public class GENESIS_Migration implements Serializable {
         BigDecimal result;
         String regionID = male.getRegionID();
         //GENESIS_Population pop = regionOutMigrationRates.get(regionID);
-        GENESIS_Population pop = getRegionOutMigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID);
+        GENESIS_Population pop = getRegionOutMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2679,7 +2675,7 @@ public class GENESIS_Migration implements Serializable {
         BigDecimal result;
         String regionID = female.getRegionID();
         //GENESIS_Population rate = regionInMigrationRates.get(regionID).get(regionID);
-        GENESIS_Population rate = getRegionInMigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
+        GENESIS_Population rate = getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2718,7 +2714,7 @@ public class GENESIS_Migration implements Serializable {
         BigDecimal result;
         String regionID = male.getRegionID();
         //GENESIS_Population rate = regionInMigrationRates.get(regionID).get(regionID);
-        GENESIS_Population rate = getRegionInMigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
+        GENESIS_Population rate = getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2751,18 +2747,18 @@ public class GENESIS_Migration implements Serializable {
     public GENESIS_Population getDailyInMigrationRate(
             String regionID) {
         //return regionInMigrationRates.get(regionID).get(RestOfUK_String);
-        return getRegionInMigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID).get(RestOfUK_String);
+        return getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(RestOfUK_String);
     }
 
     public GENESIS_Population getDailyImmigrationRate(
             String regionID) {
         //return immigrationRates.get(regionID);
-        return getImmigrationRates(_GENESIS_Environment._HandleOutOfMemoryError_boolean).get(regionID);
+        return getImmigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
     }
 
     public File getDirectory(boolean handleOutOfMemoryError) {
         File result;
-        File archive = _GENESIS_Environment.get_Directory(handleOutOfMemoryError);
+        File archive = ge.get_Directory(handleOutOfMemoryError);
         long archiveRange = Generic_StaticIO.getArchiveRange(archive, "_");
         long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(archive, "_");
         File directory = new File(

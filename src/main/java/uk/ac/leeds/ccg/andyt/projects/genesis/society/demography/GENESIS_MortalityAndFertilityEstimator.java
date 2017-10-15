@@ -32,7 +32,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 public class GENESIS_MortalityAndFertilityEstimator extends PopulationType implements Serializable {
 
     protected static final long serialVersionUID = 1L;
-    public transient GENESIS_Environment _GENESIS_Environment;
+    public transient GENESIS_Environment ge;
     /**
      * Used for Logging
      */
@@ -75,7 +75,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             GENESIS_Environment _GENESIS_Environment) {
         String sourceMethod = "GENESIS_Death()";
         getLogger().entering(sourceClass, sourceMethod);
-        this._GENESIS_Environment = _GENESIS_Environment;
+        this.ge = _GENESIS_Environment;
         init();
         getLogger().exiting(sourceClass, sourceMethod);
     }
@@ -92,7 +92,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                 + "GENESIS_Population,GENESIS_Population,"
                 + "GENESIS_Mortality,GENESIS_Fertility)";
         getLogger().entering(sourceClass, sourceMethod);
-        this._GENESIS_Environment = _GENESIS_Environment;
+        this.ge = _GENESIS_Environment;
         this._ObservedAnnualDeaths = _ObservedAnnualDeaths;
         this._ObservedAnnualBirthsByAgeOfMother = _ObservedAnnualBirthsByAgeOfMother;
         this._StartYearPopulation = _StartYearPopulation;
@@ -105,11 +105,11 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
         String sourceMethod = "init()";
         getLogger().entering(sourceClass, sourceMethod);
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
-        this._ObservedAnnualDeaths = new GENESIS_Population(_GENESIS_Environment);
-        this._ObservedAnnualBirthsByAgeOfMother = new GENESIS_Population(_GENESIS_Environment);
-        this._StartYearPopulation = new GENESIS_Population(_GENESIS_Environment);
-        this._InitialEstimateOfMortality = new GENESIS_Mortality(_GENESIS_Environment);
-        this._InitialEstimateOfFertility = new GENESIS_Fertility(_GENESIS_Environment);
+        this._ObservedAnnualDeaths = new GENESIS_Population(ge);
+        this._ObservedAnnualBirthsByAgeOfMother = new GENESIS_Population(ge);
+        this._StartYearPopulation = new GENESIS_Population(ge);
+        this._InitialEstimateOfMortality = new GENESIS_Mortality(ge);
+        this._InitialEstimateOfFertility = new GENESIS_Fertility(ge);
     }
 
     public static void main(String[] args) {
@@ -128,10 +128,9 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                     logname);
             // Run main processing task
             //directory = new File("/scratch01/Work/Projects/GENESIS/");
-            GENESIS_Environment aGENESIS_Environment = new GENESIS_Environment();
-            aGENESIS_Environment._Directory = directory;
+            GENESIS_Environment ge = new GENESIS_Environment(directory);
             GENESIS_MortalityAndFertilityEstimator instance =
-                    new GENESIS_MortalityAndFertilityEstimator(aGENESIS_Environment);
+                    new GENESIS_MortalityAndFertilityEstimator(ge);
             instance.runFormatData();
             //instance.runTest();
             GENESIS_Log.reset();
@@ -153,20 +152,20 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
         BigDecimal tripletProbability = new BigDecimal("0.00022305");
 
         File dataDirectory = new File(
-                _GENESIS_Environment.get_Directory(true).getParentFile(),
+                ge.get_Directory(true).getParentFile(),
                 "data");
         PopulationType birthPopulation = loadBirthXMLData(
                 dataDirectory,
                 "BirthDataXML",
                 year, aLADCode);
         GENESIS_Population birthPop = new GENESIS_Population(
-                _GENESIS_Environment,
+                ge,
                 birthPopulation);
         PopulationType deathPopulation = loadDeathXMLData(
                 dataDirectory,
                 "DeathDataXML", year, aLADCode);
         GENESIS_Population deathPop = new GENESIS_Population(
-                _GENESIS_Environment,
+                ge,
                 deathPopulation);
         // Load Population Data
 //        File popDataDir = new File(
@@ -187,22 +186,20 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                 dataDirectory,
                 "testPop.xml");
         GENESIS_Population initialPop = new GENESIS_Population(
-                _GENESIS_Environment,
+                ge,
                 XMLConverter.loadPopulationFromXMLFile(popDataFile));
 
-        GENESIS_Mortality initialEstimateOfMortality = getInitialEstimateOfMortality(
-                initialPop,
+        GENESIS_Mortality initialEstimateOfMortality = getInitialEstimateOfMortality(initialPop,
                 deathPop,
-                _GENESIS_Environment,
+                ge,
                 decimalPlaces,
                 roundingMode);
 
-        GENESIS_Fertility initialEstimateOfFertility = getInitialEstimateOfFertility(
-                initialPop,
+        GENESIS_Fertility initialEstimateOfFertility = getInitialEstimateOfFertility(initialPop,
                 birthPop,
                 twinProbability,
                 tripletProbability,
-                _GENESIS_Environment,
+                ge,
                 decimalPlaces,
                 roundingMode);
         Object[] estimatedMortalityAndFertility = run(
@@ -242,7 +239,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
 //        BigDecimal tripletProbability = new BigDecimal("0.00022305");
         Object[] result = new Object[2];
         File dataDirectory = new File(
-                _GENESIS_Environment.get_Directory(true).getParentFile(),
+                ge.get_Directory(true).getParentFile(),
                 "data");
         System.out.println("Initial ReEstimation ");
         Object[] estimatedRates = getEstimateRates(
@@ -557,7 +554,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
 
     public void runFormatData() {
         File dataDirectory = new File(
-                _GENESIS_Environment.get_Directory(true).getParentFile(),
+                ge.get_Directory(true).getParentFile(),
                 "data");
         File birthAndDeathCountDataDirectory = new File(
                 dataDirectory,
@@ -922,7 +919,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             GENESIS_Population deathPopulation,
             int decimalPlacePrecision,
             RoundingMode roundingMode) {
-        GENESIS_Environment a_GENESIS_Environment = initialEstimateOfMortality._GENESIS_Environment;
+        GENESIS_Environment a_GENESIS_Environment = initialEstimateOfMortality.ge;
         Object[] result = new Object[2];
         Object[] theoreticalEndYearPopulationsAndFertility;
         theoreticalEndYearPopulationsAndFertility =
