@@ -38,24 +38,7 @@ public class GENESIS_EnvironmentTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test constructor
-     */
-    @Test
-    public void testConstuctor() {
-        System.out.println("testConstuctor");
-        try {
-            GENESIS_Environment instance = new GENESIS_Environment();
-            if (instance == null) {
-                assertFalse(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (Error e) {
-            e.printStackTrace();
-        }
-    }
+    
 //    /**
 //     * Test of getTrafficModel method, of class GENESIS_Environment.
 //     */
