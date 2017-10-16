@@ -859,7 +859,7 @@ public class GENESIS_DemographicModel
                         subregionIDs.add(subregionID);
                     }
                     GENESIS_Population subregionPopulation = regionPopulation.get(subregionID);
-                    subregionPopulation._GENESIS_Environment = ge;
+                    subregionPopulation.ge = ge;
                     subregionPopulation.getGenderedAgeBoundPopulation().getFemale().addAll(
                             GENESIS_Collections.deepCopyTo_ArrayList_AgeBound_Population(
                             subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap));
@@ -881,7 +881,7 @@ public class GENESIS_DemographicModel
                 while (ite3.hasNext()) {
                     String subregionID = ite3.next();
                     subregionIDs.add(subregionID);
-                    regionPopulation.get(subregionID)._GENESIS_Environment = ge;
+                    regionPopulation.get(subregionID).ge = ge;
                 }
             }
 
