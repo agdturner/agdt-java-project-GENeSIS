@@ -120,13 +120,11 @@ public class GENESIS_Female extends GENESIS_Person {
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
         ge = a_GENESIS_Environment;
         _GENESIS_AgentCollectionManager = a_GENESIS_AgentCollectionManager;
-        _ID = a_GENESIS_AgentCollectionManager.get_NextFemaleID(
-                ge._HandleOutOfMemoryError_boolean);
+        _ID = a_GENESIS_AgentCollectionManager.get_NextFemaleID(ge.HandleOutOfMemoryError);
         _Type = getTypeLivingFemale_String();
-        _Collection_ID = a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(
-                _ID,
+        _Collection_ID = a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(_ID,
                 _Type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         this._ResidentialSubregionIDs = new ArrayList<String>();
         Generic_StaticIO.addToArchive(
                 _GENESIS_AgentCollectionManager.getLivingFemaleDirectory(),
@@ -299,7 +297,7 @@ public class GENESIS_Female extends GENESIS_Person {
 //                _GENESIS_Environment.init_MemoryReserve(
 //                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
 //                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                init_Fertility(handleOutOfMemoryError);
 //            } else {
 //                throw a_OutOfMemoryError;
@@ -330,7 +328,7 @@ public class GENESIS_Female extends GENESIS_Person {
 //                _GENESIS_Environment.init_MemoryReserve(
 //                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
 //                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                return get_Fertility(
 //                        _Fertility,
 //                        handleOutOfMemoryError);
@@ -410,8 +408,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.init_MemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                        ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return set_Pregnant(
                         a_Fertility,
                         numberOfDaysUntilDue,
@@ -474,8 +471,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.init_MemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                        ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 set_Pregnant(
                         a_Fertility,
                         handleOutOfMemoryError);
@@ -552,8 +548,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.init_MemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                        ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return isPregnant(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -633,8 +628,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.init_MemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                        ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return giveBirthSimple(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -665,8 +659,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.init_MemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                        ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return giveBirthSimpleOld(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;

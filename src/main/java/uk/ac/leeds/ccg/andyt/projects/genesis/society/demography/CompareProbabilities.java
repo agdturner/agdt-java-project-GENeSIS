@@ -31,7 +31,7 @@ public class CompareProbabilities {
     private static final String sourceClass = CompareProbabilities.class.getName();
     private static final String sourcePackage = CompareProbabilities.class.getPackage().getName();
     public GENESIS_Environment _GENESIS_Environment;
-    //public File _Directory;
+    //public File Directory;
 
     public CompareProbabilities() {
     }
@@ -63,10 +63,10 @@ public class CompareProbabilities {
 //    public void test0() {
 //        System.out.println("<test0>");
 //        _GENESIS_Environment = new GENESIS_Environment();
-//        File _Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+//        File Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
 //        File output_Directory = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/");
-//        _GENESIS_Environment._Directory = _Directory;
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/");
+//        _GENESIS_Environment.Directory = Directory;
 //        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
 //        _GENESIS_Environment._DecimalPlacePrecisionForCalculations = 10;
 //        String fileSeparator = System.getProperty("file.separator");
@@ -75,11 +75,11 @@ public class CompareProbabilities {
 //         */
 //        GENESIS_Demographics input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File inputMortalityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputMortalityRate.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputMortalityRate.xml");
 //        File inputMiscarriageRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputMiscarriageRate.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputMiscarriageRate.xml");
 //        File inputFertilityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputFertilityRate.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/metadata/inputFertilityRate.xml");
 ////        input_Demographics._Mortality = new GENESIS_Mortality(
 ////                _GENESIS_Environment,
 ////                inputMortalityRate_File);
@@ -96,11 +96,11 @@ public class CompareProbabilities {
 //         */
 //        GENESIS_Demographics output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File outputMortalityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Mortality_1992.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Mortality_1992.xml");
 ////        File outputMiscarriageRate_File = new File(
-////                _Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Miscarriage_1992.xml");
+////                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Miscarriage_1992.xml");
 //        File outputFertilityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Fertility_1992.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/Fertility_1992.xml");
 //        output_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                outputMortalityRate_File);
@@ -123,10 +123,10 @@ public class CompareProbabilities {
 //    public void test1() {
 //        System.out.println("<test1>");
 //        _GENESIS_Environment = new GENESIS_Environment();
-//        File _Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/test/");
+//        File Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/test/");
 //        File output_Directory = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/");
-//        _GENESIS_Environment._Directory = _Directory;
+//                Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/");
+//        _GENESIS_Environment.Directory = Directory;
 //        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
 //        XMLConverter a_XMLConverter = new XMLConverter(_GENESIS_Environment);
 //        String fileSeparator = System.getProperty("file.separator");
@@ -135,9 +135,9 @@ public class CompareProbabilities {
 //         */
 //        GENESIS_Demographics input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File inputMortalityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/6/metadata/MortalityRate_Leeds_1992.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/6/metadata/MortalityRate_Leeds_1992.xml");
 //        File inputFertilityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/6/metadata/FertilityRate_Leeds_1992.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/6/metadata/FertilityRate_Leeds_1992.xml");
 //        input_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                a_XMLConverter,
@@ -153,9 +153,9 @@ public class CompareProbabilities {
 //        HashMap<Integer, GENESIS_Demographics> output_Demographics_HashMap = new HashMap<Integer, GENESIS_Demographics>();
 //        GENESIS_Demographics a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File a_outputMortalityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Mortality_1993.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Mortality_1993.xml");
 //        File a_outputFertilityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Fertility_1993.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/Fertility_1993.xml");
 //        a_Output_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                a_XMLConverter,
@@ -168,9 +168,9 @@ public class CompareProbabilities {
 //        output_Demographics_HashMap.put(0, a_Output_Demographics);
 //        GENESIS_Demographics b_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File b_outputMortalityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/7/data/Demographics/0_99/0/Mortality_1993.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/7/data/Demographics/0_99/0/Mortality_1993.xml");
 //        File b_outputFertilityRate_File = new File(
-//                _Directory + "/DemographicModel_Aspatial_1/0_99/7/data/Demographics/0_99/0/Fertility_1993.xml");
+//                Directory + "/DemographicModel_Aspatial_1/0_99/7/data/Demographics/0_99/0/Fertility_1993.xml");
 //        b_Output_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                a_XMLConverter,
@@ -195,11 +195,11 @@ public class CompareProbabilities {
 //    public void test2() {
 //        System.out.println("<test2>");
 //        _GENESIS_Environment = new GENESIS_Environment();
-//        File _Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
-//        File _DirectoryTest = new File(_Directory, "test");
+//        File Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+//        File _DirectoryTest = new File(Directory, "test");
 //        File output_Directory = new File(
 //                _DirectoryTest + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/");
-//        _GENESIS_Environment._Directory = _DirectoryTest;
+//        _GENESIS_Environment.Directory = _DirectoryTest;
 //        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
 //        XMLConverter a_XMLConverter = new XMLConverter(_GENESIS_Environment);
 //        String fileSeparator = System.getProperty("file.separator");
@@ -208,9 +208,9 @@ public class CompareProbabilities {
 //         */
 //        GENESIS_Demographics input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        File inputMortalityRate_File = new File(
-//                _Directory + "/0_99/6/metadata/MortalityRate_Leeds_1992.xml");
+//                Directory + "/0_99/6/metadata/MortalityRate_Leeds_1992.xml");
 //        File inputFertilityRate_File = new File(
-//                _Directory + "/0_99/6/metadata/FertilityRate_Leeds_1992.xml");
+//                Directory + "/0_99/6/metadata/FertilityRate_Leeds_1992.xml");
 //        input_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                a_XMLConverter,
@@ -228,11 +228,11 @@ public class CompareProbabilities {
 //        for (int i = 0; i < 4; i++) {
 //            GENESIS_Demographics a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //            File a_outputMortalityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + (firstRunID + i)
 //                    + "/data/Demographics/0_99/0/Mortality_1993.xml");
 //            File a_outputFertilityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + (firstRunID + i)
 //                    + "/data/Demographics/0_99/0/Fertility_1993.xml");
 //            a_Output_Demographics._Mortality = new GENESIS_Mortality(
@@ -260,10 +260,10 @@ public class CompareProbabilities {
 //    public void test3() {
 //        System.out.println("<test3>");
 //        _GENESIS_Environment = new GENESIS_Environment();
-//        File _Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
-//        //File _DirectoryTest = new File(_Directory, "test");
-//        File _DirectoryTest = _Directory;
-//        _GENESIS_Environment._Directory = _DirectoryTest;
+//        File Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+//        //File _DirectoryTest = new File(Directory, "test");
+//        File _DirectoryTest = Directory;
+//        _GENESIS_Environment.Directory = _DirectoryTest;
 //        XMLConverter a_XMLConverter = new XMLConverter(_GENESIS_Environment);
 //
 //        int index = 0;
@@ -294,9 +294,9 @@ public class CompareProbabilities {
 //         */
 //        input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        inputMortalityRate_File = new File(
-//                _Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
+//                Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
 //        inputFertilityRate_File = new File(
-//                _Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
+//                Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
 //        input_Demographics._Mortality = new GENESIS_Mortality(
 //                _GENESIS_Environment,
 //                a_XMLConverter,
@@ -314,11 +314,11 @@ public class CompareProbabilities {
 //            index = firstRunID + i;
 //            a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //            a_outputMortalityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + index
 //                    + "/data/Demographics/0_99/0/Mortality_" + (year + 1) + ".xml");
 //            a_outputFertilityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + index
 //                    + "/data/Demographics/0_99/0/Fertility_" + (year + 1) + ".xml");
 //            a_Output_Demographics._Mortality = new GENESIS_Mortality(
@@ -353,9 +353,9 @@ public class CompareProbabilities {
 //             */
 //            input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //            inputMortalityRate_File = new File(
-//                    _Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
+//                    Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
 //            inputFertilityRate_File = new File(
-//                    _Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
+//                    Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
 //            input_Demographics._Mortality = new GENESIS_Mortality(
 //                    _GENESIS_Environment,
 //                    a_XMLConverter,
@@ -373,11 +373,11 @@ public class CompareProbabilities {
 //                index = firstRunID + i;
 //                a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //                a_outputMortalityRate_File = new File(
-//                        _Directory + "/0_99/"
+//                        Directory + "/0_99/"
 //                        + index
 //                        + "/data/Demographics/0_99/0/Mortality_" + (year + 1) + ".xml");
 //                a_outputFertilityRate_File = new File(
-//                        _Directory + "/0_99/"
+//                        Directory + "/0_99/"
 //                        + index
 //                        + "/data/Demographics/0_99/0/Fertility_" + (year + 1) + ".xml");
 //                a_Output_Demographics._Mortality = new GENESIS_Mortality(
@@ -406,10 +406,10 @@ public class CompareProbabilities {
 //    public void test4() {
 //        System.out.println("<test4>");
 //        _GENESIS_Environment = new GENESIS_Environment();
-//        File _Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/");
-//        //File _DirectoryTest = new File(_Directory, "test");
-//        File _DirectoryTest = _Directory;
-//        _GENESIS_Environment._Directory = _DirectoryTest;
+//        File Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/DemographicModel_Aspatial_1/");
+//        //File _DirectoryTest = new File(Directory, "test");
+//        File _DirectoryTest = Directory;
+//        _GENESIS_Environment.Directory = _DirectoryTest;
 //        int index = 0;
 //        int firstRunID = 5;
 //        int numberOfRunsPerYear = 2;
@@ -440,11 +440,11 @@ public class CompareProbabilities {
 //         */
 //        input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //        inputPopulation_File = new File(
-//                _Directory + "/0_99/" + firstRunID + "/metadata/inputPopulation.xml");
+//                Directory + "/0_99/" + firstRunID + "/metadata/inputPopulation.xml");
 //        inputMortalityRate_File = new File(
-//                _Directory + "/0_99/" + firstRunID + "/metadata/inputMortalityRate.xml");
+//                Directory + "/0_99/" + firstRunID + "/metadata/inputMortalityRate.xml");
 //        inputFertilityRate_File = new File(
-//                _Directory + "/0_99/" + firstRunID + "/metadata/inputFertilityRate.xml");
+//                Directory + "/0_99/" + firstRunID + "/metadata/inputFertilityRate.xml");
 //        input_Demographics._GENESIS_Population_TreeMap = new GENESIS_Population(
 //                _GENESIS_Environment,
 //                inputPopulation_File,
@@ -464,15 +464,15 @@ public class CompareProbabilities {
 //            index = firstRunID + i;
 //            a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 //            a_outputPopulation_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + index
 //                    + "/data/Demographics/0_99/0/Population_" + (year + 1) + ".xml");
 //            a_outputMortalityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + index
 //                    + "/data/Demographics/0_99/0/Mortality_" + (year + 1) + ".xml");
 //            a_outputFertilityRate_File = new File(
-//                    _Directory + "/0_99/"
+//                    Directory + "/0_99/"
 //                    + index
 //                    + "/data/Demographics/0_99/0/Fertility_" + (year + 1) + ".xml");
 //            a_Output_Demographics._GENESIS_Population_TreeMap = new GENESIS_Population(
@@ -509,11 +509,11 @@ public class CompareProbabilities {
 ////             */
 ////            input_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 ////            inputPopulation_File = new File(
-////                    _Directory + "/0_99/" + firstRunID + "/data/MortalityRate_Leeds_" + year + ".xml");
+////                    Directory + "/0_99/" + firstRunID + "/data/MortalityRate_Leeds_" + year + ".xml");
 ////            inputMortalityRate_File = new File(
-////                    _Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
+////                    Directory + "/0_99/" + firstRunID + "/metadata/MortalityRate_Leeds_" + year + ".xml");
 ////            inputFertilityRate_File = new File(
-////                    _Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
+////                    Directory + "/0_99/" + firstRunID + "/metadata/FertilityRate_Leeds_" + year + ".xml");
 ////            input_Demographics._Mortality = new GENESIS_Mortality(
 ////                    _GENESIS_Environment,
 ////                    inputMortalityRate_File);
@@ -529,11 +529,11 @@ public class CompareProbabilities {
 ////                index = firstRunID + i;
 ////                a_Output_Demographics = new GENESIS_Demographics(_GENESIS_Environment);
 ////                a_outputMortalityRate_File = new File(
-////                        _Directory + "/0_99/"
+////                        Directory + "/0_99/"
 ////                        + index
 ////                        + "/data/Demographics/0_99/0/Mortality_" + (year + 1) + ".xml");
 ////                a_outputFertilityRate_File = new File(
-////                        _Directory + "/0_99/"
+////                        Directory + "/0_99/"
 ////                        + index
 ////                        + "/data/Demographics/0_99/0/Fertility_" + (year + 1) + ".xml");
 ////                a_Output_Demographics._Mortality = new GENESIS_Mortality(
@@ -572,12 +572,11 @@ public class CompareProbabilities {
         Integer year = new Integer((int) _GENESIS_Environment._Time.getYear());
 
         // Get expected births using fertility rate and
-        Object[] expectedAndSumOfSquaredDifference = GENESIS_Demographics.getExpectedAndSumOfSquaredDifference(
-                areaCode,
+        Object[] expectedAndSumOfSquaredDifference = GENESIS_Demographics.getExpectedAndSumOfSquaredDifference(areaCode,
                 startDemographics,
                 endDemographics,
                 decimalPlacePrecisionForCalculations,
-                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                _GENESIS_Environment.HandleOutOfMemoryError);
         BigDecimal sumOfSquaredErrors = (BigDecimal) expectedAndSumOfSquaredDifference[0];
         TreeMap<Integer, BigDecimal> femaleTheoreticalEndYearAgedPopulation = (TreeMap<Integer, BigDecimal>) expectedAndSumOfSquaredDifference[1];
         TreeMap<Integer, BigDecimal> maleTheoreticalEndYearAgedPopulation = (TreeMap<Integer, BigDecimal>) expectedAndSumOfSquaredDifference[2];
@@ -979,7 +978,7 @@ public class CompareProbabilities {
 ////                fertilityFemales_JFreeChart,
 ////                width,
 ////                height,
-////                _Directory,
+////                Directory,
 ////                outputImageFileNamePrefix,
 ////                type);
 //        Object[] a_RegressionParametersAndCreateXYLineChart =
@@ -991,7 +990,7 @@ public class CompareProbabilities {
 ////                (JFreeChart) a_RegressionParametersAndCreateXYLineChart[1],
 ////                width,
 ////                height,
-////                _Directory,
+////                Directory,
 ////                outputImageFileNamePrefix,
 ////                type);
 //        JFreeChart a_YEqualsXLineChart = getYEqualsXLineChart(

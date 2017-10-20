@@ -176,7 +176,7 @@ public class GENESIS_AgentCollectionManager
 //        this._DeadMaleCollection = a_GENESIS_AgentCollectionManager._DeadMaleCollection;
 //        this._DeadMaleCollection_HashMap = a_GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap;
 //        this._DeadMaleDirectory = a_GENESIS_AgentCollectionManager._DeadMaleDirectory;
-//        this._Directory = a_GENESIS_AgentCollectionManager._DeadMaleDirectory;
+//        this.Directory = a_GENESIS_AgentCollectionManager._DeadMaleDirectory;
 //        this._IndexOfLastBornFemale = a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale;
 //        this._IndexOfLastBornMale = a_GENESIS_AgentCollectionManager._IndexOfLastBornMale;
 //        this._IndexOfLastLivingFemaleCollection = a_GENESIS_AgentCollectionManager._IndexOfLastLivingFemaleCollection;
@@ -193,14 +193,14 @@ public class GENESIS_AgentCollectionManager
     }
 
     /**
-     * <code>this(_GENESIS_AgentEnvironment,_GENESIS_AgentEnvironment._Directory);</code>
+     * <code>this(_GENESIS_AgentEnvironment,_GENESIS_AgentEnvironment.Directory);</code>
      *
      * @param a_GENESIS_Environment
      */
     public GENESIS_AgentCollectionManager(
             GENESIS_Environment a_GENESIS_Environment) {
         this(a_GENESIS_Environment,
-                a_GENESIS_Environment._Directory);
+                a_GENESIS_Environment.Directory);
     }
 
     public GENESIS_AgentCollectionManager(
@@ -227,10 +227,10 @@ public class GENESIS_AgentCollectionManager
 
     /**
      * <code>
-     * return new File(_Directory.toString());
-     * </code>
+ return new File(Directory.toString());
+ </code>
      *
-     * @return a copy of _Directory
+     * @return a copy of Directory
      */
     public File getDirectory() {
         return new File(_Directory.toString());
@@ -238,8 +238,8 @@ public class GENESIS_AgentCollectionManager
 
     /**
      * <code>
-     * this._Directory = a_File;
-     * </code>
+ this.Directory = a_File;
+ </code>
      * @param a_File
      */
     public void setDirectory(File a_File) {

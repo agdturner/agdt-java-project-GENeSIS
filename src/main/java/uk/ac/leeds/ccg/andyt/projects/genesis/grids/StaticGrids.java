@@ -6,6 +6,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.grids;
 
 import java.math.BigDecimal;
 import java.util.Random;
+import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_LineSegment2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
@@ -187,7 +188,7 @@ public class StaticGrids {
 
     /**
      * @param a_LineSegment2D
-     * @param a_CellBounds
+     * @param bounds
      * @param ignore_a_LineSegment2D_Start_Point2D
      * @param a_DecimalPlacePrecision
      * @return 0 if no intersection; +---+---+---+ | 7 | 8 | 1 | +---+---+---+ |
@@ -195,7 +196,10 @@ public class StaticGrids {
      */
     public static int getCellBoundaryIntersect(
             Vector_LineSegment2D a_LineSegment2D,
-            BigDecimal[] a_CellBounds,
+            BigDecimal xmin,
+        BigDecimal ymin,
+        BigDecimal xmax,
+        BigDecimal ymax,
             boolean ignore_a_LineSegment2D_Start_Point2D,
             BigDecimal tollerance,
             int a_DecimalPlacePrecision,
@@ -203,12 +207,12 @@ public class StaticGrids {
         Vector_LineSegment2D bottom = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                a_CellBounds[0],
-                a_CellBounds[1]),
+                xmin,
+                ymin),
                 new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                a_CellBounds[2],
-                a_CellBounds[1]));
+                xmax,
+                ymin));
         boolean a_LineSegment2D_intersect_bottom = a_LineSegment2D.getIntersects(
                 bottom,
                 ignore_a_LineSegment2D_Start_Point2D,
@@ -219,12 +223,12 @@ public class StaticGrids {
             Vector_LineSegment2D left = new Vector_LineSegment2D(
                     new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                    a_CellBounds[0],
-                    a_CellBounds[1]),
+                    xmin,
+                    ymin),
                     new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                    a_CellBounds[0],
-                    a_CellBounds[3]));
+                    xmin,
+                    ymax));
             boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
                     left,
                     ignore_a_LineSegment2D_Start_Point2D,
@@ -237,12 +241,12 @@ public class StaticGrids {
                 Vector_LineSegment2D right = new Vector_LineSegment2D(
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[2],
-                        a_CellBounds[1]),
+                        xmax,
+                        ymin),
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[2],
-                        a_CellBounds[3]));
+                        xmax,
+                        ymax));
                 boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
                         right,
                         ignore_a_LineSegment2D_Start_Point2D,
@@ -259,12 +263,12 @@ public class StaticGrids {
             Vector_LineSegment2D top = new Vector_LineSegment2D(
                     new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                    a_CellBounds[0],
-                    a_CellBounds[3]),
+                    xmin,
+                    ymax),
                     new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                    a_CellBounds[2],
-                    a_CellBounds[3]));
+                    xmax,
+                    ymax));
             boolean a_LineSegment2D_intersect_top = a_LineSegment2D.getIntersects(
                     top,
                     ignore_a_LineSegment2D_Start_Point2D,
@@ -275,12 +279,12 @@ public class StaticGrids {
                 Vector_LineSegment2D left = new Vector_LineSegment2D(
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[0],
-                        a_CellBounds[1]),
+                        xmin,
+                        ymin),
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[0],
-                        a_CellBounds[3]));
+                        xmin,
+                        ymax));
                 boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
                         left,
                         ignore_a_LineSegment2D_Start_Point2D,
@@ -293,12 +297,12 @@ public class StaticGrids {
                     Vector_LineSegment2D right = new Vector_LineSegment2D(
                             new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                            a_CellBounds[2],
-                            a_CellBounds[1]),
+                            xmax,
+                            ymin),
                             new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                            a_CellBounds[2],
-                            a_CellBounds[3]));
+                            xmax,
+                            ymax));
                     boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
                             right,
                             ignore_a_LineSegment2D_Start_Point2D,
@@ -315,12 +319,12 @@ public class StaticGrids {
                 Vector_LineSegment2D left = new Vector_LineSegment2D(
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[0],
-                        a_CellBounds[1]),
+                        xmin,
+                        ymin),
                         new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                        a_CellBounds[0],
-                        a_CellBounds[3]));
+                        xmin,
+                        ymax));
                 boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
                         left,
                         ignore_a_LineSegment2D_Start_Point2D,
@@ -333,12 +337,12 @@ public class StaticGrids {
                     Vector_LineSegment2D right = new Vector_LineSegment2D(
                             new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                            a_CellBounds[2],
-                            a_CellBounds[1]),
+                            xmax,
+                            ymin),
                             new Vector_Point2D(
                         a_LineSegment2D._Vector_Environment,
-                            a_CellBounds[2],
-                            a_CellBounds[3]));
+                            xmax,
+                            ymax));
                     boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
                             right,
                             ignore_a_LineSegment2D_Start_Point2D,

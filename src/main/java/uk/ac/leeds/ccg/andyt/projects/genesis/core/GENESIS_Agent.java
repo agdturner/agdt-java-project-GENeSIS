@@ -46,9 +46,9 @@ public abstract class GENESIS_Agent extends GENESIS_Object implements Serializab
 //        this._Agent_ID = _Agent_ID;
 //        this._AgentCollection_ID = _AgentCollection_ID;
 //        //this._GENESIS_AgentCollection = get_AgentCollection();
-//        this._Directory = get_Directory();
-//        if (!this._Directory.mkdir()) {
-//            this._Directory.mkdirs();
+//        this.Directory = get_Directory();
+//        if (!this.Directory.mkdir()) {
+//            this.Directory.mkdirs();
 //        }
 //        //this._GENESIS_AgentCollection.get_Agent_ID_Agent_HashMap().put(_Agent_ID, this);
 //    }
@@ -62,9 +62,9 @@ public abstract class GENESIS_Agent extends GENESIS_Object implements Serializab
 //                a_Agent._GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager.getAgentCollection_ID(
 //                a_Agent_ID);
 //        this._GENESIS_AgentCollection = get_AgentCollection();
-//        this._Directory = get_Directory();
-//        if (!this._Directory.mkdir()) {
-//            this._Directory.mkdirs();
+//        this.Directory = get_Directory();
+//        if (!this.Directory.mkdir()) {
+//            this.Directory.mkdirs();
 //        }
 //        this._GENESIS_AgentCollection.get_Agent_ID_Agent_HashMap().put(_Agent_ID, this);
 //    }
@@ -130,13 +130,13 @@ public abstract class GENESIS_Agent extends GENESIS_Object implements Serializab
 //                    _AgentCollection_ID, b_AgentCollection);
 //                    this._GENESIS_AgentCollection = b_AgentCollection;
 //        }
-//        this._Directory = this._GENESIS_AgentCollection.getDirectory(
+//        this.Directory = this._GENESIS_AgentCollection.getDirectory(
 //                this._GENESIS_AgentCollection.get_Registry_Directory(),
 //                this._ID);
-//        if (!this._Directory.mkdir()){
-//            this._Directory.mkdirs();
+//        if (!this.Directory.mkdir()){
+//            this.Directory.mkdirs();
 //        }
-//        this._GENESIS_AgentCollection.get_Registry_HashMap().put(_ID,_Directory);
+//        this._GENESIS_AgentCollection.get_Registry_HashMap().put(_ID,Directory);
 //    }
 //    public void init(
 //            Environment _GENESIS_AgentEnvironment,
@@ -148,13 +148,13 @@ public abstract class GENESIS_Agent extends GENESIS_Object implements Serializab
 //        if (_GENESIS_AgentEnvironment._AgentCollection_HashMap == null){
 //            _GENESIS_AgentEnvironment.init_AgentCollection_HashMap();
 //        }
-//        this._Directory = this._GENESIS_AgentEnvironment._GENESIS_AgentCollection.getDirectory(
+//        this.Directory = this._GENESIS_AgentEnvironment._GENESIS_AgentCollection.getDirectory(
 //                this._GENESIS_AgentEnvironment._GENESIS_AgentCollection.getRegistry_Directory(),
 //                _Agent_ID);
-//        if (!this._Directory.mkdir()){
-//            this._Directory.mkdirs();
+//        if (!this.Directory.mkdir()){
+//            this.Directory.mkdirs();
 //        }
-//        getAgentCollection().getRegistry_HashMap().put(_ID,_Directory);
+//        getAgentCollection().getRegistry_HashMap().put(_ID,Directory);
 //    }
     public abstract Long get_Agent_ID(boolean handleOutOfMemoryError);
 
@@ -177,7 +177,7 @@ public abstract class GENESIS_Agent extends GENESIS_Object implements Serializab
 //    }
 //    /**
 //     * For storing the state of this. If it is null, it can be pulled from a
-//     * File in _Directory via loadState_HashMap().
+//     * File in Directory via loadState_HashMap().
 //     */
 //    protected HashMap _State_HashMap;
 //

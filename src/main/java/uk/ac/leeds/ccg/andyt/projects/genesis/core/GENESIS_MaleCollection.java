@@ -59,7 +59,7 @@ public class GENESIS_MaleCollection
      */
     @Override
     public File getDirectory() {
-        // Recalculation is done as archive may have grown and _Directory might
+        // Recalculation is done as archive may have grown and Directory might
         // be out of date. There is scope for optimisation here...
         GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = get_AgentCollectionManager();
         long agentID = getAgentCollection_ID();

@@ -376,8 +376,8 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
         ge._Time = new GENESIS_Time(1991, 0);
-        //a_GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        ge._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+        //a_GENESIS_Environment.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
+        ge.Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         String a_Filename_String = a_File.getName();
         String[] a_Filename_String_prefixSuffix = a_Filename_String.split("\\.");
         GENESIS_Mortality a_Mortality = new GENESIS_Mortality(

@@ -297,8 +297,8 @@ public class GENESIS_DemographicModel
             System.exit(
                     GENESIS_ErrorAndExceptionHandler.IOException);
         }
-        ge._Directory = archiveDirectory_File;
-        ge._HandleOutOfMemoryError_boolean = true;
+        ge.Directory = archiveDirectory_File;
+        ge.HandleOutOfMemoryError = true;
         /*
          * ---------------------------------------------------------------------
          * Create instance and set running
@@ -391,7 +391,7 @@ public class GENESIS_DemographicModel
         } else {
             /*
              * For grid continuation simulations assume that we continue from
-             * the highest leaf result in _Directory
+             * the highest leaf result in Directory
              */
             if (grid) {
                 indexOfSeedPopulationRun = Generic_StaticIO.getArchiveHighestLeaf(
@@ -429,25 +429,24 @@ public class GENESIS_DemographicModel
                 parameters.getMaximumNumberOfAgentsPerAgentCollection().intValue();
         _RandomSeed = randomSeed_Long;
         ge._Generic_BigDecimal = new Generic_BigDecimal();
-        ge._Directory = _Directory;
+        ge.Directory = _Directory;
 //        _GENESIS_AgentCollectionManager = new GENESIS_AgentCollectionManager(
 //                _GENESIS_Environment,
-//                _Directory);
+//                Directory);
 //        _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection =
 //                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean)._MaximumNumberOfAgentsPerAgentCollection;
+//                _GENESIS_Environment.HandleOutOfMemoryError)._MaximumNumberOfAgentsPerAgentCollection;
 //        _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory =
 //                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean)._MaximumNumberOfObjectsPerDirectory;
-        ge._GENESIS_AgentEnvironment.set_AgentCollectionManager(
-                _GENESIS_AgentCollectionManager,
-                _HandleOutOfMemoryError);
+//                _GENESIS_Environment.HandleOutOfMemoryError)._MaximumNumberOfObjectsPerDirectory;
+        ge._GENESIS_AgentEnvironment.set_AgentCollectionManager(_GENESIS_AgentCollectionManager,
+                HandleOutOfMemoryError);
         ge._PersonFactory = new GENESIS_PersonFactory(
                 ge,
                 _GENESIS_AgentCollectionManager);
         log(Level.FINE,
                 "_TestMemory.getTotalFreeMemory() "
-                + ge.getTotalFreeMemory(ge._HandleOutOfMemoryError_boolean));
+                + ge.getTotalFreeMemory(ge.HandleOutOfMemoryError));
         Long lastRunIndex_Long;
         Long runIndex_Long;
         String underscore = "_";
@@ -697,10 +696,9 @@ public class GENESIS_DemographicModel
                     previousFemaleDirectory_File,
                     "_");
             GENESIS_FemaleCollection lastLivingFemaleCollection =
-                    _GENESIS_AgentCollectionManager.getFemaleCollection(
-                    aIndexOfLastLivingFemaleCollection,
+                    _GENESIS_AgentCollectionManager.getFemaleCollection(aIndexOfLastLivingFemaleCollection,
                     GENESIS_Person.getTypeLivingFemale_String(),
-                    _HandleOutOfMemoryError);
+                    HandleOutOfMemoryError);
             _GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
                     lastLivingFemaleCollection.getMaxAgentID();
             // LivingMales
@@ -718,10 +716,9 @@ public class GENESIS_DemographicModel
                     previousMaleDirectory_File,
                     "_");
             GENESIS_MaleCollection lastLivingMaleCollection =
-                    _GENESIS_AgentCollectionManager.getMaleCollection(
-                    aIndexOfLastLivingMaleCollection,
+                    _GENESIS_AgentCollectionManager.getMaleCollection(aIndexOfLastLivingMaleCollection,
                     GENESIS_Person.getTypeLivingMale_String(),
-                    _HandleOutOfMemoryError);
+                    HandleOutOfMemoryError);
             _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
                     lastLivingMaleCollection.getMaxAgentID();
             /*
@@ -935,41 +932,41 @@ public class GENESIS_DemographicModel
 //                String type = GENESIS_Female.getTypeLivingFemale_String();
 //                while (ite3.hasNext()) {
 //                    _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    Long a_Agent_ID = ite4.next();
 //                    Long a_Collection_ID =
 //                            _GENESIS_AgentCollectionManager.getFemaleCollection_ID(
 //                            a_Agent_ID,
 //                            type,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_FemaleCollection a_FemaleCollection =
 //                            _GENESIS_AgentCollectionManager.getFemaleCollection(
 //                            a_Collection_ID,
 //                            type,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_Female a_Female = a_FemaleCollection.getFemale(
 //                            a_Agent_ID,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    a_Female._GENESIS_Environment = _GENESIS_Environment;
 //                }
 //                ite4 = maleIDs.iterator();
 //                while (ite4.hasNext()) {
 //                    _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    Long a_Agent_ID = ite4.next();
 //                    Long a_Collection_ID =
 //                            _GENESIS_AgentCollectionManager.getMaleCollection_ID(
 //                            a_Agent_ID,
 //                            type,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_MaleCollection a_MaleCollection =
 //                            _GENESIS_AgentCollectionManager.getMaleCollection(
 //                            a_Collection_ID,
 //                            type,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_Male a_Male = a_MaleCollection.getMale(
 //                            a_Agent_ID,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    a_Male._GENESIS_Environment = _GENESIS_Environment;
 //                }
 //            }
@@ -1070,7 +1067,7 @@ public class GENESIS_DemographicModel
 //             * serialised as that run is output.
 //             */
 //            // Debug output
-//            message = "_Directory " + _Directory;
+//            message = "Directory " + Directory;
 //            log(Level.INFO, message);
 //            System.out.println(message);
 //            message = "indexOfSeedPopulationRun " + indexOfSeedPopulationRun;
@@ -1085,7 +1082,7 @@ public class GENESIS_DemographicModel
 //            System.out.println(message);
 //            _SeedDirectory_File = new File(
 //                    Generic_StaticIO.getObjectDirectory(
-//                    _Directory,
+//                    Directory,
 //                    indexOfSeedPopulationRun,
 //                    runIndex_Long,
 //                    _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
@@ -1142,7 +1139,7 @@ public class GENESIS_DemographicModel
 //                    _GENESIS_AgentCollectionManager.getFemaleCollection(
 //                    aIndexOfLastLivingFemaleCollection,
 //                    GENESIS_Person.getTypeLivingFemale_String(),
-//                    _HandleOutOfMemoryError);
+//                    HandleOutOfMemoryError);
 //            _GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
 //                    lastLivingFemaleCollection.getMaxAgentID();
 //            // LivingMales
@@ -1163,7 +1160,7 @@ public class GENESIS_DemographicModel
 //                    _GENESIS_AgentCollectionManager.getMaleCollection(
 //                    aIndexOfLastLivingMaleCollection,
 //                    GENESIS_Person.getTypeLivingMale_String(),
-//                    _HandleOutOfMemoryError);
+//                    HandleOutOfMemoryError);
 //            _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
 //                    lastLivingMaleCollection.getMaxAgentID();
 //            /*
@@ -1355,41 +1352,41 @@ public class GENESIS_DemographicModel
 ////                String type = GENESIS_Female.getTypeLivingFemale_String();
 ////                while (ite3.hasNext()) {
 ////                    _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    Long a_Agent_ID = ite4.next();
 ////                    Long a_Collection_ID =
 ////                            _GENESIS_AgentCollectionManager.getFemaleCollection_ID(
 ////                            a_Agent_ID,
 ////                            type,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_FemaleCollection a_FemaleCollection =
 ////                            _GENESIS_AgentCollectionManager.getFemaleCollection(
 ////                            a_Collection_ID,
 ////                            type,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_Female a_Female = a_FemaleCollection.getFemale(
 ////                            a_Agent_ID,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    a_Female._GENESIS_Environment = _GENESIS_Environment;
 ////                }
 ////                ite4 = maleIDs.iterator();
 ////                while (ite4.hasNext()) {
 ////                    _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    Long a_Agent_ID = ite4.next();
 ////                    Long a_Collection_ID =
 ////                            _GENESIS_AgentCollectionManager.getMaleCollection_ID(
 ////                            a_Agent_ID,
 ////                            type,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_MaleCollection a_MaleCollection =
 ////                            _GENESIS_AgentCollectionManager.getMaleCollection(
 ////                            a_Collection_ID,
 ////                            type,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_Male a_Male = a_MaleCollection.getMale(
 ////                            a_Agent_ID,
-////                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    a_Male._GENESIS_Environment = _GENESIS_Environment;
 ////                }
 ////            }
@@ -1512,7 +1509,7 @@ public class GENESIS_DemographicModel
             writeOutStartPopulations(resultMetadataDirectory_File);
             log(Level.FINE,
                     "_TestMemory.getTotalFreeMemory() "
-                    + ge.getTotalFreeMemory(ge._HandleOutOfMemoryError_boolean));
+                    + ge.getTotalFreeMemory(ge.HandleOutOfMemoryError));
             //_GENESIS_Environment._Time.subtractDay();
             // Initialise metadata
             run_Metadata.setInitialYear(startYear);
@@ -1536,7 +1533,7 @@ public class GENESIS_DemographicModel
                 _Years);
         System.out.println("Simulation complete. Writing out data for restart");
         // Store living population so they can be reloaded and run for more iterations
-        ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge._HandleOutOfMemoryError_boolean).swapToFile_AgentCollections(ge._HandleOutOfMemoryError_boolean);
+        ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryError).swapToFile_AgentCollections(ge.HandleOutOfMemoryError);
         File outputFile;
         /*
          * Write out _Demographics.
@@ -1615,8 +1612,7 @@ public class GENESIS_DemographicModel
      * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap.
      */
     protected void writeOutDeadCollectionNotAlreadyStoredOnFile() {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                _HandleOutOfMemoryError);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(HandleOutOfMemoryError);
         File outputFile;
         System.out.println("Write out Dead Collections...");
         // Dead Female Collection
@@ -1690,7 +1686,7 @@ public class GENESIS_DemographicModel
         String methodName = "Write out Living Collections not already stored on File...";
         System.out.println(methodName);
 //        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                    _HandleOutOfMemoryError);
+//                    HandleOutOfMemoryError);
         Iterator<Long> iterator;
         // Female
         iterator = _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.keySet().iterator();
@@ -1750,19 +1746,17 @@ public class GENESIS_DemographicModel
             Iterator<Long> ite3;
             ite3 = _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.keySet().iterator();
             while (ite3.hasNext()) {
-                GENESIS_FemaleCollection a_GENESIS_FemaleCollection = _GENESIS_AgentCollectionManager.getFemaleCollection(
-                        ite3.next(),
+                GENESIS_FemaleCollection a_GENESIS_FemaleCollection = _GENESIS_AgentCollectionManager.getFemaleCollection(ite3.next(),
                         GENESIS_Person.getTypeLivingFemale_String(),
-                        _HandleOutOfMemoryError);
+                        HandleOutOfMemoryError);
                 HashMap<Long, GENESIS_Agent> agent_ID_HashMap =
                         a_GENESIS_FemaleCollection.get_Agent_ID_Agent_HashMap();
                 Iterator<Long> ite2 = agent_ID_HashMap.keySet().iterator();
                 while (ite2.hasNext()) {
                     Long a_Agent_ID = ite2.next();
-                    GENESIS_Female female = _GENESIS_AgentCollectionManager.getFemale(
-                            a_Agent_ID,
+                    GENESIS_Female female = _GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                             GENESIS_Person.getTypeLivingFemale_String(),
-                            _HandleOutOfMemoryError);
+                            HandleOutOfMemoryError);
                     female.ge = ge;
                     female._GENESIS_AgentCollectionManager =
                             _GENESIS_AgentCollectionManager;
@@ -1789,19 +1783,17 @@ public class GENESIS_DemographicModel
             }
             ite3 = _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.keySet().iterator();
             while (ite3.hasNext()) {
-                GENESIS_MaleCollection a_GENESIS_MaleCollection = _GENESIS_AgentCollectionManager.getMaleCollection(
-                        ite3.next(),
+                GENESIS_MaleCollection a_GENESIS_MaleCollection = _GENESIS_AgentCollectionManager.getMaleCollection(ite3.next(),
                         GENESIS_Person.getTypeLivingMale_String(),
-                        _HandleOutOfMemoryError);
+                        HandleOutOfMemoryError);
                 HashMap<Long, GENESIS_Agent> agent_ID_HashMap =
                         a_GENESIS_MaleCollection.get_Agent_ID_Agent_HashMap();
                 Iterator<Long> ite2 = agent_ID_HashMap.keySet().iterator();
                 while (ite2.hasNext()) {
                     Long a_Agent_ID = ite2.next();
-                    GENESIS_Male male = _GENESIS_AgentCollectionManager.getMale(
-                            a_Agent_ID,
+                    GENESIS_Male male = _GENESIS_AgentCollectionManager.getMale(a_Agent_ID,
                             GENESIS_Person.getTypeLivingMale_String(),
-                            _HandleOutOfMemoryError);
+                            HandleOutOfMemoryError);
                     male.ge = ge;
                     male._GENESIS_AgentCollectionManager =
                             _GENESIS_AgentCollectionManager;
@@ -1840,7 +1832,7 @@ public class GENESIS_DemographicModel
 //    public void initialisePopulation(
 //            GENESIS_Time a_Time) {
 //        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                _GENESIS_Environment.HandleOutOfMemoryError);
 //        _LivingMaleIDs = new HashMap<String,HashSet<Long>>();
 //        _LivingFemaleIDs = new HashMap<String,HashSet<Long>>();
 //        _NotPregnantFemaleIDs = new HashSet<Long>();
@@ -1863,7 +1855,7 @@ public class GENESIS_DemographicModel
 //        ite3 = _Demographics._Population.get(GENESIS_Demographics.TotalPopulationName_String)._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
 //        while (ite3.hasNext()) {
 //            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            age = ite3.next();
 //            population = _Demographics._Population.get(GENESIS_Demographics.TotalPopulationName_String)._FemaleAgeBoundPopulationCount_TreeMap.get(age);
 //            population_BigInteger = population.toBigInteger();
@@ -1882,9 +1874,9 @@ public class GENESIS_DemographicModel
 //                        a_Birth_Time,
 //                        a_Household,
 //                        a_VectorPoint2D,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                Long a_Agent_ID = a_Female.get_Agent_ID(
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                _LivingFemaleIDs.add(a_Agent_ID);
 //                _NotPregnantFemaleIDs.add(a_Agent_ID);
 //            }
@@ -1892,7 +1884,7 @@ public class GENESIS_DemographicModel
 //        ite3 = _Demographics._Population.get(GENESIS_Demographics.TotalPopulationName_String)._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
 //        while (ite3.hasNext()) {
 //            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            age = ite3.next();
 //            population = _Demographics._Population.get(GENESIS_Demographics.TotalPopulationName_String)._MaleAgeBoundPopulationCount_TreeMap.get(age);
 //            population_BigInteger = population.toBigInteger();
@@ -1916,9 +1908,9 @@ public class GENESIS_DemographicModel
 //                        a_Birth_Time,
 //                        a_Household,
 //                        a_VectorPoint2D,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                Long a_Agent_ID = a_Male.get_Agent_ID(
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                _LivingMaleIDs.add(a_Agent_ID);
 //            }
 //        }
@@ -1941,7 +1933,7 @@ public class GENESIS_DemographicModel
             TreeMap<String, TreeMap<String, GENESIS_Population>> inputPopulation,
             GENESIS_Time a_Time) {
         try {
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
             TreeMap<String, TreeMap<String, GENESIS_Population>> result;
             result = new TreeMap<String, TreeMap<String, GENESIS_Population>>();
             BigDecimal population;
@@ -1954,7 +1946,7 @@ public class GENESIS_DemographicModel
             // Iterate over inputPopulation LADs
             ite = inputPopulation.keySet().iterator();
             while (ite.hasNext()) {
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 String regionID = ite.next();
                 if (!regionID.equalsIgnoreCase("Total")) {
                     TreeSet<String> subregionIDs = new TreeSet<String>();
@@ -1967,7 +1959,7 @@ public class GENESIS_DemographicModel
                     // Iterate over inputLADPopulation OAs
                     Iterator<String> ite2 = inputLADPopulation.keySet().iterator();
                     while (ite2.hasNext()) {
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         String subregionID = ite2.next();
                         if (!subregionID.equalsIgnoreCase(regionID)) {
                             subregionIDs.add(regionID);
@@ -1979,7 +1971,7 @@ public class GENESIS_DemographicModel
                             // Females
                             ite3 = inputLADPopulationNotNecessarilyInSingleYearsOfAge._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                             while (ite3.hasNext()) {
-                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                                 ageBound = ite3.next();
                                 population = inputLADPopulationNotNecessarilyInSingleYearsOfAge._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                                 if (population.compareTo(BigDecimal.ZERO) == 1) {
@@ -2009,14 +2001,14 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(individualYearAgeBoundPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                                 individualYearAgeBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     }
                                 }
                             }
                             // Males
                             ite3 = inputLADPopulationNotNecessarilyInSingleYearsOfAge._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                             while (ite3.hasNext()) {
-                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                                 ageBound = ite3.next();
                                 population = inputLADPopulationNotNecessarilyInSingleYearsOfAge._MaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                                 if (population.compareTo(BigDecimal.ZERO) == 1) {
@@ -2046,7 +2038,7 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(individualYearAgeBoundPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                                 individualYearAgeBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     }
                                 }
                             }
@@ -2058,7 +2050,7 @@ public class GENESIS_DemographicModel
             // and calculate totals
             ite = result.keySet().iterator();
             while (ite.hasNext()) {
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 String aLADCode = ite.next();
                 TreeMap<String, GENESIS_Population> individualYearLADPopulation;
                 individualYearLADPopulation = result.get(aLADCode);
@@ -2068,7 +2060,7 @@ public class GENESIS_DemographicModel
                 // Iterate over individualYearLADPopulation
                 Iterator<String> ite2 = individualYearLADPopulation.keySet().iterator();
                 while (ite2.hasNext()) {
-                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                     String aOACode = ite2.next();
                     GENESIS_Population individualYearAgeBoundPopulation;
                     individualYearAgeBoundPopulation = individualYearLADPopulation.get(aOACode);
@@ -2095,7 +2087,7 @@ public class GENESIS_DemographicModel
      */
     public void initialiseSubregionPopulations(
             TreeMap<String, TreeMap<String, GENESIS_Population>> singleYearAgeRegionPopulation) {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         ge._Time.subtractDay();
         Iterator<String> ite = singleYearAgeRegionPopulation.keySet().iterator();
         while (ite.hasNext()) {
@@ -2151,7 +2143,7 @@ public class GENESIS_DemographicModel
                     // Initialise females in subregion
                     ite3 = subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                     while (ite3.hasNext()) {
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         GENESIS_AgeBound ageBound = ite3.next();
                         Long population = subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound).longValue();
                         for (int p = 0; p < population; p++) {
@@ -2166,7 +2158,7 @@ public class GENESIS_DemographicModel
                     // Initialise males in subregion
                     ite3 = subregionPopulation._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                     while (ite3.hasNext()) {
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         GENESIS_AgeBound ageBound = ite3.next();
                         Long population = subregionPopulation._MaleAgeBoundPopulationCount_TreeMap.get(ageBound).longValue();
                         for (int p = 0; p < population; p++) {
@@ -2244,8 +2236,8 @@ public class GENESIS_DemographicModel
         result = ge._PersonFactory.createFemale(age,
                 null,
                 null,
-                ge._HandleOutOfMemoryError_boolean);
-        Long a_Agent_ID = result.get_Agent_ID(ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
+        Long a_Agent_ID = result.get_Agent_ID(ge.HandleOutOfMemoryError);
         subregionLivingFemaleIDs.add(a_Agent_ID);
         subregionNotPregnantFemaleIDs.add(a_Agent_ID);
 
@@ -2299,8 +2291,8 @@ public class GENESIS_DemographicModel
         result = ge._PersonFactory.createMale(age,
                 null,
                 null,
-                ge._HandleOutOfMemoryError_boolean);
-        Long a_Agent_ID = result.get_Agent_ID(ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
+        Long a_Agent_ID = result.get_Agent_ID(ge.HandleOutOfMemoryError);
         subregionLivingMaleIDs.add(a_Agent_ID);
         return result;
     }
@@ -2351,7 +2343,7 @@ public class GENESIS_DemographicModel
 //            GENESIS_Time _Time,
 //            int pregnancyInitialisationYears) {
 //        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                _GENESIS_Environment.HandleOutOfMemoryError);
 //        _LivingMaleIDs = new HashSet<Long>();
 //        _LivingFemaleIDs = new HashSet<Long>();
 //        _NotPregnantFemaleIDs = new HashSet<Long>();
@@ -2367,7 +2359,7 @@ public class GENESIS_DemographicModel
 //        //Calendar _DateOfBirth_Calendar;
 //        for (int i = 0; i < initialFemalePopulation; i++) {
 //            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            if (i % numberOfFemales_div_10 == 0) {
 //                log(Level.FINE, "Initialising female " + i);
 //            }
@@ -2379,10 +2371,10 @@ public class GENESIS_DemographicModel
 //                    a_Birth_Time,
 //                    null,
 //                    null,
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            //a_Female.write();
 //            Long a_Agent_ID = a_Female.get_Agent_ID(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            _LivingFemaleIDs.add(a_Agent_ID);
 //            _NotPregnantFemaleIDs.add(a_Agent_ID);
 //        }
@@ -2392,7 +2384,7 @@ public class GENESIS_DemographicModel
 //        long numberOfMales_div_10 = initialMalePopulation / 10;
 //        for (int i = 0; i < initialMalePopulation; i++) {
 //            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            if (i % numberOfMales_div_10 == 0) {
 //                log(Level.FINE, "Initialising female " + i);
 //            }
@@ -2404,10 +2396,10 @@ public class GENESIS_DemographicModel
 //                    a_Birth_Time,
 //                    null,
 //                    null,
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            //a_Male.write();
 //            _LivingMaleIDs.add(a_Male.get_Agent_ID(
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean));
+//                    _GENESIS_Environment.HandleOutOfMemoryError));
 //        }
 ////        initialisePregnancies(
 ////                pregnancyInitialisationYears);
@@ -2728,7 +2720,7 @@ public class GENESIS_DemographicModel
     public HashSet<Future> simulate(
             int years) {
         HashSet<Future> result = new HashSet<Future>();
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         int significantDigits = 4;
         int decimalPlacePrecisionForCalculations = 10;
         int dataWidthForScatterAndRegressionPlots = 300;
@@ -2818,7 +2810,7 @@ public class GENESIS_DemographicModel
         GENESIS_Migration migration = _Demographics._Migration;
 //        // Loop for all years
 //        for (int year = startYear; year < endYear; year++) {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         int allBirthsInYear = 0;
         int singleBirthsInYear = 0;
         int twinBirthsInYear = 0;
@@ -2881,7 +2873,7 @@ public class GENESIS_DemographicModel
 
         Iterator<String> ite = this._regionIDs.keySet().iterator();
         while (ite.hasNext()) {
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
             String regionID = ite.next();
             // Indexes
             // Death
@@ -2951,7 +2943,7 @@ public class GENESIS_DemographicModel
             Iterator<String> ite2;
             ite2 = subregionIDs.iterator();
             while (ite2.hasNext()) {
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 String subregionID = ite2.next();
                 regionDeadFemaleIDs.put(
                         subregionID, new TreeSet<Long>());
@@ -2997,16 +2989,16 @@ public class GENESIS_DemographicModel
                         new TreeMap<GENESIS_AgeBound, BigDecimal>());
             }
         }
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         GENESIS_Demographics startYear_Demographics = new GENESIS_Demographics(
                 new GENESIS_Environment(ge),
                 _Demographics);
         // Loop for all days in a year
         // (currently assumes a fixed number of days in a year)
         //for (int day = startDay; day < startDay + 2; day++) {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         for (int day = startDay; day < startDay + GENESIS_Time.NormalDaysInYear_int; day++) {
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
             String message;
 //                message = "Year " + year + " day " + day;
 //                log(Level.FINE, message);
@@ -3014,7 +3006,7 @@ public class GENESIS_DemographicModel
             message = "Year " + ge._Time.getYear() + " day " + ge._Time.getDayOfYear();
             log(Level.FINE, message);
             System.out.println(message);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
             // Iterate over each region
             ite = this._regionIDs.keySet().iterator();
             while (ite.hasNext()) {
@@ -3117,7 +3109,7 @@ public class GENESIS_DemographicModel
                 Iterator<String> ite2;
                 ite2 = subregionIDs.iterator();
                 while (ite2.hasNext()) {
-                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                     String subregionID = ite2.next();
                     HashSet<Long> dead_Female_ID_HashSet = null;
                     HashSet<Long> dead_Male_ID_HashSet = null;
@@ -3186,12 +3178,12 @@ public class GENESIS_DemographicModel
                         HashSet<Long> babyBoy_IDs = null;
                         Iterator<Long> ite3;
                         // Simulate Males first as Males do not give birth.
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         type = GENESIS_Person.getTypeLivingMale_String();
                         ite3 = subregionLivingMaleIDs.iterator();
                         while (ite3.hasNext()) {
 //                                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                                        _GENESIS_Environment.HandleOutOfMemoryError);
                             Long a_Agent_ID = ite3.next();
 //                            Long a_Collection_ID =
 //                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
@@ -3205,13 +3197,13 @@ public class GENESIS_DemographicModel
                             Long a_Collection_ID =
                                     _GENESIS_AgentCollectionManager.getMaleCollection_ID(a_Agent_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             a_MaleCollection =
                                     _GENESIS_AgentCollectionManager.getMaleCollection(a_Collection_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             GENESIS_Male a_Male = a_MaleCollection.getMale(a_Agent_ID,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
 //                        //DEBUG                        
 //                        if (a_Male == null) {
 //                            // Agent_ID 4131, 10204, 1100
@@ -3241,20 +3233,20 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(age - 1),
                                         minusOne_BigDecimal,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // Account regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap                       
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(age - 1),
                                         minusOne_BigDecimal,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                             }
                             // Simulate death and account for change in living populations
                             isDeath = simulateDeath(
@@ -3287,7 +3279,7 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDeaths._MaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
 // Now done at end of annual loop
 //                                // Account regionTotalDeaths._MaleAgeBoundPopulationCount_TreeMap
 //                                GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -3300,7 +3292,7 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionAliveDays._MaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // regionAliveDays.get(regionID) is modified at the 
                                 // end of the loop for computational efficiency
                                 // Simulate migration
@@ -3342,12 +3334,12 @@ public class GENESIS_DemographicModel
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             minusOne_BigDecimal,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     // Account regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             minusOne_BigDecimal,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
 //                                    System.out.println("Male Out Migration");
 //                                } else {
 //                                    isMigration = simulateInternalMigrationInStudyRegion(
@@ -3384,12 +3376,12 @@ public class GENESIS_DemographicModel
                             }
                         }
                         // Simulate Females
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         type = GENESIS_Person.getTypeLivingFemale_String();
                         ite3 = subregionLivingFemaleIDs.iterator();
                         while (ite3.hasNext()) {
 //                                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                                        _GENESIS_Environment.HandleOutOfMemoryError);
                             Long a_Agent_ID = ite3.next();
 //                            Long a_Collection_ID =
 //                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
@@ -3403,13 +3395,13 @@ public class GENESIS_DemographicModel
                             Long a_Collection_ID =
                                     _GENESIS_AgentCollectionManager.getFemaleCollection_ID(a_Agent_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             a_FemaleCollection =
                                     _GENESIS_AgentCollectionManager.getFemaleCollection(a_Collection_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             GENESIS_Female a_Female = a_FemaleCollection.getFemale(a_Agent_ID,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
 
 //                            // debug
 //                            if (a_Female._GENESIS_Environment == null) {
@@ -3436,20 +3428,20 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(age - 1),
                                         minusOne_BigDecimal,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // Account regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(age - 1),
                                         minusOne_BigDecimal,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                             }
                             if (subregionPregnantFemaleIDs.contains(a_Agent_ID)) {
                                 isPregnant = true;
@@ -3498,7 +3490,7 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDeaths._FemaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
 // Now done at end of annual loop
 //                                // Account regionTotalDeaths._FemaleAgeBoundPopulationCount_TreeMap
 //                                GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -3515,24 +3507,24 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionClinicalMiscarriages,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account regionTotalClinicalMiscarriages
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalClinicalMiscarriages,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account a day in pregnancy
                                         daysInLatePregnancyInYear++;
                                         // Account localFemaleAgeInYearsCountOfDaysInLatePregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDaysInLatePregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfDaysInLatePregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalDaysInLatePregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     } else {
                                         // Account Early Pregnancy Loss miscarriage
                                         totalEarlyPregnancyLossMiscarriagesInYear++;
@@ -3540,24 +3532,24 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionEarlyPregnancyLosses,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfEarlyPregnancyLoss_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalEarlyPregnancyLosses,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account a day in pregnancy
                                         daysInEarlyPregnancyInYear++;
                                         // Account localFemaleAgeInYearsCountOfDaysInEarlyPregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDaysInEarlyPregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfDaysInEarlyPregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalDaysInEarlyPregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     }
                                 }
                             } else {
@@ -3566,7 +3558,7 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionAliveDays._FemaleAgeBoundPopulationCount_TreeMap,
                                         ageBound,
                                         BigDecimal.ONE,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // annualTotalPopulationAliveDays is modified at the 
                                 // end of the loop for computational efficiency
                                 if (isPregnant) {
@@ -3598,12 +3590,12 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDaysInLatePregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfDaysInLatePregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalDaysInLatePregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     } else {
                                         // Account a day in early pregnancy
                                         daysInEarlyPregnancyInYear++;
@@ -3611,12 +3603,12 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionDaysInEarlyPregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfDaysInEarlyPregnancy_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalDaysInEarlyPregnancy,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                     }
                                     isBirthOccured = false;
                                     if (subregionNearlyDuePregnantFemaleIDs != null) {
@@ -3638,12 +3630,12 @@ public class GENESIS_DemographicModel
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionLabours,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                                 // Account annualTotalFemaleAgeInYearsCountOfLabours_TreeMap
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalLabours,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                                 if (birth[0] != null) {
                                                     if (babyGirl_IDs == null) {
                                                         babyGirl_IDs = new HashSet<Long>();
@@ -3663,22 +3655,22 @@ public class GENESIS_DemographicModel
                                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionBirths,
                                                             ageBound,
                                                             BigDecimal.ONE,
-                                                            ge._HandleOutOfMemoryError_boolean);
+                                                            ge.HandleOutOfMemoryError);
                                                     // Account regionTotalBirths
                                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalBirths,
                                                             ageBound,
                                                             BigDecimal.ONE,
-                                                            ge._HandleOutOfMemoryError_boolean);
+                                                            ge.HandleOutOfMemoryError);
                                                     // Account subregionSingleBirths
                                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionSingleBirths,
                                                             ageBound,
                                                             BigDecimal.ONE,
-                                                            ge._HandleOutOfMemoryError_boolean);
+                                                            ge.HandleOutOfMemoryError);
                                                     // Account regionTotalSingleBirths
                                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalSingleBirths,
                                                             ageBound,
                                                             BigDecimal.ONE,
-                                                            ge._HandleOutOfMemoryError_boolean);
+                                                            ge.HandleOutOfMemoryError);
                                                 } else {
                                                     if ((Integer) birth[2] == 2) {
                                                         // Account twin birth
@@ -3687,23 +3679,23 @@ public class GENESIS_DemographicModel
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionBirths,
                                                                 ageBound,
                                                                 BigDecimal.valueOf(2),
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account regionTotalBirths
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalBirths,
                                                                 ageBound,
                                                                 BigDecimal.valueOf(2),
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account twin
                                                         // Account subregionTwins
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionTwins,
                                                                 ageBound,
                                                                 BigDecimal.ONE,
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account regionTotalTwins
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalTwins,
                                                                 ageBound,
                                                                 BigDecimal.ONE,
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                     } else {
                                                         // Account triplet birth
                                                         tripletBirthsInYear++;
@@ -3711,23 +3703,23 @@ public class GENESIS_DemographicModel
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionBirths,
                                                                 ageBound,
                                                                 BigDecimal.valueOf(3),
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account regionTotalBirths
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalBirths,
                                                                 ageBound,
                                                                 BigDecimal.valueOf(3),
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account triplet
                                                         // Account subregionTriplets
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionTriplets,
                                                                 ageBound,
                                                                 BigDecimal.ONE,
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                         // Account regionTotalTriplets
                                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalTriplets,
                                                                 ageBound,
                                                                 BigDecimal.ONE,
-                                                                ge._HandleOutOfMemoryError_boolean);
+                                                                ge.HandleOutOfMemoryError);
                                                     }
                                                 }
                                             }
@@ -3760,12 +3752,12 @@ public class GENESIS_DemographicModel
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionClinicalMiscarriages,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                                 // Account regionTotalClinicalMiscarriages
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalClinicalMiscarriages,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                             } else {
                                                 // Account Early Pregnancy Loss Miscarriage
                                                 totalEarlyPregnancyLossMiscarriagesInYear++;
@@ -3773,12 +3765,12 @@ public class GENESIS_DemographicModel
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionEarlyPregnancyLosses,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                                 // Account annualTotalFemaleAgeInYearsCountOfEarlyPregnancyLoss_TreeMap
                                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalEarlyPregnancyLosses,
                                                         ageBound,
                                                         BigDecimal.ONE,
-                                                        ge._HandleOutOfMemoryError_boolean);
+                                                        ge.HandleOutOfMemoryError);
                                             }
                                         }
                                     }
@@ -3804,12 +3796,12 @@ public class GENESIS_DemographicModel
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPregnancies,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         // Account annualTotalFemaleAgeInYearsCountOfPregnancies_TreeMap
                                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPregnancies,
                                                 ageBound,
                                                 BigDecimal.ONE,
-                                                ge._HandleOutOfMemoryError_boolean);
+                                                ge.HandleOutOfMemoryError);
                                         /*
                                          * Although it might be neater to
                                          * pre-increment the count of the number of
@@ -3858,12 +3850,12 @@ public class GENESIS_DemographicModel
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             minusOne_BigDecimal,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     // Account regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             minusOne_BigDecimal,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
 //                                    System.out.println("Female Out Migration");
 //                                } else {
 //                                    isMigration = simulateInternalMigrationInStudyRegion(
@@ -3909,12 +3901,12 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(0L),
                                         BigDecimal.valueOf(babyGirl_IDs.size()),
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // Account regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(0L),
                                         BigDecimal.valueOf(babyGirl_IDs.size()),
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                             }
                         }
                         if (babyBoy_IDs != null) {
@@ -3926,12 +3918,12 @@ public class GENESIS_DemographicModel
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(0L),
                                         BigDecimal.valueOf(babyBoy_IDs.size()),
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 // Account regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap
                                 GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap,
                                         new GENESIS_AgeBound(0L),
                                         BigDecimal.valueOf(babyBoy_IDs.size()),
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                             }
                         }
                         if (dead_Female_ID_HashSet != null) {
@@ -4040,7 +4032,7 @@ public class GENESIS_DemographicModel
             // Move migrating people
             Iterator<String> ites;
             // Female
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
             System.out.println("Move migrating people");
 
             ites = outMigratingFemaleIDs.keySet().iterator();
@@ -4051,7 +4043,7 @@ public class GENESIS_DemographicModel
             int messageLength = 100;
             String message2;
             message2 = this.ge.initString(messageLength,
-                    ge._HandleOutOfMemoryError_boolean);
+                    ge.HandleOutOfMemoryError);
             String destinationRegionID = "XXXX";
             String destinationSubregionID = destinationRegionID + "XXXX";
             String femaleSubregionID = destinationRegionID + "XXXX";
@@ -4069,18 +4061,18 @@ public class GENESIS_DemographicModel
             Iterator<String> ites2 = regionOutMigratingFemaleIDs.keySet().iterator();
             GENESIS_Female a_Female;
             while (ites.hasNext()) {
-                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 regionID = ites.next();
                 message2 = "regionID " + regionID;
                 System.out.println(message2);
                 message2 = this.ge.initString(messageLength,
-                        ge._HandleOutOfMemoryError_boolean);
+                        ge.HandleOutOfMemoryError);
                 regionOutMigratingFemaleIDs = outMigratingFemaleIDs.get(regionID);
 //                TreeMap<String, TreeSet<Long>> regionLivingFemaleIDs;
 //                regionLivingFemaleIDs = _LivingFemaleIDs.get(regionID);
                 ites2 = regionOutMigratingFemaleIDs.keySet().iterator();
                 while (ites2.hasNext()) {
-                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                     subregionID = ites2.next();
                     message2 = "subregionID " + subregionID;
                     System.out.println(message2);
@@ -4091,7 +4083,7 @@ public class GENESIS_DemographicModel
                     }
 
                     message2 = this.ge.initString(messageLength,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
 //                    if (subregionID.equalsIgnoreCase("00DBFT0029")) {
 //                        System.out.println("subregionID " + subregionID);
 //                        int debug = 1;
@@ -4100,7 +4092,7 @@ public class GENESIS_DemographicModel
                     itel = agentIDs.iterator();
                     while (itel.hasNext()) {
                         try {
-                            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                            ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                             a_Agent_ID = itel.next();
 
                             // DEBUG
@@ -4121,13 +4113,13 @@ public class GENESIS_DemographicModel
                             a_Collection_ID =
                                     _GENESIS_AgentCollectionManager.getFemaleCollection_ID(a_Agent_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             a_FemaleCollection =
                                     _GENESIS_AgentCollectionManager.getFemaleCollection(a_Collection_ID,
                                     type,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
                             a_Female = a_FemaleCollection.getFemale(a_Agent_ID,
-                                    ge._HandleOutOfMemoryError_boolean);
+                                    ge.HandleOutOfMemoryError);
 //                        String femaleRegionID = a_Female.getRegionID();
 //                        // debug
 //                        if (femaleRegionID == null) {
@@ -4218,11 +4210,11 @@ public class GENESIS_DemographicModel
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(destinationRegionPopulation.get(destinationRegionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             BigDecimal.ONE,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(destinationRegionPopulation.get(destinationSubregionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             BigDecimal.ONE,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     _LivingFemaleIDs.get(originRegionID).get(originSubregionID).remove(a_Agent_ID);
                                     _LivingFemaleIDs.get(destinationRegionID).get(destinationSubregionID).add(a_Agent_ID);
                                     if (_PregnantFemaleIDs.get(originRegionID).get(originSubregionID).remove(a_Agent_ID)) {
@@ -4264,14 +4256,14 @@ public class GENESIS_DemographicModel
                 message2 = "regionID " + regionID;
                 System.out.println(message2);
                 message2 = this.ge.initString(messageLength,
-                        ge._HandleOutOfMemoryError_boolean);
+                        ge.HandleOutOfMemoryError);
                 regionOutMigratingMaleIDs = outMigratingMaleIDs.get(regionID);
 //                TreeMap<String, TreeSet<Long>> regionLivingMaleIDs;
 //                regionLivingMaleIDs = _LivingMaleIDs.get(regionID);
                 ites2 = regionOutMigratingMaleIDs.keySet().iterator();
                 while (ites2.hasNext()) {
                     try {
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         subregionID = ites2.next();
                         message2 = "subregionID " + subregionID;
                         System.out.println(message2);
@@ -4284,12 +4276,12 @@ public class GENESIS_DemographicModel
                         }
 
                         message2 = this.ge.initString(messageLength,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         agentIDs = regionOutMigratingMaleIDs.get(subregionID);
                         itel = agentIDs.iterator();
                         while (itel.hasNext()) {
                             try {
-                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                                ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                                 a_Agent_ID = itel.next();
 
                                 // DEBUG
@@ -4312,13 +4304,13 @@ public class GENESIS_DemographicModel
                                 a_Collection_ID =
                                         _GENESIS_AgentCollectionManager.getMaleCollection_ID(a_Agent_ID,
                                         type,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 a_MaleCollection =
                                         _GENESIS_AgentCollectionManager.getMaleCollection(a_Collection_ID,
                                         type,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
                                 a_Male = a_MaleCollection.getMale(a_Agent_ID,
-                                        ge._HandleOutOfMemoryError_boolean);
+                                        ge.HandleOutOfMemoryError);
 
 //                        String maleRegionID = a_Male.getRegionID();
 //                        // debug
@@ -4394,11 +4386,11 @@ public class GENESIS_DemographicModel
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(destinationRegionPopulation.get(destinationRegionID)._MaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             BigDecimal.ONE,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(destinationRegionPopulation.get(destinationSubregionID)._MaleAgeBoundPopulationCount_TreeMap,
                                             ageBound,
                                             BigDecimal.ONE,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     _LivingMaleIDs.get(originRegionID).get(originSubregionID).remove(a_Agent_ID);
                                     _LivingMaleIDs.get(destinationRegionID).get(destinationSubregionID).add(a_Agent_ID);
                                     allMigrationInYear++;
@@ -4609,10 +4601,10 @@ public class GENESIS_DemographicModel
         System.out.println(msg);
 
         // Swap out data before trying to output all images.
-        writeOutLivingCollectionNotAlreadyStoredOnFile(_HandleOutOfMemoryError);
+        writeOutLivingCollectionNotAlreadyStoredOnFile(HandleOutOfMemoryError);
         writeOutDeadCollectionNotAlreadyStoredOnFile();
         //_GENESIS_Environment.swapToFile_Data();
-        //_GENESIS_Environment.swapToFile_AgentCollections(_HandleOutOfMemoryError);
+        //_GENESIS_Environment.swapToFile_AgentCollections(HandleOutOfMemoryError);
 
         // Output
         HashSet< Future> newfutures = _Demographics.output(executorService,
@@ -4644,7 +4636,7 @@ public class GENESIS_DemographicModel
                 twins,
                 triplets,
                 pregnancies,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         result.addAll(newfutures);
 //          }
         log(Level.FINE,
@@ -4772,12 +4764,12 @@ public class GENESIS_DemographicModel
             GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                     ageBound,
                     minusOne_BigDecimal,
-                    ge._HandleOutOfMemoryError_boolean);
+                    ge.HandleOutOfMemoryError);
             // Account regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap
             GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._FemaleAgeBoundPopulationCount_TreeMap,
                     ageBound,
                     minusOne_BigDecimal,
-                    ge._HandleOutOfMemoryError_boolean);
+                    ge.HandleOutOfMemoryError);
         }
         return result;
     }
@@ -4807,7 +4799,7 @@ public class GENESIS_DemographicModel
             BigDecimal minusOne_BigDecimal) {
         boolean result = false;
 //        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                _GENESIS_Environment.HandleOutOfMemoryError);
         BigDecimal a_DailyDeathRate;
         a_DailyDeathRate = mortality.getDailyMortality(a_Male);
 //        if (Generic_BigDecimal.randomUniformTest(
@@ -4868,12 +4860,12 @@ public class GENESIS_DemographicModel
             GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(subregionPopulation._MaleAgeBoundPopulationCount_TreeMap,
                     ageBound,
                     minusOne_BigDecimal,
-                    ge._HandleOutOfMemoryError_boolean);
+                    ge.HandleOutOfMemoryError);
             // Account regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap
             GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(regionTotalPopulation._MaleAgeBoundPopulationCount_TreeMap,
                     ageBound,
                     minusOne_BigDecimal,
-                    ge._HandleOutOfMemoryError_boolean);
+                    ge.HandleOutOfMemoryError);
         }
         return result;
     }
@@ -5019,7 +5011,7 @@ public class GENESIS_DemographicModel
             TreeMap<String, TreeSet<Long>> regionLivingMaleIDs) {
         System.out.println("<simulateInMigrationFromRestOfUK>");
 //        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                _GENESIS_Environment.HandleOutOfMemoryError);
         long result = 0;
         int decimalPlaces = 10;
         //RoundingMode roundingMode = RoundingMode.HALF_UP;
@@ -5031,7 +5023,7 @@ public class GENESIS_DemographicModel
             ite = pop._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
             while (ite.hasNext()) {
 //                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
                 GENESIS_AgeBound ageBound = ite.next();
                 BigDecimal dailyCount_BigDecimal = pop._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                 long dailyCount_long = dailyCount_BigDecimal.toBigInteger().longValue();
@@ -5063,14 +5055,14 @@ public class GENESIS_DemographicModel
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
 
                         //females.add(female);
-                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(_HandleOutOfMemoryError));
+                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
                         result++;
                     }
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -5112,14 +5104,14 @@ public class GENESIS_DemographicModel
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._FemaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._FemaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
 
                     //females.add(female);
-                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(_HandleOutOfMemoryError));
+                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
                     result++;
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
 //                            regionTotalImmigration,
@@ -5160,14 +5152,14 @@ public class GENESIS_DemographicModel
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._MaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._MaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
 
                         //males.add(male);
-                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(_HandleOutOfMemoryError));
+                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
                         result++;
                     }
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -5204,13 +5196,13 @@ public class GENESIS_DemographicModel
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._MaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._MaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     //males.add(male);
-                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(_HandleOutOfMemoryError));
+                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
                     result++;
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
 //                            regionTotalImmigration,
@@ -5279,13 +5271,13 @@ public class GENESIS_DemographicModel
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._FemaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         //females.add(female);
-                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(_HandleOutOfMemoryError));
+                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
                     }
                     result++;
                 }
@@ -5324,13 +5316,13 @@ public class GENESIS_DemographicModel
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._FemaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._FemaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     //females.add(female);
-                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(_HandleOutOfMemoryError));
+                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
                     result++;
                 }
             }
@@ -5371,13 +5363,13 @@ public class GENESIS_DemographicModel
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._MaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._MaleAgeBoundPopulationCount_TreeMap,
                                 yearAgeBound,
                                 BigDecimal.ONE,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         //males.add(male);
-                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(_HandleOutOfMemoryError));
+                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
                         result++;
                     }
                 }
@@ -5417,13 +5409,13 @@ public class GENESIS_DemographicModel
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(regionID)._MaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(_Demographics._Population.get(regionID).get(subregionID)._MaleAgeBoundPopulationCount_TreeMap,
                             yearAgeBound,
                             BigDecimal.ONE,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     //males.add(male);
-                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(_HandleOutOfMemoryError));
+                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
                     result++;
                 }
             }
@@ -5452,7 +5444,7 @@ public class GENESIS_DemographicModel
             TreeSet<Long> notPregnantFemaleIDs) {
         Object[] result = null;
         if (a_Female._Time_DueToGiveBirth.compareTo(ge._Time) == 0) {
-            result = a_Female.giveBirthSimple(ge._HandleOutOfMemoryError_boolean);
+            result = a_Female.giveBirthSimple(ge.HandleOutOfMemoryError);
             Iterator<Long> ite;
             Long agent_ID;
             GENESIS_AgeBound ageBound0 = new GENESIS_AgeBound(0L);
@@ -5513,7 +5505,7 @@ public class GENESIS_DemographicModel
 
     @Deprecated
     public void updateNearlyDuePregnantFemaleIDs() {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         String type = GENESIS_Person.getTypeLivingFemale_String();
         Iterator<String> ite = _regionIDs.keySet().iterator();
         String regionID;
@@ -5533,11 +5525,11 @@ public class GENESIS_DemographicModel
                     subregionNearlyDuePregnantFemaleIDs = regionNearlyDuePregnantFemaleIDs.get(subregionID);
                     Iterator<Long> ite3 = subregionPregnantFemaleIDs.iterator();
                     while (ite3.hasNext()) {
-                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                         long a_Agent_ID = (Long) ite3.next();
                         GENESIS_Female a_Female = _GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                                 type,
-                                ge._HandleOutOfMemoryError_boolean);
+                                ge.HandleOutOfMemoryError);
                         long differenceInDays = ge._Time.getDifferenceInDays_long(a_Female._Time_DueToGiveBirth);
                         //long differenceInDays = a_Female._Time_DueToGiveBirth.getDifferenceInDays_long(_GENESIS_Environment._Time);
                         if (differenceInDays <= NearlyDueNumberOfDaysTillDueDate) {
@@ -5576,7 +5568,7 @@ public class GENESIS_DemographicModel
                         //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
                         ge.RoundingModeForPopulationProbabilities)) {
                     a_Female.set_Pregnant(fertility,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     //a_Female.set_UnbornsFather(_Father);
                     //_PregnantFemales.add(a_Female);
                     pregnantFemaleIDs.add(a_Female_ID);
@@ -5691,7 +5683,7 @@ public class GENESIS_DemographicModel
      * @return 
      */
     public int initialisePregnancies() {
-        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+        ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
         log(Level.FINE, "<initialisePregnancies>");
         String type = GENESIS_Person.getTypeLivingFemale_String();
         int totalPregnancies = 0;
@@ -5843,7 +5835,7 @@ public class GENESIS_DemographicModel
                 // Loop over notPregnant population (which is all to begin with)
                 // Set them to be pregnant based on probabilities
                 while (ite5.hasNext()) {
-                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge._HandleOutOfMemoryError_boolean);
+                    ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                     Long a_Agent_ID = ite5.next();
 
 //                    // debug
@@ -5854,7 +5846,7 @@ public class GENESIS_DemographicModel
 
                     a_Female = _GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                             type,
-                            ge._HandleOutOfMemoryError_boolean);
+                            ge.HandleOutOfMemoryError);
                     GENESIS_Age age = a_Female.getAge();
                     GENESIS_Time age_Time = new GENESIS_Time(age.getAge_Time(ge._Time));
                     age_Time.addDays(GENESIS_Female.NormalGestationPeriod_int);
@@ -5912,7 +5904,7 @@ public class GENESIS_DemographicModel
                                     log(Level.FINE, "</dayOfPregnancy>");
                                     boolean isPregnant = a_Female.set_Pregnant(_Demographics._Fertility.get(regionID).get(regionID),
                                             numberOfDaysUntilDue,
-                                            ge._HandleOutOfMemoryError_boolean);
+                                            ge.HandleOutOfMemoryError);
                                     if (isPregnant) {
                                         //a_Female.set_UnbornsFather(_Father);
 

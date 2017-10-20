@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
@@ -42,9 +43,11 @@ public class GENESIS_Environment
     //= Logger.getLogger(sourcePackage);
 
     protected GENESIS_Files gf;
-
     
-    public File _Directory;
+    /**
+     *
+     */
+    public File Directory;
     /**
      * Always initialised
      */
@@ -156,7 +159,7 @@ public class GENESIS_Environment
 //        this._DecimalPlacePrecisionForNetwork = a_GENESIS_Environment._DecimalPlacePrecisionForNetwork;
 //        this._DecimalPlacePrecisionForNetworkCalculations = a_GENESIS_Environment._DecimalPlacePrecisionForNetworkCalculations;
 //        this.DecimalPlacePrecisionForPopulationProbabilities = a_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities;
-//        this._Directory = new File(a_GENESIS_Environment._Directory.toString());
+//        this.Directory = new File(a_GENESIS_Environment.Directory.toString());
 ////        // Create a new dummy GENESIS_AgentEnvironment using 
 ////        // a_GENESIS_Environment
 ////        this._GENESIS_AgentEnvironment = new GENESIS_AgentEnvironment(
@@ -166,7 +169,7 @@ public class GENESIS_Environment
 //                a_GENESIS_Environment._GENESIS_AgentEnvironment);
 //        this._Generic_BigDecimal = new Generic_BigDecimal(a_GENESIS_Environment._Generic_BigDecimal);
 //        this._Grids_Environment = new Grids_Environment(a_GENESIS_Environment._Grids_Environment);
-//        this._HandleOutOfMemoryError_boolean = a_GENESIS_Environment._HandleOutOfMemoryError_boolean;
+//        this.HandleOutOfMemoryError = a_GENESIS_Environment.HandleOutOfMemoryError;
 //        this._MemoryReserve = a_GENESIS_Environment._MemoryReserve;
 //        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
@@ -229,7 +232,7 @@ public class GENESIS_Environment
                 a_Time);
         this._network_Grid2DSquareCellDoubleFactory = network_Grid2DSquareCellDoubleFactory;
         this._reporting_Grid2DSquareCellDoubleFactory = reporting_Grid2DSquareCellDoubleFactory;
-        this._HandleOutOfMemoryError_boolean = handleOutOfMemoryError;
+        this.HandleOutOfMemoryError = handleOutOfMemoryError;
     }
 
     private void init_Generic_BigDecimal() {
@@ -269,7 +272,7 @@ public class GENESIS_Environment
         this._AbstractModel = a_Model;
         this._Time = new GENESIS_Time(_Time);
         this._network_Grid2DSquareCellDoubleFactory = _Grid2DSquareCellDoubleFactory;
-        this._HandleOutOfMemoryError_boolean = handleOutOfMemoryError;
+        this.HandleOutOfMemoryError = handleOutOfMemoryError;
     }
 
     public AbstractTrafficModel getTrafficModel() {
@@ -281,15 +284,18 @@ public class GENESIS_Environment
 
     public Vector_Envelope2D get_reporting_VectorEnvelope2D() {
         if (_reporting_VectorEnvelope2D == null) {
-            BigDecimal[] a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.get_Dimensions(_HandleOutOfMemoryError_boolean);
+            //BigDecimal[] a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.get_Dimensions(HandleOutOfMemoryError);
+            Grids_Dimensions a_Grid2DSquareCell_Dimensions;
+            a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.getDimensions(
+                    HandleOutOfMemoryError);
             Vector_Point2D a_VectorPoint2D = new Vector_Point2D(
                     ve,
-                    a_Grid2DSquareCell_Dimensions[1],
-                    a_Grid2DSquareCell_Dimensions[2]);
+                    a_Grid2DSquareCell_Dimensions.getXMin(),
+                    a_Grid2DSquareCell_Dimensions.getYMin());
             Vector_Point2D b_VectorPoint2D = new Vector_Point2D(
                     ve,
-                    a_Grid2DSquareCell_Dimensions[3],
-                    a_Grid2DSquareCell_Dimensions[4]);
+                    a_Grid2DSquareCell_Dimensions.getXMax(),
+                    a_Grid2DSquareCell_Dimensions.getYMax());
             Vector_Envelope2D a_VectorEnvelope2D = new Vector_Envelope2D(
                     a_VectorPoint2D);
             Vector_Envelope2D b_VectorEnvelope2D = new Vector_Envelope2D(
@@ -1351,7 +1357,7 @@ public class GENESIS_Environment
 
     /**
      * @param handleOutOfMemoryError
-     * @return _Directory
+     * @return Directory
      */
     public File get_Directory(
             boolean handleOutOfMemoryError) {
@@ -1374,10 +1380,10 @@ public class GENESIS_Environment
     }
 
     /**
-     * @return _Directory
+     * @return Directory
      */
     protected File get_Directory() {
-        return _Directory;
+        return Directory;
     }
 
     private static void log(

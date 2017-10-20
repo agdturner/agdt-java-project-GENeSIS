@@ -27,12 +27,11 @@ public class Mapping {
             String _Type,
             Grids_ImageExporter _ImageExporter,
             GENESIS_Environment _Environment) {
-        _ImageExporter.toGreyScaleImage(
-                _Grid2DSquareCell,
+        _ImageExporter.toGreyScaleImage(_Grid2DSquareCell,
                 _Environment.ge.get_Grid2DSquareCellProcessor(),
                 _File,
                 _Type,
-                _Environment._HandleOutOfMemoryError_boolean);
+                _Environment.HandleOutOfMemoryError);
     }
 
     /**
@@ -50,11 +49,11 @@ public class Mapping {
             Grids_ImageExporter _ImageExporter,
             GENESIS_Environment _Environment,
             Object[] _Population) {
-        boolean _HandleOutOfMemoryError = _Environment._HandleOutOfMemoryError_boolean;
+        boolean _HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
         Grids_Grid2DSquareCellDouble _Denisty_Map_Population = (Grids_Grid2DSquareCellDouble) _Environment._reporting_Grid2DSquareCellDoubleFactory.create(
                 _Environment._reporting_Grid2DSquareCellDouble);
-        //long _NRows = _Denisty_Map_Population.get_NRows(_HandleOutOfMemoryError);
-        //long _NCols = _Denisty_Map_Population.get_NCols(_HandleOutOfMemoryError);
+        //long _NRows = _Denisty_Map_Population.getNRows(_HandleOutOfMemoryError);
+        //long _NCols = _Denisty_Map_Population.getNCols(_HandleOutOfMemoryError);
         //long row;
         //long col;
         Iterator _Iterator;
@@ -106,15 +105,15 @@ public class Mapping {
             double _CompositionLatency,
             boolean _HandleOutOfMemoryError) {
         // Divide values by _CompositionLatency
-        long _NRows = _Population_Location_Composite_Map.get_NRows(
+        long _NRows = _Population_Location_Composite_Map.getNRows(
                 _HandleOutOfMemoryError);
-        long _NCols = _Population_Location_Composite_Map.get_NCols(
+        long _NCols = _Population_Location_Composite_Map.getNCols(
                 _HandleOutOfMemoryError);
         long row;
         long col;
         double value;
         double newValue;
-        double _NoDataValue = _Population_Location_Composite_Map.get_NoDataValue(_HandleOutOfMemoryError);
+        double _NoDataValue = _Population_Location_Composite_Map.getNoDataValue(_HandleOutOfMemoryError);
         for (row = 0; row < _NRows; row++) {
             for (col = 0; col < _NCols; col++) {
                 value = _Population_Location_Composite_Map.getCell(
@@ -175,15 +174,15 @@ public class Mapping {
 //            double _CompositionLatency,
 //            boolean _HandleOutOfMemoryError) {
 //        // Divide values by _CompositionLatency
-//        long _NRows = _Population_Location_Composite_Map.get_NRows(
+//        long _NRows = _Population_Location_Composite_Map.getNRows(
 //                _HandleOutOfMemoryError);
-//        long _NCols = _Population_Location_Composite_Map.get_NCols(
+//        long _NCols = _Population_Location_Composite_Map.getNCols(
 //                _HandleOutOfMemoryError);
 //        long row;
 //        long col;
 //        double value;
 //        double newValue;
-//        double _NoDataValue = _Population_Location_Composite_Map.get_NoDataValue(_HandleOutOfMemoryError);
+//        double _NoDataValue = _Population_Location_Composite_Map.getNoDataValue(_HandleOutOfMemoryError);
 //        for (row = 0; row < _NRows; row++) {
 //            for (col = 0; col < _NCols; col++) {
 //                value = _Population_Location_Composite_Map.getCell(

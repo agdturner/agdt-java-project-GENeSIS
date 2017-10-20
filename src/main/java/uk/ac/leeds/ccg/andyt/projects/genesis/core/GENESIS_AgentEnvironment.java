@@ -61,10 +61,10 @@ public class GENESIS_AgentEnvironment
         this._AgentCollectionManager = new GENESIS_AgentCollectionManager(
                 a_GENESIS_Environment,
                 a_GENESIS_AgentEnvironment._AgentCollectionManager);
-//        this._Directory = new File(a_GENESIS_AgentEnvironment._Directory.toString());
+//        this.Directory = new File(a_GENESIS_AgentEnvironment.Directory.toString());
         this._GENESIS_Environment = a_GENESIS_Environment;
 //        //this._Generic_TestMemory no need to set this
-//        this._HandleOutOfMemoryError_boolean = a_GENESIS_AgentEnvironment._HandleOutOfMemoryError_boolean;
+//        this.HandleOutOfMemoryError = a_GENESIS_AgentEnvironment.HandleOutOfMemoryError;
 //        this._PersonFactory = a_GENESIS_AgentEnvironment._PersonFactory;
         //throw new UnsupportedOperationException();
     }
@@ -1476,7 +1476,7 @@ public class GENESIS_AgentEnvironment
 //        }
 //    }
     /**
-     * @return _Directory
+     * @return Directory
      */
     public File get_Directory() {
         return _Directory;

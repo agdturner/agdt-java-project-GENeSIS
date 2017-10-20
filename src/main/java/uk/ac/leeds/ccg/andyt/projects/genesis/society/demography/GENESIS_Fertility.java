@@ -444,7 +444,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             // Run main processing task
             GENESIS_Fertility instance = new GENESIS_Fertility();
             instance.ge = new GENESIS_Environment(directory);
-            instance.ge._Directory = directory;
+            instance.ge.Directory = directory;
             instance.formatData(directory);
             GENESIS_Log.reset();
         } catch (Error e) {
@@ -485,8 +485,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
         ge._Time = new GENESIS_Time(1991, 0);
-        //a_GENESIS_Environment._Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        ge._Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
+        //a_GENESIS_Environment.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
+        ge.Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         ge._Time = new GENESIS_Time(1991, 0);
         String[] a_Filename_String_prefixSuffix = fertilityRate_File.getName().split("\\.");
         GENESIS_Mortality a_Mortality = new GENESIS_Mortality(

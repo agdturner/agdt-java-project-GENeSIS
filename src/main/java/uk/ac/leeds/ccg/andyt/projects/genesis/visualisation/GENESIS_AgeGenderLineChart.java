@@ -171,7 +171,7 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
         File resultsDirectory = new File(
                 workspaceDirectory.getParentFile().toString() + "/data/testXML/");
         GENESIS_Environment a_GENESIS_Environment = new GENESIS_Environment(workspaceDirectory);
-        a_GENESIS_Environment._Directory = workspaceDirectory;
+        a_GENESIS_Environment.Directory = workspaceDirectory;
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         GENESIS_AgeGenderLineChart chart = new GENESIS_AgeGenderLineChart(
                 executorService,

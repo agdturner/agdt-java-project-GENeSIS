@@ -84,17 +84,17 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //                    "Compare_GENESIS_DemographicModel");
 //            theCompare_DemographicModel_Aspatial_File.mkdirs();
 //            long range = 100;
-//            instance._GENESIS_Environment._Directory = theCompare_DemographicModel_Aspatial_File;
-//            if (instance._GENESIS_Environment._Directory.list().length == 0) {
-//                instance._GENESIS_Environment._Directory = Generic_StaticIO.initialiseArchive(
-//                        instance._GENESIS_Environment._Directory, 
+//            instance._GENESIS_Environment.Directory = theCompare_DemographicModel_Aspatial_File;
+//            if (instance._GENESIS_Environment.Directory.list().length == 0) {
+//                instance._GENESIS_Environment.Directory = Generic_StaticIO.initialiseArchive(
+//                        instance._GENESIS_Environment.Directory, 
 //                        range);
 //            } else {
-//                instance._GENESIS_Environment._Directory = Generic_StaticIO.addToArchive(
-//                        instance._GENESIS_Environment._Directory,
+//                instance._GENESIS_Environment.Directory = Generic_StaticIO.addToArchive(
+//                        instance._GENESIS_Environment.Directory,
 //                        range);
 //            }
-//            instance._GENESIS_Environment._Directory.mkdirs();
+//            instance._GENESIS_Environment.Directory.mkdirs();
 //            instance.executorService = instance.getExecutorService();
 //            instance.futures = new HashSet<Future>();
             //            doGenesisSimulatorRun(args,fileSeparator,underscore);
@@ -212,9 +212,8 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //        }
 
         long range = 100L;
-        ge._Directory = comparisonResultsDirectory;
-        ge._Directory = Generic_StaticIO.initialiseArchive(
-                ge._Directory,
+        ge.Directory = comparisonResultsDirectory;
+        ge.Directory = Generic_StaticIO.initialiseArchive(ge.Directory,
                 range);
         executorService = getExecutorService();
         futures = new HashSet<Future>();
@@ -302,17 +301,15 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 "Compare_GENESIS_DemographicModel");
         theCompare_DemographicModel_Aspatial_File.mkdirs();
         long range = 100;
-        ge._Directory = theCompare_DemographicModel_Aspatial_File;
-        if (ge._Directory.list().length == 0) {
-            ge._Directory = Generic_StaticIO.initialiseArchive(
-                    ge._Directory,
+        ge.Directory = theCompare_DemographicModel_Aspatial_File;
+        if (ge.Directory.list().length == 0) {
+            ge.Directory = Generic_StaticIO.initialiseArchive(ge.Directory,
                     range);
         } else {
-            ge._Directory = Generic_StaticIO.addToArchive(
-                    ge._Directory,
+            ge.Directory = Generic_StaticIO.addToArchive(ge.Directory,
                     range);
         }
-        ge._Directory.mkdirs();
+        ge.Directory.mkdirs();
         executorService = getExecutorService();
         futures = new HashSet<Future>();
 
@@ -370,7 +367,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
         // Generate comparison plots
         generateComparisonPlots();
         File comparisonTest_File = new File(
-                ge._Directory,
+                ge.Directory,
                 "comparison.out");
         comparisonTest_PrintWriter = new PrintWriter(comparisonTest_File);
         File bestFile = compare(fileSeparator, underscore);
@@ -428,8 +425,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
         // Initialise Archive for results and create numeric look up for resultsDirectories
         TreeMap<Long, File> areaCode_TreeMap = null;
         try {
-            areaCode_TreeMap = Generic_StaticIO.initialiseArchiveReturnTreeMapLongFile(
-                    ge._Directory,
+            areaCode_TreeMap = Generic_StaticIO.initialiseArchiveReturnTreeMapLongFile(ge.Directory,
                     range,
                     highestLeaf);
         } catch (IOException ex) {
@@ -1914,10 +1910,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 a_FemaleDirectory_File,
                 "_");
         GENESIS_FemaleCollection a_LastLivingFemaleCollection =
-                a_GENESIS_AgentCollectionManager.getFemaleCollection(
-                aIndexOfLastLivingFemaleCollection,
+                a_GENESIS_AgentCollectionManager.getFemaleCollection(aIndexOfLastLivingFemaleCollection,
                 GENESIS_Person.getTypeLivingFemale_String(),
-                _HandleOutOfMemoryError);
+                HandleOutOfMemoryError);
         a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
                 a_LastLivingFemaleCollection.getMaxAgentID();
 
@@ -1932,10 +1927,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 a_MaleDirectory_File,
                 "_");
         GENESIS_MaleCollection a_LastLivingMaleCollection =
-                a_GENESIS_AgentCollectionManager.getMaleCollection(
-                aIndexOfLastLivingMaleCollection,
+                a_GENESIS_AgentCollectionManager.getMaleCollection(aIndexOfLastLivingMaleCollection,
                 GENESIS_Person.getTypeLivingMale_String(),
-                _HandleOutOfMemoryError);
+                HandleOutOfMemoryError);
         a_GENESIS_AgentCollectionManager._IndexOfLastBornMale =
                 a_LastLivingMaleCollection.getMaxAgentID();
 
@@ -1957,10 +1951,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 b_FemaleDirectory_File,
                 "_");
         GENESIS_FemaleCollection b_LastLivingFemaleCollection =
-                b_GENESIS_AgentCollectionManager.getFemaleCollection(
-                bIndexOfLastLivingFemaleCollection,
+                b_GENESIS_AgentCollectionManager.getFemaleCollection(bIndexOfLastLivingFemaleCollection,
                 GENESIS_Person.getTypeLivingFemale_String(),
-                _HandleOutOfMemoryError);
+                HandleOutOfMemoryError);
         b_GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
                 b_LastLivingFemaleCollection.getMaxAgentID();
 
@@ -1975,10 +1968,9 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
                 b_MaleDirectory_File,
                 "_");
         GENESIS_MaleCollection b_LastLivingMaleCollection =
-                b_GENESIS_AgentCollectionManager.getMaleCollection(
-                bIndexOfLastLivingMaleCollection,
+                b_GENESIS_AgentCollectionManager.getMaleCollection(bIndexOfLastLivingMaleCollection,
                 GENESIS_Person.getTypeLivingMale_String(),
-                _HandleOutOfMemoryError);
+                HandleOutOfMemoryError);
         b_GENESIS_AgentCollectionManager._IndexOfLastBornMale =
                 b_LastLivingMaleCollection.getMaxAgentID();
 
@@ -2214,22 +2206,18 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
             GENESIS_Male a_GENESIS_Male;
             GENESIS_Male b_GENESIS_Male;
             for (long a_ID = 0L; a_ID < b_GENESIS_AgentCollectionManager._IndexOfLastBornMale; a_ID++) {
-                a_GENESIS_Male = a_GENESIS_AgentCollectionManager.getMale(
-                        a_ID,
+                a_GENESIS_Male = a_GENESIS_AgentCollectionManager.getMale(a_ID,
                         GENESIS_Person.getTypeLivingMale_String(),
-                        _HandleOutOfMemoryError);
-                b_GENESIS_Male = b_GENESIS_AgentCollectionManager.getMale(
-                        a_ID, GENESIS_Person.getTypeLivingMale_String(), _HandleOutOfMemoryError);
+                        HandleOutOfMemoryError);
+                b_GENESIS_Male = b_GENESIS_AgentCollectionManager.getMale(a_ID, GENESIS_Person.getTypeLivingMale_String(), HandleOutOfMemoryError);
                 if (a_GENESIS_Male == null) {
                     if (b_GENESIS_Male == null) {
-                        a_GENESIS_Male = a_GENESIS_AgentCollectionManager.getMale(
-                                a_ID,
+                        a_GENESIS_Male = a_GENESIS_AgentCollectionManager.getMale(a_ID,
                                 GENESIS_Person.getTypeDeadMale_String(),
-                                _HandleOutOfMemoryError);
-                        b_GENESIS_Male = b_GENESIS_AgentCollectionManager.getMale(
-                                a_ID,
+                                HandleOutOfMemoryError);
+                        b_GENESIS_Male = b_GENESIS_AgentCollectionManager.getMale(a_ID,
                                 GENESIS_Person.getTypeDeadMale_String(),
-                                _HandleOutOfMemoryError);
+                                HandleOutOfMemoryError);
                     } else {
                         resultsTheSame = false;
                     }
@@ -2250,16 +2238,12 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
             GENESIS_Female a_GENESIS_Female;
             GENESIS_Female b_GENESIS_Female;
             for (long a_ID = 0L; a_ID < b_GENESIS_AgentCollectionManager._IndexOfLastBornFemale; a_ID++) {
-                a_GENESIS_Female = a_GENESIS_AgentCollectionManager.getFemale(
-                        a_ID, GENESIS_Person.getTypeLivingFemale_String(), _HandleOutOfMemoryError);
-                b_GENESIS_Female = b_GENESIS_AgentCollectionManager.getFemale(
-                        a_ID, GENESIS_Person.getTypeLivingFemale_String(), _HandleOutOfMemoryError);
+                a_GENESIS_Female = a_GENESIS_AgentCollectionManager.getFemale(a_ID, GENESIS_Person.getTypeLivingFemale_String(), HandleOutOfMemoryError);
+                b_GENESIS_Female = b_GENESIS_AgentCollectionManager.getFemale(a_ID, GENESIS_Person.getTypeLivingFemale_String(), HandleOutOfMemoryError);
                 if (a_GENESIS_Female == null) {
                     if (b_GENESIS_Female == null) {
-                        a_GENESIS_Female = a_GENESIS_AgentCollectionManager.getFemale(
-                                a_ID, GENESIS_Person.getTypeDeadFemale_String(), _HandleOutOfMemoryError);
-                        b_GENESIS_Female = b_GENESIS_AgentCollectionManager.getFemale(
-                                a_ID, GENESIS_Person.getTypeDeadFemale_String(), _HandleOutOfMemoryError);
+                        a_GENESIS_Female = a_GENESIS_AgentCollectionManager.getFemale(a_ID, GENESIS_Person.getTypeDeadFemale_String(), HandleOutOfMemoryError);
+                        b_GENESIS_Female = b_GENESIS_AgentCollectionManager.getFemale(a_ID, GENESIS_Person.getTypeDeadFemale_String(), HandleOutOfMemoryError);
                     } else {
                         resultsTheSame = false;
                     }

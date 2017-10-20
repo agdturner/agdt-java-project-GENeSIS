@@ -2422,21 +2422,19 @@ public class GENESIS_Demographics implements Serializable {
         Object[] result = new Object[2];
         HashSet<Long> alive_female_HashSet = new HashSet<Long>();
         HashSet<Long> alive_male_HashSet = new HashSet<Long>();
-        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(_GENESIS_Environment._HandleOutOfMemoryError_boolean);
+        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(_GENESIS_Environment.HandleOutOfMemoryError);
         for (long a_Agent_ID = 0; a_Agent_ID < a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale; a_Agent_ID++) {
-            GENESIS_Female a_Female = (GENESIS_Female) a_GENESIS_AgentCollectionManager.getFemale(
-                    a_Agent_ID,
+            GENESIS_Female a_Female = (GENESIS_Female) a_GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                     GENESIS_Person.getTypeLivingFemale_String(),
-                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                    _GENESIS_Environment.HandleOutOfMemoryError);
             if (a_Female.isAlive(a_Time)) {
                 alive_female_HashSet.add(a_Agent_ID);
             }
         }
         for (long a_Agent_ID = 0; a_Agent_ID < a_GENESIS_AgentCollectionManager._IndexOfLastBornMale; a_Agent_ID++) {
-            GENESIS_Male a_Male = (GENESIS_Male) a_GENESIS_AgentCollectionManager.getMale(
-                    a_Agent_ID,
+            GENESIS_Male a_Male = (GENESIS_Male) a_GENESIS_AgentCollectionManager.getMale(a_Agent_ID,
                     GENESIS_Person.getTypeLivingMale_String(),
-                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+                    _GENESIS_Environment.HandleOutOfMemoryError);
             if (a_Male.isAlive(a_Time)) {
                 alive_female_HashSet.add(a_Agent_ID);
             }

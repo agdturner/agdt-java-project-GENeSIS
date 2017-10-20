@@ -83,13 +83,11 @@ public class GENESIS_Male extends GENESIS_Person {
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
         ge = a_GENESIS_Environment;
         _GENESIS_AgentCollectionManager = a_GENESIS_AgentCollectionManager;
-        _ID = a_GENESIS_AgentCollectionManager.get_NextMaleID(
-                ge._HandleOutOfMemoryError_boolean);
+        _ID = a_GENESIS_AgentCollectionManager.get_NextMaleID(ge.HandleOutOfMemoryError);
         _Type = getTypeLivingMale_String();
-        _Collection_ID = a_GENESIS_AgentCollectionManager.getMaleCollection_ID(
-                _ID,
+        _Collection_ID = a_GENESIS_AgentCollectionManager.getMaleCollection_ID(_ID,
                 _Type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         Generic_StaticIO.addToArchive(
                 _GENESIS_AgentCollectionManager.getLivingMaleDirectory(),
                 _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,

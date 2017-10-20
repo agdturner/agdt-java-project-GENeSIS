@@ -17,19 +17,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
 import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
-import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Agent;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollectionManager;
-import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_FemaleCollection;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_MaleCollection;
 import uk.ac.leeds.ccg.andyt.projects.genesis.geotools.GTMisc;
-import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollection;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Male;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_PersonFactory;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Person;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataRecord;
+import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Envelope2D;
 import uk.ac.leeds.ccg.andyt.vector.visualisation.VectorImageManipulation;
 import uk.ac.leeds.ccg.andyt.vector.visualisation.VectorOverlayComponent_Network2D;
@@ -257,17 +255,15 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
     protected GENESIS_Female getFemale(
             Long a_Agent_ID,
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
-        return a_GENESIS_FemaleCollection.getFemale(
-                a_Agent_ID,
-                ge._HandleOutOfMemoryError_boolean);
+        return a_GENESIS_FemaleCollection.getFemale(a_Agent_ID,
+                ge.HandleOutOfMemoryError);
     }
 
     protected GENESIS_Male getMale(
             Long a_Agent_ID,
             GENESIS_MaleCollection a_GENESIS_MaleCollection) {
-        return a_GENESIS_MaleCollection.getMale(
-                a_Agent_ID,
-                ge._HandleOutOfMemoryError_boolean);
+        return a_GENESIS_MaleCollection.getMale(a_Agent_ID,
+                ge.HandleOutOfMemoryError);
     }
 
     public GENESIS_Female getFemale(
@@ -346,9 +342,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
             HashSet<Vector_Network2D> a_Network2D_HashSet,
             File a_Directory) {
-        boolean handleOutOfMemoryError = ge._HandleOutOfMemoryError_boolean;
-        int width = (int) a_Grid2DSquareCell.get_NCols(handleOutOfMemoryError);
-        int height = (int) a_Grid2DSquareCell.get_NRows(handleOutOfMemoryError);
+        boolean handleOutOfMemoryError = ge.HandleOutOfMemoryError;
+        int width = (int) a_Grid2DSquareCell.getNCols(handleOutOfMemoryError);
+        int height = (int) a_Grid2DSquareCell.getNRows(handleOutOfMemoryError);
         String time_String = ge._Time.toString();
         Grids_ImageExporter aImageExporter = new Grids_ImageExporter(ge.ge);
         //String type = "PNG";
@@ -356,12 +352,11 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
         File file = new File(
                 a_Directory,
                 time_String + "." + type);
-        aImageExporter.toGreyScaleImage(
-                a_Grid2DSquareCell,
+        aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
                 ge.ge.get_Grid2DSquareCellProcessor(),
                 file,
                 type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         VectorRenderNetwork2D a_RenderNetwork2D = new VectorRenderNetwork2D(
                 new JFrame(),
                 width,
@@ -422,8 +417,8 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             HashSet<Vector_Network2D> a_Network2D_HashSet,
             Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
             File a_Directory) {
-        int width = (int) a_Grid2DSquareCell.get_NCols(ge._HandleOutOfMemoryError_boolean);
-        int height = (int) a_Grid2DSquareCell.get_NRows(ge._HandleOutOfMemoryError_boolean);
+        int width = (int) a_Grid2DSquareCell.getNCols(ge.HandleOutOfMemoryError);
+        int height = (int) a_Grid2DSquareCell.getNRows(ge.HandleOutOfMemoryError);
         String time_String = ge._Time.toString();
         Grids_ImageExporter aImageExporter = new Grids_ImageExporter(ge.ge);
         //String type = "PNG";
@@ -431,12 +426,11 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
         File file = new File(
                 a_Directory,
                 time_String + "." + type);
-        aImageExporter.toGreyScaleImage(
-                a_Grid2DSquareCell,
+        aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
                 ge.ge.get_Grid2DSquareCellProcessor(),
                 file,
                 type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         VectorRenderNetwork2D a_RenderNetwork2D = new VectorRenderNetwork2D(
                 new JFrame(),
                 width,
@@ -499,23 +493,22 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
     public void visualiseNetworkOnGrid1(
             Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
             Vector_Envelope2D a_VectorEnvelope) {
-        int width = (int) a_Grid2DSquareCell.get_NCols(true);
-        int height = (int) a_Grid2DSquareCell.get_NRows(true);
+        int width = (int) a_Grid2DSquareCell.getNCols(true);
+        int height = (int) a_Grid2DSquareCell.getNRows(true);
         String a_Time_toString = ge._Time.toString();
         String type = "PNG";
         File directory = new File(
-                ge._Directory,
+                ge.Directory,
                 "PopulationDensityGrid");
         directory.mkdir();
         File file = new File(
                 directory,
                 a_Time_toString + "." + type);
-        _ImageExporter.toGreyScaleImage(
-                a_Grid2DSquareCell,
+        _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
                 ge.ge.get_Grid2DSquareCellProcessor(),
                 file,
                 type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         JFrame a_JFrame = new JFrame();
         RenderNetwork2D_Environment a_RenderNetwork2D = new RenderNetwork2D_Environment(
                 ge,
@@ -568,7 +561,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 height);
         try {
             directory = new File(
-                    ge._Directory,
+                    ge.Directory,
                     "NetworkOnPopulationDensityGrid");
             directory.mkdir();
             file = new File(
@@ -601,23 +594,22 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             HashSet<Vector_Network2D> a_Network2D_HashSet,
             Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
             Vector_Envelope2D a_VectorEnvelope) {
-        int width = (int) a_Grid2DSquareCell.get_NCols(true);
-        int height = (int) a_Grid2DSquareCell.get_NRows(true);
+        int width = (int) a_Grid2DSquareCell.getNCols(true);
+        int height = (int) a_Grid2DSquareCell.getNRows(true);
         String a_Time_toString = ge._Time.toString();
         String type = "PNG";
         File directory = new File(
-                ge._Directory,
+                ge.Directory,
                 "PopulationDensityGrid");
         directory.mkdir();
         File file = new File(
                 directory,
                 a_Time_toString + "." + type);
-        _ImageExporter.toGreyScaleImage(
-                a_Grid2DSquareCell,
+        _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
                 ge.ge.get_Grid2DSquareCellProcessor(),
                 file,
                 type,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
         JFrame a_JFrame = new JFrame();
         VectorRenderNetwork2D a_RenderNetwork2D = new VectorRenderNetwork2D(
                 a_JFrame,
@@ -670,7 +662,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 height);
         try {
             directory = new File(
-                    ge._Directory,
+                    ge.Directory,
                     "NetworkOnPopulationDensityGrid");
             directory.mkdir();
             file = new File(
@@ -738,11 +730,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             //}
             counter++;
             a_Agent_ID = a_Iterator.next();
-            a_Person = getFemale(
-                    a_Agent_ID, ge._HandleOutOfMemoryError_boolean);
-            a_Person.move(
-                    tollerance,
-                    ge._HandleOutOfMemoryError_boolean);
+            a_Person = getFemale(a_Agent_ID, ge.HandleOutOfMemoryError);
+            a_Person.move(tollerance,
+                    ge.HandleOutOfMemoryError);
 //
 //            // Set speeds
 //            if (_GENESIS_Environment._Time._SecondOfDay < a_Person._Work_Time[0]._SecondOfDay ||
@@ -769,10 +759,10 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //            BigDecimal distance0_BigDecimal = new BigDecimal(distance);
 //            long row = _AggregatePopulationDensity_Grid2DSquareCellDouble.getCellRowIndex(
 //                    a_Person._Point2D._y,
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            long col = _AggregatePopulationDensity_Grid2DSquareCellDouble.getCellColIndex(
 //                    a_Person._Point2D._x,
-//                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            while (distance > 0 && !movementDone) {
 //                Vector_LineSegment2D a_LineSegment2D = new Vector_LineSegment2D(
 //                        a_Person._Point2D,
@@ -786,10 +776,10 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                 * | 5 | 4 | 3 |
 //                 * +---+---+---+
 //                 */
-//                BigDecimal[] a_CellBounds = _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellBounds_BigDecimalArray(
+//                BigDecimal[] a_CellBounds = _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellDimensions(
 //                        row,
 //                        col,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                int cellBoundaryIntersect = StaticGrids.getCellBoundaryIntersect(
 //                        a_LineSegment2D,
 //                        a_CellBounds,
@@ -857,7 +847,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                                            a_Person._Point2D,
 //                                            distance0_BigDecimal,
 //                                            Vector_Point2D.DefaultDecimalPlacePrecision,
-//                                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                                    a_Person.setMovement();
 //                                } else {
 //                                    a_Person._Heading_Point2D = nextConnection._Point2D;
@@ -874,7 +864,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                                    row,
 //                                    col,
 //                                    distanceToHeading,
-//                                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                                    _GENESIS_Environment.HandleOutOfMemoryError);
 //                        }
 //                    } else {
 //                        /*
@@ -889,7 +879,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                                row,
 //                                col,
 //                                distance,
-//                                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                                _GENESIS_Environment.HandleOutOfMemoryError);
 //                        distance = 0;
 //                        movementDone = true;
 //                    }
@@ -960,7 +950,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                            row0,
 //                            col0,
 //                            distanceTravelledInCell,
-//                            _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                }
 //            }
         }
@@ -976,10 +966,8 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             Vector_Point2D a_Point2D) {
         Vector_Point2D result_Point2D;
         Vector_Point2D b_Point2D;
-        long aRowIndex = ge._network_Grid2DSquareCellDouble.getCellRowIndex(
-                a_Point2D._y, ge._HandleOutOfMemoryError_boolean);
-        long aColIndex = ge._network_Grid2DSquareCellDouble.getCellColIndex(
-                a_Point2D._x, ge._HandleOutOfMemoryError_boolean);
+        long aRowIndex = ge._network_Grid2DSquareCellDouble.getCellRowIndex(a_Point2D._y, ge.HandleOutOfMemoryError);
+        long aColIndex = ge._network_Grid2DSquareCellDouble.getCellColIndex(a_Point2D._x, ge.HandleOutOfMemoryError);
         long resultRowIndex = 0L;
         long resultColIndex = 0L;
         do {
@@ -1034,18 +1022,15 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                     break;
 
             }
-        } while (!ge._network_Grid2DSquareCellDouble.isInGrid(
-                resultRowIndex,
+        } while (!ge._network_Grid2DSquareCellDouble.isInGrid(resultRowIndex,
                 resultColIndex,
-                ge._HandleOutOfMemoryError_boolean));
+                ge.HandleOutOfMemoryError));
         return new Vector_Point2D(
                 a_Point2D._Vector_Environment,
-                ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(
-                        resultColIndex,
-                        ge._HandleOutOfMemoryError_boolean),
-                ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(
-                        resultRowIndex,
-                        ge._HandleOutOfMemoryError_boolean));
+                ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(resultColIndex,
+                        ge.HandleOutOfMemoryError),
+                ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(resultRowIndex,
+                        ge.HandleOutOfMemoryError));
     }
 
     /**
@@ -1067,11 +1052,11 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                a_Northing);
 //        double a_x = ((a_LatLon[1] - _GENESIS_Environment._XMin_double) * (double) _NCols) / _GENESIS_Environment._XRange_double;
 //        double a_y = ((a_LatLon[0] - _GENESIS_Environment._YMin_double) * (double) _NRows) / _GENESIS_Environment._YRange_double;
-//        long a_row = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_y, _GENESIS_Environment._HandleOutOfMemoryError_boolean);
-//        long a_col = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_x, _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//        long a_row = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_y, _GENESIS_Environment.HandleOutOfMemoryError);
+//        long a_col = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_x, _GENESIS_Environment.HandleOutOfMemoryError);
 //        result = new Vector_Point2D(
-//                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellXBigDecimal(a_col, _GENESIS_Environment._HandleOutOfMemoryError_boolean),
-//                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellYBigDecimal(a_row, _GENESIS_Environment._HandleOutOfMemoryError_boolean),
+//                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellXBigDecimal(a_col, _GENESIS_Environment.HandleOutOfMemoryError),
+//                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellYBigDecimal(a_row, _GENESIS_Environment.HandleOutOfMemoryError),
 //                a_DecimalPlacePrecision);
 //        return result;
 //    }
@@ -1106,7 +1091,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                        row,
 //                        col,
 //                        accessibility,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //            }
 //
 //        }
@@ -1119,7 +1104,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                        row,
 //                        col,
 //                        resourceGridCellInitial_double,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //            }
 //        }
 //    }
@@ -1132,10 +1117,10 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //        for (int i = 0; i
 //                < number; i++) {
 //            cellRowIndex = _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(
-//                    _GENESIS_Environment._Random, _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment._Random, _GENESIS_Environment.HandleOutOfMemoryError);
 //            cellColIndex =
 //                    _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellColIndex(
-//                    _GENESIS_Environment._Random, _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                    _GENESIS_Environment._Random, _GENESIS_Environment.HandleOutOfMemoryError);
 //        }
 //    }
 //
@@ -1147,14 +1132,14 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
 //                resource = _Resources_Grid2DSquareCellDouble.getCell(
 //                        row,
 //                        col,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                resource += resourceGridCellRecovery_double;
 //                resource = Math.min(resource, resourceGridCellMax_double);
 //                _Resources_Grid2DSquareCellDouble.setCell(
 //                        row,
 //                        col,
 //                        resource,
-//                        _GENESIS_Environment._HandleOutOfMemoryError_boolean);
+//                        _GENESIS_Environment.HandleOutOfMemoryError);
 //            }
 //        }
 //    }
@@ -1162,7 +1147,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             GENESIS_Person aPerson,
             long aPersonPoint2DRowIndex,
             long aPersonPoint2DColIndex,
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCellDouble,
+            Grids_AbstractGrid2DSquareCell g,
             int a_DecimalPlacePrecision) {
         Vector_Environment ve;
         ve = new Vector_Environment();
@@ -1171,47 +1156,55 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
         Vector_Point2D result_Point2D = null;
         long nextCellRowIndex = aPersonPoint2DRowIndex;
         long nextCellColIndex = aPersonPoint2DColIndex;
-        BigDecimal[] cellBounds_BigDecimalArray = a_Grid2DSquareCellDouble.getCellBounds_BigDecimalArray(
+        Grids_Dimensions dimensions;
+        dimensions = g.getDimensions(HandleOutOfMemoryError);
+        
+        Grids_Dimensions cellDimensions = g.getCellDimensions(
+                dimensions.getHalfCellsize(),
                 aPersonPoint2DRowIndex,
                 aPersonPoint2DColIndex,
-                ge._HandleOutOfMemoryError_boolean);
+                ge.HandleOutOfMemoryError);
+        BigDecimal xMin = cellDimensions.getXMin();
+        BigDecimal yMin = cellDimensions.getYMin();
+        BigDecimal xMax = cellDimensions.getXMax();
+        BigDecimal yMax = cellDimensions.getYMax();
         // Create lines
         Vector_LineSegment2D xmin_LineSegment2D = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[0],
-                        cellBounds_BigDecimalArray[1]),
+                        xMin,
+                        yMin),
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[0],
-                        cellBounds_BigDecimalArray[3]));
+                        xMin,
+                        yMax));
         Vector_LineSegment2D xmax_LineSegment2D = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[2],
-                        cellBounds_BigDecimalArray[1]),
+                        xMax,
+                        xMin),
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[2],
-                        cellBounds_BigDecimalArray[3]));
+                        xMax,
+                        yMax));
         Vector_LineSegment2D ymin_LineSegment2D = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[0],
-                        cellBounds_BigDecimalArray[1]),
+                        xMin,
+                        yMin),
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[2],
-                        cellBounds_BigDecimalArray[1]));
+                        xMax,
+                        yMin));
         Vector_LineSegment2D ymax_LineSegment2D = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[0],
-                        cellBounds_BigDecimalArray[3]),
+                        xMin,
+                        yMax),
                 new Vector_Point2D(
                         ve,
-                        cellBounds_BigDecimalArray[2],
-                        cellBounds_BigDecimalArray[3]));
+                        xMax,
+                        yMax));
         // heading
         Vector_LineSegment2D heading_LineSegment2D = new Vector_LineSegment2D(
                 aPerson._Point2D,

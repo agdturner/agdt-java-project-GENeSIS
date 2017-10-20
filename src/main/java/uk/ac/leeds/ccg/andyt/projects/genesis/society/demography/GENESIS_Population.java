@@ -536,7 +536,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                     theGENESISDir,
                     "workspace");
             ge = new GENESIS_Environment(theGENESISDir);
-            ge._Directory = theGENESISWorkspace;
+            ge.Directory = theGENESISWorkspace;
             File theGENESISUKCensusDataDir = new File(
                     theGENESISWorkspace,
                     "UKCensusData");
@@ -666,7 +666,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                     theGENESISDir,
                     "workspace");
             ge = new GENESIS_Environment(theGENESISDir);
-            ge._Directory = theGENESISWorkspace;
+            ge.Directory = theGENESISWorkspace;
             File theGENESISUKCensusDataDir = new File(
                     theGENESISWorkspace,
                     "2001UKCensusDataTest");

@@ -734,7 +734,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                     logname);
             GENESIS_Environment _GENESIS_Environment =
                     new GENESIS_Environment(directory);
-            _GENESIS_Environment._Directory = directory;
+            _GENESIS_Environment.Directory = directory;
             _GENESIS_Environment._Time = new GENESIS_Time(CommonFactory.newTime(2001L));
             GENESIS_Migration instance = new GENESIS_Migration(
                     _GENESIS_Environment);
@@ -753,7 +753,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
     public void run() {
 //       init();
         File dir = new File(
-                ge._Directory,
+                ge.Directory,
                 "InputData");
         dir = new File(
                 dir,
@@ -794,7 +794,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
     public void runTest() {
 //       init();
         File dir = new File(
-                ge._Directory,
+                ge.Directory,
                 "InputData");
         dir = new File(
                 dir,
@@ -2606,7 +2606,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             String result = originRegionID;
             TreeMap<String, GENESIS_Population> destinationMap;
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(originRegionID);
-            destinationMap = getCumulativeSumRescaledRegionOutMigration(ge._HandleOutOfMemoryError_boolean).get(originRegionID);
+            destinationMap = getCumulativeSumRescaledRegionOutMigration(ge.HandleOutOfMemoryError).get(originRegionID);
             BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
                     random,
                     decimalPlaces,
@@ -2640,7 +2640,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         BigDecimal result;
         String regionID = female.getRegionID();
         //GENESIS_Population pop = regionOutMigrationRates.get(regionID);
-        GENESIS_Population pop = getRegionOutMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
+        GENESIS_Population pop = getRegionOutMigrationRates(ge.HandleOutOfMemoryError).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2656,7 +2656,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         BigDecimal result;
         String regionID = male.getRegionID();
         //GENESIS_Population pop = regionOutMigrationRates.get(regionID);
-        GENESIS_Population pop = getRegionOutMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
+        GENESIS_Population pop = getRegionOutMigrationRates(ge.HandleOutOfMemoryError).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2675,7 +2675,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         BigDecimal result;
         String regionID = female.getRegionID();
         //GENESIS_Population rate = regionInMigrationRates.get(regionID).get(regionID);
-        GENESIS_Population rate = getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
+        GENESIS_Population rate = getRegionInMigrationRates(ge.HandleOutOfMemoryError).get(regionID).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2714,7 +2714,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         BigDecimal result;
         String regionID = male.getRegionID();
         //GENESIS_Population rate = regionInMigrationRates.get(regionID).get(regionID);
-        GENESIS_Population rate = getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(regionID);
+        GENESIS_Population rate = getRegionInMigrationRates(ge.HandleOutOfMemoryError).get(regionID).get(regionID);
         GENESIS_AgeBound containingAgeBound;
         containingAgeBound = GENESIS_AgeBound.getContainingAgeBound(
                 ageBound,
@@ -2747,13 +2747,13 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
     public GENESIS_Population getDailyInMigrationRate(
             String regionID) {
         //return regionInMigrationRates.get(regionID).get(RestOfUK_String);
-        return getRegionInMigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID).get(RestOfUK_String);
+        return getRegionInMigrationRates(ge.HandleOutOfMemoryError).get(regionID).get(RestOfUK_String);
     }
 
     public GENESIS_Population getDailyImmigrationRate(
             String regionID) {
         //return immigrationRates.get(regionID);
-        return getImmigrationRates(ge._HandleOutOfMemoryError_boolean).get(regionID);
+        return getImmigrationRates(ge.HandleOutOfMemoryError).get(regionID);
     }
 
     public File getDirectory(boolean handleOutOfMemoryError) {

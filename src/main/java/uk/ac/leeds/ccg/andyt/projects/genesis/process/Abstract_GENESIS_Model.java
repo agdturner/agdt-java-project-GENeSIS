@@ -34,7 +34,7 @@ public abstract class Abstract_GENESIS_Model extends GENESIS_Object implements S
     protected Random[] _RandomArray;
     public File _Directory;
     public File _ResultDataDirectory_File;
-    public boolean _HandleOutOfMemoryError;
+    public boolean HandleOutOfMemoryError;
     public Grids_ImageExporter _ImageExporter;
     protected transient ExecutorService executorService;
 
@@ -128,7 +128,7 @@ public abstract class Abstract_GENESIS_Model extends GENESIS_Object implements S
 //        _GENESIS_Environment._AbstractModel._GENESIS_Log = new GENESIS_Log(
 //                _GENESIS_Environment,
 //                GENESIS_Log.GENESIS_DefaultLogLevel,
-//                _GENESIS_Environment._Directory, 
+//                _GENESIS_Environment.Directory, 
 //                GENESIS_Log.GENESIS_DefaultLoggerName);
         ge._GENESIS_AgentEnvironment._GENESIS_Environment = a_GENESIS_Environment;
         _GENESIS_AgentCollectionManager = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse);

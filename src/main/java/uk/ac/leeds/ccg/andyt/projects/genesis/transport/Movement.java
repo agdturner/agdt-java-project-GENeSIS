@@ -142,8 +142,8 @@ public class Movement implements Serializable {
 //            double a_Lon,
 //            int a_DecimalPlacePrecision) {
 //        Vector_Point2D result;
-//        long a_NCols = _Environment._network_Grid2DSquareCellDouble.get_NCols(true);
-//        long a_NRows = _Environment._network_Grid2DSquareCellDouble.get_NRows(true);
+//        long a_NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(true);
+//        long a_NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(true);
 //        double a_x = ((a_Lon - _Environment._XMin_double) * (double) a_NCols) / _Environment._XRange_double;
 //        double a_y = ((a_Lat - _Environment._YMin_double) * (double) a_NRows) / _Environment._YRange_double;
 //        long a_row = this._Environment._network_Grid2DSquareCellDouble.getCellRowIndex(a_y, _Environment._HandleOutOfMemoryError_boolean);
@@ -426,8 +426,8 @@ public class Movement implements Serializable {
             Vector_Point2D destination_Point2D,
             GENESIS_Environment _Environment) {
         boolean _HandleOutOfMemoryError_boolean = _Environment._HandleOutOfMemoryError_boolean;
-        //long _NRows = _Environment._network_Grid2DSquareCellDouble.get_NRows(_HandleOutOfMemoryError_boolean);
-        //long _NCols = _Environment._network_Grid2DSquareCellDouble.get_NCols(_HandleOutOfMemoryError_boolean);
+        //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(_HandleOutOfMemoryError_boolean);
+        //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(_HandleOutOfMemoryError_boolean);
         long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(
                 origin_Point2D._y, _HandleOutOfMemoryError_boolean);
         long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(
@@ -479,8 +479,8 @@ public class Movement implements Serializable {
         }
 
         boolean _HandleOutOfMemoryError_boolean = _Environment._HandleOutOfMemoryError_boolean;
-        //long _NRows = _Environment._network_Grid2DSquareCellDouble.get_NRows(_HandleOutOfMemoryError_boolean);
-        //long _NCols = _Environment._network_Grid2DSquareCellDouble.get_NCols(_HandleOutOfMemoryError_boolean);
+        //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(_HandleOutOfMemoryError_boolean);
+        //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(_HandleOutOfMemoryError_boolean);
         long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(
                 origin_Point2D._y,
                 _HandleOutOfMemoryError_boolean);
@@ -692,8 +692,8 @@ public class Movement implements Serializable {
         boolean _HandleOutOfMemoryError_boolean = _Environment._HandleOutOfMemoryError_boolean;
         Vector_Point2D result;
 
-        long _NRows = _Environment._network_Grid2DSquareCellDouble.get_NRows(_HandleOutOfMemoryError_boolean);
-        long _NCols = _Environment._network_Grid2DSquareCellDouble.get_NCols(_HandleOutOfMemoryError_boolean);
+        long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(_HandleOutOfMemoryError_boolean);
+        long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(_HandleOutOfMemoryError_boolean);
         long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(
                 _Point2D._y, _HandleOutOfMemoryError_boolean);
         long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(_Point2D._x, _HandleOutOfMemoryError_boolean);
