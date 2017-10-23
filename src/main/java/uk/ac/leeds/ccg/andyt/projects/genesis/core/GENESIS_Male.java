@@ -13,17 +13,20 @@ import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 
 public class GENESIS_Male extends GENESIS_Person {
 
-    protected transient GENESIS_MaleCollection _GENESIS_MaleCollection;
+    /**
+     * The main collection within which this is stored.
+     */
+    protected transient GENESIS_MaleCollection Males;
 
     private GENESIS_Male() {
     }
 
     protected GENESIS_Male(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager,
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm,
             GENESIS_Age age) {
-        this(a_GENESIS_Environment,
-             a_GENESIS_AgentCollectionManager,
+        this(ge,
+             acm,
              null,
              age,
              null,
@@ -31,12 +34,12 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     protected GENESIS_Male(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager,
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm,
             GENESIS_Age age,
             Household household) {
-        this(a_GENESIS_Environment,
-             a_GENESIS_AgentCollectionManager,
+        this(ge,
+             acm,
              null,
              age,
             household,
@@ -44,13 +47,13 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     protected GENESIS_Male(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager,
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm,
             GENESIS_Age age,
             Household household,
             Vector_Point2D point2D) {
-        this(a_GENESIS_Environment,
-             a_GENESIS_AgentCollectionManager,
+        this(ge,
+             acm,
              null,
              age,
              household,
@@ -58,44 +61,44 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     protected GENESIS_Male(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager,
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm,
             File directory,
             GENESIS_Age age,
             Household household,
             Vector_Point2D point2D) {
-        init(
-              a_GENESIS_Environment,
-             a_GENESIS_AgentCollectionManager,
-             _Directory,
+        super(ge);
+        init(ge,
+             acm,
+             directory,
              age,
              household,
              point2D);
     }
 
     protected final void init(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager,
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm,
             File directory,
             GENESIS_Age age,
             Household household,
             Vector_Point2D point2D) {
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
-        ge = a_GENESIS_Environment;
-        _GENESIS_AgentCollectionManager = a_GENESIS_AgentCollectionManager;
-        _ID = a_GENESIS_AgentCollectionManager.get_NextMaleID(ge.HandleOutOfMemoryError);
-        _Type = getTypeLivingMale_String();
-        _Collection_ID = a_GENESIS_AgentCollectionManager.getMaleCollection_ID(_ID,
-                _Type,
+        ge = ge;
+        AgentCollectionManager = acm;
+        _ID = acm.get_NextMaleID(ge.HandleOutOfMemoryError);
+        Type = getTypeLivingMale_String();
+        _Collection_ID = acm.getMaleCollection_ID(_ID,
+                Type,
                 ge.HandleOutOfMemoryError);
         Generic_StaticIO.addToArchive(
-                _GENESIS_AgentCollectionManager.getLivingMaleDirectory(),
-                _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,
+                AgentCollectionManager.getLivingMaleDirectory(),
+                AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,
                 _Collection_ID);
-        this._GENESIS_MaleCollection = get_MaleCollection();
-        this._GENESIS_MaleCollection.get_Agent_ID_Agent_HashMap().put(_ID, this);
+        this.Males = get_MaleCollection();
+        this.Males.getAgentID_Agent_Map().put(_ID, this);
         this._Directory = directory;
-        this._Age = new GENESIS_Age(age, a_GENESIS_Environment);
+        this._Age = new GENESIS_Age(age, ge);
         this._Family = new Family(this);
         if (_Household != null) {
             this._Household = household;
@@ -105,7 +108,7 @@ public class GENESIS_Male extends GENESIS_Person {
             this._Point2D = point2D;
             this._Previous_Point2D = new Vector_Point2D(point2D);
         }
-        this._ResidentialSubregionIDs = new ArrayList<String>();
+        this._ResidentialSubregionIDs = new ArrayList<>();
     }
 
     /**
@@ -116,7 +119,7 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     @Override
-    public Long get_Agent_ID(boolean handleOutOfMemoryError) {
+    public Long getAgentID(boolean handleOutOfMemoryError) {
         try {
             Long result = get_Male_ID();
             GENESIS_MaleCollection a_MaleCollection =
@@ -127,12 +130,12 @@ public class GENESIS_Male extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
-                return get_Agent_ID(handleOutOfMemoryError);
+                return getAgentID(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -154,11 +157,11 @@ public class GENESIS_Male extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                if (ge._GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_Account() < 1) {
-                    ge.swapToFile_Grid2DSquareCellChunk();
+                ge.clearMemoryReserve();
+                if (ge.AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account() < 1) {
+                    ge.swapChunk();
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return get_MaleCollection(handleOutOfMemoryError);
             } else {
@@ -168,16 +171,16 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     protected GENESIS_MaleCollection get_MaleCollection() {
-        if (_GENESIS_MaleCollection == null) {
-            _GENESIS_MaleCollection = get_AgentCollectionManager().getMaleCollection(
+        if (Males == null) {
+            Males = getAgentCollectionManager().getMaleCollection(
                     _Collection_ID,
-                    _Type,
+                    Type,
                     ge.HandleOutOfMemoryErrorFalse);
         }
-        if (_GENESIS_MaleCollection.ge == null) {
-            _GENESIS_MaleCollection.ge = ge;
+        if (Males.ge == null) {
+            Males.ge = ge;
         }
-        return _GENESIS_MaleCollection;
+        return Males;
     }
 
     public Long get_MaleCollection_ID(boolean handleOutOfMemoryError) {
@@ -189,10 +192,10 @@ public class GENESIS_Male extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 return get_MaleCollection_ID(handleOutOfMemoryError);
             } else {
@@ -202,7 +205,7 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     protected Long get_MaleCollection_ID() {
-        return get_AgentCollectionManager().getAgentCollection_ID(get_Male_ID());
+        return getAgentCollectionManager().getAgentCollection_ID(get_Male_ID());
     }
 
     @Override
@@ -214,10 +217,10 @@ public class GENESIS_Male extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 return get_Gender(handleOutOfMemoryError);
             } else {
@@ -235,8 +238,8 @@ public class GENESIS_Male extends GENESIS_Person {
 //            long a_Agent_ID,
 //            GENESIS_MaleCollection a_GENESIS_MaleCollection) {
 //        GENESIS_Male result;
-//        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                a_GENESIS_MaleCollection.get_AgentCollectionManager();
+//        AgentCollectionManager a_GENESIS_AgentCollectionManager =
+//                a_GENESIS_MaleCollection.getAgentCollectionManager();
 //        File a_MaleDirectory_File = Generic_StaticIO.getObjectDirectory(
 //                a_GENESIS_AgentCollectionManager._Male_Directory,
 //                a_Agent_ID,
@@ -254,10 +257,10 @@ public class GENESIS_Male extends GENESIS_Person {
             write();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.init_MemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve(handleOutOfMemoryError);
                 write(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -269,7 +272,7 @@ public class GENESIS_Male extends GENESIS_Person {
     @Override
     protected void write() {
         File thisAgentFile = new File(
-                get_Directory(),
+                getDirectory(),
                 this.getClass().getCanonicalName() + ".thisFile");
         if (!_Directory.exists()) {
             _Directory.mkdirs();
@@ -280,9 +283,9 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     @Override
-    protected File get_Directory() {
+    protected File getDirectory() {
         if (_Directory == null) {
-            _Directory = _GENESIS_AgentCollectionManager.getLivingMaleDirectory();
+            _Directory = AgentCollectionManager.getLivingMaleDirectory();
         }
         return _Directory;
     }

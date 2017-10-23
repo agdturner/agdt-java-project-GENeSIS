@@ -21,11 +21,10 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
  * and deleting file stores/caches.
  */
 public class GENESIS_AgentCollectionManager
-        //        extends GENESIS_OutOfMemoryErrorHandler
+                extends GENESIS_Object
         implements Serializable {
 
-    static final long serialVersionUID = 1L;
-    public transient GENESIS_Environment _GENESIS_Environment;
+    //static final long serialVersionUID = 1L;
     /**
      * File where all GENESIS_AgentCollections may be written.
      */
@@ -48,26 +47,26 @@ public class GENESIS_AgentCollectionManager
     protected File _DeadMaleDirectory;
     /**
      * A HashMap to be held in memory at all times. The keys are
-     * GENESIS_FemaleCollection._AgentCollection_ID and the values are either
-     * the respective GENESIS_FemaleCollection or they are null. In the case of
-     * them being null, the data has been swapped to File and can be retrieved.
-     * If the key is not there, but it was known to have been, then this
-     * indicates that all members of that collection have died. In that case,
-     * the dead individuals data can be retrieved via the
-     * _DeadFemaleCollection_HashMap or from _DeadFemaleCollection.
+ GENESIS_FemaleCollection.AgentCollectionID and the values are either
+ the respective GENESIS_FemaleCollection or they are null. In the case of
+ them being null, the data has been swapped to File and can be retrieved.
+ If the key is not there, but it was known to have been, then this
+ indicates that all members of that collection have died. In that case,
+ the dead individuals data can be retrieved via the
+ _DeadFemaleCollection_HashMap or from _DeadFemaleCollection.
      */
-    public HashMap<Long, GENESIS_FemaleCollection> _LivingFemaleCollection_HashMap;
+    public HashMap<Long, GENESIS_FemaleCollection> LivingFemales;
     /**
      * A HashMap to be held in memory at all times. The keys are
-     * GENESIS_MaleCollection._AgentCollection_ID and the values are either the
-     * respective GENESIS_MaleCollection or they are null. In the case of them
-     * being null, the data has been swapped to File and can be retrieved. If
-     * the key is not there, but it was known to have been, then this indicates
-     * that all members of that collection have died. In that case, the dead
-     * individuals data can be retrieved via the _DeadMaleCollection_HashMap or
-     * from _DeadMaleCollection.
+ GENESIS_MaleCollection.AgentCollectionID and the values are either the
+ respective GENESIS_MaleCollection or they are null. In the case of them
+ being null, the data has been swapped to File and can be retrieved. If
+ the key is not there, but it was known to have been, then this indicates
+ that all members of that collection have died. In that case, the dead
+ individuals data can be retrieved via the _DeadMaleCollection_HashMap or
+ from _DeadMaleCollection.
      */
-    public HashMap<Long, GENESIS_MaleCollection> _LivingMaleCollection_HashMap;
+    public HashMap<Long, GENESIS_MaleCollection> LivingMales;
     /**
      * This is to be held in memory at all times and is for storing dead
      * GENESIS_Females. Once this has reached capacity it will be written to a
@@ -144,12 +143,12 @@ public class GENESIS_AgentCollectionManager
     }
 
     /**
-     * Creates a new GENESIS_AgentCollectionManager based on
-     * a_GENESIS_AgentCollectionManager. Because an instance of
+     * Creates a new AgentCollectionManager based on
+ a_GENESIS_AgentCollectionManager. Because an instance of
  GENESIS_GENESIS_AgentCollectionManager holds a reference to
- _GENESIS_Environment which holds references to all the data in a
+ ge which holds references to all the data in a
  simulation this does not deep copy everything. Also
- a_GENESIS_AgentCollectionManager._GENESIS_Environment._GENESIS_AgentEnvironment
+ a_GENESIS_AgentCollectionManager.ge.AgentEnvironment
  contains a references to a_GENESIS_AgentCollectionManager. Full
  instantiation would necessarily be a multi stage process that would use
  dummies to get all the references set up. This method can be implemented
@@ -157,20 +156,20 @@ public class GENESIS_AgentCollectionManager
  unlikely to be to the root of everything.
      *
      * @param a_GENESIS_AgentCollectionManager The
-     * GENESIS_AgentCollectionManager upon which the new instance is based.
+ AgentCollectionManager upon which the new instance is based.
      */
     public GENESIS_AgentCollectionManager(
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager) {
-        this(a_GENESIS_AgentCollectionManager._GENESIS_Environment,
+        this(a_GENESIS_AgentCollectionManager.ge,
                 a_GENESIS_AgentCollectionManager);
     }
 
     public GENESIS_AgentCollectionManager(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment ge,
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager) {
+        super(ge);
 //        throw new UnsupportedOperationException();
 //        // This is not deep copied or set
-        _GENESIS_Environment = a_GENESIS_Environment;
 //        this._DeadFemaleCollection_HashMap = a_GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap;
 //        this._DeadFemaleDirectory = a_GENESIS_AgentCollectionManager._DeadFemaleDirectory;
 //        this._DeadMaleCollection = a_GENESIS_AgentCollectionManager._DeadMaleCollection;
@@ -182,9 +181,9 @@ public class GENESIS_AgentCollectionManager
 //        this._IndexOfLastLivingFemaleCollection = a_GENESIS_AgentCollectionManager._IndexOfLastLivingFemaleCollection;
 //        this._IndexOfLastLivingMaleCollection = a_GENESIS_AgentCollectionManager._IndexOfLastLivingMaleCollection;
 //        this._LargestIndexOfDeadFemaleCollection = a_GENESIS_AgentCollectionManager._LargestIndexOfDeadFemaleCollection;
-//        this._LivingFemaleCollection_HashMap = a_GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap;
+//        this.LivingFemales = a_GENESIS_AgentCollectionManager.LivingFemales;
 //        this._LivingFemaleDirectory = a_GENESIS_AgentCollectionManager._LivingFemaleDirectory;
-//        this._LivingMaleCollection_HashMap = a_GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap;
+//        this.LivingMales = a_GENESIS_AgentCollectionManager.LivingMales;
 //        this._LivingMaleDirectory = a_GENESIS_AgentCollectionManager._LivingMaleDirectory;
 //        this._MaximumNumberOfAgentsPerAgentCollection = a_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection;
 //        this._MaximumNumberOfObjectsPerDirectory = a_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory;
@@ -193,28 +192,27 @@ public class GENESIS_AgentCollectionManager
     }
 
     /**
-     * <code>this(_GENESIS_AgentEnvironment,_GENESIS_AgentEnvironment.Directory);</code>
+     * <code>this(AgentEnvironment,AgentEnvironment.Directory);</code>
      *
-     * @param a_GENESIS_Environment
+     * @param ge
      */
     public GENESIS_AgentCollectionManager(
-            GENESIS_Environment a_GENESIS_Environment) {
-        this(a_GENESIS_Environment,
-                a_GENESIS_Environment.Directory);
+            GENESIS_Environment ge) {
+        this(ge,
+                ge.Directory);
     }
 
     public GENESIS_AgentCollectionManager(
-            GENESIS_Environment a_GENESIS_Environment,
-            File _Directory) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
-        this._Directory = _Directory;
+            GENESIS_Environment ge,
+            File directory) {
+        super(ge);
+        this._Directory = directory;
         init();
     }
 
     private void init() {
-        _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-        init_LivingMaleCollection_HashMap();
-        init_LivingFemaleCollection_HashMap();
+        initLivingMales();
+        initLivingFemales();
         _IndexOfLastBornMale = -1L;
         _IndexOfLastBornFemale = -1L;
         _NumberOfDeadFemales = 0L;
@@ -374,7 +372,7 @@ public class GENESIS_AgentCollectionManager
     public Long addToDeadFemaleCollection(
             Long a_GENESIS_Female_AgentID,
             GENESIS_Female a_GENESIS_Female) {
-        if (_DeadFemaleCollection._Agent_ID_Agent_HashMap.size()
+        if (_DeadFemaleCollection.AgentID_Agent_Map.size()
                 == _MaximumNumberOfAgentsPerAgentCollection) {
             _DeadFemaleCollection.write();
             //@TODO Set _DeadFemaleCollection to null?
@@ -385,20 +383,20 @@ public class GENESIS_AgentCollectionManager
                     _MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadFemaleCollection);
             _DeadFemaleCollection = new GENESIS_FemaleCollection(
-                    _GENESIS_Environment,
+                    ge,
                     _LargestIndexOfDeadFemaleCollection,
                     type);
         }
-        _DeadFemaleCollection._Agent_ID_Agent_HashMap.put(
+        _DeadFemaleCollection.AgentID_Agent_Map.put(
                 a_GENESIS_Female_AgentID,
                 a_GENESIS_Female);
-        return _DeadFemaleCollection.getAgentCollection_ID();
+        return _DeadFemaleCollection.getAgentCollectionID();
     }
 
     public Long addToDeadMaleCollection(
             Long a_GENESIS_Male_AgentID,
             GENESIS_Male a_GENESIS_Male) {
-        if (_DeadMaleCollection._Agent_ID_Agent_HashMap.size()
+        if (_DeadMaleCollection.AgentID_Agent_Map.size()
                 == _MaximumNumberOfAgentsPerAgentCollection) {
             _DeadMaleCollection.write();
             //@TODO Set _DeadMaleCollection to null?
@@ -409,14 +407,14 @@ public class GENESIS_AgentCollectionManager
                     _MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadMaleCollection);
             _DeadMaleCollection = new GENESIS_MaleCollection(
-                    _GENESIS_Environment,
+                    ge,
                     _LargestIndexOfDeadMaleCollection,
                     type);
         }
-        _DeadMaleCollection._Agent_ID_Agent_HashMap.put(
+        _DeadMaleCollection.AgentID_Agent_Map.put(
                 a_GENESIS_Male_AgentID,
                 a_GENESIS_Male);
-        return _DeadMaleCollection.getAgentCollection_ID();
+        return _DeadMaleCollection.getAgentCollectionID();
     }
 
     protected File getFemaleCollectionDirectory(
@@ -490,19 +488,19 @@ public class GENESIS_AgentCollectionManager
             Long result = get_NextFemaleID();
             /*
              * To use:
-             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (swapToFile_AgentCollection_Account(_GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+                ge.clearMemoryReserve();
+                if (swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return get_NextFemaleID(
                         handleOutOfMemoryError);
@@ -532,18 +530,18 @@ public class GENESIS_AgentCollectionManager
             boolean handleOutOfMemoryError) {
         try {
             Long result = get_NextFemaleID();
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 return get_NextFemaleID(
@@ -566,19 +564,19 @@ public class GENESIS_AgentCollectionManager
             Long result = get_NextMaleID();
             /*
              * To use:
-             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (swapToFile_AgentCollection_Account(_GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+                ge.clearMemoryReserve();
+                if (swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return get_NextMaleID(
                         handleOutOfMemoryError);
@@ -608,18 +606,18 @@ public class GENESIS_AgentCollectionManager
             boolean handleOutOfMemoryError) {
         try {
             Long result = get_NextMaleID();
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 return get_NextMaleID(
@@ -640,21 +638,21 @@ public class GENESIS_AgentCollectionManager
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            Long result = get_NextFemaleID();
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                if (swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
+//                ge.initMemoryReserve(
 //                        a_GENESIS_AgentCollection,
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                return getAndIncrement_NextFemaleID(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
@@ -669,21 +667,21 @@ public class GENESIS_AgentCollectionManager
 //            Long result = get_NextFemaleID();
 //            /*
 //             * To use:
-//             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
-//                if (swapToFile_AgentCollection_Account(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+//                ge.clearMemoryReserve();
+//                if (swapAgentCollection_Account(
+//                        ge.HandleOutOfMemoryErrorFalse) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
+//                ge.initMemoryReserve(
 //                        handleOutOfMemoryError);
 //                return getAndIncrement_NextFemaleID(
 //                        handleOutOfMemoryError);
@@ -702,21 +700,21 @@ public class GENESIS_AgentCollectionManager
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            Long result = get_NextMaleID();
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                if (swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
+//                ge.initMemoryReserve(
 //                        a_GENESIS_AgentCollection,
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                return getAndIncrement_NextMaleID(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
@@ -731,21 +729,21 @@ public class GENESIS_AgentCollectionManager
 //            Long result = get_NextMaleID();
 //            /*
 //             * To use:
-//             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
-//                if (swapToFile_AgentCollection_Account(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+//                ge.clearMemoryReserve();
+//                if (swapAgentCollection_Account(
+//                        ge.HandleOutOfMemoryErrorFalse) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
+//                ge.initMemoryReserve(
 //                        handleOutOfMemoryError);
 //                return getAndIncrement_NextMaleID(
 //                        handleOutOfMemoryError);
@@ -768,20 +766,20 @@ public class GENESIS_AgentCollectionManager
 //        try {
 //            Long a_NextAgentID = get_NextAgentID();
 //            a_NextAgentID++;
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            _NextAgentID = a_NextAgentID;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                if (swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
+//                ge.initMemoryReserve(
 //                        a_GENESIS_AgentCollection,
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                increment_NextAgentID(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
@@ -797,21 +795,21 @@ public class GENESIS_AgentCollectionManager
 //            a_NextAgentID++;
 //            /*
 //             * To use:
-//             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
 //            _NextAgentID = a_NextAgentID;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
-//                if (swapToFile_AgentCollection_Account(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+//                ge.clearMemoryReserve();
+//                if (swapAgentCollection_Account(
+//                        ge.HandleOutOfMemoryErrorFalse) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                increment_NextAgentID(handleOutOfMemoryError);
 //            } else {
 //                throw a_OutOfMemoryError;
@@ -832,20 +830,20 @@ public class GENESIS_AgentCollectionManager
 ////        try {
 ////            Long a_NextAgentID = get_NextAgentID();
 ////            a_NextAgentID++;
-////            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+////            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 ////                    a_GENESIS_AgentCollection,
 ////                    handleOutOfMemoryError);
 ////            _NextAgentID = a_NextAgentID;
 ////        } catch (OutOfMemoryError a_OutOfMemoryError) {
 ////            if (handleOutOfMemoryError) {
-////                _GENESIS_Environment.clear_MemoryReserve();
+////                ge.clearMemoryReserve();
 ////                if (swapToFile_AgentCollectionExcept_Account(
 ////                        a_GENESIS_AgentCollection) < 1) {
 ////                    throw a_OutOfMemoryError;
 ////                }
-////                _GENESIS_Environment.init_MemoryReserve(
+////                ge.initMemoryReserve(
 ////                        a_GENESIS_AgentCollection,
-////                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+////                        ge.HandleOutOfMemoryErrorFalse);
 ////                increment_NextAgentID(
 ////                        a_GENESIS_AgentCollection,
 ////                        handleOutOfMemoryError);
@@ -861,21 +859,21 @@ public class GENESIS_AgentCollectionManager
 ////            a_NextAgentID++;
 ////            /*
 ////             * To use:
-////             * _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+////             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
 ////             * It's success needs to be assessed and appropriate action
 ////             * performed to prevent a loop.
 ////             */
-////            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+////            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
 ////            _NextAgentID = a_NextAgentID;
 ////        } catch (OutOfMemoryError a_OutOfMemoryError) {
 ////            if (handleOutOfMemoryError) {
-////                _GENESIS_Environment.clear_MemoryReserve();
-////                if (swapToFile_AgentCollection_Account(
-////                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
+////                ge.clearMemoryReserve();
+////                if (swapAgentCollection_Account(
+////                        ge.HandleOutOfMemoryErrorFalse) < 1) {
 ////                    throw a_OutOfMemoryError;
 ////                }
-////                _GENESIS_Environment.init_MemoryReserve(
-////                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+////                ge.initMemoryReserve(
+////                        ge.HandleOutOfMemoryErrorFalse);
 ////                increment_NextAgentID(handleOutOfMemoryError);
 ////            } else {
 ////                throw a_OutOfMemoryError;
@@ -900,13 +898,13 @@ public class GENESIS_AgentCollectionManager
                 result = getMale(
                         a_Agent_ID,
                         a_GENESIS_MaleCollection);
-                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 return result;
             } else {
-                if (_DeadMaleCollection._Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)) {
-                    result = (GENESIS_Male) _DeadMaleCollection._Agent_ID_Agent_HashMap.get(a_Agent_ID);
+                if (_DeadMaleCollection.AgentID_Agent_Map.containsKey(a_Agent_ID)) {
+                    result = (GENESIS_Male) _DeadMaleCollection.AgentID_Agent_Map.get(a_Agent_ID);
                 } else {
                     // Load from _DeadMaleCollection_HashMap
                     if (_DeadMaleCollection_HashMap.keySet().contains(a_Agent_ID)) {
@@ -918,7 +916,7 @@ public class GENESIS_AgentCollectionManager
                         result = getMale(
                                 a_Agent_ID,
                                 a_GENESIS_MaleCollection);
-                        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(
                                 a_GENESIS_MaleCollection,
                                 handleOutOfMemoryError);
                     }
@@ -929,13 +927,13 @@ public class GENESIS_AgentCollectionManager
                         int debug = 1;
                     }
                 }
-                result.ge = this._GENESIS_Environment;
-                result._GENESIS_AgentCollectionManager = this._GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager();
+                result.ge = this.ge;
+                result.AgentCollectionManager = this.ge.AgentEnvironment.getAgentCollectionManager();
                 return result;
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Long a_AgentCollection_ID = getAgentCollection_ID(
                         a_Agent_ID);
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
@@ -946,7 +944,7 @@ public class GENESIS_AgentCollectionManager
                         a_GENESIS_MaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return getMale(
                         a_Agent_ID,
                         type,
@@ -965,13 +963,13 @@ public class GENESIS_AgentCollectionManager
             log(
                     "a_Male == null in " + this.getClass().getName()
                     + ".getMale(Long,GENESIS_MaleCollection)");
-            log("a_GENESIS_MaleCollection._Type " + a_GENESIS_MaleCollection.get_Type());
+            log("a_GENESIS_MaleCollection._Type " + a_GENESIS_MaleCollection.getType());
             log("a_Agent_ID " + a_Agent_ID);
-            log("a_GENESIS_MaleCollection_ID " + a_GENESIS_MaleCollection._AgentCollection_ID);
+            log("a_GENESIS_MaleCollection_ID " + a_GENESIS_MaleCollection.AgentCollectionID);
             log("a_GENESIS_MaleCollection " + a_GENESIS_MaleCollection);
             return null;
         }
-        //a_Male._GENESIS_Environment = _GENESIS_Environment;
+        //a_Male.ge = ge;
         a_Male.ge = a_GENESIS_MaleCollection.ge;
         return a_Male;
     }
@@ -994,13 +992,13 @@ public class GENESIS_AgentCollectionManager
                 result = getFemale(
                         a_Agent_ID,
                         a_GENESIS_FemaleCollection);
-                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 return result;
             } else {
-                if (_DeadFemaleCollection._Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)) {
-                    result = (GENESIS_Female) _DeadFemaleCollection._Agent_ID_Agent_HashMap.get(a_Agent_ID);
+                if (_DeadFemaleCollection.AgentID_Agent_Map.containsKey(a_Agent_ID)) {
+                    result = (GENESIS_Female) _DeadFemaleCollection.AgentID_Agent_Map.get(a_Agent_ID);
                 } else {
                     // Load from _DeadFemaleCollection_HashMap
                     if (_DeadFemaleCollection_HashMap.keySet().contains(a_Agent_ID)) {
@@ -1012,7 +1010,7 @@ public class GENESIS_AgentCollectionManager
                         result = getFemale(
                                 a_Agent_ID,
                                 a_GENESIS_FemaleCollection);
-                        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                        ge.tryToEnsureThereIsEnoughMemoryToContinue(
                                 a_GENESIS_FemaleCollection,
                                 handleOutOfMemoryError);
                     }
@@ -1023,13 +1021,13 @@ public class GENESIS_AgentCollectionManager
                         int debug = 1;
                     }
                 }
-                result.ge = this._GENESIS_Environment;
-                result._GENESIS_AgentCollectionManager = this._GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager();
+                result.ge = this.ge;
+                result.AgentCollectionManager = this.ge.AgentEnvironment.getAgentCollectionManager();
                 return result;
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Long a_AgentCollection_ID = getAgentCollection_ID(
                         a_Agent_ID);
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
@@ -1040,7 +1038,7 @@ public class GENESIS_AgentCollectionManager
                         a_GENESIS_FemaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return getFemale(
                         a_Agent_ID,
                         type,
@@ -1060,13 +1058,13 @@ public class GENESIS_AgentCollectionManager
             log(
                     "a_Female == null in " + this.getClass().getName()
                     + ".getFemale(Long,GENESIS_FemaleCollection)");
-            log("a_GENESIS_FemaleCollection._Type " + a_GENESIS_FemaleCollection.get_Type());
+            log("a_GENESIS_FemaleCollection._Type " + a_GENESIS_FemaleCollection.getType());
             log("a_Agent_ID " + a_Agent_ID);
-            log("a_GENESIS_FemaleCollection_ID " + a_GENESIS_FemaleCollection._AgentCollection_ID);
+            log("a_GENESIS_FemaleCollection_ID " + a_GENESIS_FemaleCollection.AgentCollectionID);
             log("a_GENESIS_FemaleCollection " + a_GENESIS_FemaleCollection);
             return null;
         }
-        //a_Female._GENESIS_Environment = _GENESIS_Environment;
+        //a_Female.ge = ge;
         a_Female.ge = a_GENESIS_FemaleCollection.ge;
         return a_Female;
     }
@@ -1084,13 +1082,13 @@ public class GENESIS_AgentCollectionManager
 //            GENESIS_Agent result = getAgent(
 //                    a_Agent_ID,
 //                    a_GENESIS_AgentCollection);
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                Long a_AgentCollection_ID = getAgentCollection_ID(
 //                        a_Agent_ID);
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection = getAgentCollection(
@@ -1099,8 +1097,8 @@ public class GENESIS_AgentCollectionManager
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                return getAgent(
 //                        a_Agent_ID,
 //                        handleOutOfMemoryError);
@@ -1114,10 +1112,10 @@ public class GENESIS_AgentCollectionManager
 //            Long a_Agent_ID,
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection) {
 //        GENESIS_Agent a_Agent = a_GENESIS_AgentCollection.getAgent(a_Agent_ID);
-////        if (a_Agent._GENESIS_Environment == null){
-////            a_Agent._GENESIS_Environment = _GENESIS_AgentEnvironment;
+////        if (a_Agent.ge == null){
+////            a_Agent.ge = AgentEnvironment;
 ////        }
-//        a_Agent._GENESIS_Environment = _GENESIS_Environment;
+//        a_Agent.ge = ge;
 //        return a_Agent;
 //    }
     /**
@@ -1139,13 +1137,13 @@ public class GENESIS_AgentCollectionManager
                     getFemaleCollection(
                     result,
                     type);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Long a_GENESIS_AgentCollection_ID =
                         getAgentCollection_ID(a_Agent_ID);
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
@@ -1156,7 +1154,7 @@ public class GENESIS_AgentCollectionManager
                         a_GENESIS_FemaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
 //                return getFemaleCollection_ID(
 //                        a_Agent_ID,
 //                        type,
@@ -1188,13 +1186,13 @@ public class GENESIS_AgentCollectionManager
                     getMaleCollection(
                     result,
                     type);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Long a_GENESIS_AgentCollection_ID = getAgentCollection_ID(
                         a_Agent_ID);
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
@@ -1205,7 +1203,7 @@ public class GENESIS_AgentCollectionManager
                         a_GENESIS_MaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
 //                return getMaleCollection_ID(
 //                        a_Agent_ID,
 //                        type,
@@ -1248,13 +1246,13 @@ public class GENESIS_AgentCollectionManager
 //            Long result = getAgentCollection_ID(
 //                    a_Agent_ID);
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection = getAgentCollection(result);
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                Long a_GENESIS_AgentCollection_ID = getAgentCollection_ID(a_Agent_ID);
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection = getAgentCollection(a_GENESIS_AgentCollection_ID);
 //                if (swapToFile_AgentCollectionExcept_Account(
@@ -1262,8 +1260,8 @@ public class GENESIS_AgentCollectionManager
 //                    throw a_OutOfMemoryError;
 //
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                return getAgentCollection_ID(
 //                        a_Agent_ID,
 //                        handleOutOfMemoryError);
@@ -1297,13 +1295,13 @@ public class GENESIS_AgentCollectionManager
                 GENESIS_FemaleCollection result = getFemaleCollection(
                         a_AgentCollection_ID,
                         type);
-                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                ge.tryToEnsureThereIsEnoughMemoryToContinue(
                         result,
                         handleOutOfMemoryError);
                 return result;
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 if (handleOutOfMemoryError) {
-                    _GENESIS_Environment.clear_MemoryReserve();
+                    ge.clearMemoryReserve();
                     GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
                             getFemaleCollection(
                             a_AgentCollection_ID,
@@ -1312,7 +1310,7 @@ public class GENESIS_AgentCollectionManager
                             a_GENESIS_FemaleCollection) < 1) {
                         throw a_OutOfMemoryError;
                     }
-                    _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                    ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                     return getFemaleCollection(
                             a_AgentCollection_ID,
                             type,
@@ -1342,7 +1340,7 @@ public class GENESIS_AgentCollectionManager
             String type) {
         GENESIS_FemaleCollection result;
         if (type.equalsIgnoreCase(GENESIS_Person.getTypeLivingFemale_String())) {
-            result = _LivingFemaleCollection_HashMap.get(a_AgentCollection_ID);
+            result = LivingFemales.get(a_AgentCollection_ID);
             if (result == null) {
                 File femaleCollectionDirectory = getFemaleCollectionDirectory(
                         a_AgentCollection_ID,
@@ -1354,16 +1352,16 @@ public class GENESIS_AgentCollectionManager
                 if (a_AgentCollection_File.exists()) {
                     result = (GENESIS_FemaleCollection) Generic_StaticIO.readObject(
                             a_AgentCollection_File);
-                    result._Directory = femaleCollectionDirectory;
-                    result.init(_GENESIS_Environment,
+                    result.Directory = femaleCollectionDirectory;
+                    result.init(ge,
                             a_AgentCollection_ID,
                             type);
                 } else {
                     result = new GENESIS_FemaleCollection(
-                            _GENESIS_Environment,
+                            ge,
                             a_AgentCollection_ID,
                             type);
-                    _LivingFemaleCollection_HashMap.put(
+                    LivingFemales.put(
                             a_AgentCollection_ID,
                             result);
                 }
@@ -1379,14 +1377,14 @@ public class GENESIS_AgentCollectionManager
             if (a_AgentCollection_File.exists()) {
                 result = (GENESIS_FemaleCollection) Generic_StaticIO.readObject(
                         a_AgentCollection_File);
-                result._Directory = a_AgentCollection_File.getParentFile();
-                result.init(_GENESIS_Environment,
+                result.Directory = a_AgentCollection_File.getParentFile();
+                result.init(ge,
                         a_AgentCollection_ID,
                         type);
             } else {
                 return null;
 //                    result = new GENESIS_FemaleCollection(
-//                            _GENESIS_Environment,
+//                            ge,
 //                            a_AgentCollection_ID,
 //                            type);
 //                    // There is no in memory reference store implemented for
@@ -1396,14 +1394,14 @@ public class GENESIS_AgentCollectionManager
 //                            result);
             }
             if (result.ge == null) {
-                result.ge = _GENESIS_Environment;
+                result.ge = ge;
             }
-            if (result._GENESIS_AgentCollectionManager == null) {
-                result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+            if (result.AgentCollectionManager == null) {
+                result.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
             }
         }
-        result.ge = _GENESIS_Environment;
-        result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+        result.ge = ge;
+        result.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
         return result;
     }
 
@@ -1415,13 +1413,13 @@ public class GENESIS_AgentCollectionManager
             GENESIS_MaleCollection result = getMaleCollection(
                     a_GENESIS_AgentCollection_ID,
                     type);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     result,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
                         getMaleCollection(
                         a_GENESIS_AgentCollection_ID,
@@ -1430,7 +1428,7 @@ public class GENESIS_AgentCollectionManager
                         a_GENESIS_MaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return getMaleCollection(
                         a_GENESIS_AgentCollection_ID,
                         type,
@@ -1456,7 +1454,7 @@ public class GENESIS_AgentCollectionManager
             String type) {
         GENESIS_MaleCollection result;
         if (type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
-            result = _LivingMaleCollection_HashMap.get(a_AgentCollection_ID);
+            result = LivingMales.get(a_AgentCollection_ID);
             if (result == null) {
                 File maleCollectionDirectory = getMaleCollectionDirectory(
                         a_AgentCollection_ID,
@@ -1468,16 +1466,16 @@ public class GENESIS_AgentCollectionManager
                 if (a_AgentCollection_File.exists()) {
                     result = (GENESIS_MaleCollection) Generic_StaticIO.readObject(
                             a_AgentCollection_File);
-                    result._Directory = maleCollectionDirectory;
-                    result.init(_GENESIS_Environment,
+                    result.Directory = maleCollectionDirectory;
+                    result.init(
                             a_AgentCollection_ID,
                             type);
                 } else {
                     result = new GENESIS_MaleCollection(
-                            _GENESIS_Environment,
+                            ge,
                             a_AgentCollection_ID,
                             type);
-                    _LivingMaleCollection_HashMap.put(
+                    LivingMales.put(
                             a_AgentCollection_ID,
                             result);
                 }
@@ -1493,14 +1491,14 @@ public class GENESIS_AgentCollectionManager
             if (a_AgentCollection_File.exists()) {
                 result = (GENESIS_MaleCollection) Generic_StaticIO.readObject(
                         a_AgentCollection_File);
-                result._Directory = a_AgentCollection_File.getParentFile();
-                result.init(_GENESIS_Environment,
+                result.Directory = a_AgentCollection_File.getParentFile();
+                result.init(
                         a_AgentCollection_ID,
                         type);
             } else {
                 return null;
 //                    result = new GENESIS_MaleCollection(
-//                            _GENESIS_Environment,
+//                            ge,
 //                            a_AgentCollection_ID,
 //                            type);
 //                    // There is no in memory reference store implemented for
@@ -1510,14 +1508,14 @@ public class GENESIS_AgentCollectionManager
 //                            result);
             }
             if (result.ge == null) {
-                result.ge = _GENESIS_Environment;
+                result.ge = ge;
             }
-            if (result._GENESIS_AgentCollectionManager == null) {
-                result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+            if (result.AgentCollectionManager == null) {
+                result.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
             }
         }
-        result.ge = _GENESIS_Environment;
-        result._GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment._AgentCollectionManager;
+        result.ge = ge;
+        result.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
         return result;
     }
 
@@ -1527,21 +1525,21 @@ public class GENESIS_AgentCollectionManager
 //        try {
 //            GENESIS_AgentCollection result = getAgentCollection(
 //                    a_GENESIS_AgentCollection_ID);
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    result,
 //                    handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection = getAgentCollection(a_GENESIS_AgentCollection_ID);
 //                if (swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    throw a_OutOfMemoryError;
 //
 //                }
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                return getAgentCollection(
 //                        a_GENESIS_AgentCollection_ID,
 //                        handleOutOfMemoryError);
@@ -1571,11 +1569,11 @@ public class GENESIS_AgentCollectionManager
 //            if (a_AgentCollection_File.exists()) {
 //                result = (GENESIS_AgentCollection) Generic_StaticIO.readObject(a_AgentCollection_File);
 //                result.init(
-//                        _GENESIS_Environment,
+//                        ge,
 //                        a_AgentCollection_ID);
 //            } else {
 //                result = new GENESIS_AgentCollection(
-//                        _GENESIS_Environment,
+//                        ge,
 //                        a_AgentCollection_ID,
 //                        null);
 //                _AgentCollection_HashMap.put(
@@ -1584,25 +1582,23 @@ public class GENESIS_AgentCollectionManager
 //            }
 //        } else {
 //            result = (GENESIS_AgentCollection) a_Object;
-//            //int size = result.get_Agent_ID_Agent_HashMap().size();
+//            //int size = result.getAgentID_Agent_Map().size();
 //            //log("size " + size);
 //        }
-//        if (result._GENESIS_Environment == null) {
-//            result._GENESIS_Environment = _GENESIS_Environment;
+//        if (result.ge == null) {
+//            result.ge = ge;
 //        }
 //        return result;
 //    }
-    public void init_LivingMaleCollection_HashMap() {
-        if (_LivingMaleCollection_HashMap == null) {
-            _LivingMaleCollection_HashMap =
-                    new HashMap<Long, GENESIS_MaleCollection>();
+    public void initLivingMales() {
+        if (LivingMales == null) {
+            LivingMales = new HashMap<>();
         }
     }
 
-    public void init_LivingFemaleCollection_HashMap() {
-        if (_LivingFemaleCollection_HashMap == null) {
-            _LivingFemaleCollection_HashMap =
-                    new HashMap<Long, GENESIS_FemaleCollection>();
+    public void initLivingFemales() {
+        if (LivingFemales == null) {
+            LivingFemales = new HashMap<>();
         }
     }
 //    public void init_AgentCollection_HashMap() {
@@ -1800,12 +1796,12 @@ public class GENESIS_AgentCollectionManager
     public boolean swapToFile_AgentCollection(
             boolean handleOutOfMemoryError) {
         try {
-            boolean result = swapToFile_AgentCollection();
+            boolean result = swapAgentCollection();
             try {
                 if (!result) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -1815,16 +1811,16 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long account;
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    account = swapToFile_AgentCollection_Account();
+                    account = swapAgentCollection_Account();
                     if (account < 1) {
                         throw a_OutOfMemoryError;
                     }
-                    _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    Object[] ensurance = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                    Object[] ensurance = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if (ensurance != null) {
                         createdRoom = (Boolean) ensurance[0];
                         if (!createdRoom) {
@@ -1849,20 +1845,20 @@ public class GENESIS_AgentCollectionManager
      * @return 
      */
     protected boolean swapToFile_MaleCollection() {
-        if (_LivingMaleCollection_HashMap.isEmpty()) {
+        if (LivingMales.isEmpty()) {
             log(
                     "Warning: No MaleCollections to swap in "
                     + this.getClass().getName()
                     + ".swapToFile_MaleCollection()");
-            //_GENESIS_Environment.swapToFile_SomeDataExcept(this);
+            //ge.swapToFile_SomeDataExcept(this);
             return false;
         }
-        Iterator a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = LivingMales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_MaleCollection a_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = (Long) a_Iterator.next();
-            Object value = _LivingMaleCollection_HashMap.get(
+            Object value = LivingMales.get(
                     a_AgentCollection_ID);
             //if (value != null) {
             a_MaleCollection = (GENESIS_MaleCollection) value;
@@ -1872,7 +1868,7 @@ public class GENESIS_AgentCollectionManager
             break;
             //}
         }
-        _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+        LivingMales.remove(a_AgentCollection_ID);
         return true;
     }
 
@@ -1883,20 +1879,20 @@ public class GENESIS_AgentCollectionManager
      * @return 
      */
     protected boolean swapToFile_FemaleCollection() {
-        if (_LivingFemaleCollection_HashMap.isEmpty()) {
+        if (LivingFemales.isEmpty()) {
             log(
                     "Warning: No FemaleCollections to swap in "
                     + this.getClass().getName()
                     + ".swapToFile_FemaleCollection()");
-            //_GENESIS_Environment.swapToFile_SomeDataExcept(this);
+            //ge.swapToFile_SomeDataExcept(this);
             return false;
         }
-        Iterator a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_FemaleCollection a_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = (Long) a_Iterator.next();
-            Object value = _LivingFemaleCollection_HashMap.get(
+            Object value = LivingFemales.get(
                     a_AgentCollection_ID);
             //if (value != null) {
             a_FemaleCollection = (GENESIS_FemaleCollection) value;
@@ -1906,7 +1902,7 @@ public class GENESIS_AgentCollectionManager
             break;
             //}
         }
-        _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+        LivingFemales.remove(a_AgentCollection_ID);
         return true;
     }
 
@@ -1916,27 +1912,27 @@ public class GENESIS_AgentCollectionManager
      * on something else to be swapped or throwing an Error or Exception.
      * @return 
      */
-    protected boolean swapToFile_AgentCollection() {
-        if (_LivingFemaleCollection_HashMap.isEmpty()
-                && _LivingMaleCollection_HashMap.isEmpty()) {
+    protected boolean swapAgentCollection() {
+        if (LivingFemales.isEmpty()
+                && LivingMales.isEmpty()) {
             log(
                     "Warning: No AgentCollections to swap in "
                     + this.getClass().getName()
                     + ".swapToFile_AgentCollection()");
-            //_GENESIS_Environment.swapToFile_SomeDataExcept(this);
+            //ge.swapToFile_SomeDataExcept(this);
             return false;
         }
         /*
          * Implementation tries to swap _MaleCollection first. Another
          * implementation might randomly choose Male or Female...
          */
-        if (_LivingMaleCollection_HashMap.isEmpty()) {
-            Iterator a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        if (LivingMales.isEmpty()) {
+            Iterator a_Iterator = LivingFemales.keySet().iterator();
             Long a_AgentCollection_ID = null;
             GENESIS_FemaleCollection a_FemaleCollection;
             while (a_Iterator.hasNext()) {
                 a_AgentCollection_ID = (Long) a_Iterator.next();
-                Object value = _LivingFemaleCollection_HashMap.get(
+                Object value = LivingFemales.get(
                         a_AgentCollection_ID);
                 //if (value != null) {
                 a_FemaleCollection = (GENESIS_FemaleCollection) value;
@@ -1946,15 +1942,15 @@ public class GENESIS_AgentCollectionManager
                 break;
                 //}
             }
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingFemales.remove(a_AgentCollection_ID);
             return true;
         } else {
-            Iterator a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+            Iterator a_Iterator = LivingMales.keySet().iterator();
             Long a_AgentCollection_ID = null;
             GENESIS_MaleCollection a_MaleCollection;
             while (a_Iterator.hasNext()) {
                 a_AgentCollection_ID = (Long) a_Iterator.next();
-                Object value = _LivingMaleCollection_HashMap.get(
+                Object value = LivingMales.get(
                         a_AgentCollection_ID);
                 //if (value != null) {
                 a_MaleCollection = (GENESIS_MaleCollection) value;
@@ -1964,7 +1960,7 @@ public class GENESIS_AgentCollectionManager
                 break;
                 //}
             }
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
             return true;
         }
     }
@@ -1978,17 +1974,17 @@ public class GENESIS_AgentCollectionManager
     public long swapToFile_AgentCollection_Account(
             boolean handleOutOfMemoryError) {
         try {
-            long result = swapToFile_AgentCollection_Account();
+            long result = swapAgentCollection_Account();
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
                     } else {
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -1999,18 +1995,18 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = 0;
                 long account = 0;
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    account = swapToFile_AgentCollection_Account();
+                    account = swapAgentCollection_Account();
                     if (account < 1) {
                         throw a_OutOfMemoryError;
                     }
                     result += account;
-                    result += _GENESIS_Environment.init_MemoryReserve_AccountAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    result += ge.initMemoryReserve_AccountAgentCollections(ge.HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if (potentialPartResult != null) {
                         result += (Long) potentialPartResult[1];
                         createdRoom = (Boolean) potentialPartResult[0];
@@ -2042,14 +2038,14 @@ public class GENESIS_AgentCollectionManager
             try {
                 if (result < 1) {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if ((Boolean) potentialPartResult[0]) {
                         result += (Long) potentialPartResult[1];
                     } else {
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -2060,18 +2056,18 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = 0;
                 long account;
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    account = swapToFile_AgentCollection_Account();
+                    account = swapAgentCollection_Account();
                     if (account < 1) {
                         throw a_OutOfMemoryError;
                     }
                     result += account;
-                    result += _GENESIS_Environment.init_MemoryReserve_AccountAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    result += ge.initMemoryReserve_AccountAgentCollections(ge.HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if (potentialPartResult != null) {
                         result += (Long) potentialPartResult[1];
                         createdRoom = (Boolean) potentialPartResult[0];
@@ -2092,7 +2088,7 @@ public class GENESIS_AgentCollectionManager
 
     protected long swapToFile_FemaleCollection_Account() {
         long result = 0;
-        if (_LivingFemaleCollection_HashMap.isEmpty()) {
+        if (LivingFemales.isEmpty()) {
             log(
                     "Warning: No FemaleCollections to swap in "
                     + this.getClass().getName()
@@ -2101,7 +2097,7 @@ public class GENESIS_AgentCollectionManager
 //        } else {
 //            // Implementation changed, so mappings are removed rather than
 //            // values being set to null, so this is not needed...
-//            Collection values = _LivingFemaleCollection_HashMap.values();
+//            Collection values = LivingFemales.values();
 //            if (values.size() == 1 && values.contains(null)) {
 //                log(
 //                        "Warning: No FemaleCollections to swap in "
@@ -2111,12 +2107,12 @@ public class GENESIS_AgentCollectionManager
 //            }
         }
         Iterator<Long> a_Iterator =
-                _LivingFemaleCollection_HashMap.keySet().iterator();
+                LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_FemaleCollection a_GENESIS_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_FemaleCollection = _LivingFemaleCollection_HashMap.get(
+            a_GENESIS_FemaleCollection = LivingFemales.get(
                     a_AgentCollection_ID);
             if (a_GENESIS_FemaleCollection != null) {
                 a_GENESIS_FemaleCollection.write();
@@ -2127,7 +2123,7 @@ public class GENESIS_AgentCollectionManager
         }
         // The value of result should always be 1 here!
         if (result == 1) {
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingFemales.remove(a_AgentCollection_ID);
         }
         return result;
     }
@@ -2145,14 +2141,14 @@ public class GENESIS_AgentCollectionManager
             try {
                 if (result < 1) {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if ((Boolean) potentialPartResult[0]) {
                         result += (Long) potentialPartResult[1];
                     } else {
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -2163,19 +2159,19 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = 0;
                 long account = 0;
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    account = swapToFile_AgentCollection_Account();
+                    account = swapAgentCollection_Account();
                     if (account < 1) {
                         // Can try GENESIS_Enviroment.swap...?
                         throw a_OutOfMemoryError;
                     }
                     result += account;
-                    result += _GENESIS_Environment.init_MemoryReserve_AccountAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    result += ge.initMemoryReserve_AccountAgentCollections(ge.HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if (potentialPartResult != null) {
                         result += (Long) potentialPartResult[1];
                         createdRoom = (Boolean) potentialPartResult[0];
@@ -2196,7 +2192,7 @@ public class GENESIS_AgentCollectionManager
 
     protected long swapToFile_MaleCollection_Account() {
         long result = 0;
-        if (_LivingMaleCollection_HashMap.isEmpty()) {
+        if (LivingMales.isEmpty()) {
             log(
                     "Warning: No MaleCollections to swap in "
                     + this.getClass().getName()
@@ -2205,7 +2201,7 @@ public class GENESIS_AgentCollectionManager
 //        } else {
 //            // Implementation changed, so mappings are removed rather than
 //            // values being set to null, so this is not needed...
-//            Collection values = _LivingMaleCollection_HashMap.values();
+//            Collection values = LivingMales.values();
 //            if (values.size() == 1 && values.contains(null)) {
 //                log(
 //                        "Warning: No MaleCollections to swap in "
@@ -2215,12 +2211,12 @@ public class GENESIS_AgentCollectionManager
 //           }
         }
         Iterator<Long> a_Iterator =
-                _LivingMaleCollection_HashMap.keySet().iterator();
+                LivingMales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_MaleCollection a_GENESIS_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_MaleCollection = _LivingMaleCollection_HashMap.get(
+            a_GENESIS_MaleCollection = LivingMales.get(
                     a_AgentCollection_ID);
             if (a_GENESIS_MaleCollection != null) {
                 a_GENESIS_MaleCollection.write();
@@ -2231,7 +2227,7 @@ public class GENESIS_AgentCollectionManager
         }
         // The value of result should always be 1 here!
         if (result == 1) {
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         return result;
     }
@@ -2241,7 +2237,7 @@ public class GENESIS_AgentCollectionManager
      * more randomly or iteratively whether Male of Female...
      * @return 
      */
-    protected long swapToFile_AgentCollection_Account() {
+    protected long swapAgentCollection_Account() {
         long result = swapToFile_MaleCollection_Account();
         if (result == 0) {
             result = swapToFile_FemaleCollection_Account();
@@ -2276,7 +2272,7 @@ public class GENESIS_AgentCollectionManager
             }
             try {
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                 if (!(Boolean) potentialPartResult[0]) {
                     throw new OutOfMemoryError();
                 }
@@ -2290,11 +2286,11 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                Object[] result = swapToFile_FemaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.clearMemoryReserve();
+                Object[] result = swapToFile_FemaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult =
-                            swapToFile_MaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                            swapToFile_MaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                     if (!(Boolean) potentialPartResult[0]) {
                         // Could try swapping grids here...
                         throw a_OutOfMemoryError;
@@ -2302,10 +2298,10 @@ public class GENESIS_AgentCollectionManager
                     combine(result, potentialPartResult);
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment.init_MemoryReserve_AccountDetailAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.initMemoryReserve_AccountDetailAgentCollections(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
                 return result;
@@ -2317,24 +2313,24 @@ public class GENESIS_AgentCollectionManager
 
     /**
      * Attempts to swap to file a _FemaleCollection in
-     * _LivingFemaleCollection_HashMap
+ LivingFemales
      *
      * @return null if there are no _FemaleCollection to swap in
-     * _LivingFemaleCollection_HashMap otherwise a collection of the IDs of
-     * those that are swapped
+ LivingFemales otherwise a collection of the IDs of
+ those that are swapped
      */
     //protected Object[] swapToFile_FemaleCollection_AccountDetail() {
     protected HashSet<Long> swapToFile_FemaleCollection_AccountDetail() {
         //Object[] result = new Object[3];
         HashSet<Long> swappedFemaleCollectionID_HashSet = new HashSet<Long>(0);
-        if (_LivingFemaleCollection_HashMap.isEmpty()) {
+        if (LivingFemales.isEmpty()) {
             log(
                     "Warning: No FemaleCollections to swap in "
                     + this.getClass().getName()
                     + ".swapToFile_FemaleCollection_AccountDetail()");
             return null; //return result;
 //        } else {
-//            Collection values = _LivingFemaleCollection_HashMap.values();
+//            Collection values = LivingFemales.values();
 //            if (values.size() == 1 && values.contains(null)) {
 //                log(
 //                        "Warning: No FemaleCollections to swap in "
@@ -2345,12 +2341,12 @@ public class GENESIS_AgentCollectionManager
         }
         //result[0] = false;
         Iterator<Long> a_Iterator =
-                _LivingFemaleCollection_HashMap.keySet().iterator();
+                LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_FemaleCollection a_GENESIS_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_FemaleCollection = _LivingFemaleCollection_HashMap.get(
+            a_GENESIS_FemaleCollection = LivingFemales.get(
                     a_AgentCollection_ID);
             if (a_GENESIS_FemaleCollection != null) {
                 a_GENESIS_FemaleCollection.write();
@@ -2362,7 +2358,7 @@ public class GENESIS_AgentCollectionManager
         }
         // It should not be the case that swappedMaleCollectionID_HashSet is empty!
         if (!swappedFemaleCollectionID_HashSet.isEmpty()) {
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         //result[1] = swappedFemaleCollectionID_HashSet;
         //return result;
@@ -2396,7 +2392,7 @@ public class GENESIS_AgentCollectionManager
             }
             try {
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                 if (!(Boolean) potentialPartResult[0]) {
                     throw new OutOfMemoryError();
                 }
@@ -2410,11 +2406,11 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                Object[] result = swapToFile_MaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.clearMemoryReserve();
+                Object[] result = swapToFile_MaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult =
-                            swapToFile_FemaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                            swapToFile_FemaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                     if (!(Boolean) potentialPartResult[0]) {
                         // Could try swapping grids here...
                         throw a_OutOfMemoryError;
@@ -2422,10 +2418,10 @@ public class GENESIS_AgentCollectionManager
                     combine(result, potentialPartResult);
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment.init_MemoryReserve_AccountDetailAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.initMemoryReserve_AccountDetailAgentCollections(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
                 return result;
@@ -2437,24 +2433,24 @@ public class GENESIS_AgentCollectionManager
 
     /**
      * Attempts to swap to file a _MaleCollection in
-     * _LivingMaleCollection_HashMap
+ LivingMales
      *
      * @return null if there are no _MaleCollection to swap in
-     * _LivingMaleCollection_HashMap otherwise a collection of the IDs of those
-     * that are swapped
+ LivingMales otherwise a collection of the IDs of those
+ that are swapped
      */
     //protected Object[] swapToFile_MaleCollection_AccountDetail() {
     protected HashSet<Long> swapToFile_MaleCollection_AccountDetail() {
         //Object[] result = new Object[3];
         HashSet<Long> swappedMaleCollectionID_HashSet = new HashSet<Long>(0);
-        if (_LivingMaleCollection_HashMap.isEmpty()) {
+        if (LivingMales.isEmpty()) {
             log(
                     "Warning: No MaleCollections to swap in "
                     + this.getClass().getName()
                     + ".swapToFile_MaleCollection_AccountDetail()");
             return null; //return result;
 //        } else {
-//            Collection values = _LivingMaleCollection_HashMap.values();
+//            Collection values = LivingMales.values();
 //            if (values.size() == 1 && values.contains(null)) {
 //                log(
 //                        "Warning: No MaleCollections to swap in "
@@ -2465,12 +2461,12 @@ public class GENESIS_AgentCollectionManager
         }
         //result[0] = false;
         Iterator<Long> a_Iterator =
-                _LivingMaleCollection_HashMap.keySet().iterator();
+                LivingMales.keySet().iterator();
         Long a_AgentCollection_ID = null;
         GENESIS_MaleCollection a_GENESIS_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_MaleCollection = _LivingMaleCollection_HashMap.get(
+            a_GENESIS_MaleCollection = LivingMales.get(
                     a_AgentCollection_ID);
             if (a_GENESIS_MaleCollection != null) {
                 a_GENESIS_MaleCollection.write();
@@ -2482,7 +2478,7 @@ public class GENESIS_AgentCollectionManager
         }
         // It should not be the case that swappedMaleCollectionID_HashSet is empty!
         if (!swappedMaleCollectionID_HashSet.isEmpty()) {
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         //result[2] = swappedMaleCollectionID_HashSet;
         //return result;
@@ -2563,7 +2559,7 @@ public class GENESIS_AgentCollectionManager
 //            }
             try {
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                 if (!(Boolean) potentialPartResult[0]) {
                     throw new OutOfMemoryError();
                 }
@@ -2577,7 +2573,7 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = new Object[3];
                 HashSet<Long> swapped_MaleCollectionID_HashSet =
                         swapToFile_MaleCollection_AccountDetail();
@@ -2601,9 +2597,9 @@ public class GENESIS_AgentCollectionManager
                 while (!createdRoom) {
                     Object[] potentialPartResult = swapToFile_AgentCollection_AccountDetail();
                     combine(result, potentialPartResult);
-                    potentialPartResult = _GENESIS_Environment.init_MemoryReserve_AccountDetailAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                    potentialPartResult = ge.initMemoryReserve_AccountDetailAgentCollections(ge.HandleOutOfMemoryErrorFalse);
                     combine(result, potentialPartResult);
-                    potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
                     createdRoom = true;
@@ -2660,9 +2656,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_FemaleCollection(a_GENESIS_FemaleCollection);
             try {
                 if (!success) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -2671,7 +2667,7 @@ public class GENESIS_AgentCollectionManager
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 boolean createdRoom = false;
                 while (!createdRoom) {
                     if (!swapToFile_FemaleCollection(a_GENESIS_FemaleCollection)) {
@@ -2679,8 +2675,8 @@ public class GENESIS_AgentCollectionManager
                             throw a_OutOfMemoryError;
                         }
                     }
-                    _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    createdRoom = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                    createdRoom = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
                             handleOutOfMemoryError);
                 }
             } else {
@@ -2702,7 +2698,7 @@ public class GENESIS_AgentCollectionManager
             return false;
         }
         a_GENESIS_FemaleCollection.write();
-        _LivingFemaleCollection_HashMap.remove(a_GENESIS_FemaleCollection.getAgentCollection_ID());
+        LivingFemales.remove(a_GENESIS_FemaleCollection.getAgentCollectionID());
         a_GENESIS_FemaleCollection = null;
         return true;
     }
@@ -2724,9 +2720,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_MaleCollection(a_GENESIS_MaleCollection);
             try {
                 if (!success) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -2735,7 +2731,7 @@ public class GENESIS_AgentCollectionManager
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 boolean createdRoom = false;
                 while (!createdRoom) {
                     if (!swapToFile_MaleCollection(a_GENESIS_MaleCollection)) {
@@ -2743,8 +2739,8 @@ public class GENESIS_AgentCollectionManager
                             throw a_OutOfMemoryError;
                         }
                     }
-                    _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                    createdRoom = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                    createdRoom = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
                             handleOutOfMemoryError);
                 }
             } else {
@@ -2765,8 +2761,8 @@ public class GENESIS_AgentCollectionManager
             return false;
         }
         a_GENESIS_MaleCollection.write();
-        _LivingMaleCollection_HashMap.remove(
-                a_GENESIS_MaleCollection.getAgentCollection_ID());
+        LivingMales.remove(
+                a_GENESIS_MaleCollection.getAgentCollectionID());
         a_GENESIS_MaleCollection = null;
         return true;
     }
@@ -2790,7 +2786,7 @@ public class GENESIS_AgentCollectionManager
             try {
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_FemaleCollection);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
@@ -2798,7 +2794,7 @@ public class GENESIS_AgentCollectionManager
                     combine(result, potentialPartResult);
                 } else {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_FemaleCollection,
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
@@ -2812,7 +2808,7 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result =
                         swapToFile_FemaleCollection_AccountDetail(
                         a_GENESIS_FemaleCollection);
@@ -2827,10 +2823,10 @@ public class GENESIS_AgentCollectionManager
                     }
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.AgentEnvironment.initMemoryReserve_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
@@ -2858,8 +2854,8 @@ public class GENESIS_AgentCollectionManager
             HashSet<Long> result1 = new HashSet<Long>(1);
             a_GENESIS_FemaleCollection.write();
             Long a_AgentCollection_ID =
-                    a_GENESIS_FemaleCollection.getAgentCollection_ID();
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+                    a_GENESIS_FemaleCollection.getAgentCollectionID();
+            LivingFemales.remove(a_AgentCollection_ID);
             a_GENESIS_FemaleCollection = null;
             result1.add(a_AgentCollection_ID);
             result[0] = true;
@@ -2886,7 +2882,7 @@ public class GENESIS_AgentCollectionManager
             try {
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_MaleCollection);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
@@ -2894,7 +2890,7 @@ public class GENESIS_AgentCollectionManager
                     combine(result, potentialPartResult);
                 } else {
                     Object[] potentialPartResult =
-                            _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_MaleCollection,
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
@@ -2908,7 +2904,7 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result =
                         swapToFile_MaleCollection_AccountDetail(
                         a_GENESIS_MaleCollection);
@@ -2923,10 +2919,10 @@ public class GENESIS_AgentCollectionManager
                     }
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        ge.AgentEnvironment.initMemoryReserve_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                        ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
@@ -2953,8 +2949,8 @@ public class GENESIS_AgentCollectionManager
             HashSet<Long> result1 = new HashSet<Long>(1);
             a_GENESIS_MaleCollection.write();
             Long a_AgentCollection_ID =
-                    a_GENESIS_MaleCollection.getAgentCollection_ID();
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+                    a_GENESIS_MaleCollection.getAgentCollectionID();
+            LivingMales.remove(a_AgentCollection_ID);
             a_GENESIS_MaleCollection = null;
             result1.add(a_AgentCollection_ID);
             result[0] = true;
@@ -2976,9 +2972,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_FemaleCollections();
             try {
                 if (!success) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -2989,11 +2985,11 @@ public class GENESIS_AgentCollectionManager
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (swapToFile_AgentCollection_Account() < 1) {
+                ge.clearMemoryReserve();
+                if (swapAgentCollection_Account() < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 swapToFile_FemaleCollections(
                         handleOutOfMemoryError);
             } else {
@@ -3003,13 +2999,13 @@ public class GENESIS_AgentCollectionManager
     }
 
     protected boolean swapToFile_FemaleCollections() {
-        Iterator<Long> a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_FemaleCollection a_GENESIS_FemaleCollection;
         HashSet<Long> swapped_AgentCollectionID_HashSet = new HashSet<Long>();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_FemaleCollection = _LivingFemaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_FemaleCollection = LivingFemales.get(a_AgentCollection_ID);
             a_GENESIS_FemaleCollection.write();
             a_GENESIS_FemaleCollection = null;
             swapped_AgentCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3017,7 +3013,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingFemales.remove(a_AgentCollection_ID);
         }
         return true;
     }
@@ -3035,9 +3031,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_MaleCollections();
             try {
                 if (!success) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -3048,11 +3044,11 @@ public class GENESIS_AgentCollectionManager
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (swapToFile_AgentCollection_Account() < 1) {
+                ge.clearMemoryReserve();
+                if (swapAgentCollection_Account() < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 swapToFile_MaleCollections(
                         handleOutOfMemoryError);
             } else {
@@ -3062,13 +3058,13 @@ public class GENESIS_AgentCollectionManager
     }
 
     protected boolean swapToFile_MaleCollections() {
-        Iterator<Long> a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingMales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_MaleCollection a_GENESIS_MaleCollection;
         HashSet<Long> swapped_AgentCollectionID_HashSet = new HashSet<Long>();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_MaleCollection = _LivingMaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_MaleCollection = LivingMales.get(a_AgentCollection_ID);
             a_GENESIS_MaleCollection.write();
             a_GENESIS_MaleCollection = null;
             swapped_AgentCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3076,7 +3072,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         return true;
     }
@@ -3094,9 +3090,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_AgentCollections();
             try {
                 if (!success) {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
                 } else {
-                    _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -3105,11 +3101,11 @@ public class GENESIS_AgentCollectionManager
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                if (swapToFile_AgentCollection_Account() < 1) {
+                ge.clearMemoryReserve();
+                if (swapAgentCollection_Account() < 1) {
                     throw a_OutOfMemoryError;
                 }
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 swapToFile_AgentCollections(
                         handleOutOfMemoryError);
             } else {
@@ -3130,14 +3126,14 @@ public class GENESIS_AgentCollectionManager
             long result = swapToFile_AgentCollections_Account();
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account();
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
                     } else {
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -3148,13 +3144,13 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = swapToFile_AgentCollections_Account();
                 if (result < 1) {
                     throw a_OutOfMemoryError;
                 }
-                result += _GENESIS_Environment.init_MemoryReserve_AccountAgentCollections(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                result += ge.initMemoryReserve_AccountAgentCollections(ge.HandleOutOfMemoryErrorFalse);
+                result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                         handleOutOfMemoryError);
                 return result;
             } else {
@@ -3165,13 +3161,13 @@ public class GENESIS_AgentCollectionManager
 
     protected long swapToFile_FemaleCollections_Account() {
         long result = 0L;
-        Iterator<Long> a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_FemaleCollection a_GENESIS_FemaleCollection;
         HashSet<Long> swapped_AgentCollectionID_HashSet = new HashSet<Long>();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_FemaleCollection = _LivingFemaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_FemaleCollection = LivingFemales.get(a_AgentCollection_ID);
             a_GENESIS_FemaleCollection.write();
             a_GENESIS_FemaleCollection = null;
             swapped_AgentCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3180,20 +3176,20 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingFemales.remove(a_AgentCollection_ID);
         }
         return result;
     }
 
     protected long swapToFile_MaleCollections_Account() {
         long result = 0L;
-        Iterator<Long> a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingMales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_MaleCollection a_GENESIS_MaleCollection;
         HashSet<Long> swapped_AgentCollectionID_HashSet = new HashSet<Long>();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_MaleCollection = _LivingMaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_MaleCollection = LivingMales.get(a_AgentCollection_ID);
             a_GENESIS_MaleCollection.write();
             a_GENESIS_MaleCollection = null;
             swapped_AgentCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3202,7 +3198,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         return result;
     }
@@ -3219,13 +3215,13 @@ public class GENESIS_AgentCollectionManager
             Object[] result = swapToFile_FemaleCollections_AccountDetail();
             try {
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
                     }
                     combine(result, potentialPartResult);
                 } else {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
                 }
@@ -3237,7 +3233,7 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = swapToFile_FemaleCollections_AccountDetail();
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult = swapToFile_MaleCollections_AccountDetail();
@@ -3246,7 +3242,7 @@ public class GENESIS_AgentCollectionManager
                     }
                     combine(result, potentialPartResult);
                 }
-                Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = ge.AgentEnvironment.initMemoryReserve_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult = swapToFile_FemaleCollections_AccountDetail(
                         handleOutOfMemoryError);
@@ -3268,12 +3264,12 @@ public class GENESIS_AgentCollectionManager
     protected Object[] swapToFile_FemaleCollections_AccountDetail() {
         Object[] result = new Object[3];
         HashSet<Long> femaleCollectionID_HashSet = new HashSet<Long>();
-        Iterator<Long> a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingFemales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_FemaleCollection a_GENESIS_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_FemaleCollection = _LivingFemaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_FemaleCollection = LivingFemales.get(a_AgentCollection_ID);
             a_GENESIS_FemaleCollection.write();
             a_GENESIS_FemaleCollection = null;
             femaleCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3285,7 +3281,7 @@ public class GENESIS_AgentCollectionManager
             a_Iterator = femaleCollectionID_HashSet.iterator();
             while (a_Iterator.hasNext()) {
                 a_AgentCollection_ID = (Long) a_Iterator.next();
-                _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+                LivingFemales.remove(a_AgentCollection_ID);
             }
             result[1] = femaleCollectionID_HashSet;
         }
@@ -3298,13 +3294,13 @@ public class GENESIS_AgentCollectionManager
             Object[] result = swapToFile_MaleCollections_AccountDetail();
             try {
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
                     }
                     combine(result, potentialPartResult);
                 } else {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
                 }
@@ -3316,7 +3312,7 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = swapToFile_MaleCollections_AccountDetail();
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult = swapToFile_FemaleCollections_AccountDetail();
@@ -3325,7 +3321,7 @@ public class GENESIS_AgentCollectionManager
                     }
                     combine(result, potentialPartResult);
                 }
-                Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = ge.AgentEnvironment.initMemoryReserve_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult = swapToFile_MaleCollections_AccountDetail(
                         handleOutOfMemoryError);
@@ -3347,12 +3343,12 @@ public class GENESIS_AgentCollectionManager
     protected Object[] swapToFile_MaleCollections_AccountDetail() {
         Object[] result = new Object[3];
         HashSet<Long> maleCollectionID_HashSet = new HashSet<Long>();
-        Iterator<Long> a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingMales.keySet().iterator();
         Long a_AgentCollection_ID;
         GENESIS_MaleCollection a_GENESIS_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            a_GENESIS_MaleCollection = _LivingMaleCollection_HashMap.get(a_AgentCollection_ID);
+            a_GENESIS_MaleCollection = LivingMales.get(a_AgentCollection_ID);
             a_GENESIS_MaleCollection.write();
             a_GENESIS_MaleCollection = null;
             maleCollectionID_HashSet.add(a_AgentCollection_ID);
@@ -3364,7 +3360,7 @@ public class GENESIS_AgentCollectionManager
             a_Iterator = maleCollectionID_HashSet.iterator();
             while (a_Iterator.hasNext()) {
                 a_AgentCollection_ID = (Long) a_Iterator.next();
-                _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+                LivingMales.remove(a_AgentCollection_ID);
             }
             result[2] = maleCollectionID_HashSet;
         }
@@ -3377,13 +3373,13 @@ public class GENESIS_AgentCollectionManager
             Object[] result = swapToFile_AgentCollections_AccountDetail();
             try {
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail();
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
                     }
                     combine(result, potentialPartResult);
                 } else {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
                 }
@@ -3395,12 +3391,12 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = swapToFile_AgentCollections_AccountDetail();
                 if (!(Boolean) result[0]) {
                     throw a_OutOfMemoryError;
                 }
-                Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = ge.AgentEnvironment.initMemoryReserve_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                 combine(result, potentialPartResult);
                 potentialPartResult = swapToFile_AgentCollections_AccountDetail(
                         handleOutOfMemoryError);
@@ -3427,7 +3423,7 @@ public class GENESIS_AgentCollectionManager
 //                    a_AgentCollection_ID);
 //            try {
 //                if (result.isEmpty()) {
-//                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+//                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
 //                            a_AgentCollection_ID);
 //                    if ((Boolean) account[0]) {
 //                        result.addAll((HashSet<Long>) account[1]);
@@ -3435,7 +3431,7 @@ public class GENESIS_AgentCollectionManager
 //                        throw new OutOfMemoryError();
 //                    }
 //                } else {
-//                    HashSet<Long> potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+//                    HashSet<Long> potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
 //                    a_AgentCollection_ID,
 //                            handleOutOfMemoryError);
 //                    result.addAll(potentialPartResult);
@@ -3448,14 +3444,14 @@ public class GENESIS_AgentCollectionManager
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                HashSet<Long> result = swapToFile_AgentCollectionExcept_AccountDetail(
 //                        a_AgentCollection_ID);
 //                if (result.isEmpty()) {
 //                    throw a_OutOfMemoryError;
 //                }
-//                HashSet<Long> potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+//                HashSet<Long> potentialPartResult = ge.AgentEnvironment.initMemoryReserve_AccountDetail(
+//                        ge.HandleOutOfMemoryErrorFalse);
 //                if (!potentialPartResult.isEmpty()) {
 //                    result.addAll(potentialPartResult);
 //                }
@@ -3469,20 +3465,20 @@ public class GENESIS_AgentCollectionManager
             Long a_AgentCollection_ID) {
         Object[] result = new Object[3];
         HashSet<Long> femaleCollectionID_HashSet = new HashSet<Long>(1);
-        Iterator a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = LivingFemales.keySet().iterator();
         Long b_AgentCollection_ID = null;
         GENESIS_AgentCollection b_AgentCollection = null;
         while (a_Iterator.hasNext()) {
             b_AgentCollection_ID = (Long) a_Iterator.next();
             if (b_AgentCollection_ID != a_AgentCollection_ID) {
-                b_AgentCollection = _LivingFemaleCollection_HashMap.get(a_AgentCollection_ID);
+                b_AgentCollection = LivingFemales.get(a_AgentCollection_ID);
                 b_AgentCollection.write();
                 b_AgentCollection = null;
                 femaleCollectionID_HashSet.add(b_AgentCollection_ID);
                 break;
             }
         }
-        _LivingFemaleCollection_HashMap.remove(b_AgentCollection_ID);
+        LivingFemales.remove(b_AgentCollection_ID);
 //        this._AgentCollection_HashMap.put(
 //                b_AgentCollection_ID,
 //                b_AgentCollection);
@@ -3497,7 +3493,7 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_FemaleCollection);
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_FemaleCollection);
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
@@ -3505,7 +3501,7 @@ public class GENESIS_AgentCollectionManager
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_FemaleCollection,
                             handleOutOfMemoryError);
                 }
@@ -3517,13 +3513,13 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection);
                 if (result < 1) {
                     throw a_OutOfMemoryError;
                 }
-                result += _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_Account(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                result += ge.AgentEnvironment.initMemoryReserve_Account(ge.HandleOutOfMemoryErrorFalse);
                 result += swapToFile_FemaleCollectionsExcept_Account(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
@@ -3538,12 +3534,12 @@ public class GENESIS_AgentCollectionManager
             GENESIS_FemaleCollection a_FemaleCollection) {
         long result = 0L;
         HashSet<Long> swapped_AgentCollections = new HashSet<Long>();
-        Iterator<Long> a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingFemales.keySet().iterator();
         long a_AgentCollection_ID;
         GENESIS_AgentCollection b_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            b_FemaleCollection = _LivingFemaleCollection_HashMap.get(
+            b_FemaleCollection = LivingFemales.get(
                     a_AgentCollection_ID);
             if (b_FemaleCollection != a_FemaleCollection) {
                 b_FemaleCollection.write();
@@ -3555,7 +3551,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollections.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = (Long) a_Iterator.next();
-            _LivingFemaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingFemales.remove(a_AgentCollection_ID);
         }
         return result;
     }
@@ -3568,7 +3564,7 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_MaleCollection);
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_MaleCollection);
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
@@ -3576,7 +3572,7 @@ public class GENESIS_AgentCollectionManager
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_MaleCollection,
                             handleOutOfMemoryError);
                 }
@@ -3588,13 +3584,13 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 long result = swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection);
                 if (result < 1) {
                     throw a_OutOfMemoryError;
                 }
-                result += _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_Account(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                result += ge.AgentEnvironment.initMemoryReserve_Account(ge.HandleOutOfMemoryErrorFalse);
                 result += swapToFile_MaleCollectionsExcept_Account(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
@@ -3609,12 +3605,12 @@ public class GENESIS_AgentCollectionManager
             GENESIS_MaleCollection a_MaleCollection) {
         long result = 0L;
         HashSet<Long> swapped_AgentCollections = new HashSet<Long>();
-        Iterator<Long> a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingMales.keySet().iterator();
         long a_AgentCollection_ID;
         GENESIS_AgentCollection b_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = a_Iterator.next();
-            b_MaleCollection = _LivingMaleCollection_HashMap.get(
+            b_MaleCollection = LivingMales.get(
                     a_AgentCollection_ID);
             if (b_MaleCollection != a_MaleCollection) {
                 b_MaleCollection.write();
@@ -3626,7 +3622,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swapped_AgentCollections.iterator();
         while (a_Iterator.hasNext()) {
             a_AgentCollection_ID = (Long) a_Iterator.next();
-            _LivingMaleCollection_HashMap.remove(a_AgentCollection_ID);
+            LivingMales.remove(a_AgentCollection_ID);
         }
         return result;
     }
@@ -3639,14 +3635,14 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_FemaleCollection);
             try {
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_FemaleCollection);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
                     }
                     combine(result, potentialPartResult);
                 } else {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_FemaleCollection,
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
@@ -3659,17 +3655,17 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = swapToFile_FemaleCollectionExcept_AccountDetail(
                         a_GENESIS_FemaleCollection);
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = swapToFile_MaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = swapToFile_MaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw a_OutOfMemoryError;
                     }
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(
+                        ge.AgentEnvironment.initMemoryReserve_AccountDetail(
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
                 potentialPartResult = swapToFile_FemaleCollectionsExcept_AccountDetail(
@@ -3687,12 +3683,12 @@ public class GENESIS_AgentCollectionManager
             GENESIS_FemaleCollection a_FemaleCollection) {
         Object[] result = new Object[3];
         HashSet<Long> swappedFemaleCollectionID_HashSet = new HashSet<Long>();
-        Iterator a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = LivingFemales.keySet().iterator();
         long a_FemaleCollection_ID;
         GENESIS_FemaleCollection b_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_FemaleCollection_ID = (Long) a_Iterator.next();
-            b_FemaleCollection = _LivingFemaleCollection_HashMap.get(
+            b_FemaleCollection = LivingFemales.get(
                     a_FemaleCollection_ID);
             if (b_FemaleCollection != a_FemaleCollection) {
                 b_FemaleCollection.write();
@@ -3705,7 +3701,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swappedFemaleCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_FemaleCollection_ID = (Long) a_Iterator.next();
-            _LivingFemaleCollection_HashMap.remove(a_FemaleCollection_ID);
+            LivingFemales.remove(a_FemaleCollection_ID);
         }
         return result;
     }
@@ -3718,14 +3714,14 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_MaleCollection);
             try {
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_MaleCollection);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw new OutOfMemoryError();
                     }
                     combine(result, potentialPartResult);
                 } else {
-                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                             a_GENESIS_MaleCollection,
                             handleOutOfMemoryError);
                     combine(result, potentialPartResult);
@@ -3738,17 +3734,17 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 Object[] result = swapToFile_MaleCollectionExcept_AccountDetail(
                         a_GENESIS_MaleCollection);
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = swapToFile_MaleCollection_AccountDetail(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = swapToFile_MaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
                     if (!(Boolean) potentialPartResult[0]) {
                         throw a_OutOfMemoryError;
                     }
                 }
                 Object[] potentialPartResult =
-                        _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(
+                        ge.AgentEnvironment.initMemoryReserve_AccountDetail(
                         handleOutOfMemoryError);
                 combine(result, potentialPartResult);
                 potentialPartResult = swapToFile_MaleCollectionsExcept_AccountDetail(
@@ -3766,12 +3762,12 @@ public class GENESIS_AgentCollectionManager
             GENESIS_MaleCollection a_MaleCollection) {
         Object[] result = new Object[3];
         HashSet<Long> swappedMaleCollectionID_HashSet = new HashSet<Long>();
-        Iterator a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = LivingMales.keySet().iterator();
         long a_MaleCollection_ID;
         GENESIS_MaleCollection b_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_MaleCollection_ID = (Long) a_Iterator.next();
-            b_MaleCollection = _LivingMaleCollection_HashMap.get(
+            b_MaleCollection = LivingMales.get(
                     a_MaleCollection_ID);
             if (b_MaleCollection != a_MaleCollection) {
                 b_MaleCollection.write();
@@ -3784,7 +3780,7 @@ public class GENESIS_AgentCollectionManager
         a_Iterator = swappedMaleCollectionID_HashSet.iterator();
         while (a_Iterator.hasNext()) {
             a_MaleCollection_ID = (Long) a_Iterator.next();
-            _LivingMaleCollection_HashMap.remove(a_MaleCollection_ID);
+            LivingMales.remove(a_MaleCollection_ID);
         }
         return result;
     }
@@ -3797,12 +3793,12 @@ public class GENESIS_AgentCollectionManager
 //                    a_GENESIS_FemaleCollection);
 //            try {
 //                if ((Boolean) result[0]) {
-//                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+//                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
 //                            a_GENESIS_FemaleCollection,
 //                            handleOutOfMemoryError);
 //                    combine(result, potentialPartResult);
 //                } else {
-//                    Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
+//                    Object[] potentialPartResult = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
 //                            a_GENESIS_FemaleCollection);
 //                    if (!(Boolean) potentialPartResult[0]) {
 //                        throw new OutOfMemoryError();
@@ -3817,7 +3813,7 @@ public class GENESIS_AgentCollectionManager
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
+//                ge.clearMemoryReserve();
 //                Object[] result = swapToFile_FemaleCollectionExcept_AccountDetail(
 //                        a_GENESIS_FemaleCollection);
 //                if ((Boolean) result[0]) {
@@ -3827,7 +3823,7 @@ public class GENESIS_AgentCollectionManager
 //                    }
 //                    combine(result, potentialPartResult);
 //                }
-//                Object[] potentialPartResult = _GENESIS_Environment._GENESIS_AgentEnvironment.init_MemoryReserve_AccountDetail(
+//                Object[] potentialPartResult = ge.AgentEnvironment.initMemoryReserve_AccountDetail(
 //                        handleOutOfMemoryError);
 //                combine(result, potentialPartResult);
 //                potentialPartResult = swapToFile_FemaleCollectionsExcept_AccountDetail(
@@ -3844,13 +3840,13 @@ public class GENESIS_AgentCollectionManager
             GENESIS_FemaleCollection a_FemaleCollection) {
         Object[] result = new Object[3];
         HashSet<Long> swapedFemaleCollectionID_HashSet = new HashSet<Long>(1);
-        Iterator a_Iterator = this._LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = this.LivingFemales.keySet().iterator();
         long a_FemaleCollection_ID;
         GENESIS_FemaleCollection b_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_FemaleCollection_ID = (Long) a_Iterator.next();
             b_FemaleCollection =
-                    (GENESIS_FemaleCollection) this._LivingFemaleCollection_HashMap.get(a_FemaleCollection_ID);
+                    (GENESIS_FemaleCollection) this.LivingFemales.get(a_FemaleCollection_ID);
             if (b_FemaleCollection != a_FemaleCollection) {
                 b_FemaleCollection.write();
                 b_FemaleCollection = null;
@@ -3862,7 +3858,7 @@ public class GENESIS_AgentCollectionManager
             a_Iterator = swapedFemaleCollectionID_HashSet.iterator();
             while (a_Iterator.hasNext()) {
                 a_FemaleCollection_ID = (Long) a_Iterator.next();
-                this._LivingFemaleCollection_HashMap.remove(
+                this.LivingFemales.remove(
                         a_FemaleCollection_ID);
             }
             result[0] = true;
@@ -3877,13 +3873,13 @@ public class GENESIS_AgentCollectionManager
             GENESIS_MaleCollection a_MaleCollection) {
         Object[] result = new Object[3];
         HashSet<Long> swapedMaleCollectionID_HashSet = new HashSet<Long>(1);
-        Iterator a_Iterator = this._LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator a_Iterator = this.LivingMales.keySet().iterator();
         long a_MaleCollection_ID;
         GENESIS_MaleCollection b_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_MaleCollection_ID = (Long) a_Iterator.next();
             b_MaleCollection =
-                    (GENESIS_MaleCollection) this._LivingMaleCollection_HashMap.get(a_MaleCollection_ID);
+                    (GENESIS_MaleCollection) this.LivingMales.get(a_MaleCollection_ID);
             if (b_MaleCollection != a_MaleCollection) {
                 b_MaleCollection.write();
                 b_MaleCollection = null;
@@ -3895,7 +3891,7 @@ public class GENESIS_AgentCollectionManager
             a_Iterator = swapedMaleCollectionID_HashSet.iterator();
             while (a_Iterator.hasNext()) {
                 a_MaleCollection_ID = (Long) a_Iterator.next();
-                this._LivingMaleCollection_HashMap.remove(
+                this.LivingMales.remove(
                         a_MaleCollection_ID);
             }
             result[0] = true;
@@ -3914,7 +3910,7 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_FemaleCollection);
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_FemaleCollection);
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
@@ -3922,7 +3918,7 @@ public class GENESIS_AgentCollectionManager
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_FemaleCollection,
                             handleOutOfMemoryError);
                 }
@@ -3934,13 +3930,13 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
                 long result = 1L;
-                result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 return result;
@@ -3957,12 +3953,12 @@ public class GENESIS_AgentCollectionManager
     protected long swapToFile_FemaleCollectionExcept_Account(
             GENESIS_FemaleCollection a_FemaleCollection) {
         long result = 0;
-        Iterator<Long> a_Iterator = _LivingFemaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingFemales.keySet().iterator();
         Long a_FemaleCollection_ID = 0L;
         GENESIS_FemaleCollection b_FemaleCollection;
         while (a_Iterator.hasNext()) {
             a_FemaleCollection_ID = a_Iterator.next();
-            b_FemaleCollection = _LivingFemaleCollection_HashMap.get(
+            b_FemaleCollection = LivingFemales.get(
                     a_FemaleCollection_ID);
             if (b_FemaleCollection != a_FemaleCollection) {
                 b_FemaleCollection.write();
@@ -3972,7 +3968,7 @@ public class GENESIS_AgentCollectionManager
             }
         }
         if (result == 1) {
-            _LivingFemaleCollection_HashMap.remove(
+            LivingFemales.remove(
                     a_FemaleCollection_ID);
         }
         return result;
@@ -3986,7 +3982,7 @@ public class GENESIS_AgentCollectionManager
                     a_GENESIS_MaleCollection);
             try {
                 if (result < 1) {
-                    Object[] account = _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    Object[] account = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_MaleCollection);
                     if ((Boolean) account[0]) {
                         result += (Long) account[1];
@@ -3994,7 +3990,7 @@ public class GENESIS_AgentCollectionManager
                         throw new OutOfMemoryError();
                     }
                 } else {
-                    result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                    result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                             a_GENESIS_MaleCollection,
                             handleOutOfMemoryError);
                 }
@@ -4006,13 +4002,13 @@ public class GENESIS_AgentCollectionManager
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection) < 1) {
                     throw a_OutOfMemoryError;
                 }
                 long result = 1L;
-                result += _GENESIS_Environment._GENESIS_AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
+                result += ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue_Account(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 return result;
@@ -4029,12 +4025,12 @@ public class GENESIS_AgentCollectionManager
     protected long swapToFile_MaleCollectionExcept_Account(
             GENESIS_MaleCollection a_MaleCollection) {
         long result = 0;
-        Iterator<Long> a_Iterator = _LivingMaleCollection_HashMap.keySet().iterator();
+        Iterator<Long> a_Iterator = LivingMales.keySet().iterator();
         Long a_MaleCollection_ID = 0L;
         GENESIS_MaleCollection b_MaleCollection;
         while (a_Iterator.hasNext()) {
             a_MaleCollection_ID = a_Iterator.next();
-            b_MaleCollection = _LivingMaleCollection_HashMap.get(
+            b_MaleCollection = LivingMales.get(
                     a_MaleCollection_ID);
             if (b_MaleCollection != a_MaleCollection) {
                 b_MaleCollection.write();
@@ -4044,7 +4040,7 @@ public class GENESIS_AgentCollectionManager
             }
         }
         if (result == 1) {
-            _LivingMaleCollection_HashMap.remove(
+            LivingMales.remove(
                     a_MaleCollection_ID);
         }
         return result;

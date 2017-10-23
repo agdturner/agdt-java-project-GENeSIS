@@ -8,35 +8,34 @@ import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 /**
  * A factory for creating Male and Female Persons.
  */
-public class GENESIS_PersonFactory implements Serializable {
+public class GENESIS_PersonFactory extends GENESIS_Object implements Serializable {
 
-    static final long serialVersionUID = 1L;
-    protected transient GENESIS_Environment _GENESIS_Environment;
-    protected transient GENESIS_AgentCollectionManager _GENESIS_AgentCollectionManager;
+    //static final long serialVersionUID = 1L;
+    protected transient GENESIS_AgentCollectionManager AgentCollectionManager;
 
     public GENESIS_PersonFactory() {
     }
 
     public GENESIS_PersonFactory(
-            GENESIS_PersonFactory a_GENESIS_PersonFactory) {
-        this(a_GENESIS_PersonFactory._GENESIS_Environment,
-                a_GENESIS_PersonFactory);
+            GENESIS_PersonFactory pf) {
+        this(pf.ge,
+                pf);
     }
 
     public GENESIS_PersonFactory(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_PersonFactory a_GENESIS_PersonFactory) {
-        this._GENESIS_Environment = a_GENESIS_Environment;
-        this._GENESIS_AgentCollectionManager = new GENESIS_AgentCollectionManager(
-                a_GENESIS_Environment,
-                a_GENESIS_PersonFactory._GENESIS_AgentCollectionManager);
+            GENESIS_Environment ge,
+            GENESIS_PersonFactory pf) {
+        super(ge);
+        AgentCollectionManager = new GENESIS_AgentCollectionManager(
+                ge,
+                pf.AgentCollectionManager);
     }
 
     public GENESIS_PersonFactory(
-            GENESIS_Environment a_GENESIS_Environment,
-            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager) {
-        _GENESIS_Environment = a_GENESIS_Environment;
-        _GENESIS_AgentCollectionManager = a_GENESIS_AgentCollectionManager;
+            GENESIS_Environment ge,
+            GENESIS_AgentCollectionManager acm) {
+        super(ge);
+        AgentCollectionManager = acm;
     }
 
     /**
@@ -54,34 +53,34 @@ public class GENESIS_PersonFactory implements Serializable {
             boolean handleOutOfMemoryError) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
 //                    handleOutOfMemoryError);
             GENESIS_Female result = new GENESIS_Female(
-                    _GENESIS_Environment,
-                    _GENESIS_AgentCollectionManager,
+                    ge,
+                    AgentCollectionManager,
                     age,
                     a_Household,
                     a_VectorPoint2D);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
-            _GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
-                    result.get_Agent_ID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornFemale =
+                    result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
 //                GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
 //                    handleOutOfMemoryError);
-                if (_GENESIS_AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
-                    if (_GENESIS_AgentCollectionManager.swapToFile_MaleCollection_Account(_GENESIS_Environment.HandleOutOfMemoryErrorFalse) < 1) {
-                        _GENESIS_Environment.swapToFile_Grid2DSquareCellChunk(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                if (AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
+                        ge.HandleOutOfMemoryErrorFalse) < 1) {
+                    if (AgentCollectionManager.swapToFile_MaleCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
+                        ge.swapChunk(ge.HandleOutOfMemoryErrorFalse);
                     }
                 }
-                _GENESIS_Environment.init_MemoryReserve(a_GENESIS_FemaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(a_GENESIS_FemaleCollection,
+                        ge.HandleOutOfMemoryErrorFalse);
                 return createFemale(
                         age,
                         a_Household,
@@ -106,36 +105,36 @@ public class GENESIS_PersonFactory implements Serializable {
             boolean handleOutOfMemoryError) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
 //                    handleOutOfMemoryReserve);
             GENESIS_Female result = new GENESIS_Female(
-                    _GENESIS_Environment,
-                    _GENESIS_AgentCollectionManager,
+                    ge,
+                    AgentCollectionManager,
                     age,
                     a_Household,
                     a_VectorPoint2D);
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
-                    result.get_FemaleCollection(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    result.get_FemaleCollection(ge.HandleOutOfMemoryErrorFalse);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
-            _GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
-                    result.get_Agent_ID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornFemale =
+                    result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_Female result = new GENESIS_Female(
-                        _GENESIS_Environment,
-                        _GENESIS_AgentCollectionManager,
+                        ge,
+                        AgentCollectionManager,
                         age,
                         a_Household,
                         a_VectorPoint2D);
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
-                        result.get_FemaleCollection(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                _GENESIS_Environment.swapToFile_DataAnyExcept(a_GENESIS_FemaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        result.get_FemaleCollection(ge.HandleOutOfMemoryErrorFalse);
+                ge.swapDataAnyExcept(a_GENESIS_FemaleCollection,
+                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -150,36 +149,36 @@ public class GENESIS_PersonFactory implements Serializable {
             boolean handleOutOfMemoryError) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
 //                    handleOutOfMemoryReserve);
             GENESIS_Male result = new GENESIS_Male(
-                    _GENESIS_Environment,
-                    _GENESIS_AgentCollectionManager,
+                    ge,
+                    AgentCollectionManager,
                     age,
                     a_Household,
                     a_VectorPoint2D);
             GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                    result.get_MaleCollection(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    result.get_MaleCollection(ge.HandleOutOfMemoryErrorFalse);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
-            _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
-                    result.get_Agent_ID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornMale =
+                    result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_Male result = new GENESIS_Male(
-                        _GENESIS_Environment,
-                        _GENESIS_AgentCollectionManager,
+                        ge,
+                        AgentCollectionManager,
                         age,
                         a_Household,
                         a_VectorPoint2D);
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                        result.get_MaleCollection(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                _GENESIS_Environment.swapToFile_DataAnyExcept(a_GENESIS_MaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                        result.get_MaleCollection(ge.HandleOutOfMemoryErrorFalse);
+                ge.swapDataAnyExcept(a_GENESIS_MaleCollection,
+                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -195,28 +194,28 @@ public class GENESIS_PersonFactory implements Serializable {
             boolean handleOutOfMemoryError) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
 //                    handleOutOfMemoryReserve);
             GENESIS_Male result = new GENESIS_Male(
-                    _GENESIS_Environment,
-                    _GENESIS_AgentCollectionManager,
+                    ge,
+                    AgentCollectionManager,
                     age,
                     a_Household,
                     a_VectorPoint2D);
             GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                    result.get_MaleCollection(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    result.get_MaleCollection(ge.HandleOutOfMemoryErrorFalse);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
-            _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
-                    result.get_Agent_ID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornMale =
+                    result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                _GENESIS_Environment.clear_MemoryReserve();
-                _GENESIS_Environment.swapToFile_DataAnyExcept(a_GENESIS_FemaleCollection,
-                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-                _GENESIS_Environment.init_MemoryReserve(_GENESIS_Environment.HandleOutOfMemoryErrorFalse);
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(a_GENESIS_FemaleCollection,
+                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 return createMale(
                         age,
                         a_Household,

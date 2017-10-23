@@ -119,19 +119,19 @@ public class GENESIS_Female extends GENESIS_Person {
             Vector_Point2D point2D) {
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
         ge = a_GENESIS_Environment;
-        _GENESIS_AgentCollectionManager = a_GENESIS_AgentCollectionManager;
+        AgentCollectionManager = a_GENESIS_AgentCollectionManager;
         _ID = a_GENESIS_AgentCollectionManager.get_NextFemaleID(ge.HandleOutOfMemoryError);
-        _Type = getTypeLivingFemale_String();
+        Type = getTypeLivingFemale_String();
         _Collection_ID = a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(_ID,
-                _Type,
+                Type,
                 ge.HandleOutOfMemoryError);
         this._ResidentialSubregionIDs = new ArrayList<String>();
         Generic_StaticIO.addToArchive(
-                _GENESIS_AgentCollectionManager.getLivingFemaleDirectory(),
-                _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,
+                AgentCollectionManager.getLivingFemaleDirectory(),
+                AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,
                 _Collection_ID);
         this._GENESIS_FemaleCollection = get_FemaleCollection();
-        this._GENESIS_FemaleCollection.get_Agent_ID_Agent_HashMap().put(_ID, this);
+        this._GENESIS_FemaleCollection.getAgentID_Agent_Map().put(_ID, this);
         this._Directory = directory;
         this._Age = new GENESIS_Age(age, a_GENESIS_Environment);
         this._Family = new Family(this);
@@ -168,7 +168,7 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     @Override
-    public Long get_Agent_ID(boolean handleOutOfMemoryError) {
+    public Long getAgentID(boolean handleOutOfMemoryError) {
         try {
             Long result = get_Female_ID();
             GENESIS_FemaleCollection a_FemaleCollection =
@@ -179,12 +179,12 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_FemaleCollection());
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
-                return get_Agent_ID(handleOutOfMemoryError);
+                return getAgentID(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -206,11 +206,11 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                if (ge._GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_Account() < 1) {
-                    ge.swapToFile_Grid2DSquareCellChunk();
+                ge.clearMemoryReserve();
+                if (ge.AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account() < 1) {
+                    ge.swapChunk();
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return get_FemaleCollection(handleOutOfMemoryError);
             } else {
@@ -221,9 +221,9 @@ public class GENESIS_Female extends GENESIS_Person {
 
     protected GENESIS_FemaleCollection get_FemaleCollection() {
         if (_GENESIS_FemaleCollection == null) {
-            _GENESIS_FemaleCollection = get_AgentCollectionManager().getFemaleCollection(
+            _GENESIS_FemaleCollection = getAgentCollectionManager().getFemaleCollection(
                     _Collection_ID,
-                    _Type,
+                    Type,
                     ge.HandleOutOfMemoryErrorFalse);
         }
         if (_GENESIS_FemaleCollection.ge == null) {
@@ -241,10 +241,10 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         _GENESIS_FemaleCollection);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 return get_FemaleCollection_ID(handleOutOfMemoryError);
             } else {
@@ -254,7 +254,7 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     protected Long get_FemaleCollection_ID() {
-        return get_AgentCollectionManager().getAgentCollection_ID(get_Female_ID());
+        return getAgentCollectionManager().getAgentCollection_ID(get_Female_ID());
     }
 
     @Override
@@ -266,10 +266,10 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_FemaleCollection());
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 return get_Gender(handleOutOfMemoryError);
             } else {
@@ -286,18 +286,18 @@ public class GENESIS_Female extends GENESIS_Person {
 //    public void init_Fertility(boolean handleOutOfMemoryError) {
 //        try {
 //            init_Fertility();
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
 //                    handleOutOfMemoryError);
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
-//                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-//                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                        _GENESIS_Environment.HandleOutOfMemoryError);
+//                ge.clearMemoryReserve();
+//                ge.AgentEnvironment.getAgentCollectionManager(
+//                        ge.HandleOutOfMemoryErrorFalse).swapAgentCollection(
+//                        ge.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
+//                ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//                        ge.HandleOutOfMemoryError);
 //                init_Fertility(handleOutOfMemoryError);
 //            } else {
 //                throw a_OutOfMemoryError;
@@ -306,8 +306,8 @@ public class GENESIS_Female extends GENESIS_Person {
 //    }
 //
 //    protected void init_Fertility() {
-//        this._LengthOfFertilityPeriod = 2 + this._GENESIS_Environment._AbstractModel._Random.nextInt(5);
-//        this._StartOfFertiliyPeriod = this._GENESIS_Environment._AbstractModel._Random.nextInt(28 - _LengthOfFertilityPeriod);
+//        this._LengthOfFertilityPeriod = 2 + this.ge._AbstractModel._Random.nextInt(5);
+//        this._StartOfFertiliyPeriod = this.ge._AbstractModel._Random.nextInt(28 - _LengthOfFertilityPeriod);
 //        //this._FertileDays_HashSet.add(_startOfFertiliyPeriod);
 //    }
 //
@@ -316,19 +316,19 @@ public class GENESIS_Female extends GENESIS_Person {
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            BigDecimal result = get_Fertility(_Fertility);
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//            ge.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
 //            //OutOfMemoryErrorHandler.tryToEnsureThereIsEnoughMemoryToContinue();
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                _GENESIS_Environment.clear_MemoryReserve();
-//                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-//                _GENESIS_Environment.init_MemoryReserve(
-//                        _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-//                _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
-//                        _GENESIS_Environment.HandleOutOfMemoryError);
+//                ge.clearMemoryReserve();
+//                ge.AgentEnvironment.getAgentCollectionManager(
+//                        ge.HandleOutOfMemoryErrorFalse).swapAgentCollection(
+//                        ge.HandleOutOfMemoryErrorFalse);
+//                ge.initMemoryReserve(
+//                        ge.HandleOutOfMemoryErrorFalse);
+//                ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//                        ge.HandleOutOfMemoryError);
 //                return get_Fertility(
 //                        _Fertility,
 //                        handleOutOfMemoryError);
@@ -347,7 +347,7 @@ public class GENESIS_Female extends GENESIS_Person {
 ////            return new BigDecimal("0.0");
 ////        } else {
 //////            HashSet _Children = this._Family.get_Children();
-//////            int _Day = _GENESIS_Environment._Day;
+//////            int _Day = ge._Day;
 //////            if (_Children == null){
 //////                return _GeneralFertilityForAge * ;
 //////            }
@@ -370,8 +370,8 @@ public class GENESIS_Female extends GENESIS_Person {
                 }
 
                 return new Integer((int) ge._Time.getDifferenceInDays_long(_Time_DueToGiveBirth));
-                //return new Integer((int) _Time_DueToGiveBirth.getDifferenceInDays_long(_GENESIS_Environment._Time));
-                //return _Time_DueToGiveBirth.subtract(_GENESIS_Environment._Time);
+                //return new Integer((int) _Time_DueToGiveBirth.getDifferenceInDays_long(ge._Time));
+                //return _Time_DueToGiveBirth.subtract(ge._Time);
             } catch (IllegalArgumentException e) {
                 int debug = 1;
                 return null;
@@ -402,11 +402,11 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                ge.clearMemoryReserve();
+                ge.AgentEnvironment.get_AgentCollectionManager(
                         ge.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return set_Pregnant(
@@ -465,11 +465,11 @@ public class GENESIS_Female extends GENESIS_Person {
             //OutOfMemoryErrorHandler.tryToEnsureThereIsEnoughMemoryToContinue();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                ge.clearMemoryReserve();
+                ge.AgentEnvironment.get_AgentCollectionManager(
                         ge.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 set_Pregnant(
@@ -490,7 +490,7 @@ public class GENESIS_Female extends GENESIS_Person {
      */
     protected void set_Pregnant(GENESIS_Fertility a_Fertility) {
         GENESIS_Time _DueDate = new GENESIS_Time(ge._Time);
-        //Fertility a_Fertility = ((DemographicModel_Aspatial_1)_GENESIS_Environment._AbstractModel)._Demographics._Fertility;
+        //Fertility a_Fertility = ((DemographicModel_Aspatial_1)ge._AbstractModel)._Demographics._Fertility;
         int numberOfBabies = 1;
         if (Generic_BigDecimal.randomUniformTest(
                 ge._AbstractModel.get_Random(10),
@@ -509,7 +509,7 @@ public class GENESIS_Female extends GENESIS_Person {
                 numberOfBabies = 3;
             }
         }
-//        HashMap<Integer, BigDecimal> probabilityOfTwins = ((DemographicModel_Aspatial_1) _GENESIS_Environment._AbstractModel)._Fertility._ProbabilityOfTwins_HashMap;
+//        HashMap<Integer, BigDecimal> probabilityOfTwins = ((DemographicModel_Aspatial_1) ge._AbstractModel)._Fertility._ProbabilityOfTwins_HashMap;
 //        Integer age_Integer = get_AgeInYears_int();
 //        BigDecimal probability = probabilityOfTwins.get(age_Integer);
 //        // Test
@@ -526,7 +526,7 @@ public class GENESIS_Female extends GENESIS_Person {
         }
         
         // debug
-        if (this.get_Agent_ID(false) == 58061){ 
+        if (this.getAgentID(false) == 58061){ 
             int debug = 1;
         }
         
@@ -542,11 +542,11 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                ge.clearMemoryReserve();
+                ge.AgentEnvironment.get_AgentCollectionManager(
                         ge.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return isPregnant(handleOutOfMemoryError);
@@ -585,20 +585,20 @@ public class GENESIS_Female extends GENESIS_Person {
 //        GENESIS_Person result;
 //        _Time_DueToGiveBirth = null;
 //        // Equal probabilty of male and female to start
-//        if (_GENESIS_Environment._AbstractModel._Random.nextBoolean()) {
+//        if (ge._AbstractModel._Random.nextBoolean()) {
 //            result = new GENESIS_Male(
-//                    _GENESIS_Environment,
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                    _GENESIS_Environment.HandleOutOfMemoryErrorFalse),
-//                     new GENESIS_Age(_GENESIS_Environment,_GENESIS_Environment._Time),
+//                    ge,
+//                    ge.AgentEnvironment.getAgentCollectionManager(
+//                    ge.HandleOutOfMemoryErrorFalse),
+//                     new GENESIS_Age(ge,ge._Time),
 //                       _Household,
 //                    _Point2D);
 //        } else {
 //            result = new GENESIS_Female(
-//                    _GENESIS_Environment,
-//                    _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
-//                    _GENESIS_Environment.HandleOutOfMemoryErrorFalse),
-//                     new GENESIS_Age(_GENESIS_Environment,_GENESIS_Environment._Time),
+//                    ge,
+//                    ge.AgentEnvironment.getAgentCollectionManager(
+//                    ge.HandleOutOfMemoryErrorFalse),
+//                     new GENESIS_Age(ge,ge._Time),
 //                       _Household,
 //                    _Point2D);
 //        }
@@ -622,11 +622,11 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                ge.clearMemoryReserve();
+                ge.AgentEnvironment.get_AgentCollectionManager(
                         ge.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return giveBirthSimple(handleOutOfMemoryError);
@@ -653,11 +653,11 @@ public class GENESIS_Female extends GENESIS_Person {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                ge.clearMemoryReserve();
+                ge.AgentEnvironment.get_AgentCollectionManager(
                         ge.HandleOutOfMemoryErrorFalse).swapToFile_AgentCollection(
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         ge.HandleOutOfMemoryErrorFalse);
                 ge.tryToEnsureThereIsEnoughMemoryToContinue(ge.HandleOutOfMemoryError);
                 return giveBirthSimpleOld(handleOutOfMemoryError);
@@ -702,7 +702,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
                 babyGirl._Family.set_Mother(_ID);
                 babyGirl._ResidentialSubregionIDs.add(getSubregionID());
-                long agent_ID = babyGirl.get_Agent_ID(false);
+                long agent_ID = babyGirl.getAgentID(false);
                 this._Family.add_Child(agent_ID);
                 babyGirl_IDs.add(agent_ID);
             } else {
@@ -712,7 +712,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         _Point2D,
                         a_GENESIS_FemaleCollection,
                         ge.HandleOutOfMemoryErrorFalse);
-                Long agent_ID = babyBoy.get_Agent_ID(false);
+                Long agent_ID = babyBoy.getAgentID(false);
                 babyBoy._Family.set_Mother(_ID);
                 babyBoy._ResidentialSubregionIDs.add(getSubregionID());
                 this._Family.add_Child(agent_ID);
@@ -752,7 +752,7 @@ public class GENESIS_Female extends GENESIS_Person {
                         ge.HandleOutOfMemoryErrorFalse);
             }
             result[i]._Family.set_Mother(_ID);
-            this._Family.add_Child(result[i].get_Agent_ID(false));
+            this._Family.add_Child(result[i].getAgentID(false));
         }
         _Time_DueToGiveBirth = null;
         _GenderOfUnborns = null;
@@ -765,7 +765,7 @@ public class GENESIS_Female extends GENESIS_Person {
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
         GENESIS_Female result;
         GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                a_GENESIS_FemaleCollection.get_AgentCollectionManager();
+                a_GENESIS_FemaleCollection.getAgentCollectionManager();
         File a_FemaleDirectory_File = Generic_StaticIO.getObjectDirectory(
                 a_GENESIS_AgentCollectionManager._LivingFemaleDirectory,
                 a_Agent_ID,
@@ -784,10 +784,10 @@ public class GENESIS_Female extends GENESIS_Person {
             write();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         get_FemaleCollection());
-                ge.init_MemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve(handleOutOfMemoryError);
                 write(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -799,7 +799,7 @@ public class GENESIS_Female extends GENESIS_Person {
     @Override
     protected void write() {
         File thisAgentFile = new File(
-                get_Directory(),
+                getDirectory(),
                 this.getClass().getCanonicalName() + ".thisFile");
         if (!_Directory.exists()) {
             _Directory.mkdirs();
@@ -811,9 +811,9 @@ public class GENESIS_Female extends GENESIS_Person {
 
     @Override
     @Deprecated
-    protected File get_Directory() {
+    protected File getDirectory() {
         if (_Directory == null) {
-            _Directory = _GENESIS_AgentCollectionManager.getLivingFemaleDirectory();
+            _Directory = AgentCollectionManager.getLivingFemaleDirectory();
         }
         return _Directory;
     }

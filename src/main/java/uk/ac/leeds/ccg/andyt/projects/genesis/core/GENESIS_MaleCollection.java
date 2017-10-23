@@ -17,37 +17,30 @@ public class GENESIS_MaleCollection
         extends GENESIS_AgentCollection
         implements Serializable, Comparable {
 
-    static final long serialVersionUID = 1L;
+    //static final long serialVersionUID = 1L;
 
-    public GENESIS_MaleCollection() {
-    }
+    protected GENESIS_MaleCollection() {}
 
     public GENESIS_MaleCollection(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment ge,
             Long _AgentCollection_ID,
-            String _Type) {
-        this.ge = a_GENESIS_Environment;
-        this._AgentCollection_ID = _AgentCollection_ID;
-        this._Type = _Type;
-        this._GENESIS_AgentCollectionManager =
-                ge._GENESIS_AgentEnvironment._AgentCollectionManager;
-        init_AgentID_Agent_HashMap();
+            String Type) {
+        super(ge);
+        this.AgentCollectionID = _AgentCollection_ID;
+        this.Type = Type;
+        this.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
+        initAgentID_Agent_Map();
     }
 
     public final void init(
-            GENESIS_Environment a_GENESIS_Environment,
-            long a_AgentCollection_ID,
-            String a_Type) {
-        this.ge = a_GENESIS_Environment;
-        this._AgentCollection_ID = a_AgentCollection_ID;
-        _Type = a_Type;
-        if (a_Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
-            this._GENESIS_AgentCollectionManager =
-                    ge._GENESIS_AgentEnvironment._AgentCollectionManager;
-            this._GENESIS_AgentCollectionManager._GENESIS_Environment = a_GENESIS_Environment;
-            this._GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.put(
-                    _AgentCollection_ID,
-                    this);
+            long agentCollectionID,
+            String type) {
+        this.AgentCollectionID = agentCollectionID;
+        Type = type;
+        if (type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
+            this.AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
+            this.AgentCollectionManager.ge = ge;
+            this.AgentCollectionManager.LivingMales.put(AgentCollectionID, this);
         }
     }
 
@@ -61,40 +54,40 @@ public class GENESIS_MaleCollection
     public File getDirectory() {
         // Recalculation is done as archive may have grown and Directory might
         // be out of date. There is scope for optimisation here...
-        GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = get_AgentCollectionManager();
-        long agentID = getAgentCollection_ID();
-        if (_Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
+        GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = getAgentCollectionManager();
+        long agentID = getAgentCollectionID();
+        if (Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
             Long indexOfLastBornMale = theGENESIS_AgentCollectionManager._IndexOfLastBornMale;
             Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager.getAgentCollection_ID(
                     indexOfLastBornMale);
 //            Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager.getMaleCollection_ID(
-//                    indexOfLastBornMale, _Type, false);
+//                    indexOfLastBornMale, Type, false);
 //            Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager._IndexOfLastLivingMaleCollection;
 //            Long indexOfLastBornMaleCollection =
-//                    get_AgentCollectionManager().getMaleCollection_ID(
-//                    get_AgentCollectionManager()._IndexOfLastBornMale,
-//                    _Type,
-//                    _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-            _Directory = new File(
+//                    getAgentCollectionManager().getMaleCollection_ID(
+//                    getAgentCollectionManager()._IndexOfLastBornMale,
+//                    Type,
+//                    ge.HandleOutOfMemoryErrorFalse);
+            Directory = new File(
                     Generic_StaticIO.getObjectDirectory(
                     theGENESIS_AgentCollectionManager._LivingMaleDirectory,
                     agentID,
                     indexOfLastBornMaleCollection,
                     theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
                     "" + agentID);
-            File result = new File(this._Directory.toString());
+            File result = new File(Directory.toString());
             return result;
         } else {
             Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
-                    get_AgentCollectionManager().getDeadMaleDirectory(), "_");
-            _Directory = new File(
+                    getAgentCollectionManager().getDeadMaleDirectory(), "_");
+            Directory = new File(
                     Generic_StaticIO.getObjectDirectory(
                     theGENESIS_AgentCollectionManager.getDeadMaleDirectory(),
                     agentID,
                     highestLeaf,
                     theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
-                    "" + getAgentCollection_ID());
-            File result = new File(this._Directory.toString());
+                    "" + getAgentCollectionID());
+            File result = new File(Directory.toString());
             return result;
         }
     }
@@ -105,36 +98,36 @@ public class GENESIS_MaleCollection
         try {
             GENESIS_Male result = getMale(a_Agent_ID);
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                    get_AgentCollectionManager();
+                    getAgentCollectionManager();
             Long a_MaleCollection_ID =
                     a_GENESIS_AgentCollectionManager.getMaleCollection_ID(
                     a_Agent_ID,
-                    _Type,
+                    Type,
                     handleOutOfMemoryError);
             GENESIS_MaleCollection a_GENESIS_MaleCollection =
                     a_GENESIS_AgentCollectionManager.getMaleCollection(
                     a_MaleCollection_ID,
-                    _Type);
+                    Type);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                        get_AgentCollectionManager();
+                        getAgentCollectionManager();
                 Long a_MaleCollection_ID =
                         a_GENESIS_AgentCollectionManager.getMaleCollection_ID(
                         a_Agent_ID,
-                        _Type,
+                        Type,
                         ge.HandleOutOfMemoryErrorFalse);
                 GENESIS_MaleCollection a_GENESIS_MaleCollection =
                         a_GENESIS_AgentCollectionManager.getMaleCollection(
                         a_MaleCollection_ID,
-                        _Type);
-                ge.swapToFile_DataAnyExcept(a_GENESIS_MaleCollection);
-                ge.init_MemoryReserve(
+                        Type);
+                ge.swapDataAnyExcept(a_GENESIS_MaleCollection);
+                ge.initMemoryReserve(
                         a_GENESIS_MaleCollection,
                         ge.HandleOutOfMemoryErrorFalse);
                 return getMale(
@@ -148,9 +141,9 @@ public class GENESIS_MaleCollection
 
     public GENESIS_Male getMale(
             Long a_Agent_ID) {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        if (_Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)) {
-            GENESIS_Male result = (GENESIS_Male) _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        if (AgentID_Agent_Map.containsKey(a_Agent_ID)) {
+            GENESIS_Male result = (GENESIS_Male) AgentID_Agent_Map.get(a_Agent_ID);
             result.ge = ge;
 
             // Debug
@@ -164,17 +157,17 @@ public class GENESIS_MaleCollection
         } else {
             return null;
         }
-//        GENESIS_Male result = (GENESIS_Male) _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+//        GENESIS_Male result = (GENESIS_Male) AgentID_Agent_Map.get(a_Agent_ID);
 //        if (result == null) {
 //            // Try loading from Agent Directory
-//            GENESIS_AgentCollectionManager a_AgentCollectionManager = get_AgentCollectionManager();
-//            File a_Agent_Directory = a_AgentCollectionManager.getMaleCollectionDirectory(a_Agent_ID, _Type);
+//            GENESIS_AgentCollectionManager a_AgentCollectionManager = getAgentCollectionManager();
+//            File a_Agent_Directory = a_AgentCollectionManager.getMaleCollectionDirectory(a_Agent_ID, Type);
 //            if (a_Agent_Directory.exists()) {
 //                File[] agentFiles = a_Agent_Directory.listFiles();
 //                if (agentFiles.length > 0) {
 //                    result = (GENESIS_Male) Generic_StaticIO.readObject(agentFiles[0]);
 //                    result.init(
-//                            _GENESIS_Environment,
+//                            ge,
 //                            a_Agent_ID, this.getAgentCollection_ID());
 //                }
 //            }
@@ -197,9 +190,9 @@ public class GENESIS_MaleCollection
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(this);
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(this);
+                ge.initMemoryReserve(
                         this,
                         ge.HandleOutOfMemoryErrorFalse);
                 write(handleOutOfMemoryError);
@@ -215,10 +208,10 @@ public class GENESIS_MaleCollection
             return 1;
         }
         GENESIS_MaleCollection oGENESIS_MaleCollection = (GENESIS_MaleCollection) o;
-        if (oGENESIS_MaleCollection._AgentCollection_ID < this._AgentCollection_ID) {
+        if (oGENESIS_MaleCollection.AgentCollectionID < this.AgentCollectionID) {
             return 1;
         } else {
-            if (oGENESIS_MaleCollection._AgentCollection_ID > this._AgentCollection_ID) {
+            if (oGENESIS_MaleCollection.AgentCollectionID > this.AgentCollectionID) {
                 return -1;
             }
         }
@@ -240,7 +233,7 @@ public class GENESIS_MaleCollection
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + (int) (this._AgentCollection_ID ^ (this._AgentCollection_ID >>> 32));
+        hash = 11 * hash + (int) (this.AgentCollectionID ^ (this.AgentCollectionID >>> 32));
         return hash;
     }
 }

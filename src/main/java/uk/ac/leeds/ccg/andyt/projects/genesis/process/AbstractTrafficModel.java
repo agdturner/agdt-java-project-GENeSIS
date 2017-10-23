@@ -86,9 +86,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_Rounding(
                         cellsize_BigDecimal,
@@ -133,7 +133,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             boolean handleOutOfMemoryError) {
         try {
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                    = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                    = ge.AgentEnvironment.get_AgentCollectionManager(
                             handleOutOfMemoryError);
             String type = GENESIS_Person.getTypeLivingFemale_String();
             Long a_AgentCollection_ID
@@ -155,9 +155,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                        = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                        = ge.AgentEnvironment.get_AgentCollectionManager(
                                 ge.HandleOutOfMemoryErrorFalse);
                 String type = GENESIS_Person.getTypeLivingFemale_String();
                 Long a_FemaleCollection_ID
@@ -173,10 +173,10 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 if (a_GENESIS_AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection,
                         ge.HandleOutOfMemoryErrorFalse) < 1L) {
-                    ge.swapToFile_Grid2DSquareCellChunk(
+                    ge.swapChunk(
                             ge.HandleOutOfMemoryErrorFalse);
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 return getFemale(
@@ -195,7 +195,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             boolean handleOutOfMemoryError) {
         try {
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                    = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                    = ge.AgentEnvironment.get_AgentCollectionManager(
                             handleOutOfMemoryError);
             String type = GENESIS_Person.getTypeLivingMale_String();
             Long a_AgentCollection_ID
@@ -217,9 +217,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                        = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                        = ge.AgentEnvironment.get_AgentCollectionManager(
                                 ge.HandleOutOfMemoryErrorFalse);
                 String type = GENESIS_Person.getTypeLivingMale_String();
                 Long a_MaleCollection_ID
@@ -235,10 +235,10 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 if (a_GENESIS_AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection,
                         ge.HandleOutOfMemoryErrorFalse) < 1L) {
-                    ge.swapToFile_Grid2DSquareCellChunk(
+                    ge.swapChunk(
                             ge.HandleOutOfMemoryErrorFalse);
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 return getMale(
@@ -281,14 +281,14 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (a_GENESIS_AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection,
                         ge.HandleOutOfMemoryErrorFalse) < 1L) {
-                    ge.swapToFile_Grid2DSquareCellChunk(
+                    ge.swapChunk(
                             ge.HandleOutOfMemoryErrorFalse);
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
                 return getFemale(
@@ -317,14 +317,14 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (a_GENESIS_AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection,
                         ge.HandleOutOfMemoryErrorFalse) < 1L) {
-                    ge.swapToFile_Grid2DSquareCellChunk(
+                    ge.swapChunk(
                             ge.HandleOutOfMemoryErrorFalse);
                 }
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
                 return getMale(
@@ -353,7 +353,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 a_Directory,
                 time_String + "." + type);
         aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.get_Grid2DSquareCellProcessor(),
+                ge.ge.getGridProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -427,7 +427,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 a_Directory,
                 time_String + "." + type);
         aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.get_Grid2DSquareCellProcessor(),
+                ge.ge.getGridProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -505,7 +505,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 directory,
                 a_Time_toString + "." + type);
         _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.get_Grid2DSquareCellProcessor(),
+                ge.ge.getGridProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -606,7 +606,7 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                 directory,
                 a_Time_toString + "." + type);
         _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.get_Grid2DSquareCellProcessor(),
+                ge.ge.getGridProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -1303,9 +1303,9 @@ public abstract class AbstractTrafficModel extends Abstract_GENESIS_Model {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_Shifts(
                         handleOutOfMemoryError);

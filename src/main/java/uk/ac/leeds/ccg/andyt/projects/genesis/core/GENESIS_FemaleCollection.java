@@ -11,36 +11,35 @@ public class GENESIS_FemaleCollection
         extends GENESIS_AgentCollection
         implements Serializable, Comparable {
 
-    static final long serialVersionUID = 1L;
+    //static final long serialVersionUID = 1L;
 
     public GENESIS_FemaleCollection() {
     }
 
     public GENESIS_FemaleCollection(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment age,
             long _AgentCollection_ID,
-            String _Type) {
-        this.ge = a_GENESIS_Environment;
-        this._AgentCollection_ID = _AgentCollection_ID;
-        this._Type = _Type;
-        this._GENESIS_AgentCollectionManager =
-                ge._GENESIS_AgentEnvironment._AgentCollectionManager;
-        init_AgentID_Agent_HashMap();
+            String Type) {
+        this.ge = age;
+        this.AgentCollectionID = _AgentCollection_ID;
+        this.Type = Type;
+        this.AgentCollectionManager =
+                ge.AgentEnvironment.AgentCollectionManager;
+        initAgentID_Agent_Map();
     }
 
     public final void init(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment age,
             long a_AgentCollection_ID,
-            String a_Type) {
-        this.ge = a_GENESIS_Environment;
-        this._AgentCollection_ID = a_AgentCollection_ID;
-        this._Type = a_Type;
-        if (a_Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingFemale_String())) {
-            this._GENESIS_AgentCollectionManager =
-                    ge._GENESIS_AgentEnvironment._AgentCollectionManager;
-            this._GENESIS_AgentCollectionManager._GENESIS_Environment = a_GENESIS_Environment;
-            this._GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.put(
-                    _AgentCollection_ID,
+            String aType) {
+        this.ge = age;
+        this.AgentCollectionID = a_AgentCollection_ID;
+        this.Type = aType;
+        if (aType.equalsIgnoreCase(GENESIS_Person.getTypeLivingFemale_String())) {
+            this.AgentCollectionManager =
+                    ge.AgentEnvironment.AgentCollectionManager;
+            this.AgentCollectionManager.ge = age;
+            this.AgentCollectionManager.LivingFemales.put(AgentCollectionID,
                     this);
         }
     }
@@ -55,40 +54,40 @@ public class GENESIS_FemaleCollection
     public File getDirectory() {
         // Recalculation is done as archive may have grown and Directory might
         // be out of date. There is scope for optimisation here...
-        GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = get_AgentCollectionManager();
-        long agentID = getAgentCollection_ID();
-        if (_Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingFemale_String())) {
+        GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = getAgentCollectionManager();
+        long agentID = getAgentCollectionID();
+        if (Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingFemale_String())) {
             Long indexOfLastBornFemale = theGENESIS_AgentCollectionManager._IndexOfLastBornFemale;
             Long indexOfLastBornFemaleCollection = theGENESIS_AgentCollectionManager.getAgentCollection_ID(
                     indexOfLastBornFemale);
 //            Long indexOfLastBornFemaleCollection = theGENESIS_AgentCollectionManager.getFemaleCollection_ID(
-//                    indexOfLastBornFemale, _Type, false);
+//                    indexOfLastBornFemale, Type, false);
 //            Long indexOfLastBornFemaleCollection = theGENESIS_AgentCollectionManager._IndexOfLastLivingFemaleCollection;
 //            Long indexOfLastBornFemaleCollection =
-//                    get_AgentCollectionManager().getFemaleCollection_ID(
-//                    get_AgentCollectionManager()._IndexOfLastBornFemale,
-//                    _Type,
-//                    _GENESIS_Environment.HandleOutOfMemoryErrorFalse);
-            _Directory = new File(
+//                    getAgentCollectionManager().getFemaleCollection_ID(
+//                    getAgentCollectionManager()._IndexOfLastBornFemale,
+//                    Type,
+//                    ge.HandleOutOfMemoryErrorFalse);
+            Directory = new File(
                     Generic_StaticIO.getObjectDirectory(
                     theGENESIS_AgentCollectionManager._LivingFemaleDirectory,
                     agentID,
                     indexOfLastBornFemaleCollection,
                     theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
                     "" + agentID);
-            File result = new File(this._Directory.toString());
+            File result = new File(this.Directory.toString());
             return result;
         } else {
             Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
-                    get_AgentCollectionManager().getDeadFemaleDirectory(), "_");
-            _Directory = new File(
+                    getAgentCollectionManager().getDeadFemaleDirectory(), "_");
+            Directory = new File(
                     Generic_StaticIO.getObjectDirectory(
                     theGENESIS_AgentCollectionManager.getDeadFemaleDirectory(),
                     agentID,
                     highestLeaf,
                     theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
-                    "" + getAgentCollection_ID());
-            File result = new File(this._Directory.toString());
+                    "" + getAgentCollectionID());
+            File result = new File(this.Directory.toString());
             return result;
         }
     }
@@ -99,36 +98,36 @@ public class GENESIS_FemaleCollection
         try {
             GENESIS_Female result = getFemale(a_Agent_ID);
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                    get_AgentCollectionManager();
+                    getAgentCollectionManager();
             Long a_FemaleCollection_ID =
                     a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(
                     a_Agent_ID,
-                    _Type,
+                    Type,
                     handleOutOfMemoryError);
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
                     a_GENESIS_AgentCollectionManager.getFemaleCollection(
                     a_FemaleCollection_ID,
-                    _Type);
+                    Type);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                        get_AgentCollectionManager();
+                        getAgentCollectionManager();
                 Long a_FemaleCollection_ID =
                         a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(
                         a_Agent_ID,
-                        _Type,
+                        Type,
                         ge.HandleOutOfMemoryErrorFalse);
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
                         a_GENESIS_AgentCollectionManager.getFemaleCollection(
                         a_FemaleCollection_ID,
-                        _Type);
-                ge.swapToFile_DataAnyExcept(a_GENESIS_FemaleCollection);
-                ge.init_MemoryReserve(
+                        Type);
+                ge.swapDataAnyExcept(a_GENESIS_FemaleCollection);
+                ge.initMemoryReserve(
                         this, ge.HandleOutOfMemoryErrorFalse);
                 return getFemale(
                         a_Agent_ID,
@@ -141,26 +140,26 @@ public class GENESIS_FemaleCollection
 
     /**
      * <code>
-     * _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-     * if (_Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)){
-     * GENESIS_Female result = (GENESIS_Female) _Agent_ID_Agent_HashMap.get(a_Agent_ID);
-     * } else {
-     * return null;
-     * }
-     * </code>
+ AgentID_Agent_Map = getAgentID_Agent_Map();
+ if (AgentID_Agent_Map.containsKey(a_Agent_ID)){
+ GENESIS_Female result = (GENESIS_Female) AgentID_Agent_Map.get(a_Agent_ID);
+ } else {
+ return null;
+ }
+ </code>
      *
      * @param a_Agent_ID
-     * @return GENESIS_Female if it exists in _Agent_ID_Agent_HashMap and null
-     * otherwise. If null is returned, the GENESIS_Female is probably Dead and
-     * if so can be retrieved from a collection of the dead.
+     * @return GENESIS_Female if it exists in AgentID_Agent_Map and null
+ otherwise. If null is returned, the GENESIS_Female is probably Dead and
+ if so can be retrieved from a collection of the dead.
      */
     //protected GENESIS_Female getFemale(
     public GENESIS_Female getFemale(
             Long a_Agent_ID) {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        if (_Agent_ID_Agent_HashMap.containsKey(a_Agent_ID)) {
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        if (AgentID_Agent_Map.containsKey(a_Agent_ID)) {
             // Female is Living
-            GENESIS_Female result = (GENESIS_Female) _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+            GENESIS_Female result = (GENESIS_Female) AgentID_Agent_Map.get(a_Agent_ID);
             result.ge = ge;
 
             // Debug
@@ -176,16 +175,16 @@ public class GENESIS_FemaleCollection
             return null;
         }
 //        if (result == null) {
-//            GENESIS_AgentCollectionManager a_AgentCollectionManager = get_AgentCollectionManager();
-//            File a_Agent_Directory =
+//            GENESIS_AgentCollectionManager a_AgentCollectionManager = getAgentCollectionManager();
+//            File a_AgentDirectory =
 //                    a_AgentCollectionManager.getFemaleCollectionDirectory(
-//                    a_Agent_ID,_Type);
-//            if (a_Agent_Directory.exists()) {
-//                File[] agentFiles = a_Agent_Directory.listFiles();
+//                    a_Agent_ID,Type);
+//            if (a_AgentDirectory.exists()) {
+//                File[] agentFiles = a_AgentDirectory.listFiles();
 //                if (agentFiles.length > 0) {
 //                    result = (GENESIS_Female) Generic_StaticIO.readObject(agentFiles[0]);
 //                    result.init(
-//                            _GENESIS_Environment,
+//                            ge,
 //                            a_Agent_ID, this.getAgentCollection_ID());
 //                }
 //            }
@@ -212,9 +211,9 @@ public class GENESIS_FemaleCollection
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(this);
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(this);
+                ge.initMemoryReserve(
                         this,
                         ge.HandleOutOfMemoryErrorFalse);
                 write(handleOutOfMemoryError);
@@ -230,10 +229,10 @@ public class GENESIS_FemaleCollection
             return 1;
         }
         GENESIS_FemaleCollection oGENESIS_FemaleCollection = (GENESIS_FemaleCollection) o;
-        if (oGENESIS_FemaleCollection._AgentCollection_ID < this._AgentCollection_ID) {
+        if (oGENESIS_FemaleCollection.AgentCollectionID < this.AgentCollectionID) {
             return 1;
         } else {
-            if (oGENESIS_FemaleCollection._AgentCollection_ID > this._AgentCollection_ID) {
+            if (oGENESIS_FemaleCollection.AgentCollectionID > this.AgentCollectionID) {
                 return -1;
             }
         }
@@ -255,7 +254,7 @@ public class GENESIS_FemaleCollection
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + (int) (this._AgentCollection_ID ^ (this._AgentCollection_ID >>> 32));
+        hash = 11 * hash + (int) (this.AgentCollectionID ^ (this.AgentCollectionID >>> 32));
         return hash;
     }
 }

@@ -122,17 +122,16 @@ public abstract class Abstract_GENESIS_Model extends GENESIS_Object implements S
     }
 
     public void init_Environment(
-            GENESIS_Environment a_GENESIS_Environment) {
-        ge = a_GENESIS_Environment;
+            GENESIS_Environment ge) {
         ge._AbstractModel = this;
-//        _GENESIS_Environment._AbstractModel._GENESIS_Log = new GENESIS_Log(
-//                _GENESIS_Environment,
+//        ge._AbstractModel._GENESIS_Log = new GENESIS_Log(
+//                ge,
 //                GENESIS_Log.GENESIS_DefaultLogLevel,
-//                _GENESIS_Environment.Directory, 
+//                ge.Directory, 
 //                GENESIS_Log.GENESIS_DefaultLoggerName);
-        ge._GENESIS_AgentEnvironment._GENESIS_Environment = a_GENESIS_Environment;
-        _GENESIS_AgentCollectionManager = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse);
-        _GENESIS_AgentCollectionManager._GENESIS_Environment = a_GENESIS_Environment;
+        ge.AgentEnvironment.ge = ge;
+        _GENESIS_AgentCollectionManager = ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse);
+        _GENESIS_AgentCollectionManager.ge = ge;
     }
     
     /**

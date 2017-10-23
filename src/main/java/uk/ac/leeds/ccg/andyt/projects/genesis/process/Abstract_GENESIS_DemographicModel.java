@@ -78,12 +78,12 @@ public abstract class Abstract_GENESIS_DemographicModel
     }
 
     @Override
-    public void init_Environment(GENESIS_Environment a_GENESIS_Environment) {
-        super.init_Environment(a_GENESIS_Environment);
+    public void init_Environment(GENESIS_Environment ge) {
+        super.init_Environment(ge);
         ge._PersonFactory = new GENESIS_PersonFactory(
                 ge,
                 _GENESIS_AgentCollectionManager);
-        get_Demographics()._GENESIS_Environment = a_GENESIS_Environment;
+        get_Demographics()._GENESIS_Environment = ge;
     }
 
     public GENESIS_Fertility get_Fertility(

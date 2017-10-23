@@ -94,8 +94,8 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             long aMaximumNumberOfAgents_long,
             int aMaximumNumberOfAgentsPerAgentCollection,
             int aMaximumNumberOfObjectsPerDirectory) {
-        Generic_TestMemory a_Generic_TestMemory = new Generic_TestMemory();
-        System.out.println("_TestMemory.getTotalFreeMemory() " + a_Generic_TestMemory.getTotalFreeMemory());
+        Generic_TestMemory gtm = new Generic_TestMemory();
+        System.out.println("_TestMemory.getTotalFreeMemory() " + gtm.getTotalFreeMemory());
         // Initialisation
         System.out.println("Initialise Environment");
         init_RandomArrayMinLength(
@@ -106,16 +106,16 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 aDirectory_File,
                 this,
                 new GENESIS_Time(0, 0));
-        ge.init_MemoryReserve(
+        ge.initMemoryReserve(
                 ge.HandleOutOfMemoryErrorTrue);
         ge._DecimalPlacePrecisionForCalculations = 10;
-        int[] memoryReserve = ge.get_MemoryReserve();
-        ge._Generic_TestMemory = a_Generic_TestMemory;
+        int[] memoryReserve = ge.getMemoryReserve();
+        ge.Generic_TestMemory = gtm;
         ge.Directory = aDirectory_File;
         boolean handleOutOfMemoryError = true;
         this.HandleOutOfMemoryError = handleOutOfMemoryError;
         ge.HandleOutOfMemoryError = handleOutOfMemoryError;
-        // Initialise _GENESIS_AgentEnvironment._AbstractGrid2DSquareCell_HashSet
+        // Initialise AgentEnvironment._AbstractGrid2DSquareCell_HashSet
         ge.ge = new Grids_Environment(ge.getGENESIS_Files().getGridsDirectory());
         // Initialise network_Grid2DSquareCellDoubleFactory and network_Grid2DSquareCellDouble
         BigDecimal networkNRows_BigDecimal = new BigDecimal(networkNRows_long);
@@ -155,7 +155,7 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 handleOutOfMemoryError);
         init_DecimalPlacePrecision(handleOutOfMemoryError);
 
-        // Initialise _GENESIS_Environment._GENESIS_AgentEnvironment
+        // Initialise _GENESIS_Environment.AgentEnvironment
         init_AgentCollectionManager(
                 aDirectory_File,
                 aMaximumNumberOfAgents_long,
@@ -163,12 +163,12 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 aMaximumNumberOfObjectsPerDirectory,
                 handleOutOfMemoryError);
 
-        // Initialise _GENESIS_AgentEnvironment._TSMisc
+        // Initialise AgentEnvironment._TSMisc
         init_TSMisc(
                 aMap_File,
                 handleOutOfMemoryError);
 
-        System.out.println("_TestMemory.getTotalFreeMemory() " + a_Generic_TestMemory.getTotalFreeMemory());
+        System.out.println("_TestMemory.getTotalFreeMemory() " + gtm.getTotalFreeMemory());
         // Initialise Shifts
         init_Shifts(handleOutOfMemoryError);
         System.out.println("Initialised Shifts");
@@ -211,9 +211,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             return a_CASAreaEastingNorthingDataHandler;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return init_CASAreaEastingNorthingDataHandler(
                         handleOutOfMemoryError);
@@ -240,9 +240,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             return a_SWSDataHandler;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 return init_SWSDataHandler(
                         handleOutOfMemoryError);
@@ -274,21 +274,21 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                             a_AgentCollection_ID,
                             GENESIS_Person.getTypeLivingFemale_String());
             GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                    = ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+                    = ge.AgentEnvironment.get_AgentCollectionManager(
                             handleOutOfMemoryError);
-            a_GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.put(
+            a_GENESIS_AgentCollectionManager.LivingFemales.put(
                     a_AgentCollection_ID,
                     a_FemaleCollection);
             // Initialise Agent cache
             //Don't always need to initialise file cache
             File directory_Agents = new File(aDirectory_File, "Agents");
             directory_Agents.mkdirs();
-//        _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.initialise_FileCache(
-//                _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager._MaximumNumberOfAgents,
-//                _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,//64,
+//        AgentEnvironment.AgentCollectionManager.initialise_FileCache(
+//                AgentEnvironment.AgentCollectionManager._MaximumNumberOfAgents,
+//                AgentEnvironment.AgentCollectionManager._MaximumNumberOfObjectsPerDirectory,//64,
 //                directory_Agents);
 //            a_GENESIS_AgentCollectionManager.delete_FileCache(aDirectory_File);
-            //_GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.delete_FileCache(new File(directory.toString() + "old"));
+            //_GENESIS_AgentEnvironment.AgentCollectionManager.delete_FileCache(new File(directory.toString() + "old"));
             // Initialise AgentCollection cache
             File directory_AgentCollections = new File(aDirectory_File, "AgentCollections");
             directory_AgentCollections.mkdirs();
@@ -320,9 +320,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_Population_HashSet(
                         reportingCellsize_BigDecimal,
@@ -345,9 +345,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_ImageExporter(
                         handleOutOfMemoryError);
@@ -368,8 +368,8 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_TSMisc(
                         aMap_File,
@@ -396,14 +396,14 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             a_GENESIS_AgentEnvironment.set_AgentCollectionManager(
                     _GENESIS_AgentCollectionManager,
                     handleOutOfMemoryError);
-            ge._GENESIS_AgentEnvironment = a_GENESIS_AgentEnvironment;
+            ge.AgentEnvironment = a_GENESIS_AgentEnvironment;
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_AgentCollectionManager(
                         aDirectory_File,
@@ -429,9 +429,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(
                         handleOutOfMemoryError);
                 init_DecimalPlacePrecision(
                         handleOutOfMemoryError);
@@ -460,7 +460,7 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             BigDecimal miny,
             int[] memoryReserve,
             boolean handleOutOfMemoryError) {
-        // Initialise _GENESIS_AgentEnvironment._network_Grid2DSquareCellDoubleFactory
+        // Initialise AgentEnvironment._network_Grid2DSquareCellDoubleFactory
         int networkChunkNCols = 512;
         int networkChunkNRows = 512;
         Grids_AbstractGrid2DSquareCellDoubleChunkFactory network_GDCF;
@@ -479,9 +479,9 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 (networkNCols.multiply(reportingCellsize)).add(minx),
                 (networkNRows.multiply(reportingCellsize)).add(miny));
         ge._network_Grid2DSquareCellDoubleFactory.setDimensions(network_Dimensions);
-        //_GENESIS_Environment._network_Grid2DSquareCellDoubleFactory.set_MemoryReserve(memoryReserve);
-        //network_Grid2DSquareCellDoubleFactory.init_MemoryReserve(handleOutOfMemoryError);
-        // Initialise _GENESIS_AgentEnvironment._network_Grid2DSquareCellDouble
+        //_GENESIS_Environment._network_Grid2DSquareCellDoubleFactory.setMemoryReserve(memoryReserve);
+        //network_Grid2DSquareCellDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
+        // Initialise AgentEnvironment._network_Grid2DSquareCellDouble
         ge._network_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) ge._network_Grid2DSquareCellDoubleFactory.create(
                 new File(aDirectory_File, "Network"),
                 networkNRows_long,
@@ -489,7 +489,7 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 network_Dimensions,
                 handleOutOfMemoryError);
         // Swapped here as they contain so little data that this makes sense in terms of memory handling
-        ge._network_Grid2DSquareCellDouble.swapToFile_Grid2DSquareCellChunks(handleOutOfMemoryError);
+        ge._network_Grid2DSquareCellDouble.swapChunks(handleOutOfMemoryError);
     }
 
     public void initReporting_Grid2DSquareCellDoubleFactory_Grid2DSquareCellDouble(
@@ -502,7 +502,7 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             BigDecimal minY,
             int[] memoryReserve,
             boolean handleOutOfMemoryError) {
-        // Initialise _GENESIS_AgentEnvironment._reporting_Grid2DSquareCellDoubleFactory
+        // Initialise AgentEnvironment._reporting_Grid2DSquareCellDoubleFactory
         int reportingChunkNCols = 512;
         int reportingChunkNRows = 512;
         Grids_AbstractGrid2DSquareCellDoubleChunkFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_Grid2DSquareCellDoubleChunkMapFactory();
@@ -529,31 +529,31 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
                 maxX,
                 maxY);
         ge._reporting_Grid2DSquareCellDoubleFactory.setDimensions(reporting_Dimensions);
-        //_GENESIS_Environment._reporting_Grid2DSquareCellDoubleFactory.init_MemoryReserve(handleOutOfMemoryError);
-        // Initialise _GENESIS_AgentEnvironment._reportingPopulationDensity_Grid2DSquareCellDouble
+        //_GENESIS_Environment._reporting_Grid2DSquareCellDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
+        // Initialise AgentEnvironment._reportingPopulationDensity_Grid2DSquareCellDouble
         ge._reportingPopulationDensity_Grid2DSquareCellDouble
                 = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensity"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,
                         handleOutOfMemoryError);
-        ge._reportingPopulationDensity_Grid2DSquareCellDouble.init_Cells(0, handleOutOfMemoryError);
-        // Initialise _GENESIS_AgentEnvironment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble
+        ge._reportingPopulationDensity_Grid2DSquareCellDouble.initCells(0, handleOutOfMemoryError);
+        // Initialise AgentEnvironment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble
         ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble
                 = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,
                         handleOutOfMemoryError);
-        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.init_Cells(0, handleOutOfMemoryError);
-        // Initialise _GENESIS_AgentEnvironment._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble
+        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.initCells(0, handleOutOfMemoryError);
+        // Initialise AgentEnvironment._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble
         ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble
                 = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityMovingAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,
                         handleOutOfMemoryError);
-        ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble.init_Cells(0, handleOutOfMemoryError);
+        ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble.initCells(0, handleOutOfMemoryError);
     }
 
     @Override
@@ -619,11 +619,11 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAnyExcept(
+                ge.clearMemoryReserve();
+                ge.swapDataAnyExcept(
                         a_GENESIS_FemaleCollection,
                         false);
-                ge.init_MemoryReserve(
+                ge.initMemoryReserve(
                         a_GENESIS_FemaleCollection,
                         ge.HandleOutOfMemoryErrorFalse);
                 init_Population_HashSet(
@@ -739,20 +739,20 @@ public class Traffic_Leeds_0 extends AbstractTrafficModel {
 //                                a_Female._Work_Point2D,
 //                                4);
                             _FemalePopulation_HashSet.add(
-                                    a_Female.get_Agent_ID(ge.HandleOutOfMemoryError));
-                            //a_Female.write(_GENESIS_AgentEnvironment.HandleOutOfMemoryError);
+                                    a_Female.getAgentID(ge.HandleOutOfMemoryError));
+                            //a_Female.write(AgentEnvironment.HandleOutOfMemoryError);
                         }
                     }
                 }
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 System.out.println("Need to work...");
-                ge.swapToFile_DataAnyExcept(
+                ge.swapDataAnyExcept(
                         a_GENESIS_FemaleCollection,
                         ge.HandleOutOfMemoryErrorFalse);
-                ge.init_MemoryReserve(false);
+                ge.initMemoryReserve(false);
                 init_Population_HashSet(
                         area_String,
                         a_SWSDataHandler,

@@ -26,7 +26,7 @@ import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
  */
 public abstract class GENESIS_Person extends GENESIS_Agent {
 
-    static final long serialVersionUID = 1L;
+    //static final long serialVersionUID = 1L;
     private static final String TypeLivingFemale_String = "LivingFemale";
     private static final String TypeDeadFemale_String = "DeadFemale";
     private static final String TypeLivingMale_String = "LivingMale";
@@ -40,6 +40,12 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      */
     public ArrayList<String> _ResidentialSubregionIDs;
 
+    protected GENESIS_Person(){}
+    
+    public GENESIS_Person(GENESIS_Environment ge) {
+        super(ge);
+    }
+    
     public String getRegionID() {
         return getSubregionID().substring(0, 4);
     }
@@ -384,7 +390,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     public String toString() {
         String result = "Person: ";
         result += getType();
-        result += ", Agent_ID " + get_Agent_ID(true);        
+        result += ", Agent_ID " + getAgentID(true);        
         //_String += "Age " + get_AgeInYears_int(_GENESIS_Environment._Calendar);
         result += ", Age in years " + getAge().getAgeInYears(ge._Time);
         //_String += "Age " + get_Age_double();
@@ -471,11 +477,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      * (from home)...
      */
     public boolean getIsTimeToSetOfToWork() {
-        if (ge._Time.getSecondOfDay() > _SetOffToWork_Time.getSecondOfDay()) {
-            return true;
-        } else {
-            return false;
-        }
+        return ge._Time.getSecondOfDay() > _SetOffToWork_Time.getSecondOfDay();
     }
 
     /**
@@ -524,26 +526,26 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
+                ge.clearMemoryReserve();
                 if (get_Gender(handleOutOfMemoryError) == 0) {
                     GENESIS_Female a_Female = (GENESIS_Female) this;
                     GENESIS_FemaleCollection a_GENESIS_FemaleCollection = a_Female.get_FemaleCollection(
                             handleOutOfMemoryError);
-                    if (ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
+                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
                             ge.HandleOutOfMemoryErrorFalse) < 1) {
-                        ge.swapToFile_Grid2DSquareCellChunk(ge.HandleOutOfMemoryErrorFalse);
+                        ge.swapChunk(ge.HandleOutOfMemoryErrorFalse);
                     }
-                    ge.init_MemoryReserve(a_GENESIS_FemaleCollection,
+                    ge.initMemoryReserve(a_GENESIS_FemaleCollection,
                             ge.HandleOutOfMemoryErrorFalse);
                 } else {
                     GENESIS_Male a_Male = (GENESIS_Male) this;
                     GENESIS_MaleCollection a_GENESIS_MaleCollection = a_Male.get_MaleCollection(
                             handleOutOfMemoryError);
-                    if (ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
+                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
                             ge.HandleOutOfMemoryErrorFalse) < 1) {
-                        ge.swapToFile_Grid2DSquareCellChunk(ge.HandleOutOfMemoryErrorFalse);
+                        ge.swapChunk(ge.HandleOutOfMemoryErrorFalse);
                     }
-                    ge.init_MemoryReserve(a_GENESIS_MaleCollection,
+                    ge.initMemoryReserve(a_GENESIS_MaleCollection,
                             ge.HandleOutOfMemoryErrorFalse);
                 }
                 move( tollerance,

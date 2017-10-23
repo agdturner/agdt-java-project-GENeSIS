@@ -73,7 +73,7 @@ public class RenderNetwork2D_Environment
         while (a_Iterator.hasNext()) {
             a_AgentID = (Long) a_Iterator.next();
             a_Person =
-                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
+                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
                     GENESIS_Person.getTypeLivingMale_String(),
                     ge.HandleOutOfMemoryErrorTrue);
             a_Network2D = a_Person._reporting_VectorNetwork2D;
@@ -94,7 +94,7 @@ public class RenderNetwork2D_Environment
         while (a_Iterator.hasNext()) {
             a_AgentID = (Long) a_Iterator.next();
             a_Person =
-                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
+                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
                     GENESIS_Person.getTypeLivingFemale_String(),
                     ge.HandleOutOfMemoryErrorTrue);
             a_Network2D = a_Person._reporting_VectorNetwork2D;

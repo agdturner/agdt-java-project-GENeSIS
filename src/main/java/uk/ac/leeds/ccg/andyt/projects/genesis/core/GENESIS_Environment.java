@@ -61,7 +61,7 @@ public class GENESIS_Environment
 //    public transient ParametersFactory _ParametersFactory;
 //    public AbstractTrafficModel _TrafficModel;
     public transient GENESIS_PersonFactory _PersonFactory;
-    public transient GENESIS_AgentEnvironment _GENESIS_AgentEnvironment;
+    public transient GENESIS_AgentEnvironment AgentEnvironment;
     /**
      * For mathematical uses
      */
@@ -142,16 +142,16 @@ public class GENESIS_Environment
     }
 
     /**
-     * Creates a new _GENESIS_Environment based on a_GENESIS_Environment.
-     * Because an instance of _GENESIS_Environment holds a references to all the
-     * data in a simulation this does not deep copy everything. Also most
-     * GENESIS Objects contain references to a _GENESIS_Environment instance, so
-     * that duplication is necessarily a multi stage process that has to use
-     * dummies to get all the references set up. This can be implemented more
-     * comprehensively as needed, but the depth of the copy is unlikely to go to
-     * the rootRoundIfNecessary of everything.
+     * Creates a new ge based on a_GENESIS_Environment.
+     * Because an instance of ge holds a references to all the
+ data in a simulation this does not deep copy everything. Also most
+ GENESIS Objects contain references to a ge instance, so
+ that duplication is necessarily a multi stage process that has to use
+ dummies to get all the references set up. This can be implemented more
+ comprehensively as needed, but the depth of the copy is unlikely to go to
+ the rootRoundIfNecessary of everything.
      *
-     * @param ge The _GENESIS_Environment to deep copy.
+     * @param ge The ge to deep copy.
      */
     public GENESIS_Environment(GENESIS_Environment ge) {
         this._AbstractModel = ge._AbstractModel;
@@ -162,15 +162,15 @@ public class GENESIS_Environment
 //        this.Directory = new File(a_GENESIS_Environment.Directory.toString());
 ////        // Create a new dummy GENESIS_AgentEnvironment using 
 ////        // a_GENESIS_Environment
-////        this._GENESIS_AgentEnvironment = new GENESIS_AgentEnvironment(
+////        this.AgentEnvironment = new GENESIS_AgentEnvironment(
 ////                a_GENESIS_Environment);
-//        this._GENESIS_AgentEnvironment = new GENESIS_AgentEnvironment(
+//        this.AgentEnvironment = new GENESIS_AgentEnvironment(
 //                a_GENESIS_Environment,
-//                a_GENESIS_Environment._GENESIS_AgentEnvironment);
+//                a_GENESIS_Environment.AgentEnvironment);
 //        this._Generic_BigDecimal = new Generic_BigDecimal(a_GENESIS_Environment._Generic_BigDecimal);
 //        this._Grids_Environment = new Grids_Environment(a_GENESIS_Environment._Grids_Environment);
 //        this.HandleOutOfMemoryError = a_GENESIS_Environment.HandleOutOfMemoryError;
-//        this._MemoryReserve = a_GENESIS_Environment._MemoryReserve;
+//        this.MemoryReserve = a_GENESIS_Environment.MemoryReserve;
 //        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
         this._Time = new GENESIS_Time(ge._Time);
@@ -179,7 +179,7 @@ public class GENESIS_Environment
 
     private void init_GENESIS_Environment(File Directory) {
         gf = new GENESIS_Files(Directory);
-        _GENESIS_AgentEnvironment = new GENESIS_AgentEnvironment(this);
+        AgentEnvironment = new GENESIS_AgentEnvironment(this);
         ge = new Grids_Environment(gf.getGridsDirectory());
         _Generic_BigDecimal = new Generic_BigDecimal();
     }
@@ -306,39 +306,39 @@ public class GENESIS_Environment
     }
 
     @Override
-    public void init_MemoryReserve(
+    public void initMemoryReserve(
             boolean handleOutOfMemoryError) {
         try {
-            init_MemoryReserve();
+            initMemoryReserve();
             tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                if (!swapToFile_DataAny()) {
+                clearMemoryReserve();
+                if (!swapDataAny()) {
                     throw a_OutOfMemoryError;
                 }
-                init_MemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
         }
     }
 
-    public long init_MemoryReserve_AccountAgentCollections(
+    public long initMemoryReserve_AccountAgentCollections(
             boolean handleOutOfMemoryError) {
         try {
-            init_MemoryReserve();
+            initMemoryReserve();
             return tryToEnsureThereIsEnoughMemoryToContinue_AccountAgentCollections(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                long result = _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_Account(
+                clearMemoryReserve();
+                long result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_Account(
                         HandleOutOfMemoryErrorFalse);
                 if (result < 1) {
-                    swapToFile_Grid2DSquareCellChunk();
+                    swapChunk();
                 }
-                result += init_MemoryReserve_AccountAgentCollections(
+                result += initMemoryReserve_AccountAgentCollections(
                         handleOutOfMemoryError);
                 return result;
             } else {
@@ -351,22 +351,22 @@ public class GENESIS_Environment
      * @param handleOutOfMemoryError
      * @return
      */
-    //public HashSet<Long> init_MemoryReserve_AccountDetailAgentCollections(
-    public Object[] init_MemoryReserve_AccountDetailAgentCollections(
+    //public HashSet<Long> initMemoryReserve_AccountDetailAgentCollections(
+    public Object[] initMemoryReserve_AccountDetailAgentCollections(
             boolean handleOutOfMemoryError) {
         try {
-            init_MemoryReserve();
+            initMemoryReserve();
             return tryToEnsureThereIsEnoughMemoryToContinue_AccountDetailAgentCollections(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                Object[] result = _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
+                clearMemoryReserve();
+                Object[] result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
                         HandleOutOfMemoryErrorFalse);
                 if (!(Boolean) result[0]) {
-                    swapToFile_Grid2DSquareCellChunk();
+                    swapChunk();
                 }
-                Object[] potentialPartResult = init_MemoryReserve_AccountDetailAgentCollections(
+                Object[] potentialPartResult = initMemoryReserve_AccountDetailAgentCollections(
                         handleOutOfMemoryError);
                 if (potentialPartResult != null) {
                     if (result[1] == null) {
@@ -393,19 +393,19 @@ public class GENESIS_Environment
         }
     }
 
-    public final void init_MemoryReserve(
+    public final void initMemoryReserve(
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
             boolean handleOutOfMemoryError) {
         try {
-            init_MemoryReserve();
+            initMemoryReserve();
             a_GENESIS_FemaleCollection.ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                swapToFile_DataAnyExcept(a_GENESIS_FemaleCollection);
-                init_MemoryReserve(
+                clearMemoryReserve();
+                swapDataAnyExcept(a_GENESIS_FemaleCollection);
+                initMemoryReserve(
                         a_GENESIS_FemaleCollection,
                         handleOutOfMemoryError);
             } else {
@@ -414,19 +414,19 @@ public class GENESIS_Environment
         }
     }
 
-    public final void init_MemoryReserve(
+    public final void initMemoryReserve(
             GENESIS_MaleCollection a_GENESIS_MaleCollection,
             boolean handleOutOfMemoryError) {
         try {
-            init_MemoryReserve();
+            initMemoryReserve();
             a_GENESIS_MaleCollection.ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                swapToFile_DataAnyExcept(a_GENESIS_MaleCollection);
-                init_MemoryReserve(
+                clearMemoryReserve();
+                swapDataAnyExcept(a_GENESIS_MaleCollection);
+                initMemoryReserve(
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
             } else {
@@ -442,27 +442,27 @@ public class GENESIS_Environment
 //    /**
 //     * @TODO Wnat some way to distinguish Male and Female...
 //     */
-//    public final void init_MemoryReserve(
+//    public final void initMemoryReserve(
 //            long a_AgentCollection_ID,
 //            boolean handleOutOfMemoryError) {
 //        try {
-//            GENESIS_AgentCollection a_GENESIS_AgentCollection = _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
+//            GENESIS_AgentCollection a_GENESIS_AgentCollection = AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
 //                    handleOutOfMemoryError);
-//            init_MemoryReserve(
+//            initMemoryReserve(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                clear_MemoryReserve();
-//                GENESIS_AgentCollection a_GENESIS_AgentCollection = _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
+//                clearMemoryReserve();
+//                GENESIS_AgentCollection a_GENESIS_AgentCollection = AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
 //                        HandleOutOfMemoryErrorFalse);
-//                if (_GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
+//                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
-//                    swapToFile_Grid2DSquareCellChunk();
+//                    swapChunk();
 //                }
-//                init_MemoryReserve(
+//                initMemoryReserve(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
 //            } else {
@@ -471,18 +471,18 @@ public class GENESIS_Environment
 //        }
 //    }
     @Override
-    public boolean swapToFile_DataAny(boolean handleOutOfMemoryError) {
+    public boolean swapDataAny(boolean handleOutOfMemoryError) {
         try {
-            boolean result = swapToFile_DataAny();
+            boolean result = swapDataAny();
             tryToEnsureThereIsEnoughMemoryToContinue(
                     HandleOutOfMemoryErrorFalse);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                boolean result = swapToFile_DataAny(
+                clearMemoryReserve();
+                boolean result = swapDataAny(
                         HandleOutOfMemoryErrorFalse);
-                init_MemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -491,23 +491,23 @@ public class GENESIS_Environment
     }
 
     @Override
-    public boolean swapToFile_DataAny() {
-        long swapToFile_Grid2DSquareCellChunk_Account = 0;
+    public boolean swapDataAny() {
+        long swapChunk_Account = 0;
         // Probably better to query here and know there is nothing to swap out
         // instead of an expensive try and fail
         try {
-            swapToFile_Grid2DSquareCellChunk_Account += swapToFile_Grid2DSquareCellChunk_Account();
+            swapChunk_Account += swapChunk_Account();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             log(
                     "Caught OutOfMemoryError in "
-                    + this.getClass().getName() + ".swapToFile_DataAny()");
+                    + this.getClass().getName() + ".swapDataAny()");
         }
-        if (swapToFile_Grid2DSquareCellChunk_Account < 1) {
+        if (swapChunk_Account < 1) {
             if (swapToFile_AgentCollection_Account() < 1) {
                 log(
                         "Found no data to swap in "
                         + this.getClass().getName()
-                        + ".swapToFile_DataAny()");
+                        + ".swapDataAny()");
 //                throw new OutOfMemoryError();
                 return false;
             }
@@ -515,11 +515,11 @@ public class GENESIS_Environment
         return true;
     }
 
-    public boolean swapToFile_DataAnyExcept(
+    public boolean swapDataAnyExcept(
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
             boolean handleOutOfMemoryError) {
         try {
-            boolean result = swapToFile_DataAnyExcept(
+            boolean result = swapDataAnyExcept(
                     a_GENESIS_FemaleCollection);
             tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
@@ -527,10 +527,10 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                boolean result = swapToFile_DataAnyExcept(
+                clearMemoryReserve();
+                boolean result = swapDataAnyExcept(
                         a_GENESIS_FemaleCollection);
-                init_MemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -538,11 +538,11 @@ public class GENESIS_Environment
         }
     }
 
-    public boolean swapToFile_DataAnyExcept(
+    public boolean swapDataAnyExcept(
             GENESIS_MaleCollection a_GENESIS_MaleCollection,
             boolean handleOutOfMemoryError) {
         try {
-            boolean result = swapToFile_DataAnyExcept(
+            boolean result = swapDataAnyExcept(
                     a_GENESIS_MaleCollection);
             tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
@@ -550,10 +550,10 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                boolean result = swapToFile_DataAnyExcept(
+                clearMemoryReserve();
+                boolean result = swapDataAnyExcept(
                         a_GENESIS_MaleCollection);
-                init_MemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -561,24 +561,24 @@ public class GENESIS_Environment
         }
     }
 
-    protected boolean swapToFile_DataAnyExcept(
+    protected boolean swapDataAnyExcept(
             GENESIS_MaleCollection a_GENESIS_MaleCollection) {
-        long swapToFile_Grid2DSquareCellChunk_Account = 0;
+        long swapChunk_Account = 0;
         try {
-            swapToFile_Grid2DSquareCellChunk_Account += swapToFile_Grid2DSquareCellChunk_Account();
+            swapChunk_Account += swapChunk_Account();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             log(
                     "Caught OutOfMemoryError in "
-                    + this.getClass().getName() + ".swapToFile_DataAnyExcept(GENESIS_MaleCollection)");
+                    + this.getClass().getName() + ".swapDataAnyExcept(GENESIS_MaleCollection)");
         }
-        if (swapToFile_Grid2DSquareCellChunk_Account < 1) {
-            if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
+        if (swapChunk_Account < 1) {
+            if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                     a_GENESIS_MaleCollection) < 1) {
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollection_Account() < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollection_Account() < 1) {
                     log(
                             "Found no data to swap in "
                             + this.getClass().getName()
-                            + ".swapToFile_DataAnyExcept(GENESIS_MaleCollection)");
+                            + ".swapDataAnyExcept(GENESIS_MaleCollection)");
                     return false;
                 }
             }
@@ -586,24 +586,24 @@ public class GENESIS_Environment
         return true;
     }
 
-    protected boolean swapToFile_DataAnyExcept(
+    protected boolean swapDataAnyExcept(
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
-        long swapToFile_Grid2DSquareCellChunk_Account = 0;
+        long swapChunk_Account = 0;
         try {
-            swapToFile_Grid2DSquareCellChunk_Account += swapToFile_Grid2DSquareCellChunk_Account();
+            swapChunk_Account += swapChunk_Account();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             log(
                     "Caught OutOfMemoryError in "
-                    + this.getClass().getName() + ".swapToFile_DataAnyExcept(GENESIS_FemaleCollection)");
+                    + this.getClass().getName() + ".swapDataAnyExcept(GENESIS_FemaleCollection)");
         }
-        if (swapToFile_Grid2DSquareCellChunk_Account < 1) {
-            if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollection_Account() < 1) {
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
+        if (swapChunk_Account < 1) {
+            if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollection_Account() < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection) < 1) {
                     log(
                             "Found no data to swap in "
                             + this.getClass().getName()
-                            + ".swapToFile_DataAnyExcept(GENESIS_FemaleCollection)");
+                            + ".swapDataAnyExcept(GENESIS_FemaleCollection)");
                     return false;
                 }
             }
@@ -611,71 +611,70 @@ public class GENESIS_Environment
         return true;
     }
 
-//    protected boolean swapToFile_DataAnyExcept(
+//    protected boolean swapDataAnyExcept(
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection) {
-//        long swapToFile_Grid2DSquareCellChunk_Account = 0;
+//        long swapChunk_Account = 0;
 //        try {
-//            swapToFile_Grid2DSquareCellChunk_Account += swapToFile_Grid2DSquareCellChunk_Account();
+//            swapChunk_Account += swapChunk_Account();
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            log(
 //                    "Caught OutOfMemoryError in "
-//                    + this.getClass().getName() + ".swapToFile_DataAnyExcept()");
+//                    + this.getClass().getName() + ".swapDataAnyExcept()");
 //        }
-//        if (swapToFile_Grid2DSquareCellChunk_Account < 1) {
-//            if (_GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
+//        if (swapChunk_Account < 1) {
+//            if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                    a_GENESIS_AgentCollection) < 1) {
 //                log(
 //                        "Found no data to swap in "
 //                        + this.getClass().getName()
-//                        + ".swapToFile_DataAnyExcept()");
+//                        + ".swapDataAnyExcept()");
 //                return false;
 //            }
 //        }
 //        return true;
 //    }
     public void swapToFile_Data() {
-        swapToFile_Grid2DSquareCellChunks();
-        _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollections();
+        swapChunks();
+        AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollections();
     }
 
-    public void swapToFile_Grid2DSquareCellChunks(
+    public void swapChunks(
             boolean handleOutOfMemoryError) {
         try {
-            swapToFile_Grid2DSquareCellChunks();
+            swapChunks();
             tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                if (swapToFile_Grid2DSquareCellChunks_Account() < 1) {
-                    _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection();
+                clearMemoryReserve();
+                if (swapChunks_Account() < 1) {
+                    AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                init_MemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
         }
     }
 
-    protected void swapToFile_Grid2DSquareCellChunks() {
-        ge.swapToFile_Grid2DSquareCellChunks(
-                HandleOutOfMemoryErrorFalse);
+    protected void swapChunks() {
+        ge.swapChunks(HandleOutOfMemoryErrorFalse);
     }
 
-    public long swapToFile_Grid2DSquareCellChunks_Account(
+    public long swapChunks_Account(
             boolean handleOutOfMemoryError) {
         try {
-            long result = swapToFile_Grid2DSquareCellChunks_Account();
+            long result = swapChunks_Account();
             tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                long result = swapToFile_Grid2DSquareCellChunk_Account();
+                clearMemoryReserve();
+                long result = swapChunk_Account();
                 if (result < 1) {
-                    _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection();
+                    AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                init_MemoryReserve(handleOutOfMemoryError);
-                result += swapToFile_Grid2DSquareCellChunks_Account(
+                initMemoryReserve(handleOutOfMemoryError);
+                result += swapChunks_Account(
                         handleOutOfMemoryError);
                 return result;
             } else {
@@ -684,33 +683,33 @@ public class GENESIS_Environment
         }
     }
 
-    protected long swapToFile_Grid2DSquareCellChunks_Account() {
-        return ge.swapToFile_Grid2DSquareCellChunks_Account(
+    protected long swapChunks_Account() {
+        return ge.swapChunks_Account(
                 HandleOutOfMemoryErrorFalse);
     }
 
-    protected long swapToFile_Grid2DSquareCellChunk_Account() {
+    protected long swapChunk_Account() {
         if (ge.isDataToSwap()) {
-            return ge.swapToFile_Grid2DSquareCellChunk_Account(
+            return ge.swapChunk_Account(
                     HandleOutOfMemoryErrorFalse);
         } else {
             return 0;
         }
     }
 
-    public void swapToFile_Grid2DSquareCellChunk(
+    public void swapChunk(
             boolean handleOutOfMemoryError) {
         try {
-            swapToFile_Grid2DSquareCellChunk();
+            swapChunk();
             tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                long result = swapToFile_Grid2DSquareCellChunk_Account();
+                clearMemoryReserve();
+                long result = swapChunk_Account();
                 if (result < 1) {
-                    _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection();
+                    AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                init_MemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -721,23 +720,23 @@ public class GENESIS_Environment
      * Not needed, but makes code tidier and probably adds little in terms of
      * overhead...
      */
-    protected void swapToFile_Grid2DSquareCellChunk() {
-        ge.swapToFile_Grid2DSquareCellChunk(
+    protected void swapChunk() {
+        ge.swapChunk(
                 HandleOutOfMemoryErrorFalse);
     }
 
     public void swapToFile_AgentCollections(
             boolean handleOutOfMemoryError) {
         try {
-            _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollections();
+            AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollections();
             tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
+                clearMemoryReserve();
                 if (swapToFile_AgentCollection_Account() < 1) {
-                    swapToFile_Grid2DSquareCellChunk();
+                    swapChunk();
                 }
-                init_MemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -752,9 +751,9 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
+                clearMemoryReserve();
                 long result = swapToFile_AgentCollections_Account();
-                init_MemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve(handleOutOfMemoryError);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -763,7 +762,7 @@ public class GENESIS_Environment
     }
 
     protected long swapToFile_AgentCollections_Account() {
-        return _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollections_Account();
+        return AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollections_Account();
     }
 
     public long swapToFile_AgentCollection_Account(
@@ -774,14 +773,14 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
+                clearMemoryReserve();
                 long result = swapToFile_AgentCollection_Account();
                 if (result < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         throw a_OutOfMemoryError;
                     }
                 }
-                init_MemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HandleOutOfMemoryErrorFalse);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -790,7 +789,7 @@ public class GENESIS_Environment
     }
 
     protected long swapToFile_AgentCollection_Account() {
-        return _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_Account();
+        return AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account();
     }
 
     /**
@@ -817,10 +816,10 @@ public class GENESIS_Environment
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
+                clearMemoryReserve();
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    if (!swapToFile_DataAny()) {
+                    if (!swapDataAny()) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
                                 + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
@@ -828,7 +827,7 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        init_MemoryReserve(
+                        initMemoryReserve(
                                 HandleOutOfMemoryErrorFalse);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
@@ -854,7 +853,7 @@ public class GENESIS_Environment
     @Override
     protected boolean tryToEnsureThereIsEnoughMemoryToContinue() {
         while (getTotalFreeMemory() < Memory_Threshold) {
-            if (!swapToFile_DataAny()) {
+            if (!swapDataAny()) {
                 return false;
             }
         }
@@ -884,11 +883,11 @@ public class GENESIS_Environment
 //            }
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                clear_MemoryReserve();
-//                if (_GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
+//                clearMemoryReserve();
+//                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection,
 //                        HandleOutOfMemoryErrorFalse) < 1) {
-//                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+//                    if (swapChunk_Account() < 1) {
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
 //                                + this.getClass().getName()
@@ -899,11 +898,11 @@ public class GENESIS_Environment
 //                }
 //                boolean createdRoom = false;
 //                while (!createdRoom) {
-//                    if (!swapToFile_DataAny()) {
+//                    if (!swapDataAny()) {
 //                        throw a_OutOfMemoryError;
 //                    }
 //                    try {
-//                        init_MemoryReserve(
+//                        initMemoryReserve(
 //                                a_GENESIS_AgentCollection,
 //                                HandleOutOfMemoryErrorFalse);
 //                        createdRoom = true;
@@ -950,11 +949,11 @@ public class GENESIS_Environment
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
+                clearMemoryReserve();
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
                         a_GENESIS_FemaleCollection,
                         HandleOutOfMemoryErrorFalse) < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
                                 + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_FemaleCollection,boolean)";
@@ -965,11 +964,11 @@ public class GENESIS_Environment
                 }
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    if (!swapToFile_DataAny()) {
+                    if (!swapDataAny()) {
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        init_MemoryReserve(
+                        initMemoryReserve(
                                 a_GENESIS_FemaleCollection,
                                 HandleOutOfMemoryErrorFalse);
                         createdRoom = true;
@@ -1017,11 +1016,11 @@ public class GENESIS_Environment
             }
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
+                clearMemoryReserve();
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                         a_GENESIS_MaleCollection,
                         HandleOutOfMemoryErrorFalse) < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
                                 + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_MaleCollection,boolean)";
@@ -1032,11 +1031,11 @@ public class GENESIS_Environment
                 }
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    if (!swapToFile_DataAny()) {
+                    if (!swapDataAny()) {
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        init_MemoryReserve(
+                        initMemoryReserve(
                                 a_GENESIS_MaleCollection,
                                 HandleOutOfMemoryErrorFalse);
                         createdRoom = true;
@@ -1068,22 +1067,22 @@ public class GENESIS_Environment
             GENESIS_FemaleCollection a_FemaleCollection) {
         while (getTotalFreeMemory() < Memory_Threshold) {
 //            long swappedMaleCollections = 0L;
-//            if (!_GENESIS_AgentEnvironment._AgentCollectionManager._MaleCollection_HashMap.isEmpty()) {
-//                swappedMaleCollections = _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollection_Account();
+//            if (!AgentEnvironment.AgentCollectionManager._MaleCollection_HashMap.isEmpty()) {
+//                swappedMaleCollections = AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollection_Account();
 //            }
 //            if (swappedMaleCollections < 1) {
-            if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
+            if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
                     a_FemaleCollection) < 1) {
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollection_Account() < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollection_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         return false;
                     }
                 }
             }
-//            if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollection_Account() < 1){
-//                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
+//            if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollection_Account() < 1){
+//                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
 //                        a_FemaleCollection) < 1) {
-//                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+//                    if (swapChunk_Account() < 1) {
 //                        return false;
 //                    }
 //                }
@@ -1102,10 +1101,10 @@ public class GENESIS_Environment
     protected boolean tryToEnsureThereIsEnoughMemoryToContinue(
             GENESIS_MaleCollection a_MaleCollection) {
         while (getTotalFreeMemory() < Memory_Threshold) {
-            if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
+            if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                     a_MaleCollection) < 1) {
-                if (_GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_FemaleCollection_Account() < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollection_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         return false;
                     }
                 }
@@ -1125,7 +1124,7 @@ public class GENESIS_Environment
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection =
-//                    _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
+//                    AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
 //                    HandleOutOfMemoryErrorFalse);
 //            if (!tryToEnsureThereIsEnoughMemoryToContinue(
@@ -1141,15 +1140,15 @@ public class GENESIS_Environment
 //            }
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
-//                clear_MemoryReserve();
+//                clearMemoryReserve();
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection =
-//                        _GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
+//                        AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
 //                        HandleOutOfMemoryErrorFalse);
-//                if (_GENESIS_AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
+//                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection,
 //                        HandleOutOfMemoryErrorFalse) < 1) {
-//                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+//                    if (swapChunk_Account() < 1) {
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
 //                                + this.getClass().getName()
@@ -1160,11 +1159,11 @@ public class GENESIS_Environment
 //                }
 //                boolean createdRoom = false;
 //                while (!createdRoom) {
-//                    if (!swapToFile_DataAny()) {
+//                    if (!swapDataAny()) {
 //                        throw a_OutOfMemoryError;
 //                    }
 //                    try {
-//                        init_MemoryReserve(
+//                        initMemoryReserve(
 //                                a_GENESIS_AgentCollection,
 //                                HandleOutOfMemoryErrorFalse);
 //                        createdRoom = true;
@@ -1204,10 +1203,10 @@ public class GENESIS_Environment
             return (Long) test[1];
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
+                clearMemoryReserve();
                 Long result = swapToFile_AgentCollection_Account();
                 if (result < 1) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
                                 + ".tryToEnsureThereIsEnoughMemoryToContinue_AccountAgentCollections(boolean)";
@@ -1218,11 +1217,11 @@ public class GENESIS_Environment
                 }
                 boolean createdRoom = false;
                 while (!createdRoom) {
-                    if (!swapToFile_DataAny()) {
+                    if (!swapDataAny()) {
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        result += init_MemoryReserve_AccountAgentCollections(
+                        result += initMemoryReserve_AccountAgentCollections(
                                 HandleOutOfMemoryErrorFalse);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
@@ -1250,7 +1249,7 @@ public class GENESIS_Environment
             while (getTotalFreeMemory() < Memory_Threshold) {
                 a_long = swapToFile_AgentCollection_Account();
                 if (a_long < 1) {
-                    long b_long = swapToFile_Grid2DSquareCellChunk_Account();
+                    long b_long = swapChunk_Account();
                     if (b_long < 1) {
                         result[0] = false;
                         result[1] = result1;
@@ -1292,15 +1291,15 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = _GENESIS_AgentEnvironment.get_AgentCollectionManager();
+                clearMemoryReserve();
+                GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = AgentEnvironment.getAgentCollectionManager();
                 Object[] result = a_GENESIS_AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(
                         HandleOutOfMemoryErrorFalse);
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult = a_GENESIS_AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(
                             HandleOutOfMemoryErrorFalse);
                     if (!(Boolean) potentialPartResult[0]) {
-                        if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                        if (swapChunk_Account() < 1) {
                             throw a_OutOfMemoryError;
                         }
                     } else {
@@ -1338,10 +1337,10 @@ public class GENESIS_Environment
             Object[] result = new Object[3];
             Object[] potentialPartResult;
             while (getTotalFreeMemory() < Memory_Threshold) {
-                potentialPartResult = _GENESIS_AgentEnvironment._AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
+                potentialPartResult = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
                         HandleOutOfMemoryErrorFalse);
                 if (potentialPartResult == null) {
-                    if (swapToFile_Grid2DSquareCellChunk_Account() < 1) {
+                    if (swapChunk_Account() < 1) {
                         result[0] = false;
                         return result;
                     }
@@ -1368,9 +1367,9 @@ public class GENESIS_Environment
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                clear_MemoryReserve();
-                swapToFile_DataAny();
-                init_MemoryReserve();
+                clearMemoryReserve();
+                swapDataAny();
+                initMemoryReserve();
                 return get_Directory(
                         handleOutOfMemoryError);
             } else {

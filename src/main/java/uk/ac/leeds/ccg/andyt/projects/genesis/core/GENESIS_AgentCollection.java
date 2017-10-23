@@ -18,111 +18,72 @@ import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
  */
 public abstract class GENESIS_AgentCollection extends GENESIS_Object implements Serializable {
 
-    /**
-     * The File which is used to swap data.
-     */
-    protected File _Directory;
-    protected long _AgentCollection_ID;
-    protected transient GENESIS_AgentCollectionManager _GENESIS_AgentCollectionManager;
+    protected File Directory;
+    protected long AgentCollectionID;
+    protected transient GENESIS_AgentCollectionManager AgentCollectionManager;
+    
     /**
      * For recording the type (getClass().getName())of Agents
      * _AgentID_Agent_HashMap contains.
      */
-    protected String _Type;
+    protected String Type;
+    
     /**
      * keys are long _AgentID, values are Agents.
      */
-    protected HashMap<Long, GENESIS_Agent> _Agent_ID_Agent_HashMap;
+    protected HashMap<Long, GENESIS_Agent> AgentID_Agent_Map;
 
-    public HashMap<Long, GENESIS_Agent> get_Agent_ID_Agent_HashMap() {
-        if (_Agent_ID_Agent_HashMap == null) {
-            _Agent_ID_Agent_HashMap = (HashMap<Long, GENESIS_Agent>) Generic_StaticIO.readObject(
+    protected GENESIS_AgentCollection(){}
+    
+    public GENESIS_AgentCollection(GENESIS_Environment ge) {
+        super(ge);
+    }
+    
+    public HashMap<Long, GENESIS_Agent> getAgentID_Agent_Map() {
+        if (AgentID_Agent_Map == null) {
+            AgentID_Agent_Map = (HashMap<Long, GENESIS_Agent>) Generic_StaticIO.readObject(
                     get_File());
         }
-        return _Agent_ID_Agent_HashMap;
+        return AgentID_Agent_Map;
     }
 
     public boolean isInMemory() {
-        return _Agent_ID_Agent_HashMap != null;
+        return AgentID_Agent_Map != null;
     }
 
-    public File get_AgentCollectionManager_Directory() {
-        return get_AgentCollectionManager().getDirectory();
-    }
-
-    public GENESIS_AgentCollectionManager get_AgentCollectionManager() {
-        if (_GENESIS_AgentCollectionManager == null) {
-            _GENESIS_AgentCollectionManager =
-                    ge._GENESIS_AgentEnvironment._AgentCollectionManager;
+    public GENESIS_AgentCollectionManager getAgentCollectionManager() {
+        if (AgentCollectionManager == null) {
+            AgentCollectionManager = ge.AgentEnvironment.AgentCollectionManager;
         }
-        if (_GENESIS_AgentCollectionManager._GENESIS_Environment == null) {
-            _GENESIS_AgentCollectionManager._GENESIS_Environment = ge;
+        if (AgentCollectionManager.ge == null) {
+            AgentCollectionManager.ge = ge;
         }
-        return _GENESIS_AgentCollectionManager;
+        return AgentCollectionManager;
     }
 
-    protected String get_Type() {
-        return _Type;
+    protected String getType() {
+        return Type;
     }
 
     public abstract File getDirectory();
 
     protected File get_File() {
-        _Directory = getDirectory();
+        Directory = getDirectory();
         return new File(
-                _Directory,
-                //this._AgentCollection_ID + "_" + this.getClass().getName() + ".thisFile");
-                this.getClass().getName() + get_Type() + ".thisFile");
+                Directory,
+                //this.AgentCollectionID + "_" + this.getClass().getName() + ".thisFile");
+                this.getClass().getName() + getType() + ".thisFile");
     }
 
-    protected void init_AgentID_Agent_HashMap() {
-        _Agent_ID_Agent_HashMap = new HashMap<>();
+    protected final void initAgentID_Agent_Map() {
+        AgentID_Agent_Map = new HashMap<>();
     }
 
-    /**
-     * <code>
-     * _Agent_ID_Agent_HashMap.remove(a_AgentID);
-     * if (_Agent_ID_Agent_HashMap.isEmpty()){
-     * return true;
-     * } else {
-     * return false;
-     * }
-     * </code>
-     *
-     * @param a_AgentID
-     * @return true iff after removing entry _Agent_ID_Agent_HashMap is empty
-     */
     public boolean remove(Long a_AgentID) {
-        _Agent_ID_Agent_HashMap.remove(a_AgentID);
-        return _Agent_ID_Agent_HashMap.isEmpty();
+        AgentID_Agent_Map.remove(a_AgentID);
+        return AgentID_Agent_Map.isEmpty();
     }
 
-//    public abstract GENESIS_Agent getAgent(
-//            Long a_Agent_ID,
-//            boolean handleOutOfMemoryError);
-//
-//    protected GENESIS_Agent getAgent(
-//            Long a_Agent_ID){
-//        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-//        GENESIS_Agent result = _Agent_ID_Agent_HashMap.get(a_Agent_ID);
-//        if (result == null) {
-//            // Try loading from Agent Directory
-//            File a_Agent_Directory = result.getDirectory(
-//                    a_Agent_ID,
-//                    get_AgentCollectionManager());
-//            if (a_Agent_Directory.exists()) {
-//                File[] agentFiles = a_Agent_Directory.listFiles();
-//                if (agentFiles.length > 0) {
-//                    result = (GENESIS_Agent) Generic_StaticIO.readObject(agentFiles[0]);
-//                    result.init(
-//                            _GENESIS_Environment,
-//                            a_Agent_ID,
-//                            this._AgentCollection_ID);
-//                }
-//            }
-//        }
-//        return result;
-//    }
     public abstract void write(boolean handleOutOfMemoryError);
 
     //protected abstract void write();
@@ -138,11 +99,11 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     }
 
     protected void swapToFileAgents() {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = _Agent_ID_Agent_HashMap.keySet().iterator();
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = AgentID_Agent_Map.keySet().iterator();
         while (_Agent_ID_Agent_HashMapKeySetIterator.hasNext()) {
             Long a_Agent_ID = _Agent_ID_Agent_HashMapKeySetIterator.next();
-            GENESIS_Agent a_Agent = _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+            GENESIS_Agent a_Agent = AgentID_Agent_Map.get(a_Agent_ID);
             a_Agent.write();
             //_Agent_ID_Agent_HashMap.remove(a_Agent_ID);
             // Set a_Agent to null to free resources
@@ -152,8 +113,8 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     }
 
     protected void swapToFileAgent(Long a_Agent_ID) {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        GENESIS_Agent a_Agent = _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        GENESIS_Agent a_Agent = AgentID_Agent_Map.get(a_Agent_ID);
         a_Agent.write();
         //_Agent_ID_Agent_HashMap.remove(a_Agent_ID);
         // Set a_Agent to null to free resources
@@ -161,13 +122,13 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     }
 
     protected void swapToFileAgentExcept(Long a_Agent_ID) {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = _Agent_ID_Agent_HashMap.keySet().iterator();
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = AgentID_Agent_Map.keySet().iterator();
 //        HashMap<Long,Agent> agentsToRemove
         while (_Agent_ID_Agent_HashMapKeySetIterator.hasNext()) {
             long b_Agent_ID = _Agent_ID_Agent_HashMapKeySetIterator.next();
             if (a_Agent_ID != b_Agent_ID) {
-                GENESIS_Agent a_Agent = _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+                GENESIS_Agent a_Agent = AgentID_Agent_Map.get(a_Agent_ID);
                 a_Agent.write();
                 // Might need to break here and dispose outside iterator to 
                 // avoid concurrent modification. Other option is to catch and 
@@ -181,12 +142,12 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     }
 
     protected void swapToFileAgentsExcept(Long a_Agent_ID) {
-        _Agent_ID_Agent_HashMap = get_Agent_ID_Agent_HashMap();
-        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = _Agent_ID_Agent_HashMap.keySet().iterator();
+        AgentID_Agent_Map = getAgentID_Agent_Map();
+        Iterator<Long> _Agent_ID_Agent_HashMapKeySetIterator = AgentID_Agent_Map.keySet().iterator();
         while (_Agent_ID_Agent_HashMapKeySetIterator.hasNext()) {
             long b_Agent_ID = _Agent_ID_Agent_HashMapKeySetIterator.next();
             if (a_Agent_ID != b_Agent_ID) {
-                GENESIS_Agent a_Agent = _Agent_ID_Agent_HashMap.get(a_Agent_ID);
+                GENESIS_Agent a_Agent = AgentID_Agent_Map.get(a_Agent_ID);
                 a_Agent.write();
                 //_Agent_ID_Agent_HashMap.remove(a_Agent_ID);
                 // Set a_Agent to null to free resources
@@ -196,14 +157,14 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     }
 
     /**
-     * @return the _AgentCollection_ID
+     * @return the AgentCollectionID
      */
-    public long getAgentCollection_ID() {
-        return _AgentCollection_ID;
+    public long getAgentCollectionID() {
+        return AgentCollectionID;
     }
 
     public Long getMinAgentID() {
-        return _AgentCollection_ID * _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection;
+        return AgentCollectionID * AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection;
     }
 
     /**
@@ -211,7 +172,7 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
      * @return The maximum AgentID this collection will store
      */
     public Long getMaxAgentID(Long minAgentID) {
-        return minAgentID + _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection - 1L;
+        return minAgentID + AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection - 1L;
     }
 
     /**
@@ -223,7 +184,7 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
      */
     public Long getMaxAgentID() {
         Long result = Long.MIN_VALUE;
-        Iterator<Long> ite = _Agent_ID_Agent_HashMap.keySet().iterator();
+        Iterator<Long> ite = AgentID_Agent_Map.keySet().iterator();
         while (ite.hasNext()) {
             result = Math.max(result, ite.next());
         }
@@ -235,7 +196,7 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
         Long maxAgentID = getMaxAgentID(minAgentID);
         //Long agentID = new Long(minAgentID);
         HashSet result = new HashSet(
-                _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection);
+                AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection);
         for (Long agentID = minAgentID; agentID <= maxAgentID; agentID++) {
             result.add(agentID);
         }

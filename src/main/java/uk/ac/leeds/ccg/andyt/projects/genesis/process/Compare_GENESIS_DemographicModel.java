@@ -2200,7 +2200,7 @@ public class Compare_GENESIS_DemographicModel extends Abstract_GENESIS_Model {
 //            long a_MaxLivingMaleCollectionID = a_GENESIS_AgentCollectionManager.getMaxLivingMaleCollectionID();
 //            GENESIS_MaleCollection a_GENESIS_MaleCollection;
 //            for (long a_MaleCollectionID = 0; a_MaleCollectionID < a_MaxLivingMaleCollectionID; a_MaleCollectionID++) {
-//                a_GENESIS_MaleCollection = a_GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.get(
+//                a_GENESIS_MaleCollection = a_GENESIS_AgentCollectionManager.LivingMales.get(
 //                        a_MaleCollectionID);
 //            }
             GENESIS_Male a_GENESIS_Male;

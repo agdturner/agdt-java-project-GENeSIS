@@ -28,7 +28,7 @@ public class Mapping {
             Grids_ImageExporter _ImageExporter,
             GENESIS_Environment _Environment) {
         _ImageExporter.toGreyScaleImage(_Grid2DSquareCell,
-                _Environment.ge.get_Grid2DSquareCellProcessor(),
+                _Environment.ge.getGridProcessor(),
                 _File,
                 _Type,
                 _Environment.HandleOutOfMemoryError);
@@ -85,7 +85,7 @@ public class Mapping {
         }
         _ImageExporter.toGreyScaleImage(
                 _Denisty_Map_Population,
-                _Environment.ge.get_Grid2DSquareCellProcessor(),
+                _Environment.ge.getGridProcessor(),
                 _File, _Type, _HandleOutOfMemoryError);
 
     }

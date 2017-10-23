@@ -332,7 +332,7 @@ public class GENESIS_Demographics implements Serializable {
         File demographicsDirectory = new File(
                 _GENESIS_Environment._AbstractModel._ResultDataDirectory_File,
                 "Demographics");
-        long range = _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory;
+        long range = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory;
         try {
             Generic_StaticIO.initialiseArchive(
                     demographicsDirectory,
@@ -803,7 +803,7 @@ public class GENESIS_Demographics implements Serializable {
 //                demographicsDirectoryParent_File,
 //                theDemographicsDirectoryID,
 //                maxDemographicsDirectoryID,
-//                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory),
+//                _GENESIS_Environment.AgentEnvironment.getAgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory),
 //                "" + theDemographicsDirectoryID);
 //        demographicsDirectory_File = new File(
 //                demographicsDirectory_File,
@@ -2422,7 +2422,7 @@ public class GENESIS_Demographics implements Serializable {
         Object[] result = new Object[2];
         HashSet<Long> alive_female_HashSet = new HashSet<Long>();
         HashSet<Long> alive_male_HashSet = new HashSet<Long>();
-        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(_GENESIS_Environment.HandleOutOfMemoryError);
+        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(_GENESIS_Environment.HandleOutOfMemoryError);
         for (long a_Agent_ID = 0; a_Agent_ID < a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale; a_Agent_ID++) {
             GENESIS_Female a_Female = (GENESIS_Female) a_GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                     GENESIS_Person.getTypeLivingFemale_String(),

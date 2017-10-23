@@ -750,7 +750,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //                    a_Agent_ID,
 //                    type,
 //                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
-//            // a_Female._GENESIS_AgentEnvironment is null!
+//            // a_Female.AgentEnvironment is null!
 //            ageInYears_Integer = a_Female.get_AgeInYears_int();
 //            BigDecimal femalePopulation = _Demographics._Population._FemaleAgeInYearsPopulationCount_TreeMap.get(ageInYears_Integer);
 //            if (femalePopulation.compareTo(BigDecimal.ZERO) != 0) {

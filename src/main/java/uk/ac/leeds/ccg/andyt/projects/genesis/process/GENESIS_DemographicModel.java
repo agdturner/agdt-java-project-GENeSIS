@@ -99,8 +99,8 @@ public class GENESIS_DemographicModel
         this((GENESIS_DemographicModel) Generic_StaticIO.readObject(thisFile));
     }
 
-    private void init(GENESIS_Environment _GENESIS_Environment) {
-        init_Environment(_GENESIS_Environment);
+    private void init(GENESIS_Environment ge) {
+        init_Environment(ge);
     }
 
     /**
@@ -430,16 +430,16 @@ public class GENESIS_DemographicModel
         _RandomSeed = randomSeed_Long;
         ge._Generic_BigDecimal = new Generic_BigDecimal();
         ge.Directory = _Directory;
-//        _GENESIS_AgentCollectionManager = new GENESIS_AgentCollectionManager(
+//        AgentCollectionManager = new AgentCollectionManager(
 //                _GENESIS_Environment,
 //                Directory);
-//        _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection =
-//                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//        AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection =
+//                _GENESIS_Environment.AgentEnvironment.getAgentCollectionManager(
 //                _GENESIS_Environment.HandleOutOfMemoryError)._MaximumNumberOfAgentsPerAgentCollection;
-//        _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory =
-//                _GENESIS_Environment._GENESIS_AgentEnvironment.get_AgentCollectionManager(
+//        AgentCollectionManager._MaximumNumberOfObjectsPerDirectory =
+//                _GENESIS_Environment.AgentEnvironment.getAgentCollectionManager(
 //                _GENESIS_Environment.HandleOutOfMemoryError)._MaximumNumberOfObjectsPerDirectory;
-        ge._GENESIS_AgentEnvironment.set_AgentCollectionManager(_GENESIS_AgentCollectionManager,
+        ge.AgentEnvironment.set_AgentCollectionManager(_GENESIS_AgentCollectionManager,
                 HandleOutOfMemoryError);
         ge._PersonFactory = new GENESIS_PersonFactory(
                 ge,
@@ -795,7 +795,7 @@ public class GENESIS_DemographicModel
                     previousMaleDirectory_File,
                     "_");
             /*
-             * Initialise _GENESIS_AgentCollectionManager._DeadFemaleCollection.
+             * Initialise AgentCollectionManager._DeadFemaleCollection.
              */
             _GENESIS_AgentCollectionManager._DeadFemaleCollection =
                     (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
@@ -803,7 +803,7 @@ public class GENESIS_DemographicModel
                     "Dead_GENESIS_FemaleCollection.thisFile"));
             _GENESIS_AgentCollectionManager._DeadFemaleCollection.ge = ge;
             /*
-             * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection.
+             * Initialise AgentCollectionManager._DeadMaleCollection.
              */
             _GENESIS_AgentCollectionManager._DeadMaleCollection =
                     (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
@@ -812,7 +812,7 @@ public class GENESIS_DemographicModel
             _GENESIS_AgentCollectionManager._DeadMaleCollection.ge = ge;
             /*
              * Initialise
-             * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap.
+             * AgentCollectionManager._DeadFemaleCollection_HashMap.
              */
             _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap =
                     (HashMap) Generic_StaticIO.readObject(new File(
@@ -820,7 +820,7 @@ public class GENESIS_DemographicModel
                     "Dead_GENESIS_Female_HashMap.thisFile"));
             /*
              * Initialise
-             * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap.
+             * AgentCollectionManager._DeadMaleCollection_HashMap.
              */
             _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap =
                     (HashMap) Generic_StaticIO.readObject(new File(
@@ -935,12 +935,12 @@ public class GENESIS_DemographicModel
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    Long a_Agent_ID = ite4.next();
 //                    Long a_Collection_ID =
-//                            _GENESIS_AgentCollectionManager.getFemaleCollection_ID(
+//                            AgentCollectionManager.getFemaleCollection_ID(
 //                            a_Agent_ID,
 //                            type,
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_FemaleCollection a_FemaleCollection =
-//                            _GENESIS_AgentCollectionManager.getFemaleCollection(
+//                            AgentCollectionManager.getFemaleCollection(
 //                            a_Collection_ID,
 //                            type,
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
@@ -955,12 +955,12 @@ public class GENESIS_DemographicModel
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    Long a_Agent_ID = ite4.next();
 //                    Long a_Collection_ID =
-//                            _GENESIS_AgentCollectionManager.getMaleCollection_ID(
+//                            AgentCollectionManager.getMaleCollection_ID(
 //                            a_Agent_ID,
 //                            type,
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
 //                    GENESIS_MaleCollection a_MaleCollection =
-//                            _GENESIS_AgentCollectionManager.getMaleCollection(
+//                            AgentCollectionManager.getMaleCollection(
 //                            a_Collection_ID,
 //                            type,
 //                            _GENESIS_Environment.HandleOutOfMemoryError);
@@ -1076,8 +1076,8 @@ public class GENESIS_DemographicModel
 //            message = "runIndex_Long " + runIndex_Long;
 //            log(Level.INFO, message);
 //            System.out.println(message);
-//            message = "_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory "
-//                    + _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory;
+//            message = "AgentCollectionManager._MaximumNumberOfObjectsPerDirectory "
+//                    + AgentCollectionManager._MaximumNumberOfObjectsPerDirectory;
 //            log(Level.INFO, message);
 //            System.out.println(message);
 //            _SeedDirectory_File = new File(
@@ -1085,7 +1085,7 @@ public class GENESIS_DemographicModel
 //                    Directory,
 //                    indexOfSeedPopulationRun,
 //                    runIndex_Long,
-//                    _GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
+//                    AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
 //                    "" + indexOfSeedPopulationRun);
 //            File previousResultDataDirectory_File = new File(
 //                    _SeedDirectory_File,
@@ -1122,7 +1122,7 @@ public class GENESIS_DemographicModel
 //            log(Level.INFO, message);
 //            System.out.println(message);
 //            // LivingFemales
-//            _GENESIS_AgentCollectionManager.setLivingFemaleDirectory(
+//            AgentCollectionManager.setLivingFemaleDirectory(
 //                    new File(
 //                    _ResultDataDirectory_File,
 //                    "LivingFemales"));
@@ -1136,14 +1136,14 @@ public class GENESIS_DemographicModel
 //                    previousFemaleDirectory_File,
 //                    "_");
 //            GENESIS_FemaleCollection lastLivingFemaleCollection =
-//                    _GENESIS_AgentCollectionManager.getFemaleCollection(
+//                    AgentCollectionManager.getFemaleCollection(
 //                    aIndexOfLastLivingFemaleCollection,
 //                    GENESIS_Person.getTypeLivingFemale_String(),
 //                    HandleOutOfMemoryError);
-//            _GENESIS_AgentCollectionManager._IndexOfLastBornFemale =
+//            AgentCollectionManager._IndexOfLastBornFemale =
 //                    lastLivingFemaleCollection.getMaxAgentID();
 //            // LivingMales
-//            _GENESIS_AgentCollectionManager.setLivingMaleDirectory(
+//            AgentCollectionManager.setLivingMaleDirectory(
 //                    new File(
 //                    _ResultDataDirectory_File,
 //                    "LivingMales"));
@@ -1157,11 +1157,11 @@ public class GENESIS_DemographicModel
 //                    previousMaleDirectory_File,
 //                    "_");
 //            GENESIS_MaleCollection lastLivingMaleCollection =
-//                    _GENESIS_AgentCollectionManager.getMaleCollection(
+//                    AgentCollectionManager.getMaleCollection(
 //                    aIndexOfLastLivingMaleCollection,
 //                    GENESIS_Person.getTypeLivingMale_String(),
 //                    HandleOutOfMemoryError);
-//            _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
+//            AgentCollectionManager._IndexOfLastBornMale =
 //                    lastLivingMaleCollection.getMaxAgentID();
 //            /*
 //             * Initialise: _PregnantFemaleIDs;
@@ -1202,7 +1202,7 @@ public class GENESIS_DemographicModel
 //             * to a dead persons data should be stored, but what is a good way
 //             * to do this?
 //             */
-//            _GENESIS_AgentCollectionManager.setDeadFemaleDirectory(
+//            AgentCollectionManager.setDeadFemaleDirectory(
 //                    new File(
 //                    _ResultDataDirectory_File,
 //                    "DeadFemales"));
@@ -1212,7 +1212,7 @@ public class GENESIS_DemographicModel
 //            Generic_StaticIO.copy(
 //                    previousFemaleDirectory_File,
 //                    _ResultDataDirectory_File);
-//            _GENESIS_AgentCollectionManager._LargestIndexOfDeadFemaleCollection =
+//            AgentCollectionManager._LargestIndexOfDeadFemaleCollection =
 //                    Generic_StaticIO.getArchiveHighestLeaf(
 //                    previousFemaleDirectory_File,
 //                    "_");
@@ -1222,7 +1222,7 @@ public class GENESIS_DemographicModel
 //             * a dead persons data should be stored, but what is a good way to
 //             * do this?
 //             */
-//            _GENESIS_AgentCollectionManager.setDeadMaleDirectory(
+//            AgentCollectionManager.setDeadMaleDirectory(
 //                    new File(
 //                    _ResultDataDirectory_File,
 //                    "DeadMales"));
@@ -1232,39 +1232,39 @@ public class GENESIS_DemographicModel
 //            Generic_StaticIO.copy(
 //                    previousMaleDirectory_File,
 //                    _ResultDataDirectory_File);
-//            _GENESIS_AgentCollectionManager._LargestIndexOfDeadMaleCollection =
+//            AgentCollectionManager._LargestIndexOfDeadMaleCollection =
 //                    Generic_StaticIO.getArchiveHighestLeaf(
 //                    previousMaleDirectory_File,
 //                    "_");
 //            /*
-//             * Initialise _GENESIS_AgentCollectionManager._DeadFemaleCollection.
+//             * Initialise AgentCollectionManager._DeadFemaleCollection.
 //             */
-//            _GENESIS_AgentCollectionManager._DeadFemaleCollection =
+//            AgentCollectionManager._DeadFemaleCollection =
 //                    (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
 //                    previousResultDataDirectory_File,
 //                    "Dead_GENESIS_FemaleCollection.thisFile"));
-//            _GENESIS_AgentCollectionManager._DeadFemaleCollection._GENESIS_Environment = _GENESIS_Environment;
+//            AgentCollectionManager._DeadFemaleCollection._GENESIS_Environment = _GENESIS_Environment;
 //            /*
-//             * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection.
+//             * Initialise AgentCollectionManager._DeadMaleCollection.
 //             */
-//            _GENESIS_AgentCollectionManager._DeadMaleCollection =
+//            AgentCollectionManager._DeadMaleCollection =
 //                    (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
 //                    previousResultDataDirectory_File,
 //                    "Dead_GENESIS_MaleCollection.thisFile"));
-//            _GENESIS_AgentCollectionManager._DeadMaleCollection._GENESIS_Environment = _GENESIS_Environment;
+//            AgentCollectionManager._DeadMaleCollection._GENESIS_Environment = _GENESIS_Environment;
 //            /*
 //             * Initialise
-//             * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap.
+//             * AgentCollectionManager._DeadFemaleCollection_HashMap.
 //             */
-//            _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap =
+//            AgentCollectionManager._DeadFemaleCollection_HashMap =
 //                    (HashMap) Generic_StaticIO.readObject(new File(
 //                    previousResultDataDirectory_File,
 //                    "Dead_GENESIS_Female_HashMap.thisFile"));
 //            /*
 //             * Initialise
-//             * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap.
+//             * AgentCollectionManager._DeadMaleCollection_HashMap.
 //             */
-//            _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap =
+//            AgentCollectionManager._DeadMaleCollection_HashMap =
 //                    (HashMap) Generic_StaticIO.readObject(new File(
 //                    previousResultDataDirectory_File,
 //                    "Dead_GENESIS_Male_HashMap.thisFile"));
@@ -1355,12 +1355,12 @@ public class GENESIS_DemographicModel
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    Long a_Agent_ID = ite4.next();
 ////                    Long a_Collection_ID =
-////                            _GENESIS_AgentCollectionManager.getFemaleCollection_ID(
+////                            AgentCollectionManager.getFemaleCollection_ID(
 ////                            a_Agent_ID,
 ////                            type,
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_FemaleCollection a_FemaleCollection =
-////                            _GENESIS_AgentCollectionManager.getFemaleCollection(
+////                            AgentCollectionManager.getFemaleCollection(
 ////                            a_Collection_ID,
 ////                            type,
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
@@ -1375,12 +1375,12 @@ public class GENESIS_DemographicModel
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    Long a_Agent_ID = ite4.next();
 ////                    Long a_Collection_ID =
-////                            _GENESIS_AgentCollectionManager.getMaleCollection_ID(
+////                            AgentCollectionManager.getMaleCollection_ID(
 ////                            a_Agent_ID,
 ////                            type,
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
 ////                    GENESIS_MaleCollection a_MaleCollection =
-////                            _GENESIS_AgentCollectionManager.getMaleCollection(
+////                            AgentCollectionManager.getMaleCollection(
 ////                            a_Collection_ID,
 ////                            type,
 ////                            _GENESIS_Environment.HandleOutOfMemoryError);
@@ -1418,7 +1418,7 @@ public class GENESIS_DemographicModel
                     ge,
                     a_AgentCollection_ID,
                     GENESIS_Person.getTypeLivingFemale_String());
-            _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.put(
+            _GENESIS_AgentCollectionManager.LivingFemales.put(
                     a_AgentCollection_ID,
                     a_LivingFemaleCollection);
             _GENESIS_AgentCollectionManager.setLivingFemaleDirectory(
@@ -1434,7 +1434,7 @@ public class GENESIS_DemographicModel
                     ge,
                     a_AgentCollection_ID,
                     GENESIS_Person.getTypeLivingMale_String());
-            _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.put(
+            _GENESIS_AgentCollectionManager.LivingMales.put(
                     a_AgentCollection_ID,
                     a_MaleCollection);
             _GENESIS_AgentCollectionManager.setLivingMaleDirectory(
@@ -1533,7 +1533,7 @@ public class GENESIS_DemographicModel
                 _Years);
         System.out.println("Simulation complete. Writing out data for restart");
         // Store living population so they can be reloaded and run for more iterations
-        ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryError).swapToFile_AgentCollections(ge.HandleOutOfMemoryError);
+        ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryError).swapToFile_AgentCollections(ge.HandleOutOfMemoryError);
         File outputFile;
         /*
          * Write out _Demographics.
@@ -1606,10 +1606,10 @@ public class GENESIS_DemographicModel
     }
 
     /**
-     * Write out: _GENESIS_AgentCollectionManager._DeadFemaleCollection;
-     * _GENESIS_AgentCollectionManager._DeadMaleCollection;
-     * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap;
-     * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap.
+     * Write out: AgentCollectionManager._DeadFemaleCollection;
+ AgentCollectionManager._DeadMaleCollection;
+ AgentCollectionManager._DeadFemaleCollection_HashMap;
+ AgentCollectionManager._DeadMaleCollection_HashMap.
      */
     protected void writeOutDeadCollectionNotAlreadyStoredOnFile() {
         ge.tryToEnsureThereIsEnoughMemoryToContinue(HandleOutOfMemoryError);
@@ -1653,8 +1653,8 @@ public class GENESIS_DemographicModel
 
     /**
      * Writes out Living Collections that are not already stored on File from:
-     * _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap; and,
-     * _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.
+ AgentCollectionManager.LivingFemales; and,
+ AgentCollectionManager.LivingMales.
      * @param handleOutOfMemoryError
      */
     protected void writeOutLivingCollectionNotAlreadyStoredOnFile(
@@ -1667,9 +1667,9 @@ public class GENESIS_DemographicModel
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
-                ge.clear_MemoryReserve();
-                ge.swapToFile_DataAny();
-                ge.init_MemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                ge.clearMemoryReserve();
+                ge.swapDataAny();
+                ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
                 writeOutLivingCollectionNotAlreadyStoredOnFile(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -1679,8 +1679,8 @@ public class GENESIS_DemographicModel
 
     /**
      * Writes out Living Collections that are not already stored on File from:
-     * _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap; and,
-     * _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.
+ AgentCollectionManager.LivingFemales; and,
+ AgentCollectionManager.LivingMales.
      */
     protected void writeOutLivingCollectionNotAlreadyStoredOnFile() {
         String methodName = "Write out Living Collections not already stored on File...";
@@ -1689,22 +1689,22 @@ public class GENESIS_DemographicModel
 //                    HandleOutOfMemoryError);
         Iterator<Long> iterator;
         // Female
-        iterator = _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.keySet().iterator();
+        iterator = _GENESIS_AgentCollectionManager.LivingFemales.keySet().iterator();
         while (iterator.hasNext()) {
             Long a_ID = iterator.next();
             GENESIS_FemaleCollection c;
-            c = _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.get(a_ID);
+            c = _GENESIS_AgentCollectionManager.LivingFemales.get(a_ID);
             if (c != null) {
                 c.write(false); // Has to be false otherwise a concurrent modification exception may occur!
                 c = null;
             }
         }
         // Male
-        iterator = _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.keySet().iterator();
+        iterator = _GENESIS_AgentCollectionManager.LivingMales.keySet().iterator();
         while (iterator.hasNext()) {
             Long a_ID = iterator.next();
             GENESIS_MaleCollection c;
-            c = _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.get(a_ID);
+            c = _GENESIS_AgentCollectionManager.LivingMales.get(a_ID);
             if (c != null) {
                 c.write(false); // Has to be false otherwise a concurrent modification exception may occur!
                 c = null;
@@ -1714,21 +1714,21 @@ public class GENESIS_DemographicModel
 
     public void initCollections(
             String underscore) {
-        _GENESIS_AgentCollectionManager.init_LivingFemaleCollection_HashMap();
+        _GENESIS_AgentCollectionManager.initLivingFemales();
         long aIndexOfLastLivingFemaleCollection =
                 Generic_StaticIO.getArchiveHighestLeaf(
                 _GENESIS_AgentCollectionManager.getLivingFemaleDirectory(),
                 underscore);
         for (long i = 0; i <= aIndexOfLastLivingFemaleCollection; i++) {
-            _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.put(i, null);
+            _GENESIS_AgentCollectionManager.LivingFemales.put(i, null);
         }
-        _GENESIS_AgentCollectionManager.init_LivingMaleCollection_HashMap();
+        _GENESIS_AgentCollectionManager.initLivingMales();
         long aIndexOfLastLivingMaleCollection =
                 Generic_StaticIO.getArchiveHighestLeaf(
                 _GENESIS_AgentCollectionManager.getLivingMaleDirectory(),
                 underscore);
         for (long i = 0; i <= aIndexOfLastLivingMaleCollection; i++) {
-            _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.put(i, null);
+            _GENESIS_AgentCollectionManager.LivingMales.put(i, null);
         }
     }
 
@@ -1744,13 +1744,13 @@ public class GENESIS_DemographicModel
             //_Demographics._Population = new GENESIS_Population(_GENESIS_Environment);
             long age;
             Iterator<Long> ite3;
-            ite3 = _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.keySet().iterator();
+            ite3 = _GENESIS_AgentCollectionManager.LivingFemales.keySet().iterator();
             while (ite3.hasNext()) {
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection = _GENESIS_AgentCollectionManager.getFemaleCollection(ite3.next(),
                         GENESIS_Person.getTypeLivingFemale_String(),
                         HandleOutOfMemoryError);
                 HashMap<Long, GENESIS_Agent> agent_ID_HashMap =
-                        a_GENESIS_FemaleCollection.get_Agent_ID_Agent_HashMap();
+                        a_GENESIS_FemaleCollection.getAgentID_Agent_Map();
                 Iterator<Long> ite2 = agent_ID_HashMap.keySet().iterator();
                 while (ite2.hasNext()) {
                     Long a_Agent_ID = ite2.next();
@@ -1758,7 +1758,7 @@ public class GENESIS_DemographicModel
                             GENESIS_Person.getTypeLivingFemale_String(),
                             HandleOutOfMemoryError);
                     female.ge = ge;
-                    female._GENESIS_AgentCollectionManager =
+                    female.AgentCollectionManager =
                             _GENESIS_AgentCollectionManager;
                     age = female.getAge().getAgeInYears();
                     GENESIS_AgeBound ageBound = new GENESIS_AgeBound(age);
@@ -1781,13 +1781,13 @@ public class GENESIS_DemographicModel
                     subregionPopulation.updateGenderedAgePopulation();
                 }
             }
-            ite3 = _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.keySet().iterator();
+            ite3 = _GENESIS_AgentCollectionManager.LivingMales.keySet().iterator();
             while (ite3.hasNext()) {
                 GENESIS_MaleCollection a_GENESIS_MaleCollection = _GENESIS_AgentCollectionManager.getMaleCollection(ite3.next(),
                         GENESIS_Person.getTypeLivingMale_String(),
                         HandleOutOfMemoryError);
                 HashMap<Long, GENESIS_Agent> agent_ID_HashMap =
-                        a_GENESIS_MaleCollection.get_Agent_ID_Agent_HashMap();
+                        a_GENESIS_MaleCollection.getAgentID_Agent_Map();
                 Iterator<Long> ite2 = agent_ID_HashMap.keySet().iterator();
                 while (ite2.hasNext()) {
                     Long a_Agent_ID = ite2.next();
@@ -1795,7 +1795,7 @@ public class GENESIS_DemographicModel
                             GENESIS_Person.getTypeLivingMale_String(),
                             HandleOutOfMemoryError);
                     male.ge = ge;
-                    male._GENESIS_AgentCollectionManager =
+                    male.AgentCollectionManager =
                             _GENESIS_AgentCollectionManager;
                     age = male.getAge().getAgeInYears();
                     GENESIS_AgeBound ageBound = new GENESIS_AgeBound(age);
@@ -1875,7 +1875,7 @@ public class GENESIS_DemographicModel
 //                        a_Household,
 //                        a_VectorPoint2D,
 //                        _GENESIS_Environment.HandleOutOfMemoryError);
-//                Long a_Agent_ID = a_Female.get_Agent_ID(
+//                Long a_Agent_ID = a_Female.getAgentID(
 //                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                _LivingFemaleIDs.add(a_Agent_ID);
 //                _NotPregnantFemaleIDs.add(a_Agent_ID);
@@ -1909,7 +1909,7 @@ public class GENESIS_DemographicModel
 //                        a_Household,
 //                        a_VectorPoint2D,
 //                        _GENESIS_Environment.HandleOutOfMemoryError);
-//                Long a_Agent_ID = a_Male.get_Agent_ID(
+//                Long a_Agent_ID = a_Male.getAgentID(
 //                        _GENESIS_Environment.HandleOutOfMemoryError);
 //                _LivingMaleIDs.add(a_Agent_ID);
 //            }
@@ -2237,7 +2237,7 @@ public class GENESIS_DemographicModel
                 null,
                 null,
                 ge.HandleOutOfMemoryError);
-        Long a_Agent_ID = result.get_Agent_ID(ge.HandleOutOfMemoryError);
+        Long a_Agent_ID = result.getAgentID(ge.HandleOutOfMemoryError);
         subregionLivingFemaleIDs.add(a_Agent_ID);
         subregionNotPregnantFemaleIDs.add(a_Agent_ID);
 
@@ -2292,7 +2292,7 @@ public class GENESIS_DemographicModel
                 null,
                 null,
                 ge.HandleOutOfMemoryError);
-        Long a_Agent_ID = result.get_Agent_ID(ge.HandleOutOfMemoryError);
+        Long a_Agent_ID = result.getAgentID(ge.HandleOutOfMemoryError);
         subregionLivingMaleIDs.add(a_Agent_ID);
         return result;
     }
@@ -2373,7 +2373,7 @@ public class GENESIS_DemographicModel
 //                    null,
 //                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            //a_Female.write();
-//            Long a_Agent_ID = a_Female.get_Agent_ID(
+//            Long a_Agent_ID = a_Female.getAgentID(
 //                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            _LivingFemaleIDs.add(a_Agent_ID);
 //            _NotPregnantFemaleIDs.add(a_Agent_ID);
@@ -2398,7 +2398,7 @@ public class GENESIS_DemographicModel
 //                    null,
 //                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            //a_Male.write();
-//            _LivingMaleIDs.add(a_Male.get_Agent_ID(
+//            _LivingMaleIDs.add(a_Male.getAgentID(
 //                    _GENESIS_Environment.HandleOutOfMemoryError));
 //        }
 ////        initialisePregnancies(
@@ -3186,10 +3186,10 @@ public class GENESIS_DemographicModel
 //                                        _GENESIS_Environment.HandleOutOfMemoryError);
                             Long a_Agent_ID = ite3.next();
 //                            Long a_Collection_ID =
-//                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
+//                                    AgentCollectionManager.getAgentCollection_ID(
 //                                    a_Agent_ID);
 //                            a_MaleCollection =
-//                                    _GENESIS_AgentCollectionManager.getMaleCollection(
+//                                    AgentCollectionManager.getMaleCollection(
 //                                    a_Collection_ID,
 //                                    type);
 //                            GENESIS_Male a_Male = a_MaleCollection.getMale(
@@ -3384,10 +3384,10 @@ public class GENESIS_DemographicModel
 //                                        _GENESIS_Environment.HandleOutOfMemoryError);
                             Long a_Agent_ID = ite3.next();
 //                            Long a_Collection_ID =
-//                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
+//                                    AgentCollectionManager.getAgentCollection_ID(
 //                                    a_Agent_ID);
 //                            a_FemaleCollection =
-//                                    _GENESIS_AgentCollectionManager.getFemaleCollection(
+//                                    AgentCollectionManager.getFemaleCollection(
 //                                    a_Collection_ID,
 //                                    type);
 //                            GENESIS_Female a_Female = a_FemaleCollection.getFemale(
@@ -4102,10 +4102,10 @@ public class GENESIS_DemographicModel
                             }
 
 //                            Long a_Collection_ID =
-//                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
+//                                    AgentCollectionManager.getAgentCollection_ID(
 //                                    a_Agent_ID);
 //                            a_FemaleCollection =
-//                                    _GENESIS_AgentCollectionManager.getFemaleCollection(
+//                                    AgentCollectionManager.getFemaleCollection(
 //                                    a_Collection_ID,
 //                                    type);
 //                            GENESIS_Female a_Female = a_FemaleCollection.getFemale(
@@ -4173,7 +4173,7 @@ public class GENESIS_DemographicModel
                                 // InternalMigration within study region
                                 try {
 //                            //debug
-//                            if (a_Female.get_Agent_ID(true ) == 499029) {
+//                            if (a_Female.getAgentID(true ) == 499029) {
 //                                int debug = 1;
 //                            }
 
@@ -4293,10 +4293,10 @@ public class GENESIS_DemographicModel
 
 
 //                            Long a_Collection_ID =
-//                                    _GENESIS_AgentCollectionManager.getAgentCollection_ID(
+//                                    AgentCollectionManager.getAgentCollection_ID(
 //                                    a_Agent_ID);
 //                            a_MaleCollection =
-//                                    _GENESIS_AgentCollectionManager.getMaleCollection(
+//                                    AgentCollectionManager.getMaleCollection(
 //                                    a_Collection_ID,
 //                                    type);
 //                            GENESIS_Male a_Male = a_MaleCollection.getMale(
@@ -4723,7 +4723,7 @@ public class GENESIS_DemographicModel
                     _GENESIS_AgentCollectionManager.addToDeadFemaleCollection(
                     a_Female_ID,
                     a_Female);
-            // Add Mapping to _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap
+            // Add Mapping to AgentCollectionManager._DeadFemaleCollection_HashMap
             _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap.put(
                     a_Female_ID,
                     deadFemaleCollectionID);
@@ -4734,7 +4734,7 @@ public class GENESIS_DemographicModel
             if (collectionEmpty) {
                 HashSet<Long> collectionPossibleAgentIDs =
                         a_FemaleCollection.getPossibleAgentIDs_HashSet();
-                // Get mappings from _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap
+                // Get mappings from AgentCollectionManager._DeadFemaleCollection_HashMap
                 // and add them to mapping to be written out
                 HashMap<Long, Long> _DeadFemaleCollectionMap =
                         new HashMap<Long, Long>(collectionPossibleAgentIDs.size());
@@ -4755,8 +4755,8 @@ public class GENESIS_DemographicModel
                         _DeadFemaleCollectionMap,
                         _DeadFemaleCollectionMap_File);
                 a_FemaleCollection = null;
-                // Remove Mapping from _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap
-                _GENESIS_AgentCollectionManager._LivingFemaleCollection_HashMap.remove(a_Collection_ID);
+                // Remove Mapping from AgentCollectionManager.LivingFemales
+                _GENESIS_AgentCollectionManager.LivingFemales.remove(a_Collection_ID);
             }
             // Account Populations
             //GENESIS_AgeBound singleYearAgeBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
@@ -4819,7 +4819,7 @@ public class GENESIS_DemographicModel
                     _GENESIS_AgentCollectionManager.addToDeadMaleCollection(
                     a_Male_ID,
                     a_Male);
-            // Add Mapping to _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap
+            // Add Mapping to AgentCollectionManager._DeadMaleCollection_HashMap
             _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap.put(
                     a_Male_ID,
                     deadMaleCollectionID);
@@ -4830,7 +4830,7 @@ public class GENESIS_DemographicModel
             if (collectionEmpty) {
                 HashSet<Long> collectionPossibleAgentIDs =
                         a_MaleCollection.getPossibleAgentIDs_HashSet();
-                // Get mappings from _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap
+                // Get mappings from AgentCollectionManager._DeadMaleCollection_HashMap
                 // and add them to mapping to be written out
                 HashMap<Long, Long> theDeadMaleCollectionMap =
                         new HashMap<Long, Long>(collectionPossibleAgentIDs.size());
@@ -4851,8 +4851,8 @@ public class GENESIS_DemographicModel
                         theDeadMaleCollectionMap,
                         theDeadMaleCollectionMap_File);
                 a_MaleCollection = null;
-                // Remove Mapping from _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap
-                _GENESIS_AgentCollectionManager._LivingMaleCollection_HashMap.remove(a_Collection_ID);
+                // Remove Mapping from AgentCollectionManager.LivingMales
+                _GENESIS_AgentCollectionManager.LivingMales.remove(a_Collection_ID);
             }
             // Account Populations
             //GENESIS_AgeBound singleYearAgeBound = new GENESIS_AgeBound(a_Male.getAge().getAgeInYears());
@@ -5062,7 +5062,7 @@ public class GENESIS_DemographicModel
                                 ge.HandleOutOfMemoryError);
 
                         //females.add(female);
-                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
+                        //regionLivingFemaleIDs.get(subregionID).add(female.getAgentID(HandleOutOfMemoryError));
                         result++;
                     }
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -5111,7 +5111,7 @@ public class GENESIS_DemographicModel
                             ge.HandleOutOfMemoryError);
 
                     //females.add(female);
-                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
+                    //regionLivingFemaleIDs.get(subregionID).add(female.getAgentID(HandleOutOfMemoryError));
                     result++;
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
 //                            regionTotalImmigration,
@@ -5159,7 +5159,7 @@ public class GENESIS_DemographicModel
                                 ge.HandleOutOfMemoryError);
 
                         //males.add(male);
-                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
+                        //regionLivingMaleIDs.get(subregionID).add(male.getAgentID(HandleOutOfMemoryError));
                         result++;
                     }
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
@@ -5202,7 +5202,7 @@ public class GENESIS_DemographicModel
                             BigDecimal.ONE,
                             ge.HandleOutOfMemoryError);
                     //males.add(male);
-                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
+                    //regionLivingMaleIDs.get(subregionID).add(male.getAgentID(HandleOutOfMemoryError));
                     result++;
 //                    GENESIS_Collections.addTo_TreeMap_AgeBound_BigDecimal(
 //                            regionTotalImmigration,
@@ -5277,7 +5277,7 @@ public class GENESIS_DemographicModel
                                 BigDecimal.ONE,
                                 ge.HandleOutOfMemoryError);
                         //females.add(female);
-                        //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
+                        //regionLivingFemaleIDs.get(subregionID).add(female.getAgentID(HandleOutOfMemoryError));
                     }
                     result++;
                 }
@@ -5322,7 +5322,7 @@ public class GENESIS_DemographicModel
                             BigDecimal.ONE,
                             ge.HandleOutOfMemoryError);
                     //females.add(female);
-                    //regionLivingFemaleIDs.get(subregionID).add(female.get_Agent_ID(HandleOutOfMemoryError));
+                    //regionLivingFemaleIDs.get(subregionID).add(female.getAgentID(HandleOutOfMemoryError));
                     result++;
                 }
             }
@@ -5369,7 +5369,7 @@ public class GENESIS_DemographicModel
                                 BigDecimal.ONE,
                                 ge.HandleOutOfMemoryError);
                         //males.add(male);
-                        //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
+                        //regionLivingMaleIDs.get(subregionID).add(male.getAgentID(HandleOutOfMemoryError));
                         result++;
                     }
                 }
@@ -5415,7 +5415,7 @@ public class GENESIS_DemographicModel
                             BigDecimal.ONE,
                             ge.HandleOutOfMemoryError);
                     //males.add(male);
-                    //regionLivingMaleIDs.get(subregionID).add(male.get_Agent_ID(HandleOutOfMemoryError));
+                    //regionLivingMaleIDs.get(subregionID).add(male.getAgentID(HandleOutOfMemoryError));
                     result++;
                 }
             }
@@ -5576,7 +5576,7 @@ public class GENESIS_DemographicModel
                     result = true;
 
 //                    // debug
-//                    if (a_Female.get_Agent_ID(false) == 58061) {
+//                    if (a_Female.getAgentID(false) == 58061) {
 //                        int debug = 1;
 //                        System.out.println(a_Female);
 //                    }
@@ -5618,7 +5618,7 @@ public class GENESIS_DemographicModel
         if (result) {
 
 //            // debug
-//            if (a_Female.get_Agent_ID(false) == 58061) {
+//            if (a_Female.getAgentID(false) == 58061) {
 //                int debug = 1;
 //                System.out.println("Miscarriage");
 //                System.out.println(a_Female);
