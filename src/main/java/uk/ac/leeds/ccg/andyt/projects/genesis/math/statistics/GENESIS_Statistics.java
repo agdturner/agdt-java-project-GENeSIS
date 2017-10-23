@@ -22,12 +22,12 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Collections;
  */
 public class GENESIS_Statistics extends Generic_Statistics {
 
-    private GENESIS_Environment _GENESIS_Environment;
+    private GENESIS_Environment ge;
 
     public GENESIS_Statistics(
             GENESIS_Environment a_GENESIS_Environment) {
         super();
-        this._GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = a_GENESIS_Environment;
     }
 
     /**
