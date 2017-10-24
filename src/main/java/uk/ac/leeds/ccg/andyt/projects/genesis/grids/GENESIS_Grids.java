@@ -55,16 +55,18 @@ public class GENESIS_Grids extends GENESIS_Object {
     }
 
     /**
+     * @param g
+     * @param random
      * @param handleOutOfMemoryError
      * @param distance
-     * @param a_Point2D
+     * @param p
      * @return a Vector_Point2D within distance of a_Point2D using double
      * precision arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
             Grids_AbstractGrid2DSquareCell g,
-            Random a_Random,
-            Vector_Point2D a_Point2D,
+            Random random,
+            Vector_Point2D p,
             double distance,
             boolean handleOutOfMemoryError) {
         double xdiff;
@@ -74,8 +76,8 @@ public class GENESIS_Grids extends GENESIS_Object {
         double counter = 0;
         do {
             do {
-                xdiff = (0.5d - a_Random.nextDouble()) * distance * 2.0d;
-                ydiff = (0.5d - a_Random.nextDouble()) * distance * 2.0d;
+                xdiff = (0.5d - random.nextDouble()) * distance * 2.0d;
+                ydiff = (0.5d - random.nextDouble()) * distance * 2.0d;
                 //xdiff = (a_Random.nextDouble() - 0.5d) * distance * 2.0d;
                 //ydiff = (a_Random.nextDouble() - 0.5d) * distance * 2.0d;
                 counter++;
@@ -83,37 +85,39 @@ public class GENESIS_Grids extends GENESIS_Object {
                     System.out.println("Getting stuck in " + GENESIS_Grids.class.getName() + ".getRandom_Point2D(AbstractGrid2DSquareCell,Random,Point2D,double,boolean )");
                 }
             } while (Math.sqrt((Math.pow(xdiff, 2.0d) + Math.pow(ydiff, 2.0d))) >= distance);
-            x = a_Point2D.X.doubleValue() + xdiff;
-            y = a_Point2D.Y.doubleValue() + ydiff;
+            x = p.X.doubleValue() + xdiff;
+            y = p.Y.doubleValue() + ydiff;
             if (counter > 1000) {
                 System.out.println("Getting stuck in " + GENESIS_Grids.class.getName() + ".getRandom_Point2D(AbstractGrid2DSquareCell,Random,Point2D,double,boolean )");
             }
         } while (!g.isInGrid(x, y, handleOutOfMemoryError));
         return new Vector_Point2D(
-                a_Point2D.ve,
+                p.ve,
                 new BigDecimal(x),
                 new BigDecimal(y),
-                a_Point2D.getDecimalPlacePrecision());
+                p.getDecimalPlacePrecision());
     }
 
     /**
+     * @param g
+     * @param random
      * @param handleOutOfMemoryError
-     * @param distance_BigDecimal
-     * @param a_Point2D
+     * @param distance
+     * @param p
      * @return a Vector_Point2D within distance of a_Point2D using double
      * precision arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
-            Random a_Random,
-            Vector_Point2D a_Point2D,
-            BigDecimal distance_BigDecimal,
+            Grids_AbstractGrid2DSquareCell g,
+            Random random,
+            Vector_Point2D p,
+            BigDecimal distance,
             boolean handleOutOfMemoryError) {
         return getRandom_Point2D(
-                a_Grid2DSquareCell,
-                a_Random,
-                a_Point2D,
-                distance_BigDecimal.doubleValue(),
+                g,
+                random,
+                p,
+                distance.doubleValue(),
                 handleOutOfMemoryError);
     }
 
