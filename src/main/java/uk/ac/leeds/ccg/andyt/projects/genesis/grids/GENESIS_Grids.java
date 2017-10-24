@@ -24,13 +24,6 @@ public class GENESIS_Grids extends GENESIS_Object {
         super(ge);
     }
 
-    public static Vector_Point2D getNextCentroid_Point2D(
-            Vector_Point2D origin_Point2D,
-            Vector_Point2D destination_Point2D) {
-        Vector_Point2D result = null;
-        return result;
-    }
-
     public Vector_Point2D getCellCentroid_Point2D(
             Grids_AbstractGrid2DSquareCell g,
             Vector_Point2D p,
@@ -44,7 +37,7 @@ public class GENESIS_Grids extends GENESIS_Object {
         long row = g.getCellRowIndex(p.Y, handleOutOfMemoryError);
         long col = g.getCellColIndex(p.X, handleOutOfMemoryError);
         result = new Vector_Point2D(
-                null,
+                ge.ve,
                 g.getCellXBigDecimal(
                         col, handleOutOfMemoryError),
                 g.getCellYBigDecimal(
@@ -82,13 +75,19 @@ public class GENESIS_Grids extends GENESIS_Object {
                 //ydiff = (a_Random.nextDouble() - 0.5d) * distance * 2.0d;
                 counter++;
                 if (counter > 1000) {
-                    System.out.println("Getting stuck in " + GENESIS_Grids.class.getName() + ".getRandom_Point2D(AbstractGrid2DSquareCell,Random,Point2D,double,boolean )");
+                    System.out.println(
+                            "Getting stuck in " + this.getClass().getName()
+                            + ".getRandom_Point2D(" + g.getClass().getName()
+                            + ",Random,Point2D,double,boolean)");
                 }
             } while (Math.sqrt((Math.pow(xdiff, 2.0d) + Math.pow(ydiff, 2.0d))) >= distance);
             x = p.X.doubleValue() + xdiff;
             y = p.Y.doubleValue() + ydiff;
             if (counter > 1000) {
-                System.out.println("Getting stuck in " + GENESIS_Grids.class.getName() + ".getRandom_Point2D(AbstractGrid2DSquareCell,Random,Point2D,double,boolean )");
+                System.out.println(
+                        "Getting stuck in " + this.getClass().getName()
+                        + ".getRandom_Point2D(" + g.getClass().getName()
+                        + "Random,Point2D,double,boolean )");
             }
         } while (!g.isInGrid(x, y, handleOutOfMemoryError));
         return new Vector_Point2D(
@@ -231,7 +230,7 @@ public class GENESIS_Grids extends GENESIS_Object {
         * +---+---+---+
         * | 5 | 4 | 3 |
         * +---+---+---+
-        */
+         */
         Vector_LineSegment2D bottom = new Vector_LineSegment2D(
                 new Vector_Point2D(
                         l.ve,
