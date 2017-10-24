@@ -69,11 +69,10 @@ public class GENESIS_MaleCollection
 //                    Type,
 //                    ge.HandleOutOfMemoryErrorFalse);
             Directory = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    theGENESIS_AgentCollectionManager._LivingMaleDirectory,
+                    Generic_StaticIO.getObjectDirectory(theGENESIS_AgentCollectionManager._LivingMaleDirectory,
                     agentID,
                     indexOfLastBornMaleCollection,
-                    theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
+                    theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
                     "" + agentID);
             File result = new File(Directory.toString());
             return result;
@@ -81,11 +80,10 @@ public class GENESIS_MaleCollection
             Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
                     getAgentCollectionManager().getDeadMaleDirectory(), "_");
             Directory = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    theGENESIS_AgentCollectionManager.getDeadMaleDirectory(),
+                    Generic_StaticIO.getObjectDirectory(theGENESIS_AgentCollectionManager.getDeadMaleDirectory(),
                     agentID,
                     highestLeaf,
-                    theGENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory),
+                    theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
                     "" + getAgentCollectionID());
             File result = new File(Directory.toString());
             return result;

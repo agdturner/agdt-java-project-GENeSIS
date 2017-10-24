@@ -1396,7 +1396,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                + "/InputData/DemographicData/Population/
 //                + "GenderAgeCount_Test.csv");
         GENESIS_Environment ge = new GENESIS_Environment(directory);
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         String[] a_Filename_String_prefixSuffix = a_File.getName().split("\\.");
         GENESIS_Population a_Population = new GENESIS_Population(
                 ge,

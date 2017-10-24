@@ -9,12 +9,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_2D_ID_long;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
-import uk.ac.leeds.ccg.andyt.projects.genesis.grids.StaticGrids;
+import uk.ac.leeds.ccg.andyt.projects.genesis.grids.GENESIS_Grids;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
-import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.Family;
-import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.Household;
-import uk.ac.leeds.ccg.andyt.projects.genesis.transport.Movement;
+import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.GENESIS_Family;
+import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.GENESIS_Household;
+import uk.ac.leeds.ccg.andyt.projects.genesis.transport.GENESIS_Movement;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_LineSegment2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
@@ -38,20 +38,21 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      * in this list is either the current or moving to subregionID.
      * @TODO Change to be a collection that records times as well.
      */
-    public ArrayList<String> _ResidentialSubregionIDs;
+    public ArrayList<String> ResidentialSubregionIDs;
 
-    protected GENESIS_Person(){}
-    
+    protected GENESIS_Person() {
+    }
+
     public GENESIS_Person(GENESIS_Environment ge) {
         super(ge);
     }
-    
+
     public String getRegionID() {
         return getSubregionID().substring(0, 4);
     }
 
     public String getSubregionID() {
-        String result = _ResidentialSubregionIDs.get(_ResidentialSubregionIDs.size() - 1);
+        String result = ResidentialSubregionIDs.get(ResidentialSubregionIDs.size() - 1);
         if (result == null) {
             int debug = 1;
         }
@@ -63,7 +64,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     }
 
     public String getPreviousSubregionID() {
-        String result = _ResidentialSubregionIDs.get(_ResidentialSubregionIDs.size() - 2);
+        String result = ResidentialSubregionIDs.get(ResidentialSubregionIDs.size() - 2);
         if (result == null) {
             int debug = 1;
         }
@@ -72,14 +73,14 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     /**
      * A unique numerical ID for this
      */
-    protected Long _ID;
+    protected Long ID;
     /*
      * Stores the ID of the main collection this belongs to
      */
-    protected Long _Collection_ID;
+    protected Long CollectionID;
     /**
      * Directory for storing information about this. If this is null, it can be
-     * retrieved using _ID from:
+     * retrieved using ID from:
      * _GENESIS_FemaleCollection._Agent_ID_Agent_HashMap
      */
     protected File _Directory;
@@ -118,12 +119,12 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     /**
      * A record of the time of birth of this person
      */
-    protected GENESIS_Age _Age;
+    protected GENESIS_Age Age;
     /**
      * A record of the time of death of this person. If this is null then the
      * GENESIS_Person can be assumed not to dead.
      */
-    public GENESIS_Time _Death_Time;
+    public GENESIS_Time TimeOfDeath;
     /**
      * Provides the location at which this GENESIS_Person was born. This is
      * probably referred to very infrequently and might best be stored in a
@@ -138,11 +139,11 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     /**
      * Stores the location of the GENESIS_Person.
      */
-    public Vector_Point2D _Point2D;
+    public Vector_Point2D Location;
     /**
      * Stores a previous location.
      */
-    protected Vector_Point2D _Previous_Point2D;
+    protected Vector_Point2D PreviousPoint2D;
     /**
      * For storing the _Environment._reportingGrid CellID
      */
@@ -150,33 +151,33 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     /**
      * Stores the next network location where the person is heading.
      */
-    public Vector_Point2D _Heading_Point2D;
+    public Vector_Point2D HeadingLocation;
     /**
-     * Stores current Movement of GENESIS_Person from an origin through all
-     * network locations to a destination. Might be heavy, so this might be best
- stored in a File in Directory.
+     * Stores current GENESIS_Movement of GENESIS_Person from an origin through
+     * all network locations to a destination. Might be heavy, so this might be
+     * best stored in a File in Directory.
      */
-    public Movement _Movement;
+    public GENESIS_Movement Movement;
     /**
      * Stores the persons network along which they have headed. Might be heavy,
- so this might be best stored in a File in Directory.
+     * so this might be best stored in a File in Directory.
      */
     public Vector_Network2D _Network2D;
     /**
      * Stores the persons network along which they have headed. Might be heavy,
- so this might be best stored in a File in Directory.
+     * so this might be best stored in a File in Directory.
      */
     public Vector_Network2D _reporting_VectorNetwork2D;
     /**
-     * Stores a reference to the Family of this GENESIS_Person
+     * Stores a reference to the GENESIS_Family of this GENESIS_Person
      */
-    public Family _Family;
+    public GENESIS_Family _Family;
     /**
      * Stores the GENESIS_Person's household which is information about where
      * and with who the GENESIS_Person resides. Currently each GENESIS_Person
      * has just one household at a time.
      */
-    public Household _Household;
+    public GENESIS_Household _Household;
     /**
      * Stores work location. Perhaps need an ordered collection of meetings...
      * This would combine locations and times and perhaps other things, e.g.
@@ -220,19 +221,19 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         //super.
         this._Birth_Calendar = a_Person._Birth_Calendar;
         this._Birth_Point2D = a_Person._Birth_Point2D;
-        this._Age = a_Person._Age;
+        this.Age = a_Person.Age;
         this._Death_Point2D = a_Person._Death_Point2D;
-        this._Death_Time = a_Person._Death_Time;
+        this.TimeOfDeath = a_Person.TimeOfDeath;
         this._Family = a_Person._Family;
         this._personalFertility_BigDecimal = a_Person._personalFertility_BigDecimal;
-        this._Heading_Point2D = a_Person._Heading_Point2D;
+        this.HeadingLocation = a_Person.HeadingLocation;
         this._Household = a_Person._Household;
         this._HouseholdHistory = a_Person._HouseholdHistory;
         this._personalMortality_BigDecimal = a_Person._personalMortality_BigDecimal;
-        this._Movement = a_Person._Movement;
+        this.Movement = a_Person.Movement;
         this._Network2D = a_Person._Network2D;
-        this._Point2D = a_Person._Point2D;
-        this._Previous_Point2D = a_Person._Previous_Point2D;
+        this.Location = a_Person.Location;
+        this.PreviousPoint2D = a_Person.PreviousPoint2D;
         this._SetOffToWork_0_Time = a_Person._SetOffToWork_0_Time;
         this._SetOffToWork_Time = a_Person._SetOffToWork_Time;
         this._Work_Point2D = a_Person._Work_Point2D;
@@ -242,91 +243,88 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     }
 
     /**
-     * return _Previous_Point2D;
+     * return PreviousPoint2D;
      *
      * @TODO Better to return a copy?
      *
      * @return
      */
-    public Vector_Point2D get_Previous_Point2D() {
-        return _Previous_Point2D;
+    public Vector_Point2D getPreviousPoint2D() {
+        return PreviousPoint2D;
     }
 
     /**
-     * this._Previous_Point2D = new Vector_Point2D(a_Point2D);
-     *
-     * @param a_Point2D
+     * @param p
      */
-    public void set_Previous_Point2D(Vector_Point2D a_Point2D) {
-        this._Previous_Point2D = new Vector_Point2D(a_Point2D);
+    public void setPreviousPoint2D(Vector_Point2D p) {
+        this.PreviousPoint2D = new Vector_Point2D(p);
     }
 
-//    public void set_DateOfDeath_Calendar(Calendar _TimeOfDeath_Calendar) {
-//        this._TimeOfDeath_Calendar = _TimeOfDeath_Calendar;
-//    }
-    public void set_Death_Time(GENESIS_Time _Time_Death) {
-        this._Death_Time = new GENESIS_Time(_Time_Death);
+    public void setTimeOfDeath(GENESIS_Time t) {
+        this.TimeOfDeath = new GENESIS_Time(t);
     }
 
     /**
      *
      */
-    public void setMovement() {
-        _Movement = new Movement(
+    public void setMovement(GENESIS_Grids grids) {
+        Movement = new GENESIS_Movement(
                 ge,
-                _Point2D,
-                _Heading_Point2D);
-        //_Movement._networkRoute_VectorNetwork2D = _Movement.getShortStraightNetworkPath();
-        double[] origin = _Point2D.to_doubleArray();
-        double[] destination = _Heading_Point2D.to_doubleArray();
-        _Movement._networkRoute_VectorNetwork2D = _Movement.getTravellingSalesmanRoute(
+                Location,
+                HeadingLocation);
+        //_Movement.Route = GENESIS_Movement.getShortStraightNetworkPath();
+        double[] origin = Location.to_doubleArray();
+        double[] destination = HeadingLocation.to_doubleArray();
+        Movement.Route = Movement.getTravellingSalesmanRoute(
+                grids,
                 origin,
                 destination,
                 ge._TSMisc);
-        if (_Movement._networkRoute_VectorNetwork2D == null) {
-            _Movement._networkRoute_VectorNetwork2D = _Movement.getShortStraightNetworkPath();
+        if (Movement.Route == null) {
+            Movement.Route = Movement.getShortStraightNetworkPath(grids);
         }
-        if (_Movement._networkRoute_VectorNetwork2D._Connection_HashMap == null) {
+        if (Movement.Route.Connections == null) {
             int debug = 1;
         }
-        HashSet<Connection> a_Connection_HashSet = (HashSet<Connection>) _Movement._networkRoute_VectorNetwork2D._Connection_HashMap.get(_Point2D);
-        if (a_Connection_HashSet == null) {
-            if (_Point2D.equals(_Heading_Point2D)) {
-                _Movement = null;
+        HashSet<Connection> connections;
+        connections = (HashSet<Connection>) Movement.Route.Connections.get(Location);
+        if (connections == null) {
+            if (Location.equals(HeadingLocation)) {
+                Movement = null;
             }
         } else {
-            Connection a_Connection = (Connection) a_Connection_HashSet.iterator().next();
-            _Heading_Point2D = a_Connection._Point2D;
+            Connection connection = (Connection) connections.iterator().next();
+            HeadingLocation = connection.Location;
         }
     }
 
 //    public void setMovementLatLon(int a_DecimalPlacePrecision) {
-//        _Movement = new Movement(
+//        GENESIS_Movement = new GENESIS_Movement(
 //                _GENESIS_Environment,
-//                _Point2D,
-//                _Heading_Point2D);
-//        //_Movement._networkRoute_VectorNetwork2D = _Movement.getShortStraightNetworkPath();
+//                Location,
+//                HeadingLocation);
+//        //_Movement.Route = GENESIS_Movement.getShortStraightNetworkPath();
 //
 //        //Convert from screen coordinates to OSGB
-//        double origin_x = ((_Point2D._x.doubleValue() * _GENESIS_Environment._XRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNCols(true)) + _GENESIS_Environment._XMin_double;
-//        double origin_y = ((_Point2D._y.doubleValue() * _GENESIS_Environment._YRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNRows(true)) + _GENESIS_Environment._YMin_double;
+//        double origin_x = ((Location.X.doubleValue() * _GENESIS_Environment._XRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNCols(true)) + _GENESIS_Environment._XMin_double;
+//        double origin_y = ((Location.Y.doubleValue() * _GENESIS_Environment._YRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNRows(true)) + _GENESIS_Environment._YMin_double;
 //
 //        double[] origin = new double[2];
 //        origin[0] = origin_x;
 //        origin[1] = origin_y;
 //
 ////        double[] origin = GTMisc.transform_OSGB_To_LatLon(
-////                _Point2D._x.doubleValue(),
-////                _Point2D._y.doubleValue());
-//        double destination_x = ((_Heading_Point2D._x.doubleValue() * _GENESIS_Environment._XRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNCols(true)) + _GENESIS_Environment._XMin_double;
-//        double destination_y = ((_Heading_Point2D._y.doubleValue() * _GENESIS_Environment._YRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNRows(true)) + _GENESIS_Environment._YMin_double;
+////                Location.X.doubleValue(),
+////                Location.Y.doubleValue());
+//        double destination_x = ((HeadingLocation.X.doubleValue() * _GENESIS_Environment._XRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNCols(true)) + _GENESIS_Environment._XMin_double;
+//        double destination_y = ((HeadingLocation.Y.doubleValue() * _GENESIS_Environment._YRange_double) / (double) _GENESIS_Environment._network_Grid2DSquareCellDouble.getNRows(true)) + _GENESIS_Environment._YMin_double;
 //
 //        double[] destination = new double[2];
 //        destination[0] = destination_x;
 //        destination[1] = destination_y;
 ////        double[] destination = GTMisc.transform_OSGB_To_LatLon(
-////                _Heading_Point2D._x.doubleValue(),
-////                _Heading_Point2D._y.doubleValue());
+////                HeadingLocation.X.doubleValue(),
+////                HeadingLocation.Y.doubleValue());
 ////        double[] origin = GTMisc.transform_OSGB_To_LatLon(
 ////                origin_x,
 ////                origin_y);
@@ -339,48 +337,48 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
 ////        if (destination == null) {
 ////            int debug = 1;
 ////        }
-//        _Movement._networkRoute_VectorNetwork2D = _Movement.getTravellingSalesmanRoute(
+//        GENESIS_Movement.Route = GENESIS_Movement.getTravellingSalesmanRoute(
 //                origin,
 //                destination,
 //                _GENESIS_Environment._TSMisc,
 //                a_DecimalPlacePrecision);
-//        if (_Movement._networkRoute_VectorNetwork2D == null) {
-//            _Movement._networkRoute_VectorNetwork2D = _Movement.getShortStraightNetworkPath(a_DecimalPlacePrecision);
+//        if (GENESIS_Movement.Route == null) {
+//            GENESIS_Movement.Route = GENESIS_Movement.getShortStraightNetworkPath(a_DecimalPlacePrecision);
 //            //int debug = 1;
 //        } else {
 //            _GENESIS_Environment._AbstractModel._GENESIS_Log.log("hurray found OSM route");
 //        }
-//        if (_Movement._networkRoute_VectorNetwork2D._Connection_HashMap == null) {
+//        if (GENESIS_Movement.Route.Connections == null) {
 //            int debug = 1;
 //        }
-//        HashSet<Connection> a_Connection_HashSet = (HashSet<Connection>) _Movement._networkRoute_VectorNetwork2D._Connection_HashMap.get(_Point2D);
+//        HashSet<Connection> a_Connection_HashSet = (HashSet<Connection>) GENESIS_Movement.Route.Connections.get(Location);
 //        if (a_Connection_HashSet == null) {
-//            if (_Point2D.equals(_Heading_Point2D)) {
-//                _Movement = null;
+//            if (Location.equals(HeadingLocation)) {
+//                GENESIS_Movement = null;
 //            }
 //        } else {
 //            Connection a_Connection = (Connection) a_Connection_HashSet.iterator().next();
-//            _Heading_Point2D = a_Connection._Point2D;
+//            HeadingLocation = a_Connection.Location;
 //        }
 //    }
-    public abstract int get_Gender(boolean handleOutOfMemoryError);
+    public abstract int getGender(boolean handleOutOfMemoryError);
 
-    protected abstract int get_Gender();
+    protected abstract int getGender();
 
     /**
-     * @return Copy of _Age.
+     * @return Copy of Age.
      *
      */
-    public GENESIS_Age getAge() {
-        return new GENESIS_Age(this._Age, ge);
+    public GENESIS_Age getCopyOfAge() {
+        return new GENESIS_Age(ge, Age);
     }
 
     /**
-     * @return _Age.
+     * @return Age.
      *
      */
-    public GENESIS_Age get_Age() {
-        return this._Age;
+    public GENESIS_Age getAge() {
+        return this.Age;
     }
 
     /**
@@ -390,20 +388,20 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     public String toString() {
         String result = "Person: ";
         result += getType();
-        result += ", Agent_ID " + getAgentID(true);        
+        result += ", Agent_ID " + getAgentID(true);
         //_String += "Age " + get_AgeInYears_int(_GENESIS_Environment._Calendar);
-        result += ", Age in years " + getAge().getAgeInYears(ge._Time);
+        result += ", Age in years " + getCopyOfAge().getAgeInYears(ge.Time);
         //_String += "Age " + get_Age_double();
         if (_Birth_Calendar == null) {
-            result += ", Year of Birth " + getAge().getTimeOfBirth().getYear();
-            result += ", Day of Year of Birth " + getAge().getTimeOfBirth().getDayOfYear();
+            result += ", Year of Birth " + getCopyOfAge().getTimeOfBirth().getYear();
+            result += ", Day of Year of Birth " + getCopyOfAge().getTimeOfBirth().getDayOfYear();
         } else {
             result += ", Year of Birth " + _Birth_Calendar.get(Calendar.YEAR);
             result += ", Day of Year of Birth " + _Birth_Calendar.get(Calendar.DAY_OF_YEAR);
         }
-        if (_Death_Time != null) {
-            result += ", Year of Death " + _Death_Time.getYear();
-            result += ", Day of Year of Death " + _Death_Time.getDayOfYear();
+        if (TimeOfDeath != null) {
+            result += ", Year of Death " + TimeOfDeath.getYear();
+            result += ", Day of Year of Death " + TimeOfDeath.getDayOfYear();
         }
         result += ", subregionID " + getSubregionID();
         if (_Work_Point2D != null) {
@@ -425,13 +423,13 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
 
     /**
      * @return true if _Birth_Time.getDayOfYear() ==
- _GENESIS_Environment._Time.getDayOfYear() &TODO deal with leap years.
- _GENESIS_Environment._Time._DayOfYear
+     * _GENESIS_Environment.Time.getDayOfYear() &TODO deal with leap years.
+     * _GENESIS_Environment.Time._DayOfYear
      */
     public boolean getIsBirthday() {
         boolean result = false;
-        Integer annualBirthday = getAge().getTimeOfBirth().getDayOfYear();
-        if (annualBirthday.compareTo(ge._Time.getDayOfYear()) == 0) {
+        Integer annualBirthday = getCopyOfAge().getTimeOfBirth().getDayOfYear();
+        if (annualBirthday.compareTo(ge.Time.getDayOfYear()) == 0) {
             result = true;
         }
         return result;
@@ -462,12 +460,12 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
             boolean debug = true;
         }
         if (a_Work_Time[0].getSecondOfDay() < a_Work_Time[1].getSecondOfDay()) {
-            boolean isWorkTime = ge._Time.getSecondOfDay() > a_Work_Time[0].getSecondOfDay()
-                    && ge._Time.getSecondOfDay() < a_Work_Time[1].getSecondOfDay();
+            boolean isWorkTime = ge.Time.getSecondOfDay() > a_Work_Time[0].getSecondOfDay()
+                    && ge.Time.getSecondOfDay() < a_Work_Time[1].getSecondOfDay();
             return isWorkTime;
         } else {
-            boolean isWorkTime = ge._Time.getSecondOfDay() > a_Work_Time[0].getSecondOfDay()
-                    || ge._Time.getSecondOfDay() < a_Work_Time[1].getSecondOfDay();
+            boolean isWorkTime = ge.Time.getSecondOfDay() > a_Work_Time[0].getSecondOfDay()
+                    || ge.Time.getSecondOfDay() < a_Work_Time[1].getSecondOfDay();
             return isWorkTime;
         }
     }
@@ -477,21 +475,21 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      * (from home)...
      */
     public boolean getIsTimeToSetOfToWork() {
-        return ge._Time.getSecondOfDay() > _SetOffToWork_Time.getSecondOfDay();
+        return ge.Time.getSecondOfDay() > _SetOffToWork_Time.getSecondOfDay();
     }
 
     /**
      * Convenience method for getting a next connection on a route. This
      * currently does not distinguish between Connection Type
      *
-     * @return A next Connection on the _networkRoute_VectorNetwork2D if there
-     * is one and null otherwise.
+     * @return A next Connection on the Route if there is one and null
+     * otherwise.
      */
     public Connection getNextConnectionOnRoute() {
-        if (_Movement != null) {
-            if (_Movement._networkRoute_VectorNetwork2D != null) {
-                if (_Movement._networkRoute_VectorNetwork2D._Connection_HashMap != null) {
-                    Object value = _Movement._networkRoute_VectorNetwork2D._Connection_HashMap.get(_Point2D);
+        if (Movement != null) {
+            if (Movement.Route != null) {
+                if (Movement.Route.Connections != null) {
+                    Object value = Movement.Route.Connections.get(Location);
                     if (value != null) {
                         HashSet<Connection> nextConnections = (HashSet<Connection>) value;
                         if (!nextConnections.isEmpty()) {
@@ -505,11 +503,13 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     }
 
     public void move(
+            GENESIS_Grids grids,
+            BigDecimal halfCellsize,
             BigDecimal tollerance,
             boolean handleOutOfMemoryError) {
         try {
-            move(tollerance);
-            if (get_Gender(handleOutOfMemoryError) == 0) {
+            move(grids, halfCellsize, tollerance);
+            if (getGender(handleOutOfMemoryError) == 0) {
                 GENESIS_Female a_Female = (GENESIS_Female) this;
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection = a_Female.get_FemaleCollection(
                         handleOutOfMemoryError);
@@ -524,10 +524,10 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         a_GENESIS_MaleCollection,
                         handleOutOfMemoryError);
             }
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
-                if (get_Gender(handleOutOfMemoryError) == 0) {
+                if (getGender(handleOutOfMemoryError) == 0) {
                     GENESIS_Female a_Female = (GENESIS_Female) this;
                     GENESIS_FemaleCollection a_GENESIS_FemaleCollection = a_Female.get_FemaleCollection(
                             handleOutOfMemoryError);
@@ -548,17 +548,16 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     ge.initMemoryReserve(a_GENESIS_MaleCollection,
                             ge.HandleOutOfMemoryErrorFalse);
                 }
-                move( tollerance,
-                        handleOutOfMemoryError);
+                move(grids, halfCellsize, tollerance, handleOutOfMemoryError);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     /**
      * @param tollerance
-     * @return 
+     * @return
      * @TODO Speeds
      * @TODO Change distance and speeds to be BigDecimals
      * @TODO Unsafe accounting if out of memory error encountered... Method to
@@ -567,58 +566,61 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      * due and at home location _Speed set to 0. If not due and not at home
      * location _Speed set to _SpeedDefault.
      */
-    protected BigDecimal move(BigDecimal tollerance) {
+    protected BigDecimal move(
+            GENESIS_Grids grids,
+            BigDecimal halfCellsize,
+            BigDecimal tollerance) {
         boolean handleOutOfMemoryError = false;
         if (getIsWorkTime()) {
-            if (_Point2D.equals(_Work_Point2D)) {
+            if (Location.equals(_Work_Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(_Point2D._y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(_Point2D._x, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
                         _SpeedDefault_BigDecimal.doubleValue(),
                         ge.HandleOutOfMemoryError);
                 _Speed_BigDecimal = BigDecimal.ZERO;
                 return BigDecimal.ZERO;
             } else {
                 _Speed_BigDecimal = _SpeedDefault_BigDecimal;
-                if (_Movement == null) {
+                if (Movement == null) {
                     if (_Work_Point2D == null) {
                         int debug = 1;
                     }
-                    _Heading_Point2D = _Work_Point2D;
-                    setMovement();
+                    HeadingLocation = _Work_Point2D;
+                    setMovement(grids);
                 } else {
-                    if (_Point2D.equals(_Heading_Point2D)) {
-                        if (!_Movement._Destination_Point2D.equals(_Work_Point2D)) {
-                            _Heading_Point2D = _Work_Point2D;
-                            setMovement();
+                    if (Location.equals(HeadingLocation)) {
+                        if (!Movement._Destination_Point2D.equals(_Work_Point2D)) {
+                            HeadingLocation = _Work_Point2D;
+                            setMovement(grids);
                         }
                     }
                 }
-                return move(_Speed_BigDecimal, tollerance, handleOutOfMemoryError);
+                return move(grids, halfCellsize, _Speed_BigDecimal, tollerance, handleOutOfMemoryError);
             }
         } else {
-            if (_Point2D.equals(_Household._Point2D)) {
+            if (Location.equals(_Household._Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(_Point2D._y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(_Point2D._x, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
                         _SpeedDefault_BigDecimal.doubleValue(),
                         ge.HandleOutOfMemoryError);
                 _Speed_BigDecimal = BigDecimal.ZERO;
                 return BigDecimal.ZERO;
             } else {
                 _Speed_BigDecimal = _SpeedDefault_BigDecimal;
-                if (_Movement == null) {
-                    _Heading_Point2D = _Household._Point2D;
-                    setMovement();
+                if (Movement == null) {
+                    HeadingLocation = _Household._Point2D;
+                    setMovement(grids);
                 } else {
-                    if (_Point2D.equals(_Heading_Point2D)) {
-                        if (!_Movement._Destination_Point2D.equals(_Household._Point2D)) {
-                            _Heading_Point2D = _Household._Point2D;
-                            setMovement();
+                    if (Location.equals(HeadingLocation)) {
+                        if (!Movement._Destination_Point2D.equals(_Household._Point2D)) {
+                            HeadingLocation = _Household._Point2D;
+                            setMovement(grids);
                         }
                     }
                 }
-                return move(_Speed_BigDecimal, tollerance, handleOutOfMemoryError);
+                return move(grids, halfCellsize, _Speed_BigDecimal, tollerance, handleOutOfMemoryError);
             }
         }
     }
@@ -634,12 +636,13 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
      * @return
      */
     public BigDecimal move(
+            GENESIS_Grids grids,
+            BigDecimal halfCellsize,
             BigDecimal distance_BigDecimal,
             BigDecimal tollerance,
             boolean handleOutOfMemoryError) {
         BigDecimal result = BigDecimal.ZERO;
         BigDecimal tdistance_BigDecimal = new BigDecimal(distance_BigDecimal.toString());
-        BigDecimal halfCellsize = ge._network_Grid2DSquareCellDouble.getDimensions(handleOutOfMemoryError).getHalfCellsize();
         boolean movementDone = false;
         long networkRow;
         long networkCol;
@@ -647,34 +650,34 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         long reportingCol;
         BigDecimal distanceToHeading_BigDecimal;
         while (tdistance_BigDecimal.compareTo(BigDecimal.ZERO) == 1 && !movementDone) {
-            networkRow = ge._network_Grid2DSquareCellDouble.getCellRowIndex(_Point2D._y,
+            networkRow = ge._network_Grid2DSquareCellDouble.getCellRowIndex(Location.Y,
                     ge.HandleOutOfMemoryError);
-            networkCol = ge._network_Grid2DSquareCellDouble.getCellColIndex(_Point2D._x,
+            networkCol = ge._network_Grid2DSquareCellDouble.getCellColIndex(Location.X,
                     ge.HandleOutOfMemoryError);
-            reportingRow = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(_Point2D._y,
+            reportingRow = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y,
                     ge.HandleOutOfMemoryError);
-            reportingCol = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(_Point2D._x,
+            reportingCol = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X,
                     ge.HandleOutOfMemoryError);
             /*
              * If distanceToHeading is less than tdistance_BigDecimal, then get
              * point that will be moved to and use this as basis for
              * intersection.
              */
-            distanceToHeading_BigDecimal = _Point2D.getDistance(_Heading_Point2D,
+            distanceToHeading_BigDecimal = Location.getDistance(HeadingLocation,
                     ge._DecimalPlacePrecisionForNetworkCalculations);
             Vector_LineSegment2D a_LineSegment2D;
             if (distanceToHeading_BigDecimal.compareTo(tdistance_BigDecimal) == 1) {
-                Vector_Point2D new_Point2D = Movement.getPoint2D(_Point2D,
-                        _Heading_Point2D,
+                Vector_Point2D new_Point2D = Movement.getPoint2D(Location,
+                        HeadingLocation,
                         result,
                         ge._DecimalPlacePrecisionForNetworkCalculations);
                 a_LineSegment2D = new Vector_LineSegment2D(
-                        _Point2D,
+                        Location,
                         new_Point2D);
             } else {
                 a_LineSegment2D = new Vector_LineSegment2D(
-                        _Point2D,
-                        _Heading_Point2D);
+                        Location,
+                        HeadingLocation);
             }
             /**
              * +---+---+---+ | 7 | 8 | 1 | +---+---+---+ | 6 | 0 | 2 |
@@ -686,14 +689,14 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     networkCol,
                     ge.HandleOutOfMemoryError);
             BigDecimal xmin;
-        BigDecimal ymin;
-        BigDecimal xmax;
-        BigDecimal ymax;
-        xmin = bounds.getXMin();
-        xmax = bounds.getXMax();
-        ymin = bounds.getYMin();
-        ymax = bounds.getYMax();
-            int cellBoundaryIntersect = StaticGrids.getCellBoundaryIntersect(
+            BigDecimal ymin;
+            BigDecimal xmax;
+            BigDecimal ymax;
+            xmin = bounds.getXMin();
+            xmax = bounds.getXMax();
+            ymin = bounds.getYMin();
+            ymax = bounds.getYMax();
+            int cellBoundaryIntersect = grids.getCellBoundaryIntersect(
                     a_LineSegment2D,
                     xmin, ymin, xmax, ymax,
                     true,
@@ -709,26 +712,24 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                  * centroid b) Not.
                  */
                 if (distanceToHeading_BigDecimal.compareTo(tdistance_BigDecimal) == -1) {
-                    if (_Point2D.equals(_Heading_Point2D)) {
-                        if (_Point2D == null) {
+                    if (Location.equals(HeadingLocation)) {
+                        if (Location == null) {
                             int debug = 1;
                         }
                         /*
                          * Case 2a)
                          */
-                        _Network2D.addToNetwork(
-                                _Point2D,
-                                _Previous_Point2D);
-                        _Network2D.addToNetwork(
-                                _Previous_Point2D,
-                                _Point2D);
-                        _Previous_Point2D = _Point2D;
-                        if (_Movement == null) {
-                            setMovement();
+                        _Network2D.addToNetwork(Location,
+                                PreviousPoint2D);
+                        _Network2D.addToNetwork(PreviousPoint2D,
+                                Location);
+                        PreviousPoint2D = Location;
+                        if (Movement == null) {
+                            setMovement(grids);
                         }
-                        Vector_Point2D destination_Point2D = _Movement._Destination_Point2D;
+                        Vector_Point2D destination_Point2D = Movement._Destination_Point2D;
                         if (destination_Point2D != null) {
-                            if (_Point2D.equals(_Movement._Destination_Point2D)) {
+                            if (Location.equals(Movement._Destination_Point2D)) {
                                 /*
                                  * a_Person is at _Destination_Point2D
                                  */
@@ -737,10 +738,12 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                                 _Speed_BigDecimal = BigDecimal.ZERO;
                             } else {
                                 set_Heading_Point2D(
+                                        grids,
                                         tdistance_BigDecimal);
                             }
                         } else {
                             set_Heading_Point2D(
+                                    grids,
                                     tdistance_BigDecimal);
                         }
                     } else {
@@ -755,7 +758,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                                 reportingCol,
                                 distanceToHeading_BigDecimal.doubleValue(),
                                 ge.HandleOutOfMemoryError);
-                        _Point2D = _Heading_Point2D;
+                        Location = HeadingLocation;
                         //result = distanceToHeading_BigDecimal;
                         tdistance_BigDecimal = tdistance_BigDecimal.subtract(distanceToHeading_BigDecimal);
                         //distance -= distanceToHeading;
@@ -764,8 +767,8 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     /*
                      * Case 1b) 2b) Move a_Person towards heading
                      */
-                    _Point2D = Movement.getPoint2D(_Point2D,
-                            _Heading_Point2D,
+                    Location = Movement.getPoint2D(Location,
+                            HeadingLocation,
                             tdistance_BigDecimal,
                             ge._DecimalPlacePrecisionForNetworkCalculations);
                     ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(reportingRow,
@@ -797,7 +800,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         a_Point2D = new Vector_Point2D(
                                 ge.ve,
                                 xmax,
-                                _Point2D._y);
+                                Location.Y);
                         networkCol++;
                         break;
                     case 3:
@@ -811,7 +814,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     case 4:
                         a_Point2D = new Vector_Point2D(
                                 ge.ve,
-                                _Point2D._x,
+                                Location.X,
                                 ymin);
                         networkRow--;
                         break;
@@ -827,7 +830,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         a_Point2D = new Vector_Point2D(
                                 ge.ve,
                                 xmin,
-                                _Point2D._y);
+                                Location.Y);
                         networkCol--;
                         break;
                     case 7:
@@ -841,12 +844,12 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     default:
                         a_Point2D = new Vector_Point2D(
                                 ge.ve,
-                                _Point2D._x,
+                                Location.X,
                                 ymax);
                         networkRow++;
                         break;
                 }
-                BigDecimal distanceTravelledInCell_BigDecimal = _Point2D.getDistance(a_Point2D,
+                BigDecimal distanceTravelledInCell_BigDecimal = Location.getDistance(a_Point2D,
                         ge._DecimalPlacePrecisionForNetworkCalculations);
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
                         //reportingRow,
@@ -860,7 +863,7 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         //distanceToHeading_BigDecimal.doubleValue(),
                         distanceTravelledInCell_BigDecimal.doubleValue(),
                         ge.HandleOutOfMemoryError);
-                _Point2D = a_Point2D;
+                Location = a_Point2D;
 
                 BigDecimal next_x = ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(networkCol, ge.HandleOutOfMemoryError);
                 BigDecimal next_y = ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, ge.HandleOutOfMemoryError);
@@ -869,11 +872,11 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         ge.HandleOutOfMemoryError);
                 if (next_CellID.compareTo(_reporting_CellID) != 0) {
                     Vector_Point2D a_VectorPoint2D = new Vector_Point2D(
-                                ge.ve,
+                            ge.ve,
                             ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(_reporting_CellID, ge.HandleOutOfMemoryError),
                             ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(_reporting_CellID, ge.HandleOutOfMemoryError));
                     Vector_Point2D b_VectorPoint2D = new Vector_Point2D(
-                                ge.ve,
+                            ge.ve,
                             ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(next_CellID, ge.HandleOutOfMemoryError),
                             ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(next_CellID, ge.HandleOutOfMemoryError));
                     _reporting_VectorNetwork2D.addToNetwork(
@@ -886,17 +889,16 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
 //                Vector_Point2D newHeading_Point2D = new Vector_Point2D(
 //                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(col, _GENESIS_Environment.HandleOutOfMemoryError),
 //                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, _GENESIS_Environment.HandleOutOfMemoryError));
-//                Movement nextPartMovement = new Movement(_GENESIS_Environment, _Point2D, newHeading_Point2D);
-//                Movement totalMovement = this._Movement;
-//                _Movement = nextPartMovement;
+//                GENESIS_Movement nextPartMovement = new GENESIS_Movement(_GENESIS_Environment, Location, newHeading_Point2D);
+//                GENESIS_Movement totalMovement = this.GENESIS_Movement;
+//                GENESIS_Movement = nextPartMovement;
 //                distance -= move1(
 //                        _AggregatePopulationDensity_Grid2DSquareCellDouble,
 //                        a_DecimalPlacePrecision,
 //                        toRoundToX_BigDecimal,
 //                        toRoundToY_BigDecimal,
 //                        distance);
-//                _Movement = totalMovement;
-
+//                GENESIS_Movement = totalMovement;
             }
         }
         result = tdistance_BigDecimal;
@@ -904,34 +906,37 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     }
 
     /**
-     * Sets a_Person._Heading_Point2D using next connection on route. If no
+     * Sets a_Person.HeadingLocation using next connection on route. If no
      * further connection on route set new movement.
+     *
      * @param distance0_BigDecimal
      */
     public void set_Heading_Point2D(
+            GENESIS_Grids grids,
             BigDecimal distance0_BigDecimal) {
         Connection nextConnection = getNextConnectionOnRoute();
         if (nextConnection == null) {
-            _Heading_Point2D = StaticGrids.getRandomCellCentroid_Point2D(ge._network_Grid2DSquareCellDouble,
+            HeadingLocation = grids.getRandomCellCentroid_Point2D(
+                    ge._network_Grid2DSquareCellDouble,
                     ge._AbstractModel.get_Random(0),
-                    _Point2D,
+                    Location,
                     distance0_BigDecimal,
                     ge._DecimalPlacePrecisionForNetwork,
                     ge._ToRoundToX_BigDecimal,
                     ge._ToRoundToY_BigDecimal,
                     ge.HandleOutOfMemoryError);
-            setMovement();
+            setMovement(grids);
         } else {
-            _Heading_Point2D = nextConnection._Point2D;
+            HeadingLocation = nextConnection.Location;
         }
     }
 
     public boolean isAlive(GENESIS_Time a_Time) {
-        if (a_Time.compareTo(getAge().getTimeOfBirth()) != -1) {
-            if (_Death_Time == null) {
+        if (a_Time.compareTo(getCopyOfAge().getTimeOfBirth()) != -1) {
+            if (TimeOfDeath == null) {
                 return true;
             } else {
-                if (a_Time.compareTo(_Death_Time) != 1) {
+                if (a_Time.compareTo(TimeOfDeath) != 1) {
                     return true;
                 }
             }
@@ -947,6 +952,6 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
     protected static void log(
             Level level,
             String message) {
-        Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+        Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
 }

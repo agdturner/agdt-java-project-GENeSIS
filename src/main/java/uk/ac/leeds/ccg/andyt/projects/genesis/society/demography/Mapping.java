@@ -62,10 +62,10 @@ public class Mapping {
         _Iterator = _Females.iterator();
         while (_Iterator.hasNext()) {
             _Female = (GENESIS_Female) _Iterator.next();
-            if (_Female._Death_Time == null) {
+            if (_Female.TimeOfDeath == null) {
                 _Denisty_Map_Population.setCell(
-                        _Denisty_Map_Population.getCellRowIndex(_Female._Point2D._y, _HandleOutOfMemoryError),
-                        _Denisty_Map_Population.getCellColIndex(_Female._Point2D._x, _HandleOutOfMemoryError),
+                        _Denisty_Map_Population.getCellRowIndex(_Female.Location.Y, _HandleOutOfMemoryError),
+                        _Denisty_Map_Population.getCellColIndex(_Female.Location.X, _HandleOutOfMemoryError),
                         1.0d,
                         _HandleOutOfMemoryError);
             }
@@ -75,10 +75,10 @@ public class Mapping {
         _Iterator = _Males.iterator();
         while (_Iterator.hasNext()) {
             _Male = (GENESIS_Male) _Iterator.next();
-            if (_Male._Death_Time == null) {
+            if (_Male.TimeOfDeath == null) {
                 _Denisty_Map_Population.setCell(
-                        _Denisty_Map_Population.getCellRowIndex(_Male._Point2D._y, _HandleOutOfMemoryError),
-                        _Denisty_Map_Population.getCellColIndex(_Male._Point2D._x, _HandleOutOfMemoryError),
+                        _Denisty_Map_Population.getCellRowIndex(_Male.Location.Y, _HandleOutOfMemoryError),
+                        _Denisty_Map_Population.getCellColIndex(_Male.Location.X, _HandleOutOfMemoryError),
                         1.0d,
                         _HandleOutOfMemoryError);
             }
@@ -94,6 +94,7 @@ public class Mapping {
      * Modifies _Population_Location_Composite_Map.
      *
      * @param _Population_Location_Composite_Map
+     * @param _Population_Alive_Female
      * @param _HandleOutOfMemoryError
      * @param _Population_Alive_Male
      * @param _CompositionLatency
@@ -134,12 +135,12 @@ public class Mapping {
         while (_Iterator.hasNext()) {
             _Person = (GENESIS_Person) _Iterator.next();
             //if (!_Person._Location.equals(_Person._Location_Heading) && _Person._Location_Heading != null) {
-            if (!_Person._Point2D.equals(_Person.get_Previous_Point2D())) {
+            if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
                 _Population_Location_Composite_Map.addToCell(
                         _Population_Location_Composite_Map.getCellRowIndex(
-                        _Person._Point2D._y, _HandleOutOfMemoryError),
+                        _Person.Location.Y, _HandleOutOfMemoryError),
                         _Population_Location_Composite_Map.getCellColIndex(
-                        _Person._Point2D._x, _HandleOutOfMemoryError),
+                        _Person.Location.X, _HandleOutOfMemoryError),
                         1.0d,
                         _HandleOutOfMemoryError);
             }
@@ -148,12 +149,12 @@ public class Mapping {
         while (_Iterator.hasNext()) {
             _Person = (GENESIS_Person) _Iterator.next();
             //if (!_Person._Location.equals(_Person._Location_Heading) && _Person._Location_Heading != null) {
-            if (!_Person._Point2D.equals(_Person.get_Previous_Point2D())) {
+            if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
                 _Population_Location_Composite_Map.addToCell(
                         _Population_Location_Composite_Map.getCellRowIndex(
-                        _Person._Point2D._y, _HandleOutOfMemoryError),
+                        _Person.Location.Y, _HandleOutOfMemoryError),
                         _Population_Location_Composite_Map.getCellColIndex(
-                        _Person._Point2D._x, _HandleOutOfMemoryError),
+                        _Person.Location.X, _HandleOutOfMemoryError),
                         1.0d,
                         _HandleOutOfMemoryError);
 //                _Population_Location_Composite_Map.setCell(

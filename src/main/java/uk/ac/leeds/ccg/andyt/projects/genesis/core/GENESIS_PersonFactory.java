@@ -2,7 +2,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.core;
 
 import java.io.Serializable;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
-import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.Household;
+import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.GENESIS_Household;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 
 /**
@@ -47,7 +47,7 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
      */
     public GENESIS_Female createFemale(
             GENESIS_Age age,
-            Household a_Household,
+            GENESIS_Household a_Household,
             Vector_Point2D a_VectorPoint2D,
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
             boolean handleOutOfMemoryError) {
@@ -100,7 +100,7 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
      */
     public GENESIS_Female createFemale(
             GENESIS_Age age,
-            Household a_Household,
+            GENESIS_Household a_Household,
             Vector_Point2D a_VectorPoint2D,
             boolean handleOutOfMemoryError) {
         try {
@@ -144,7 +144,7 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
 
     public GENESIS_Male createMale(
             GENESIS_Age age,
-            Household a_Household,
+            GENESIS_Household a_Household,
             Vector_Point2D a_VectorPoint2D,
             boolean handleOutOfMemoryError) {
         try {
@@ -188,7 +188,7 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
 
     public GENESIS_Male createMale(
             GENESIS_Age age,
-            Household a_Household,
+            GENESIS_Household a_Household,
             Vector_Point2D a_VectorPoint2D,
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
             boolean handleOutOfMemoryError) {

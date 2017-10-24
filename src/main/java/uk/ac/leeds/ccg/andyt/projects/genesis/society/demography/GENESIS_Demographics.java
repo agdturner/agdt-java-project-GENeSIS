@@ -332,7 +332,7 @@ public class GENESIS_Demographics implements Serializable {
         File demographicsDirectory = new File(
                 _GENESIS_Environment._AbstractModel._ResultDataDirectory_File,
                 "Demographics");
-        long range = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory;
+        long range = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(true).MaximumNumberOfObjectsPerDirectory;
         try {
             Generic_StaticIO.initialiseArchive(
                     demographicsDirectory,
@@ -803,7 +803,7 @@ public class GENESIS_Demographics implements Serializable {
 //                demographicsDirectoryParent_File,
 //                theDemographicsDirectoryID,
 //                maxDemographicsDirectoryID,
-//                _GENESIS_Environment.AgentEnvironment.getAgentCollectionManager(true)._MaximumNumberOfObjectsPerDirectory),
+//                _GENESIS_Environment.AgentEnvironment.getAgentCollectionManager(true).MaximumNumberOfObjectsPerDirectory),
 //                "" + theDemographicsDirectoryID);
 //        demographicsDirectory_File = new File(
 //                demographicsDirectory_File,
@@ -860,7 +860,7 @@ public class GENESIS_Demographics implements Serializable {
          * Output Theoretically Expected Plots
          */
         // Theoretically alive population
-        long year = _GENESIS_Environment._Time.getYear();
+        long year = _GENESIS_Environment.Time.getYear();
         title = regionID + " Population _Theoretically Expected Living_ Year " + year;
         xAxisLabel = "Population (Number of Years)";
         yAxisLabel = "Age";
@@ -1112,14 +1112,14 @@ public class GENESIS_Demographics implements Serializable {
                 decimalPlacePrecisionForCalculations,
                 decimalPlacePrecisionForDisplay,
                 a_RoundingMode);
-//        title = "Fertility Rate Theoretical Comparison Year " + _GENESIS_Environment._Time._Year;
+//        title = "Fertility Rate Theoretical Comparison Year " + _GENESIS_Environment.Time._Year;
 //        CompareProbabilities.output(
 //                femaleTheoreticalFertility,
 //                observedAnnualFertility,
 //                femaleAgeInYearsCountOfTwins_TreeMap,
 //                femaleAgeInYearsCountOfTriplets_TreeMap,
 //                title,
-//                _GENESIS_Environment._Time._Year,
+//                _GENESIS_Environment.Time._Year,
 //                demographicsDirectory_File);
         // Output comparison statistics
         return result;
@@ -1220,7 +1220,7 @@ public class GENESIS_Demographics implements Serializable {
         String title;
         String xAxisLabel;
         String yAxisLabel = "Age";
-        long year = _GENESIS_Environment._Time.getYear();
+        long year = _GENESIS_Environment.Time.getYear();
         // All parents
         // -----------
         GENESIS_Population populationOfParentsOfNewborns = new GENESIS_Population(_GENESIS_Environment);
@@ -1412,8 +1412,8 @@ public class GENESIS_Demographics implements Serializable {
                 annual_Fertility);
 //        a_XMLConverter.saveFertilityToXMLFile(
 //                new File(demographicsDirectory_File,
-//                "Fertility_" + _GENESIS_Environment._Time._Year + ".xml"),
-//                _GENESIS_Environment._Time._Year,
+//                "Fertility_" + _GENESIS_Environment.Time._Year + ".xml"),
+//                _GENESIS_Environment.Time._Year,
 //                annual_Fertility);
         boolean drawOriginLinesOnPlot = false;
         xAxisLabel = "Annual Live Birth Fertility Rate Input (X)";
@@ -1726,7 +1726,7 @@ public class GENESIS_Demographics implements Serializable {
 //        annual_Mortality.getGenderedAgeBoundRates().getMale().addAll(
 //                GENESIS_Collections.deepCopyTo_ArrayList_AgeBoundRate(
 //                annual_Mortality._MaleAnnualMortalityAgeBoundRate_TreeMap));
-        long year = _GENESIS_Environment._Time.getYear();
+        long year = _GENESIS_Environment.Time.getYear();
         String xAxisLabel;
         String yAxisLabel;
         boolean drawOriginLinesOnPlot = false;
@@ -1930,7 +1930,7 @@ public class GENESIS_Demographics implements Serializable {
         // ------------------
         // Output populations
         // ------------------
-        long year = _GENESIS_Environment._Time.getYear();
+        long year = _GENESIS_Environment.Time.getYear();
 
         // Early pregnancy loss
         GENESIS_Population earlyPregnancyLoss_Population = new GENESIS_Population(

@@ -735,7 +735,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             GENESIS_Environment _GENESIS_Environment =
                     new GENESIS_Environment(directory);
             _GENESIS_Environment.Directory = directory;
-            _GENESIS_Environment._Time = new GENESIS_Time(CommonFactory.newTime(2001L));
+            _GENESIS_Environment.Time = new GENESIS_Time(CommonFactory.newTime(2001L));
             GENESIS_Migration instance = new GENESIS_Migration(
                     _GENESIS_Environment);
             //instance.run();
@@ -2312,7 +2312,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                     decimalPlaces,
                     BigDecimal.ZERO,
                     BigDecimal.ONE);
-            Long ageInYears = female.get_Age().getAgeInYears(ge._Time);
+            Long ageInYears = female.getAge().getAgeInYears(ge.Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             Iterator<String> ite;
             ite = destinationMap.keySet().iterator();
@@ -2358,7 +2358,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             Random random) {
         try {
             String result;
-            Long ageInYears = female.get_Age().getAgeInYears(ge._Time);
+            Long ageInYears = female.getAge().getAgeInYears(ge.Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             result = getInternalMigrationSubregionDestinationFromStudyRegionFemale(
                     ageBound,
@@ -2445,7 +2445,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             Random random) {
         try {
             String result;
-            Long ageInYears = male.get_Age().getAgeInYears(ge._Time);
+            Long ageInYears = male.getAge().getAgeInYears(ge.Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             result = getInternalMigrationSubregionDestinationFromStudyRegionMale(
                     ageBound,
@@ -2612,7 +2612,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                     decimalPlaces,
                     BigDecimal.ZERO,
                     BigDecimal.ONE);
-            Long ageInYears = male.get_Age().getAgeInYears(ge._Time);
+            Long ageInYears = male.getAge().getAgeInYears(ge.Time);
             GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
             Iterator<String> ite;
             ite = destinationMap.keySet().iterator();

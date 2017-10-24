@@ -136,7 +136,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
         String sourceMethod = "GENESIS_Fertility()";
         getLogger().entering(sourceClass, sourceMethod);
         FertilityFactory.init();
-        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
+        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.DefaultLoggerName));
     }
 
     public GENESIS_Fertility(GENESIS_Fertility a_Fertility) {
@@ -484,10 +484,10 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             File fertilityRate_File) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         //a_GENESIS_Environment.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         ge.Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         String[] a_Filename_String_prefixSuffix = fertilityRate_File.getName().split("\\.");
         GENESIS_Mortality a_Mortality = new GENESIS_Mortality(
                 ge,
@@ -562,7 +562,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 
     public BigDecimal getTwinProbability_BigDecimal(
             GENESIS_Female aGENESIS_Female) {
-        long ageInYears = aGENESIS_Female.getAge().getAgeInYears();
+        long ageInYears = aGENESIS_Female.getCopyOfAge().getAgeInYears();
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
         return getTwinProbability_BigDecimal(ageBound);
     }
@@ -578,7 +578,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 
     public BigDecimal getTripletProbability_BigDecimal(
             GENESIS_Female aGENESIS_Female) {
-        long ageInYears = aGENESIS_Female.getAge().getAgeInYears();
+        long ageInYears = aGENESIS_Female.getCopyOfAge().getAgeInYears();
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageInYears);
         return getTripletProbability_BigDecimal(ageBound);
     }
@@ -645,9 +645,9 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //    }
 //    public BigDecimal getDailyPregnancyRateProbabilty(GENESIS_Female a_Female) {
 //        // Calculate age when a baby would be due at full term
-//        GENESIS_Time a_Time = new GENESIS_Time(_GENESIS_Environment._Time);
+//        GENESIS_Time a_Time = new GENESIS_Time(_GENESIS_Environment.Time);
 //        a_Time.addDays(GENESIS_Female.NormalGestationPeriod_int);
-//        long ageAtTimeDue = a_Female.getAge().getAgeInYears();
+//        long ageAtTimeDue = a_Female.getCopyOfAge().getAgeInYears();
 //        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(ageAtTimeDue);
 //        return getDailyPregnancyRateProbabilty(ageBound);
 //    }
@@ -830,7 +830,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //    }
     public BigDecimal getAnnualLiveBirthFertility(
             GENESIS_Female a_Female) {
-        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
+        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getCopyOfAge().getAgeInYears());
         return getAnnualLiveBirthFertility(ageBound);
     }
 
@@ -867,8 +867,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
     public BigDecimal getDailyPregnancyRate(
             GENESIS_Female a_Female) {
         // If age at birth would be greater than we allow then return zero!
-        GENESIS_Age age = a_Female.getAge();
-        Time time = age.getAge_Time(ge._Time);
+        GENESIS_Age age = a_Female.getCopyOfAge();
+        Time time = age.getAge_Time(ge.Time);
         GENESIS_Time age_Time = new GENESIS_Time(time);
         age_Time.addDays(GENESIS_Female.NormalGestationPeriod_int);
         long ageInYearsAtDueDate = age_Time.getYear();
@@ -885,7 +885,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 
     public BigDecimal getTwinProbability(
             GENESIS_Female a_Female) {
-        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
+        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getCopyOfAge().getAgeInYears());
         return getTwinProbability(ageBound);
     }
 
@@ -898,7 +898,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 
     public BigDecimal getTripletProbability(
             GENESIS_Female a_Female) {
-        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
+        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getCopyOfAge().getAgeInYears());
         return getTripletProbability(ageBound);
     }
 

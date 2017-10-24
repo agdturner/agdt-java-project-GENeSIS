@@ -401,9 +401,9 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
             GENESIS_Mortality mortality) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         ge.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         ge.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         //a_GENESIS_Environment.Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         String[] a_Filename_String_prefixSuffix = miscarriageRate_File.getName().split("\\.");

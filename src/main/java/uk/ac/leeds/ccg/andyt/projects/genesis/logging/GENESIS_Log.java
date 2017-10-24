@@ -18,7 +18,7 @@ public final class GENESIS_Log extends Generic_Log {
     private static final String sourceClass = GENESIS_Log.class.getName();
     //private static final Logger logger = Logger.getLogger(sourcePackage);
     public static final Level GENESIS_DefaultLogLevel = Level.ALL;
-    public static final String GENESIS_DefaultLoggerName = sourcePackage + ".GENESIS_Log";
+    public static final String DefaultLoggerName = sourcePackage + ".GENESIS_Log";
 //    public GENESIS_Log(){
 //    }
 //
@@ -39,7 +39,7 @@ public final class GENESIS_Log extends Generic_Log {
 //            Level level,
 //            File directory,
 //            String filename) {
-//        super(level, directory, GENESIS_DefaultLoggerName, filename);
+//        super(level, directory, DefaultLoggerName, filename);
 //        this._GENESIS_Environment = a_GENESIS_Environment;
 ////        initLog(
 ////                directory,

@@ -67,7 +67,7 @@ public class CompareProbabilities {
 //        File output_Directory = new File(
 //                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/");
 //        _GENESIS_Environment.Directory = Directory;
-//        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(1993, 0);
 //        _GENESIS_Environment._DecimalPlacePrecisionForCalculations = 10;
 //        String fileSeparator = System.getProperty("file.separator");
 //        /**
@@ -127,7 +127,7 @@ public class CompareProbabilities {
 //        File output_Directory = new File(
 //                Directory + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/");
 //        _GENESIS_Environment.Directory = Directory;
-//        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(1993, 0);
 //        XMLConverter a_XMLConverter = new XMLConverter(_GENESIS_Environment);
 //        String fileSeparator = System.getProperty("file.separator");
 //        /**
@@ -200,7 +200,7 @@ public class CompareProbabilities {
 //        File output_Directory = new File(
 //                _DirectoryTest + "/DemographicModel_Aspatial_1/0_99/6/data/Demographics/0_99/0/");
 //        _GENESIS_Environment.Directory = _DirectoryTest;
-//        _GENESIS_Environment._Time = new GENESIS_Time(1993, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(1993, 0);
 //        XMLConverter a_XMLConverter = new XMLConverter(_GENESIS_Environment);
 //        String fileSeparator = System.getProperty("file.separator");
 //        /**
@@ -285,10 +285,10 @@ public class CompareProbabilities {
 //        year = 1991;
 //        output_Directory = new File(
 //                _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-//        _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 //        output_Directory = new File(
 //                _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-//        _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 //        /**
 //         * Initialise input_Demographics
 //         */
@@ -345,7 +345,7 @@ public class CompareProbabilities {
 //            //        _DirectoryTest + "/DemographicModel_Aspatial_1/0_99/" + (year + 1) + "/");
 //            output_Directory = new File(
 //                    _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-//            _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+//            _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 //
 //
 //            /**
@@ -431,10 +431,10 @@ public class CompareProbabilities {
 //        year = 1991;
 //        output_Directory = new File(
 //                _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-//        _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 //        output_Directory = new File(
 //                _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-//        _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+//        _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 //        /**
 //         * Initialise input_Demographics
 //         */
@@ -501,7 +501,7 @@ public class CompareProbabilities {
 ////            //        _DirectoryTest + "/DemographicModel_Aspatial_1/0_99/" + (year + 1) + "/");
 ////            output_Directory = new File(
 ////                    _DirectoryTest + "/0_99/comparison/" + (year) + "/");
-////            _GENESIS_Environment._Time = new GENESIS_Time(year + 1, 0);
+////            _GENESIS_Environment.Time = new GENESIS_Time(year + 1, 0);
 ////
 ////
 ////            /**
@@ -569,7 +569,7 @@ public class CompareProbabilities {
          * Compare input_Demographics and output_Demographics
          */
         String name;
-        Integer year = new Integer((int) _GENESIS_Environment._Time.getYear());
+        Integer year = new Integer((int) _GENESIS_Environment.Time.getYear());
 
         // Get expected births using fertility rate and
         Object[] expectedAndSumOfSquaredDifference = GENESIS_Demographics.getExpectedAndSumOfSquaredDifference(areaCode,
@@ -595,7 +595,7 @@ public class CompareProbabilities {
 //         * same for any simulation with the same input)
 //         */
 //        convertToDays = false;
-//        title = "Population _Theoretically_Expected_Living_ Year " + _GENESIS_Environment._Time._Year;
+//        title = "Population _Theoretically_Expected_Living_ Year " + _GENESIS_Environment.Time._Year;
 //        rangeAxisLabel = "Population";
 //        input_Demographics.outputAgeGenderPlot(
 //                title,
@@ -660,7 +660,7 @@ public class CompareProbabilities {
 //        BigDecimal inputProbability;
 //        BigDecimal outputProbability;
 //        String name;
-//        Integer year = new Integer((int) _GENESIS_Environment._Time.getYear());
+//        Integer year = new Integer((int) _GENESIS_Environment.Time.getYear());
 //
 //        Iterator<GENESIS_AgeBound> ite;
 //        GENESIS_AgeBound key;
@@ -692,7 +692,7 @@ public class CompareProbabilities {
 //         * same for any simulation with the same input)
 //         */
 //        convertDaysToYears = true;
-//        title = "Theoretical Age Gender Plot Living Population Year " + _GENESIS_Environment._Time.getYear();
+//        title = "Theoretical Age Gender Plot Living Population Year " + _GENESIS_Environment.Time.getYear();
 //        rangeAxisLabel = "Population";
 //        input_Demographics.outputAgeGenderPlot(
 //                title,

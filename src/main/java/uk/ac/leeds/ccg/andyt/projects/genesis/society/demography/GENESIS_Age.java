@@ -18,61 +18,53 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
  */
 public class GENESIS_Age extends Age implements Comparable, Serializable {
 
-    static final long serialVersionUID = 1L;
-    private transient GENESIS_Environment _GENESIS_Environment;
-    protected Time initialised_Time;
+    //static final long serialVersionUID = 1L;
+    GENESIS_Environment ge;
 
-    public GENESIS_Age() {
+    protected Time TimeInitialised;
+
+    protected GENESIS_Age() {
     }
 
-    public GENESIS_Age(
-            GENESIS_Age aGENESIS_Age,
-            GENESIS_Environment aGENESIS_Environment) {
-        this._GENESIS_Environment = aGENESIS_Environment;
-        aGENESIS_Age._GENESIS_Environment = aGENESIS_Environment;
-        Age newAge = CommonFactory.newAge(aGENESIS_Age);
+    public GENESIS_Age(GENESIS_Environment ge, GENESIS_Age age) {
+        this.ge = ge;
+        Age newAge = CommonFactory.newAge(age);
         init(newAge);
-        this.initialised_Time =  CommonFactory.newTime(aGENESIS_Age.initialised_Time);
+        this.TimeInitialised = CommonFactory.newTime(age.TimeInitialised);
     }
 
-    public GENESIS_Age(GENESIS_Age aGENESIS_Age) {
-        this._GENESIS_Environment = aGENESIS_Age._GENESIS_Environment;
-        Age newAge = CommonFactory.newAge(aGENESIS_Age);
-        init(newAge);
-        this.initialised_Time =  CommonFactory.newTime(aGENESIS_Age.initialised_Time);
-    }
-
-    public GENESIS_Age(Age age) {
+    public GENESIS_Age(GENESIS_Environment ge, Age age) {
+        this.ge = ge;
         init(age);
     }
 
     public GENESIS_Age(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment ge,
             Time timeOfBirth) {
-        _GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = ge;
         Age newAge = CommonFactory.newAge();
         //CommonFactory.init();
         newAge.setTimeOfBirth(new GENESIS_Time(CommonFactory.newTime(timeOfBirth)));
         init(newAge);
-        this.initialised_Time =  CommonFactory.newTime(a_GENESIS_Environment._Time);
+        this.TimeInitialised = CommonFactory.newTime(ge.Time);
     }
 
     public GENESIS_Age(
-            GENESIS_Environment a_GENESIS_Environment,
+            GENESIS_Environment ge,
             Time timeOfBirth,
             Time timeOfBirthMin,
             Time timeOfBirthMax) {
-        _GENESIS_Environment = a_GENESIS_Environment;
+        this.ge = ge;
         Age newAge = CommonFactory.newAge();
         newAge.setTimeOfBirth(new GENESIS_Time(
                 CommonFactory.newTime(timeOfBirth)));
         GENESIS_AgeBound newAgeBound = new GENESIS_AgeBound(
                 CommonFactory.newAgeBound(
-                timeOfBirthMin,
-                timeOfBirthMax));
+                        timeOfBirthMin,
+                        timeOfBirthMax));
         newAge.setTimeOfBirthAgeBound(newAgeBound);
         init(newAge);
-        this.initialised_Time =  CommonFactory.newTime(a_GENESIS_Environment._Time);
+        this.TimeInitialised = CommonFactory.newTime(ge.Time);
     }
 
     /**
@@ -129,38 +121,38 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //        return (int) yearsDiff;
 //    }
     public long getAgeInYears(
-            GENESIS_Time a_Time) {
-        double age_double = getAge_double(a_Time);
+            GENESIS_Time time) {
+        double age_double = getAge_double(time);
         return (long) age_double;
     }
 
     @Override
     public Long getAgeInYears() {
-        long result = getAgeInYears(_GENESIS_Environment._Time);
+        long result = getAgeInYears(ge.Time);
         setAgeInYears(result);
-        setAgeInYearsCalculationTime(new GENESIS_Time(_GENESIS_Environment._Time));
+        setAgeInYearsCalculationTime(new GENESIS_Time(ge.Time));
         return result;
     }
 
     /**
      * Returns the Persons Age as a double.
      *
-     * @param a_Time
+     * @param time
      * @return measure of age (difference between <code>getTimeOfBirth()</code>
      * and a_Time) as a double
      */
-    public double getAge_double(GENESIS_Time a_Time) {
+    public double getAge_double(GENESIS_Time time) {
         double result;
         int aDayOfYear = 0;
-        if (a_Time.getDayOfYear() != null) {
-            aDayOfYear = a_Time.getDayOfYear();
+        if (time.getDayOfYear() != null) {
+            aDayOfYear = time.getDayOfYear();
         }
         Time t = getTimeOfBirth();
         int birthDayOfYear = 0;
         if (t.getDayOfYear() != null) {
             birthDayOfYear = t.getDayOfYear();
         }
-        long aYear = a_Time.getYear();
+        long aYear = time.getYear();
         long birthYear = t.getYear();
         result = aYear - birthYear;
         double daysInYear = (double) GENESIS_Time.NormalDaysInYear_int;
@@ -196,8 +188,8 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //     */
 //    public void print_Age(Calendar _Calendar) {
 //        //Date _TimeOfBirth_Date = _TimeOfBirth_Calendar.getTime();
-//        //Date _Time = _Time_Calendar.getTime();
-//        //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + _Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
+//        //Date Time = _Time_Calendar.getTime();
+//        //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
 //        int _DAY_OF_YEAR = _Calendar.get(Calendar.DAY_OF_YEAR);
 //        int _Calendar_Birth_DAY_OF_YEAR = _Birth_Calendar.get(Calendar.DAY_OF_YEAR);
 //        int _Age_Day;
@@ -220,8 +212,8 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //            _Age_Year = _Calendar.get(Calendar.YEAR) - (int) _GENESIS_Age.getTimeOfBirth().getYear();
 //        } else {
 //            //Date _TimeOfBirth_Date = _TimeOfBirth_Calendar.getTime();
-//            //Date _Time = _Time_Calendar.getTime();
-//            //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + _Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
+//            //Date Time = _Time_Calendar.getTime();
+//            //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
 //            int _Time_Birth_DAY_OF_YEAR = _Birth_Calendar.get(Calendar.DAY_OF_YEAR);
 //            _Age_Year = _Calendar.get(Calendar.YEAR) - _Birth_Calendar.get(Calendar.YEAR);
 //            int _Age_Day;
@@ -263,14 +255,14 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
     }
 
 //    public int get_AgeInYears_int(
-//            GENESIS_Time _Time) {
-//        double _Age_double = get_Age_double(_Time);
+//            GENESIS_Time Time) {
+//        double _Age_double = get_Age_double(Time);
 //        return (int) _Age_double;
 //    }
 //
 //    public int get_AgeInYears_int() {
 //        //return get_AgeInYears_int(_GENESIS_Environment._Calendar);
-//        return get_AgeInYears_int(_GENESIS_Environment._Time);
+//        return get_AgeInYears_int(_GENESIS_Environment.Time);
 //    }
 //    /**
 //     * Returns the Persons Age as a double
@@ -302,10 +294,10 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
      * Returns the Persons Age as a double.
      *
      * @return measure of age (difference between <code>_anchorTime</code> and
-     * _GENESIS_Environment._Time) as a double
+ _GENESIS_Environment.Time) as a double
      */
     public double getAge_double() {
-        return getAge_double(_GENESIS_Environment._Time);
+        return getAge_double(ge.Time);
     }
 
     @Override
@@ -333,7 +325,9 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 
     /**
      * Overrides equals in Object
+     *
      * @param o
+     * @return
      */
     @Override
     public boolean equals(Object o) {

@@ -1523,6 +1523,6 @@ public class GENESIS_AgentEnvironment
     private static void log(
             Level level,
             String message) {
-        Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+        Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
 }

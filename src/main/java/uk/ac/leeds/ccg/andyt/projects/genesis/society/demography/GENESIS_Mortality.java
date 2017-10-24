@@ -323,7 +323,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     private void init() {
         String sourceMethod = "init()";
         getLogger().entering(sourceClass, sourceMethod);
-        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
+        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.DefaultLoggerName));
         _FemaleDailyMortalityAgeBoundProbability_TreeMap = new TreeMap<GENESIS_AgeBound, BigDecimal>();
         _MaleDailyMortalityAgeBoundProbability_TreeMap = new TreeMap<GENESIS_AgeBound, BigDecimal>();
         _FemaleAnnualMortalityAgeBoundRate_TreeMap = new TreeMap<GENESIS_AgeBound, BigDecimal>();
@@ -375,7 +375,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public void processCSVtoXML(File a_File) {
         String sourceMethod = "processCSVtoXML(File)";
         getLogger().entering(sourceClass, sourceMethod);
-        ge._Time = new GENESIS_Time(1991, 0);
+        ge.Time = new GENESIS_Time(1991, 0);
         //a_GENESIS_Environment.Directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         ge.Directory = new File("/scratch01/Work/Projects/GENESIS/workspace/");
         String a_Filename_String = a_File.getName();
@@ -722,7 +722,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 
     public BigDecimal getAnnualMortality(
             GENESIS_Female female) {
-        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(female.getAge().getAgeInYears());
+        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(female.getCopyOfAge().getAgeInYears());
         return getAnnualMortalityFemale(ageBound);
     }
 
@@ -757,7 +757,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 
     public BigDecimal getAnnualMortality(
             GENESIS_Male male) {
-        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(male.getAge().getAgeInYears());
+        GENESIS_AgeBound ageBound = new GENESIS_AgeBound(male.getCopyOfAge().getAgeInYears());
         return getAnnualMortalityMale(ageBound);
     }
 
@@ -774,8 +774,8 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public BigDecimal getDailyMortality(
             GENESIS_Female female) {
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(
-                female.get_Age().getAgeInYears_long(ge._Time));
-        //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getAge().getAgeInYears());
+                female.getAge().getAgeInYears_long(ge.Time));
+        //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Female.getCopyOfAge().getAgeInYears());
         return getDailyMortalityFemale(ageBound);
     }
 
@@ -792,8 +792,8 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
     public BigDecimal getDailyMortality(
             GENESIS_Male male) {
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(
-                male.get_Age().getAgeInYears_long(ge._Time));
-        //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Male.getAge().getAgeInYears());
+                male.getAge().getAgeInYears_long(ge.Time));
+        //GENESIS_AgeBound ageBound = new GENESIS_AgeBound(a_Male.getCopyOfAge().getAgeInYears());
         return getDailyMortalityMale(ageBound);
     }
 

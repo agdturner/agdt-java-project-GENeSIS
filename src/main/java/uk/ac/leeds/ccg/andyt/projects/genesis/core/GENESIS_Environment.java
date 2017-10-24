@@ -14,12 +14,12 @@ import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Environment;
+import uk.ac.leeds.ccg.andyt.projects.genesis.grids.GENESIS_Grids;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.GENESIS_Files;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
-import uk.ac.leeds.ccg.andyt.projects.genesis.process.AbstractTrafficModel;
-import uk.ac.leeds.ccg.andyt.projects.genesis.process.Abstract_GENESIS_Model;
-import uk.ac.leeds.ccg.andyt.projects.genesis.resource.AbstractResource;
-import uk.ac.leeds.ccg.andyt.projects.genesis.travelingsalesman.TSMisc;
+import uk.ac.leeds.ccg.andyt.projects.genesis.process.GENESIS_AbstractModelTraffic;
+import uk.ac.leeds.ccg.andyt.projects.genesis.process.GENESIS_AbstractModel;
+import uk.ac.leeds.ccg.andyt.projects.genesis.travelingsalesman.GENESIS_TravelingSalesman;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 import uk.ac.leeds.ccg.andyt.vector.core.Vector_Environment;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Envelope2D;
@@ -51,7 +51,7 @@ public class GENESIS_Environment
     /**
      * Always initialised
      */
-    public transient Abstract_GENESIS_Model _AbstractModel;
+    public transient GENESIS_AbstractModel _AbstractModel;
 //    public transient CommonFactory _CommonFactory;
 //    public transient PopulationFactory _PopulationFactory;
 //    public transient MortalityFactory _MortalityFactory;
@@ -59,7 +59,7 @@ public class GENESIS_Environment
 //    public transient MiscarriageFactory _MiscarriageFactory;
 //    public transient MetadataFactory _MetadataFactory;
 //    public transient ParametersFactory _ParametersFactory;
-//    public AbstractTrafficModel _TrafficModel;
+//    public GENESIS_AbstractModelTraffic _TrafficModel;
     public transient GENESIS_PersonFactory _PersonFactory;
     public transient GENESIS_AgentEnvironment AgentEnvironment;
     /**
@@ -93,6 +93,8 @@ public class GENESIS_Environment
      * moving.
      */
     public transient Grids_Grid2DSquareCellDouble _reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble;
+    
+    public GENESIS_Grids Grids;
     /**
      * For storing the Envelope containing reporting grids. It is here for
      * convenience instead of repeatedly generating it from
@@ -124,11 +126,10 @@ public class GENESIS_Environment
 //    public double _YMin_double;
     public transient Grids_AbstractGrid2DSquareCell _Resource_Grid2DSquareCellDouble;
 //    public Random _Random;
-    public GENESIS_Time _Time;
+    public GENESIS_Time Time;
     public GENESIS_Time _initial_Time;
-    public transient HashSet<AbstractResource> _Resource_HashSet;
 //    public VectorNetwork2D _Network2D;
-    public transient TSMisc _TSMisc;
+    public transient GENESIS_TravelingSalesman _TSMisc;
 //    protected static long Memory_Threshold = 10000000L;
     //private static long Memory_Threshold_TenThousand = 10000L;
     //private static long Memory_Threshold_TwoMillion = 2000000L;
@@ -173,7 +174,7 @@ public class GENESIS_Environment
 //        this.MemoryReserve = a_GENESIS_Environment.MemoryReserve;
 //        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
-        this._Time = new GENESIS_Time(ge._Time);
+        this.Time = new GENESIS_Time(ge.Time);
 //        this = a_GENESIS_Environment.;
     }
 
@@ -186,7 +187,7 @@ public class GENESIS_Environment
 
     public GENESIS_Environment(
             File Directory,
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time) {
         init_GENESIS_Environment(
                 Directory,
@@ -196,16 +197,16 @@ public class GENESIS_Environment
 
     private void init_GENESIS_Environment(
             File Directory,
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time) {
         init_GENESIS_Environment(Directory);
         this._AbstractModel = a_Model;
-        this._Time = new GENESIS_Time(a_Time);
+        this.Time = new GENESIS_Time(a_Time);
     }
 
     public GENESIS_Environment(
             File Directory,
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
             Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
@@ -221,7 +222,7 @@ public class GENESIS_Environment
 
     private void init_GENESIS_Environment(
             File Directory,
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
             Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
@@ -249,7 +250,7 @@ public class GENESIS_Environment
     @Deprecated
     public GENESIS_Environment(
             File Directory,
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
             Grids_Grid2DSquareCellDoubleFactory a_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
@@ -264,20 +265,20 @@ public class GENESIS_Environment
 
     @Deprecated
     public GENESIS_Environment(
-            Abstract_GENESIS_Model a_Model,
+            GENESIS_AbstractModel a_Model,
             GENESIS_Time _Time,
             Grids_Grid2DSquareCellDoubleFactory _Grid2DSquareCellDoubleFactory,
             Grids_Grid2DSquareCellDouble _World_Grid2DSquareCellDouble,
             boolean handleOutOfMemoryError) {
         this._AbstractModel = a_Model;
-        this._Time = new GENESIS_Time(_Time);
+        this.Time = new GENESIS_Time(_Time);
         this._network_Grid2DSquareCellDoubleFactory = _Grid2DSquareCellDoubleFactory;
         this.HandleOutOfMemoryError = handleOutOfMemoryError;
     }
 
-    public AbstractTrafficModel getTrafficModel() {
-        if (_AbstractModel instanceof AbstractTrafficModel) {
-            return (AbstractTrafficModel) _AbstractModel;
+    public GENESIS_AbstractModelTraffic getTrafficModel() {
+        if (_AbstractModel instanceof GENESIS_AbstractModelTraffic) {
+            return (GENESIS_AbstractModelTraffic) _AbstractModel;
         }
         return null;
     }
@@ -1393,10 +1394,16 @@ public class GENESIS_Environment
     private static void log(
             Level level,
             String message) {
-        Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+        Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
     
     public GENESIS_Files getGENESIS_Files(){
         return gf;
     }
+    
+    public GENESIS_Grids getGENESIS_Grids(){
+        return Grids;
+    }
+    
+    
 }

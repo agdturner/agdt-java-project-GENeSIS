@@ -104,7 +104,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
     private void init() {
         String sourceMethod = "init()";
         getLogger().entering(sourceClass, sourceMethod);
-        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName));
+        LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.DefaultLoggerName));
         this._ObservedAnnualDeaths = new GENESIS_Population(ge);
         this._ObservedAnnualBirthsByAgeOfMother = new GENESIS_Population(ge);
         this._StartYearPopulation = new GENESIS_Population(ge);

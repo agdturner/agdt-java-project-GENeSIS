@@ -372,6 +372,6 @@ public class XMLConverter {
         if (level.intValue() != Level.OFF.intValue()) {
             System.out.println(message);
         }
-        Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+        Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
 }

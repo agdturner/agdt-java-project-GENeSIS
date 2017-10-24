@@ -108,7 +108,7 @@ public class GENESIS_AgentCollectionManager
      * it might be hard to find and order things. A value of 100 seems a good
      * compromise.
      */
-    public int _MaximumNumberOfObjectsPerDirectory;
+    public int MaximumNumberOfObjectsPerDirectory;
     /**
      * The index of the last born GENESIS_Male
      */
@@ -186,7 +186,7 @@ public class GENESIS_AgentCollectionManager
 //        this.LivingMales = a_GENESIS_AgentCollectionManager.LivingMales;
 //        this._LivingMaleDirectory = a_GENESIS_AgentCollectionManager._LivingMaleDirectory;
 //        this._MaximumNumberOfAgentsPerAgentCollection = a_GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection;
-//        this._MaximumNumberOfObjectsPerDirectory = a_GENESIS_AgentCollectionManager._MaximumNumberOfObjectsPerDirectory;
+//        this.MaximumNumberOfObjectsPerDirectory = a_GENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory;
 //        this._NumberOfDeadFemales = a_GENESIS_AgentCollectionManager._NumberOfDeadFemales;
 //        this._NumberOfDeadMales = a_GENESIS_AgentCollectionManager._NumberOfDeadMales;
     }
@@ -378,9 +378,8 @@ public class GENESIS_AgentCollectionManager
             //@TODO Set _DeadFemaleCollection to null?
             String type = GENESIS_Person.getTypeDeadFemale_String();
             _LargestIndexOfDeadFemaleCollection++;
-            Generic_StaticIO.addToArchive(
-                    getDeadFemaleDirectory(),
-                    _MaximumNumberOfObjectsPerDirectory,
+            Generic_StaticIO.addToArchive(getDeadFemaleDirectory(),
+                    MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadFemaleCollection);
             _DeadFemaleCollection = new GENESIS_FemaleCollection(
                     ge,
@@ -402,9 +401,8 @@ public class GENESIS_AgentCollectionManager
             //@TODO Set _DeadMaleCollection to null?
             String type = GENESIS_Person.getTypeDeadMale_String();
             _LargestIndexOfDeadMaleCollection++;
-            Generic_StaticIO.addToArchive(
-                    getDeadMaleDirectory(),
-                    _MaximumNumberOfObjectsPerDirectory,
+            Generic_StaticIO.addToArchive(getDeadMaleDirectory(),
+                    MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadMaleCollection);
             _DeadMaleCollection = new GENESIS_MaleCollection(
                     ge,
@@ -429,19 +427,17 @@ public class GENESIS_AgentCollectionManager
                         getLivingFemaleDirectory(), "_");
             }
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    getLivingFemaleDirectory(),
+                    Generic_StaticIO.getObjectDirectory(getLivingFemaleDirectory(),
                     a_Agent_ID,
                     maxLivingFemaleCollectionID,//getMaxLivingFemaleCollectionID(),
-                    _MaximumNumberOfObjectsPerDirectory),
+                    MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    getDeadFemaleDirectory(),
+                    Generic_StaticIO.getObjectDirectory(getDeadFemaleDirectory(),
                     a_Agent_ID,
                     getMaxDeadFemaleCollectionID(),
-                    _MaximumNumberOfObjectsPerDirectory),
+                    MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         }
         return result;
@@ -459,19 +455,17 @@ public class GENESIS_AgentCollectionManager
                         getLivingMaleDirectory(), "_");
             }
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    getLivingMaleDirectory(),
+                    Generic_StaticIO.getObjectDirectory(getLivingMaleDirectory(),
                     a_Agent_ID,
                     maxLivingMaleCollectionID,//getMaxLivingMaleCollectionID(),
-                    _MaximumNumberOfObjectsPerDirectory),
+                    MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(
-                    getDeadMaleDirectory(),
+                    Generic_StaticIO.getObjectDirectory(getDeadMaleDirectory(),
                     a_Agent_ID,
                     getMaxDeadMaleCollectionID(),
-                    _MaximumNumberOfObjectsPerDirectory),
+                    MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         }
         return result;
@@ -4054,6 +4048,6 @@ public class GENESIS_AgentCollectionManager
     private static void log(
             Level level,
             String message) {
-        Logger.getLogger(GENESIS_Log.GENESIS_DefaultLoggerName).log(level, message);
+        Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
 }
