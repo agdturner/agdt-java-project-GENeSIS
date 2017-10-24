@@ -6,7 +6,6 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.grids;
 
 import java.math.BigDecimal;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Object;
@@ -18,12 +17,13 @@ import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
  */
 public class GENESIS_Grids extends GENESIS_Object {
 
-    protected GENESIS_Grids(){}
-    
-    public GENESIS_Grids(GENESIS_Environment ge){
+    protected GENESIS_Grids() {
+    }
+
+    public GENESIS_Grids(GENESIS_Environment ge) {
         super(ge);
     }
-    
+
     public static Vector_Point2D getNextCentroid_Point2D(
             Vector_Point2D origin_Point2D,
             Vector_Point2D destination_Point2D) {
@@ -44,11 +44,11 @@ public class GENESIS_Grids extends GENESIS_Object {
         long row = g.getCellRowIndex(p.Y, handleOutOfMemoryError);
         long col = g.getCellColIndex(p.X, handleOutOfMemoryError);
         result = new Vector_Point2D(
-                                null,
+                null,
                 g.getCellXBigDecimal(
-                col, handleOutOfMemoryError),
+                        col, handleOutOfMemoryError),
                 g.getCellYBigDecimal(
-                row, handleOutOfMemoryError),
+                        row, handleOutOfMemoryError),
                 toRoundToX_BigDecimal,
                 toRoundToY_BigDecimal);
         return result;
@@ -104,8 +104,8 @@ public class GENESIS_Grids extends GENESIS_Object {
      * @param handleOutOfMemoryError
      * @param distance
      * @param p
-     * @return a Vector_Point2D within distance of a_Point2D using double
-     * precision arithmetic.
+     * @return a Vector_Point2D within distance of p using double precision
+     * arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
             Grids_AbstractGrid2DSquareCell g,
@@ -122,146 +122,166 @@ public class GENESIS_Grids extends GENESIS_Object {
     }
 
     /**
-     * @param a_Grid2DSquareCell
-     * @param a_Random
+     * @param g
+     * @param random
+     * @param p
+     * @param distance
      * @param decimalPlacePrecision
      * @param handleOutOfMemoryError
-     * @param a_DecimalPlacePrecision
      * @param toRoundToY_BigDecimal
      * @param toRoundToX_BigDecimal
      * @return A randomly selected cell centroid in a_Grid2DSquareCell
      */
     public Vector_Point2D getRandomCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
-            Random a_Random,
-            Vector_Point2D a_Point2D,
-            BigDecimal distance_BigDecimal,
-            int a_DecimalPlacePrecision,
+            Grids_AbstractGrid2DSquareCell g,
+            Random random,
+            Vector_Point2D p,
+            BigDecimal distance,
+            int decimalPlacePrecision,
             BigDecimal toRoundToX_BigDecimal,
             BigDecimal toRoundToY_BigDecimal,
             boolean handleOutOfMemoryError) {
         Vector_Point2D result;
         int counter = 0;
         do {
-            Vector_Point2D b_Point2D = getRandom_Point2D(
-                    a_Grid2DSquareCell,
-                    a_Random,
-                    a_Point2D,
-                    distance_BigDecimal,
+            Vector_Point2D pb = getRandom_Point2D(
+                    g,
+                    random,
+                    p,
+                    distance,
                     handleOutOfMemoryError);
             result = getCellCentroid_Point2D(
-                    a_Grid2DSquareCell,
-                    b_Point2D,
+                    g,
+                    pb,
                     toRoundToX_BigDecimal,
                     toRoundToY_BigDecimal,
                     handleOutOfMemoryError);
             counter++;
             if (counter > 1000) {
-                System.out.println("Getting stuck in StaticGrids.getRandomCellCentroid_Point2D(AbstractGrid2DSquareCell,Random,Point2D,BigDecimal,int,boolean)");
+                System.out.println("Stuck in " + this.getClass().getName()
+                        + ".getRandomCellCentroid_Point2D("
+                        + g.getClass().getName() + ",Random,Point2D,"
+                        + "BigDecimal,int,boolean)");
             }
-        } while (result.getDistance(a_Point2D, a_DecimalPlacePrecision).compareTo(distance_BigDecimal) == 1);
+        } while (result.getDistance(p, decimalPlacePrecision).compareTo(distance) == 1);
         return result;
     }
 
     /**
      *
-     * @param a_Grid2DSquareCell
-     * @param a_Random
-     * @param a_DecimalPlacePrecision
+     * @param g
+     * @param random
+     * @param decimalPlacePrecision
      * @param handleOutOfMemoryError
      * @return
      */
     public Vector_Point2D getRandomCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
-            Random a_Random,
-            int a_DecimalPlacePrecision,
+            Grids_AbstractGrid2DSquareCell g,
+            Random random,
+            int decimalPlacePrecision,
             boolean handleOutOfMemoryError) {
         Vector_Point2D result;
         int counter = 0;
         do {
-            long col = a_Grid2DSquareCell.getCellColIndex(a_Random, handleOutOfMemoryError);
-            long row = a_Grid2DSquareCell.getCellColIndex(a_Random, handleOutOfMemoryError);
+            long col = g.getCellColIndex(random, handleOutOfMemoryError);
+            long row = g.getCellColIndex(random, handleOutOfMemoryError);
             result = new Vector_Point2D(
                     null,
-                    a_Grid2DSquareCell.getCellXBigDecimal(col, handleOutOfMemoryError),
-                    a_Grid2DSquareCell.getCellYBigDecimal(row, handleOutOfMemoryError),
-                    a_DecimalPlacePrecision);
+                    g.getCellXBigDecimal(col, handleOutOfMemoryError),
+                    g.getCellYBigDecimal(row, handleOutOfMemoryError),
+                    decimalPlacePrecision);
             counter++;
             if (counter > 1000) {
-                System.out.println("Getting stuck in StaticGrids.getRandomCellCentroid_Point2D(AbstractGrid2DSquareCell,Random,int decimalPlacePrecision,boolean");
+                System.out.println("Stuck in " + this.getClass().getName()
+                        + ".getRandomCellCentroid_Point2D("
+                        + g.getClass().getName() + ",Random,int,boolean)");
             }
-        } while (!a_Grid2DSquareCell.isInGrid(result.X, result.Y, handleOutOfMemoryError));
+        } while (!g.isInGrid(result.X, result.Y, handleOutOfMemoryError));
         return result;
     }
 
     /**
-     * @param a_LineSegment2D
-     * @param bounds
-     * @param ignore_a_LineSegment2D_Start_Point2D
-     * @param a_DecimalPlacePrecision
+     * @param l
+     * @param xmin
+     * @param ymin
+     * @param xmax
+     * @param ymax
+     * @param ignoreStartPoint
+     * @param tollerance
+     * @param decimalPlacePrecision
+     * @param handleOutOfMemoryError
      * @return 0 if no intersection; +---+---+---+ | 7 | 8 | 1 | +---+---+---+ |
      * 6 | 0 | 2 | +---+---+---+ | 5 | 4 | 3 | +---+---+---+
      */
     public int getCellBoundaryIntersect(
-            Vector_LineSegment2D a_LineSegment2D,
+            Vector_LineSegment2D l,
             BigDecimal xmin,
-        BigDecimal ymin,
-        BigDecimal xmax,
-        BigDecimal ymax,
-            boolean ignore_a_LineSegment2D_Start_Point2D,
+            BigDecimal ymin,
+            BigDecimal xmax,
+            BigDecimal ymax,
+            boolean ignoreStartPoint,
             BigDecimal tollerance,
-            int a_DecimalPlacePrecision,
+            int decimalPlacePrecision,
             boolean handleOutOfMemoryError) {
+        /*
+        * +---+---+---+
+        * | 7 | 8 | 1 |
+        * +---+---+---+
+        * | 6 | 0 | 2 |
+        * +---+---+---+
+        * | 5 | 4 | 3 |
+        * +---+---+---+
+        */
         Vector_LineSegment2D bottom = new Vector_LineSegment2D(
                 new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                xmin,
-                ymin),
+                        l.ve,
+                        xmin,
+                        ymin),
                 new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                xmax,
-                ymin));
-        boolean a_LineSegment2D_intersect_bottom = a_LineSegment2D.getIntersects(
+                        l.ve,
+                        xmax,
+                        ymin));
+        boolean l_intersect_bottom = l.getIntersects(
                 bottom,
-                ignore_a_LineSegment2D_Start_Point2D,
+                ignoreStartPoint,
                 tollerance,
-                a_DecimalPlacePrecision,
+                decimalPlacePrecision,
                 handleOutOfMemoryError);
-        if (a_LineSegment2D_intersect_bottom) {
+        if (l_intersect_bottom) {
             Vector_LineSegment2D left = new Vector_LineSegment2D(
                     new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                    xmin,
-                    ymin),
+                            l.ve,
+                            xmin,
+                            ymin),
                     new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                    xmin,
-                    ymax));
-            boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
+                            l.ve,
+                            xmin,
+                            ymax));
+            boolean l_intersect_left = l.getIntersects(
                     left,
-                    ignore_a_LineSegment2D_Start_Point2D,
+                    ignoreStartPoint,
                     tollerance,
-                    a_DecimalPlacePrecision,
+                    decimalPlacePrecision,
                     handleOutOfMemoryError);
-            if (a_LineSegment2D_intersect_left) {
+            if (l_intersect_left) {
                 return 5;
             } else {
                 Vector_LineSegment2D right = new Vector_LineSegment2D(
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmax,
-                        ymin),
+                                l.ve,
+                                xmax,
+                                ymin),
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmax,
-                        ymax));
-                boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
+                                l.ve,
+                                xmax,
+                                ymax));
+                boolean l_intersect_right = l.getIntersects(
                         right,
-                        ignore_a_LineSegment2D_Start_Point2D,
+                        ignoreStartPoint,
                         tollerance,
-                        a_DecimalPlacePrecision,
+                        decimalPlacePrecision,
                         handleOutOfMemoryError);
-                if (a_LineSegment2D_intersect_right) {
+                if (l_intersect_right) {
                     return 3;
                 } else {
                     return 4;
@@ -270,54 +290,54 @@ public class GENESIS_Grids extends GENESIS_Object {
         } else {
             Vector_LineSegment2D top = new Vector_LineSegment2D(
                     new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                    xmin,
-                    ymax),
+                            l.ve,
+                            xmin,
+                            ymax),
                     new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                    xmax,
-                    ymax));
-            boolean a_LineSegment2D_intersect_top = a_LineSegment2D.getIntersects(
+                            l.ve,
+                            xmax,
+                            ymax));
+            boolean l_intersect_top = l.getIntersects(
                     top,
-                    ignore_a_LineSegment2D_Start_Point2D,
+                    ignoreStartPoint,
                     tollerance,
-                    a_DecimalPlacePrecision,
+                    decimalPlacePrecision,
                     handleOutOfMemoryError);
-            if (a_LineSegment2D_intersect_top) {
+            if (l_intersect_top) {
                 Vector_LineSegment2D left = new Vector_LineSegment2D(
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmin,
-                        ymin),
+                                l.ve,
+                                xmin,
+                                ymin),
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmin,
-                        ymax));
-                boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
+                                l.ve,
+                                xmin,
+                                ymax));
+                boolean l_intersect_left = l.getIntersects(
                         left,
-                        ignore_a_LineSegment2D_Start_Point2D,
+                        ignoreStartPoint,
                         tollerance,
-                        a_DecimalPlacePrecision,
+                        decimalPlacePrecision,
                         handleOutOfMemoryError);
-                if (a_LineSegment2D_intersect_left) {
+                if (l_intersect_left) {
                     return 7;
                 } else {
                     Vector_LineSegment2D right = new Vector_LineSegment2D(
                             new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                            xmax,
-                            ymin),
+                                    l.ve,
+                                    xmax,
+                                    ymin),
                             new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                            xmax,
-                            ymax));
-                    boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
+                                    l.ve,
+                                    xmax,
+                                    ymax));
+                    boolean l_intersect_right = l.getIntersects(
                             right,
-                            ignore_a_LineSegment2D_Start_Point2D,
+                            ignoreStartPoint,
                             tollerance,
-                            a_DecimalPlacePrecision,
+                            decimalPlacePrecision,
                             handleOutOfMemoryError);
-                    if (a_LineSegment2D_intersect_right) {
+                    if (l_intersect_right) {
                         return 1;
                     } else {
                         return 8;
@@ -326,38 +346,38 @@ public class GENESIS_Grids extends GENESIS_Object {
             } else {
                 Vector_LineSegment2D left = new Vector_LineSegment2D(
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmin,
-                        ymin),
+                                l.ve,
+                                xmin,
+                                ymin),
                         new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                        xmin,
-                        ymax));
-                boolean a_LineSegment2D_intersect_left = a_LineSegment2D.getIntersects(
+                                l.ve,
+                                xmin,
+                                ymax));
+                boolean l_intersect_left = l.getIntersects(
                         left,
-                        ignore_a_LineSegment2D_Start_Point2D,
+                        ignoreStartPoint,
                         tollerance,
-                        a_DecimalPlacePrecision,
+                        decimalPlacePrecision,
                         handleOutOfMemoryError);
-                if (a_LineSegment2D_intersect_left) {
+                if (l_intersect_left) {
                     return 6;
                 } else {
                     Vector_LineSegment2D right = new Vector_LineSegment2D(
                             new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                            xmax,
-                            ymin),
+                                    l.ve,
+                                    xmax,
+                                    ymin),
                             new Vector_Point2D(
-                        a_LineSegment2D.ve,
-                            xmax,
-                            ymax));
-                    boolean a_LineSegment2D_intersect_right = a_LineSegment2D.getIntersects(
+                                    l.ve,
+                                    xmax,
+                                    ymax));
+                    boolean l_intersect_right = l.getIntersects(
                             right,
-                            ignore_a_LineSegment2D_Start_Point2D,
+                            ignoreStartPoint,
                             tollerance,
-                            a_DecimalPlacePrecision,
+                            decimalPlacePrecision,
                             handleOutOfMemoryError);
-                    if (a_LineSegment2D_intersect_right) {
+                    if (l_intersect_right) {
                         return 2;
                     } else {
                         return 0;
