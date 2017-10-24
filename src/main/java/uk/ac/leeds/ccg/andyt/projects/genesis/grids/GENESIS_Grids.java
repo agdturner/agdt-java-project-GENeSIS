@@ -32,8 +32,8 @@ public class GENESIS_Grids extends GENESIS_Object {
     }
 
     public Vector_Point2D getCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
-            Vector_Point2D a_Point2D,
+            Grids_AbstractGrid2DSquareCell g,
+            Vector_Point2D p,
             BigDecimal toRoundToX_BigDecimal,
             BigDecimal toRoundToY_BigDecimal,
             boolean handleOutOfMemoryError) {
@@ -41,13 +41,13 @@ public class GENESIS_Grids extends GENESIS_Object {
         //   BigDecimal toRoundBigDecimal,
         //  BigDecimal toRoundToBigDecimal);
         Vector_Point2D result;
-        long row = a_Grid2DSquareCell.getCellRowIndex(a_Point2D.Y, handleOutOfMemoryError);
-        long col = a_Grid2DSquareCell.getCellColIndex(a_Point2D.X, handleOutOfMemoryError);
+        long row = g.getCellRowIndex(p.Y, handleOutOfMemoryError);
+        long col = g.getCellColIndex(p.X, handleOutOfMemoryError);
         result = new Vector_Point2D(
                                 null,
-                a_Grid2DSquareCell.getCellXBigDecimal(
+                g.getCellXBigDecimal(
                 col, handleOutOfMemoryError),
-                a_Grid2DSquareCell.getCellYBigDecimal(
+                g.getCellYBigDecimal(
                 row, handleOutOfMemoryError),
                 toRoundToX_BigDecimal,
                 toRoundToY_BigDecimal);
@@ -62,7 +62,7 @@ public class GENESIS_Grids extends GENESIS_Object {
      * precision arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
+            Grids_AbstractGrid2DSquareCell g,
             Random a_Random,
             Vector_Point2D a_Point2D,
             double distance,
@@ -88,7 +88,7 @@ public class GENESIS_Grids extends GENESIS_Object {
             if (counter > 1000) {
                 System.out.println("Getting stuck in " + GENESIS_Grids.class.getName() + ".getRandom_Point2D(AbstractGrid2DSquareCell,Random,Point2D,double,boolean )");
             }
-        } while (!a_Grid2DSquareCell.isInGrid(x, y, handleOutOfMemoryError));
+        } while (!g.isInGrid(x, y, handleOutOfMemoryError));
         return new Vector_Point2D(
                 a_Point2D.ve,
                 new BigDecimal(x),
