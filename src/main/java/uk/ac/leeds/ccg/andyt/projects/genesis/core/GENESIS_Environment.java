@@ -42,7 +42,7 @@ public class GENESIS_Environment
     private static final String sourcePackage = GENESIS_Environment.class.getPackage().getName();
     //= Logger.getLogger(sourcePackage);
 
-    protected GENESIS_Files gf;
+    protected GENESIS_Files Files;
     
     /**
      *
@@ -179,9 +179,9 @@ public class GENESIS_Environment
     }
 
     private void init_GENESIS_Environment(File Directory) {
-        gf = new GENESIS_Files(Directory);
+        Files = new GENESIS_Files(Directory);
         AgentEnvironment = new GENESIS_AgentEnvironment(this);
-        ge = new Grids_Environment(gf.getGridsDirectory());
+        ge = new Grids_Environment(Files.getGridsDirectory());
         _Generic_BigDecimal = new Generic_BigDecimal();
     }
 
@@ -1398,7 +1398,7 @@ public class GENESIS_Environment
     }
     
     public GENESIS_Files getGENESIS_Files(){
-        return gf;
+        return Files;
     }
     
     public GENESIS_Grids getGENESIS_Grids(){
