@@ -21,10 +21,10 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.GENESIS_Household;
 import uk.ac.leeds.ccg.andyt.projects.genesis.travelingsalesman.GENESIS_TravelingSalesman;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataHandler;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataRecord;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.SWSDataHandler;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.SWSDataRecord;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataHandler;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataRecord;
+import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataHandler;
+import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataRecord;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 import uk.ac.leeds.ccg.andyt.vector.projection.Vector_OSGBtoLatLon;
@@ -197,17 +197,17 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                 ge.get_reporting_VectorEnvelope2D());
     }
 
-    protected CASAreaEastingNorthingDataHandler init_CASAreaEastingNorthingDataHandler(
+    protected Census_CASAreaEastingNorthingDataHandler init_CASAreaEastingNorthingDataHandler(
             boolean handleOutOfMemoryError) {
         try {
             // CASAreaEastingNorthingDataRecords
-            CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
-            a_CASAreaEastingNorthingDataHandler = new CASAreaEastingNorthingDataHandler();
+            Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
+            a_CASAreaEastingNorthingDataHandler = new Census_CASAreaEastingNorthingDataHandler();
 //        file = new File("C:/Work/data/Census/2001/OA/");//England_OA_ZoneCode_Area_Easting_Northing.csv");
 //        a_CASAreaEastingNorthingDataHandler.formatSourceData(file, 20);
             File file = new File(
                     ge.Directory.getParentFile(),
-                    CASAreaEastingNorthingDataHandler.class.getCanonicalName() + ".thisFile");
+                    Census_CASAreaEastingNorthingDataHandler.class.getCanonicalName() + ".thisFile");
             Generic_StaticIO.writeObject(a_CASAreaEastingNorthingDataHandler, file);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     handleOutOfMemoryError);
@@ -227,16 +227,16 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
     }
 
     // SWSDataRecords
-    protected SWSDataHandler init_SWSDataHandler(
+    protected Census_SWSDataHandler init_SWSDataHandler(
             boolean handleOutOfMemoryError) {
         try {
             File file = new File(
                     ge.Directory.getParentFile(),
-                    SWSDataHandler.class.getCanonicalName() + ".thisFile");
-            SWSDataHandler a_SWSDataHandler = new SWSDataHandler();
+                    Census_SWSDataHandler.class.getCanonicalName() + ".thisFile");
+            Census_SWSDataHandler a_SWSDataHandler = new Census_SWSDataHandler();
             Generic_StaticIO.writeObject(a_SWSDataHandler, file);
             System.out.println("a_SWSDataHandler.getNDataRecords() " + a_SWSDataHandler.getNDataRecords());
-            SWSDataRecord a_SWSDataRecord = (SWSDataRecord) a_SWSDataHandler.getDataRecord(0L);
+            Census_SWSDataRecord a_SWSDataRecord = (Census_SWSDataRecord) a_SWSDataHandler.getDataRecord(0L);
             System.out.println("a_SWSDataRecord " + a_SWSDataRecord);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     handleOutOfMemoryError);
@@ -295,13 +295,13 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             // Initialise AgentCollection cache
             File directory_AgentCollections = new File(aDirectory_File, "AgentCollections");
             directory_AgentCollections.mkdirs();
-            File SWSDataHandler_File = new File(aDirectory_File, SWSDataHandler.class.getName() + ".thisFile");
+            File SWSDataHandler_File = new File(aDirectory_File, Census_SWSDataHandler.class.getName() + ".thisFile");
             //SWSDataHandler a_SWSDataHandler = getSWSDataHandler(SWSDataHandler_File);
-            SWSDataHandler a_SWSDataHandler = new SWSDataHandler();
+            Census_SWSDataHandler a_SWSDataHandler = new Census_SWSDataHandler();
             File SWSDataFile = new File(aDirectory_File, "SWSDataRecords.dat");
             a_SWSDataHandler.setFile(SWSDataFile);
             Generic_StaticIO.writeObject(a_SWSDataHandler, SWSDataHandler_File);
-            CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
+            Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
             a_CASAreaEastingNorthingDataHandler = init_CASAreaEastingNorthingDataHandler(
                     handleOutOfMemoryError);
             _FemalePopulation_HashSet = new HashSet<>();
@@ -605,8 +605,8 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
      */
     public void init_Population_HashSet(
             String area_String,
-            SWSDataHandler a_SWSDataHandler,
-            CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler,
+            Census_SWSDataHandler a_SWSDataHandler,
+            Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler,
             HashMap a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap,
             long nDataRecords,
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
@@ -648,8 +648,8 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
 
     public void init_Population_HashSet(
             String area_String,
-            SWSDataHandler a_SWSDataHandler,
-            CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler,
+            Census_SWSDataHandler a_SWSDataHandler,
+            Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler,
             HashMap a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap,
             long nDataRecords,
             long a_RecordID,
@@ -661,9 +661,9 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     handleOutOfMemoryError);
                     Vector_OSGBtoLatLon OSGBtoLatLon = ge.ve.getOSGBtoLatLon();
                     GENESIS_Grids grids = ge.getGENESIS_Grids();
-            SWSDataRecord a_SWSDataRecord;
-            CASAreaEastingNorthingDataRecord home_CASAreaEastingNorthingDataRecord;
-            CASAreaEastingNorthingDataRecord work_CASAreaEastingNorthingDataRecord;
+            Census_SWSDataRecord a_SWSDataRecord;
+            Census_CASAreaEastingNorthingDataRecord home_CASAreaEastingNorthingDataRecord;
+            Census_CASAreaEastingNorthingDataRecord work_CASAreaEastingNorthingDataRecord;
             //if (a_RecordID % 6923 == 0) {
             //if (a_RecordID % 1000 = 0) {
             System.out.println("Flow " + a_RecordID + " out of " + nDataRecords);
@@ -672,7 +672,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             String a_ZoneCode = new String(a_SWSDataRecord.getZone_Code());
             if (a_ZoneCode.startsWith(area_String)
                     && a_SWSDataRecord.get_Destination_Zone_Code().startsWith(area_String)) {
-                home_CASAreaEastingNorthingDataRecord = (CASAreaEastingNorthingDataRecord) a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap.get(new String(a_SWSDataRecord.getZone_Code()));
+                home_CASAreaEastingNorthingDataRecord = (Census_CASAreaEastingNorthingDataRecord) a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap.get(new String(a_SWSDataRecord.getZone_Code()));
                 if (home_CASAreaEastingNorthingDataRecord == null) {
                     int debug = 1;
                     System.out.println("home_CASAreaEastingNorthingDataRecord == null _RecordID " + a_RecordID);
@@ -691,7 +691,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     // Everyone in an output area travelling to the same destination
                     // is collected into the same household which is probably not right!!!!
                     GENESIS_Household a_Household = new GENESIS_Household(homeCentroid_Point2D);
-                    work_CASAreaEastingNorthingDataRecord = (CASAreaEastingNorthingDataRecord) a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap.get(a_SWSDataRecord.get_Destination_Zone_Code());
+                    work_CASAreaEastingNorthingDataRecord = (Census_CASAreaEastingNorthingDataRecord) a_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap.get(a_SWSDataRecord.get_Destination_Zone_Code());
                     if (work_CASAreaEastingNorthingDataRecord == null) {
                         int debug = 1;
                         System.out.println("work_CASAreaEastingNorthingDataRecord == null _RecordID " + a_RecordID);
@@ -780,15 +780,15 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         }
     }
 
-    public SWSDataHandler getSWSDataHandler(File file) {
-        SWSDataHandler result = null;
+    public Census_SWSDataHandler getSWSDataHandler(File file) {
+        Census_SWSDataHandler result = null;
         try {
-            result = (SWSDataHandler) Generic_StaticIO.readObject(file);
+            result = (Census_SWSDataHandler) Generic_StaticIO.readObject(file);
             result.init_Logger(Level.ALL, _Directory);
         } catch (Exception e) {
             if (e instanceof InvalidClassException) {
                 //} catch (InvalidClassException e) {
-                result = new SWSDataHandler(this.ge.get_Directory(false), true);
+                result = new Census_SWSDataHandler(this.ge.get_Directory(false), true);
                 Generic_StaticIO.writeObject(result, file);
                 result.init_Logger(Level.ALL, _Directory);
             }

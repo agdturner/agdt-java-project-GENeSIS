@@ -25,7 +25,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Male;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_PersonFactory;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Person;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASAreaEastingNorthingDataRecord;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataRecord;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.grids.GENESIS_Grids;
@@ -1059,7 +1059,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      * @return
      */
 //    public Vector_Point2D getScreen_Point2D(
-//            CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord,
+//            Census_CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord,
 //            int a_DecimalPlacePrecision) {
 //        Vector_Point2D result;
 //        double a_Easting = a_CASAreaEastingNorthingDataRecord.get_Easting();
@@ -1085,7 +1085,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      */
     public Vector_Point2D get_OSGB_To_LatLon_Point2D(
             Vector_OSGBtoLatLon OSGBtoLatLon, 
-            CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord,
+            Census_CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord,
             int a_DecimalPlacePrecision) {
         Vector_Point2D result;
         double a_Easting = a_CASAreaEastingNorthingDataRecord.get_Easting();

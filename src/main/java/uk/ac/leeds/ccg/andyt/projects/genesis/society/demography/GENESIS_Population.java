@@ -27,10 +27,10 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Collections;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Time;
 import uk.ac.leeds.ccg.andyt.projects.genesis.visualisation.GENESIS_AgeGenderBarChart;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.AbstractCASDataRecord;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CAS001DataHandler;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CAS001DataRecord;
-import uk.ac.leeds.ccg.andyt.agdtcensus.cas.CASDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS001DataHandler;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS001DataRecord;
+import uk.ac.leeds.ccg.andyt.census.core.Census_CASDataHandler;
 
 /**
  * A class for storing population count statistics. The statistics are stored in
@@ -476,7 +476,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         File lut_File = new File(
                 theLUTDataGENESISWorkspace,
                 "LookUpMSOAfromOAHashMap.thisFile");
-        CASDataHandler aCASDataHandler = new CASDataHandler(
+        Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler(
                 theMOSESWorkspace, "OA");
         HashMap<String, String> lut = aCASDataHandler.get_LookUpMSOAfromOAHashMap();
         Generic_StaticIO.writeObject(lut, lut_File);
@@ -508,7 +508,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         File lut_File = new File(
                 theLUTDataGENESISWorkspace,
                 "LookUpMSOAfromOATreeMap.thisFile");
-        CASDataHandler aCASDataHandler = new CASDataHandler(
+        Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler(
                 theMOSESWorkspace, "OA");
         HashMap<String, String> lutHashMap = aCASDataHandler.get_LookUpMSOAfromOAHashMap();
         TreeMap<String, String> lutTreeMap = new TreeMap<String, String>();
@@ -868,7 +868,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             String areaCode) {
         TreeMap<String, GENESIS_Population> result = new TreeMap<String, GENESIS_Population>();
         // Initialisation
-        CASDataHandler aCASDataHandler = new CASDataHandler(
+        Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler(
                 theMOSESWorkspace, "OA");
         HashSet<String> outputAreas = aCASDataHandler.getOACodes_HashSet(areaCode);
         System.out.println(outputAreas.size());
@@ -898,14 +898,14 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         aZoneCodeRecordID_HashMap = (HashMap<String, Long>) Generic_StaticIO.readObject(
                 aZoneCodeRecordID_HashMap_File);
 
-        CAS001DataHandler aCAS001DataHandler = aCASDataHandler.getCAS001DataHandler();
-        AbstractCASDataRecord aCASDataRecord;
+        Census_CAS001DataHandler aCAS001DataHandler = aCASDataHandler.getCAS001DataHandler();
+        Census_AbstractDataRecord aCASDataRecord;
 
         Iterator<String> ite = outputAreas.iterator();
 
         Long recordID;
         String outputAreaCode;
-        CAS001DataRecord aCAS001DataRecord;// = aCAS001DataHandler.getCAS001DataRecord(0);
+        Census_CAS001DataRecord aCAS001DataRecord;// = aCAS001DataHandler.getCAS001DataRecord(0);
         while (ite.hasNext()) {
             outputAreaCode = ite.next();
             recordID = aZoneCodeRecordID_HashMap.get(outputAreaCode);
@@ -964,7 +964,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             long minimumAgeInYears,
             long maximumAgeInYears,
             GENESIS_Population pop,
-            CAS001DataRecord aCAS001DataRecord) {
+            Census_CAS001DataRecord aCAS001DataRecord) {
         BigDecimal population = null;
         GENESIS_AgeBound ageBound = new GENESIS_AgeBound(
                 minimumAgeInYears,
