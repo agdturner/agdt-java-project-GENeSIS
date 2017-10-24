@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import uk.ac.leeds.ccg.andyt.projects.genesis.process.AbstractTrafficModel;
+import uk.ac.leeds.ccg.andyt.projects.genesis.process.GENESIS_AbstractModelTraffic;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Envelope2D;
 
 /**
@@ -46,8 +46,8 @@ public class GENESIS_EnvironmentTest {
 //    public void testGetTrafficModel() {
 //        System.out.println("getTrafficModel");
 //        GENESIS_Environment instance = new GENESIS_Environment();
-//        AbstractTrafficModel expResult = null;
-//        AbstractTrafficModel result = instance.getTrafficModel();
+//        GENESIS_AbstractModelTraffic expResult = null;
+//        GENESIS_AbstractModelTraffic result = instance.getTrafficModel();
 //        assertEquals(expResult, result);
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
