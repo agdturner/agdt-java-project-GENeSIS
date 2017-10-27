@@ -6,7 +6,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.grids;
 
 import java.math.BigDecimal;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Object;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_LineSegment2D;
@@ -25,7 +25,7 @@ public class GENESIS_Grids extends GENESIS_Object {
     }
 
     public Vector_Point2D getCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             Vector_Point2D p,
             BigDecimal toRoundToX_BigDecimal,
             BigDecimal toRoundToY_BigDecimal,
@@ -57,7 +57,7 @@ public class GENESIS_Grids extends GENESIS_Object {
      * precision arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             Random random,
             Vector_Point2D p,
             double distance,
@@ -107,7 +107,7 @@ public class GENESIS_Grids extends GENESIS_Object {
      * arithmetic.
      */
     public Vector_Point2D getRandom_Point2D(
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             Random random,
             Vector_Point2D p,
             BigDecimal distance,
@@ -132,7 +132,7 @@ public class GENESIS_Grids extends GENESIS_Object {
      * @return A randomly selected cell centroid in a_Grid2DSquareCell
      */
     public Vector_Point2D getRandomCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             Random random,
             Vector_Point2D p,
             BigDecimal distance,
@@ -175,7 +175,7 @@ public class GENESIS_Grids extends GENESIS_Object {
      * @return
      */
     public Vector_Point2D getRandomCellCentroid_Point2D(
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             Random random,
             int decimalPlacePrecision,
             boolean handleOutOfMemoryError) {

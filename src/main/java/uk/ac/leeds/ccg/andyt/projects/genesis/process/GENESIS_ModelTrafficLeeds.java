@@ -1,9 +1,9 @@
 package uk.ac.leeds.ccg.andyt.projects.genesis.process;
 
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.chunk.Grids_AbstractGrid2DSquareCellDoubleChunkFactory;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.chunk.Grids_Grid2DSquareCellDoubleChunkMapFactory;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDoubleFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.chunk.Grids_AbstractGridChunkDoubleFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.chunk.Grids_GridChunkDoubleMapFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
 import java.io.File;
 import java.io.InvalidClassException;
 import java.math.BigDecimal;
@@ -466,9 +466,9 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         // Initialise AgentEnvironment._network_Grid2DSquareCellDoubleFactory
         int networkChunkNCols = 512;
         int networkChunkNRows = 512;
-        Grids_AbstractGrid2DSquareCellDoubleChunkFactory network_GDCF;
-        network_GDCF = new Grids_Grid2DSquareCellDoubleChunkMapFactory();
-        ge._network_Grid2DSquareCellDoubleFactory = new Grids_Grid2DSquareCellDoubleFactory(
+        Grids_AbstractGridChunkDoubleFactory network_GDCF;
+        network_GDCF = new Grids_GridChunkDoubleMapFactory();
+        ge._network_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
                 aDirectory_File,
                 networkChunkNRows,
                 networkChunkNCols,
@@ -485,7 +485,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         //_GENESIS_Environment._network_Grid2DSquareCellDoubleFactory.setMemoryReserve(memoryReserve);
         //network_Grid2DSquareCellDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
         // Initialise AgentEnvironment._network_Grid2DSquareCellDouble
-        ge._network_Grid2DSquareCellDouble = (Grids_Grid2DSquareCellDouble) ge._network_Grid2DSquareCellDoubleFactory.create(
+        ge._network_Grid2DSquareCellDouble = (Grids_GridDouble) ge._network_Grid2DSquareCellDoubleFactory.create(
                 new File(aDirectory_File, "Network"),
                 networkNRows_long,
                 networkNCols_long,
@@ -508,8 +508,8 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         // Initialise AgentEnvironment._reporting_Grid2DSquareCellDoubleFactory
         int reportingChunkNCols = 512;
         int reportingChunkNRows = 512;
-        Grids_AbstractGrid2DSquareCellDoubleChunkFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_Grid2DSquareCellDoubleChunkMapFactory();
-        ge._reporting_Grid2DSquareCellDoubleFactory = new Grids_Grid2DSquareCellDoubleFactory(
+        Grids_AbstractGridChunkDoubleFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_GridChunkDoubleMapFactory();
+        ge._reporting_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
                 aDirectory_File,
                 reportingChunkNRows,
                 reportingChunkNCols,
@@ -535,7 +535,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         //_GENESIS_Environment._reporting_Grid2DSquareCellDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
         // Initialise AgentEnvironment._reportingPopulationDensity_Grid2DSquareCellDouble
         ge._reportingPopulationDensity_Grid2DSquareCellDouble
-                = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensity"),
+                = (Grids_GridDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensity"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,
@@ -543,7 +543,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         ge._reportingPopulationDensity_Grid2DSquareCellDouble.initCells(0, handleOutOfMemoryError);
         // Initialise AgentEnvironment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble
         ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble
-                = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityAggregate"),
+                = (Grids_GridDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,
@@ -551,7 +551,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.initCells(0, handleOutOfMemoryError);
         // Initialise AgentEnvironment._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble
         ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble
-                = (Grids_Grid2DSquareCellDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityMovingAggregate"),
+                = (Grids_GridDouble) ge._reporting_Grid2DSquareCellDoubleFactory.create(new File(aDirectory_File, "PopulationDensityMovingAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
                         reporting_Dimensions,

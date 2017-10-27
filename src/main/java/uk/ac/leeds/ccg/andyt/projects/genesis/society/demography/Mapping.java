@@ -7,8 +7,8 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.society.demography;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
 import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -22,7 +22,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Person;
 public class Mapping {
 
     public static void _OutputMap(
-            Grids_AbstractGrid2DSquareCell _Grid2DSquareCell,
+            Grids_AbstractGridNumber _Grid2DSquareCell,
             File _File,
             String _Type,
             Grids_ImageExporter _ImageExporter,
@@ -50,7 +50,7 @@ public class Mapping {
             GENESIS_Environment _Environment,
             Object[] _Population) {
         boolean _HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
-        Grids_Grid2DSquareCellDouble _Denisty_Map_Population = (Grids_Grid2DSquareCellDouble) _Environment._reporting_Grid2DSquareCellDoubleFactory.create(
+        Grids_GridDouble _Denisty_Map_Population = (Grids_GridDouble) _Environment._reporting_Grid2DSquareCellDoubleFactory.create(
                 _Environment._reporting_Grid2DSquareCellDouble);
         //long _NRows = _Denisty_Map_Population.getNRows(_HandleOutOfMemoryError);
         //long _NCols = _Denisty_Map_Population.getNCols(_HandleOutOfMemoryError);
@@ -100,7 +100,7 @@ public class Mapping {
      * @param _CompositionLatency
      */
     public static void _AddTo_Population_Movement_Composite_Map(
-            Grids_Grid2DSquareCellDouble _Population_Location_Composite_Map,
+            Grids_GridDouble _Population_Location_Composite_Map,
             HashSet _Population_Alive_Female,
             HashSet _Population_Alive_Male,
             double _CompositionLatency,

@@ -10,9 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDouble;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_Grid2DSquareCellDoubleFactory;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDoubleFactory;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.grids.GENESIS_Grids;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.GENESIS_Files;
@@ -75,24 +75,24 @@ public class GENESIS_Environment
     /**
      * A factory for creating Grid2DSquareCellDouble of reporting dimensions
      */
-    public transient Grids_Grid2DSquareCellDoubleFactory _reporting_Grid2DSquareCellDoubleFactory;
+    public transient Grids_GridDoubleFactory _reporting_Grid2DSquareCellDoubleFactory;
     /**
      * An example of a reporting grid for tidy coding.
      */
-    public transient Grids_Grid2DSquareCellDouble _reporting_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble _reporting_Grid2DSquareCellDouble;
     /**
      * A grid for storing Population Density at any tick.
      */
-    public transient Grids_Grid2DSquareCellDouble _reportingPopulationDensity_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble _reportingPopulationDensity_Grid2DSquareCellDouble;
     /**
      * A grid for storing cumulative Population Density.
      */
-    public transient Grids_Grid2DSquareCellDouble _reportingPopulationDensityAggregate_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble _reportingPopulationDensityAggregate_Grid2DSquareCellDouble;
     /**
      * A grid for storing cumulative Population Density of people that are
      * moving.
      */
-    public transient Grids_Grid2DSquareCellDouble _reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble _reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble;
     
     public GENESIS_Grids Grids;
     /**
@@ -104,11 +104,11 @@ public class GENESIS_Environment
     /**
      * A factory for creating Grid2DSquareCellDouble of network dimensions
      */
-    public transient Grids_Grid2DSquareCellDoubleFactory _network_Grid2DSquareCellDoubleFactory;
+    public transient Grids_GridDoubleFactory _network_Grid2DSquareCellDoubleFactory;
     /**
      * An example of a network grid for tidy coding.
      */
-    public transient Grids_Grid2DSquareCellDouble _network_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble _network_Grid2DSquareCellDouble;
     public static final int DecimalPlacePrecisionForPopulationProbabilities = 8;
     public static final RoundingMode RoundingModeForPopulationProbabilities = RoundingMode.HALF_EVEN;
     public static final MathContext MathContextForPopulationProbabilities = new MathContext(
@@ -124,7 +124,7 @@ public class GENESIS_Environment
 //    public double _YRange_double;
 //    public double _XMin_double;
 //    public double _YMin_double;
-    public transient Grids_AbstractGrid2DSquareCell _Resource_Grid2DSquareCellDouble;
+    public transient Grids_AbstractGridNumber _Resource_Grid2DSquareCellDouble;
 //    public Random _Random;
     public GENESIS_Time Time;
     public GENESIS_Time _initial_Time;
@@ -208,8 +208,8 @@ public class GENESIS_Environment
             File Directory,
             GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
-            Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
-            Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
+            Grids_GridDoubleFactory network_Grid2DSquareCellDoubleFactory,
+            Grids_GridDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
                 Directory,
@@ -224,8 +224,8 @@ public class GENESIS_Environment
             File Directory,
             GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
-            Grids_Grid2DSquareCellDoubleFactory network_Grid2DSquareCellDoubleFactory,
-            Grids_Grid2DSquareCellDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
+            Grids_GridDoubleFactory network_Grid2DSquareCellDoubleFactory,
+            Grids_GridDoubleFactory reporting_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
                 Directory,
@@ -252,7 +252,7 @@ public class GENESIS_Environment
             File Directory,
             GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time,
-            Grids_Grid2DSquareCellDoubleFactory a_Grid2DSquareCellDoubleFactory,
+            Grids_GridDoubleFactory a_Grid2DSquareCellDoubleFactory,
             boolean handleOutOfMemoryError) {
         init_GENESIS_Environment(
                 Directory,
@@ -267,8 +267,8 @@ public class GENESIS_Environment
     public GENESIS_Environment(
             GENESIS_AbstractModel a_Model,
             GENESIS_Time _Time,
-            Grids_Grid2DSquareCellDoubleFactory _Grid2DSquareCellDoubleFactory,
-            Grids_Grid2DSquareCellDouble _World_Grid2DSquareCellDouble,
+            Grids_GridDoubleFactory _Grid2DSquareCellDoubleFactory,
+            Grids_GridDouble _World_Grid2DSquareCellDouble,
             boolean handleOutOfMemoryError) {
         this._AbstractModel = a_Model;
         this.Time = new GENESIS_Time(_Time);

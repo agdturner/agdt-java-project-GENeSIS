@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGrid2DSquareCell;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
 import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollectionManager;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_FemaleCollection;
@@ -347,7 +347,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
     }
 
     public void visualiseNetworkOnGrid(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
+            Grids_AbstractGridNumber a_Grid2DSquareCell,
             HashSet<Vector_Network2D> a_Network2D_HashSet,
             File a_Directory) {
         boolean handleOutOfMemoryError = ge.HandleOutOfMemoryError;
@@ -424,7 +424,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 
     public void visualiseNetworkOnGrid(
             HashSet<Vector_Network2D> a_Network2D_HashSet,
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
+            Grids_AbstractGridNumber a_Grid2DSquareCell,
             File a_Directory) {
         int width = (int) a_Grid2DSquareCell.getNCols(ge.HandleOutOfMemoryError);
         int height = (int) a_Grid2DSquareCell.getNRows(ge.HandleOutOfMemoryError);
@@ -501,7 +501,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      * @param a_Grid2DSquareCell The grid to visualise on.
      */
     public void visualiseNetworkOnGrid1(
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
+            Grids_AbstractGridNumber a_Grid2DSquareCell,
             Vector_Envelope2D a_VectorEnvelope) {
         int width = (int) a_Grid2DSquareCell.getNCols(true);
         int height = (int) a_Grid2DSquareCell.getNRows(true);
@@ -602,7 +602,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      */
     public void visualiseNetworkOnGrid1(
             HashSet<Vector_Network2D> a_Network2D_HashSet,
-            Grids_AbstractGrid2DSquareCell a_Grid2DSquareCell,
+            Grids_AbstractGridNumber a_Grid2DSquareCell,
             Vector_Envelope2D a_VectorEnvelope) {
         int width = (int) a_Grid2DSquareCell.getNCols(true);
         int height = (int) a_Grid2DSquareCell.getNRows(true);
@@ -1166,7 +1166,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
             GENESIS_Person aPerson,
             long aPersonPoint2DRowIndex,
             long aPersonPoint2DColIndex,
-            Grids_AbstractGrid2DSquareCell g,
+            Grids_AbstractGridNumber g,
             int a_DecimalPlacePrecision) {
         Vector_Environment ve;
         ve = new Vector_Environment();
