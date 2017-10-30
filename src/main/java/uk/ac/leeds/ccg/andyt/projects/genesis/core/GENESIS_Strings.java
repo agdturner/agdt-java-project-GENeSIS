@@ -5,11 +5,13 @@
  */
 package uk.ac.leeds.ccg.andyt.projects.genesis.core;
 
+import uk.ac.leeds.ccg.andyt.generic.core.Generic_Strings;
+
 /**
  *
  * @author geoagdt
  */
-public class GENESIS_Strings {
+public class GENESIS_Strings extends Generic_Strings {
     
     protected String String_Grids = "Grids";
     
