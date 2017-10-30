@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
-import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
+import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollectionManager;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_FemaleCollection;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_MaleCollection;
@@ -361,7 +361,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
                 a_Directory,
                 time_String + "." + type);
         aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getGridProcessor(),
+                ge.ge.getProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -436,7 +436,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
                 a_Directory,
                 time_String + "." + type);
         aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getGridProcessor(),
+                ge.ge.getProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -515,7 +515,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
                 directory,
                 a_Time_toString + "." + type);
         _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getGridProcessor(),
+                ge.ge.getProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);
@@ -616,7 +616,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
                 directory,
                 a_Time_toString + "." + type);
         _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getGridProcessor(),
+                ge.ge.getProcessor(),
                 file,
                 type,
                 ge.HandleOutOfMemoryError);

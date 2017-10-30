@@ -14,7 +14,7 @@ import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
 import uk.ac.leeds.ccg.andyt.generic.memory.Generic_TestMemory;
 import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Time;
 import uk.ac.leeds.ccg.andyt.grids.core.*;
-import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
+import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
 import uk.ac.leeds.ccg.andyt.projects.genesis.grids.GENESIS_Grids;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;

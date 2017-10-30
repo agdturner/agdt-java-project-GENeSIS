@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
-import uk.ac.leeds.ccg.andyt.grids.exchange.Grids_ImageExporter;
+import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Male;
@@ -28,7 +28,7 @@ public class Mapping {
             Grids_ImageExporter _ImageExporter,
             GENESIS_Environment _Environment) {
         _ImageExporter.toGreyScaleImage(_Grid2DSquareCell,
-                _Environment.ge.getGridProcessor(),
+                _Environment.ge.getProcessor(),
                 _File,
                 _Type,
                 _Environment.HandleOutOfMemoryError);
@@ -85,7 +85,7 @@ public class Mapping {
         }
         _ImageExporter.toGreyScaleImage(
                 _Denisty_Map_Population,
-                _Environment.ge.getGridProcessor(),
+                _Environment.ge.getProcessor(),
                 _File, _Type, _HandleOutOfMemoryError);
 
     }
