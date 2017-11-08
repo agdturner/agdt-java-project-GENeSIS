@@ -25,6 +25,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataHandler
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataRecord;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataHandler;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataRecord;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.statistics.Grids_GridDoubleStatisticsNotUpdated;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 import uk.ac.leeds.ccg.andyt.vector.projection.Vector_OSGBtoLatLon;
@@ -469,12 +470,14 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         Grids_AbstractGridChunkDoubleFactory network_GDCF;
         network_GDCF = new Grids_GridChunkDoubleMapFactory();
         ge._network_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
+                ge.ge,
                 aDirectory_File,
+                -Double.MAX_VALUE,
                 networkChunkNRows,
                 networkChunkNCols,
-                network_GDCF,
-                ge.ge,
-                handleOutOfMemoryError);
+                new Grids_Dimensions(networkNRows_long, networkNCols_long),
+                new Grids_GridDoubleStatisticsNotUpdated(ge.ge),
+                network_GDCF);
         Grids_Dimensions network_Dimensions = new Grids_Dimensions(
                 reportingCellsize,
                 minx,
@@ -510,12 +513,14 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         int reportingChunkNRows = 512;
         Grids_AbstractGridChunkDoubleFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_GridChunkDoubleMapFactory();
         ge._reporting_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
+                ge.ge,
                 aDirectory_File,
+                -Double.MAX_VALUE,
                 reportingChunkNRows,
                 reportingChunkNCols,
-                reporting_Grid2DSquareCellDoubleChunkFactory,
-                ge.ge,
-                handleOutOfMemoryError);
+                network_Dimensions,
+                new Grids_GridDoubleStatisticsNotUpdated(ge.ge),
+                reporting_Grid2DSquareCellDoubleChunkFactory);
         BigDecimal maxX;
         BigDecimal maxY;
         BigDecimal reportingScaleGeneralisation = network_Dimensions.getCellsize().divide(reportingCellsize);
