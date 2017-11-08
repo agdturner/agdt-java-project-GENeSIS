@@ -574,8 +574,8 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         if (getIsWorkTime()) {
             if (Location.equals(_Work_Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
                         _SpeedDefault_BigDecimal.doubleValue(),
                         ge.HandleOutOfMemoryError);
                 _Speed_BigDecimal = BigDecimal.ZERO;
@@ -601,8 +601,8 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         } else {
             if (Location.equals(_Household._Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
                         _SpeedDefault_BigDecimal.doubleValue(),
                         ge.HandleOutOfMemoryError);
                 _Speed_BigDecimal = BigDecimal.ZERO;

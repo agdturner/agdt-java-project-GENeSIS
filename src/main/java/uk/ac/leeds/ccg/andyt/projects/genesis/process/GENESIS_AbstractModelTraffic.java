@@ -774,10 +774,10 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 //            boolean movementDone = false;
 //            double distance = a_Person._Speed;
 //            BigDecimal distance0_BigDecimal = new BigDecimal(distance);
-//            long row = _AggregatePopulationDensity_Grid2DSquareCellDouble.getCellRowIndex(
+//            long row = _AggregatePopulationDensity_Grid2DSquareCellDouble.getRow(
 //                    a_Person._Point2D._y,
 //                    _GENESIS_Environment.HandleOutOfMemoryError);
-//            long col = _AggregatePopulationDensity_Grid2DSquareCellDouble.getCellColIndex(
+//            long col = _AggregatePopulationDensity_Grid2DSquareCellDouble.getCellCol(
 //                    a_Person._Point2D._x,
 //                    _GENESIS_Environment.HandleOutOfMemoryError);
 //            while (distance > 0 && !movementDone) {
@@ -1069,8 +1069,8 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 //                a_Northing);
 //        double a_x = ((a_LatLon[1] - _GENESIS_Environment._XMin_double) * (double) _NCols) / _GENESIS_Environment._XRange_double;
 //        double a_y = ((a_LatLon[0] - _GENESIS_Environment._YMin_double) * (double) _NRows) / _GENESIS_Environment._YRange_double;
-//        long a_row = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_y, _GENESIS_Environment.HandleOutOfMemoryError);
-//        long a_col = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(a_x, _GENESIS_Environment.HandleOutOfMemoryError);
+//        long a_row = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getRow(a_y, _GENESIS_Environment.HandleOutOfMemoryError);
+//        long a_col = this._GENESIS_Environment._World_Grid2DSquareCellDouble.getRow(a_x, _GENESIS_Environment.HandleOutOfMemoryError);
 //        result = new Vector_Point2D(
 //                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellXBigDecimal(a_col, _GENESIS_Environment.HandleOutOfMemoryError),
 //                this._GENESIS_Environment._World_Grid2DSquareCellDouble.getCellYBigDecimal(a_row, _GENESIS_Environment.HandleOutOfMemoryError),
@@ -1135,10 +1135,10 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 //        long cellColIndex;
 //        for (int i = 0; i
 //                < number; i++) {
-//            cellRowIndex = _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellRowIndex(
+//            cellRowIndex = _GENESIS_Environment._World_Grid2DSquareCellDouble.getRow(
 //                    _GENESIS_Environment._Random, _GENESIS_Environment.HandleOutOfMemoryError);
 //            cellColIndex =
-//                    _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellColIndex(
+//                    _GENESIS_Environment._World_Grid2DSquareCellDouble.getCellCol(
 //                    _GENESIS_Environment._Random, _GENESIS_Environment.HandleOutOfMemoryError);
 //        }
 //    }

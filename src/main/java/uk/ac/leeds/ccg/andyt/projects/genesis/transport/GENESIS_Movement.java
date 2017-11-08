@@ -146,8 +146,8 @@ public class GENESIS_Movement implements Serializable {
 //        long a_NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(true);
 //        double a_x = ((a_Lon - _Environment._XMin_double) * (double) a_NCols) / _Environment._XRange_double;
 //        double a_y = ((a_Lat - _Environment._YMin_double) * (double) a_NRows) / _Environment._YRange_double;
-//        long a_row = this._Environment._network_Grid2DSquareCellDouble.getCellRowIndex(a_y, _Environment.HandleOutOfMemoryError);
-//        long a_col = this._Environment._network_Grid2DSquareCellDouble.getCellRowIndex(a_x, _Environment.HandleOutOfMemoryError);
+//        long a_row = this._Environment._network_Grid2DSquareCellDouble.getRow(a_y, _Environment.HandleOutOfMemoryError);
+//        long a_col = this._Environment._network_Grid2DSquareCellDouble.getRow(a_x, _Environment.HandleOutOfMemoryError);
 //        result = new Vector_Point2D(
 //                this._Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(a_col, _Environment.HandleOutOfMemoryError),
 //                this._Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(a_row, _Environment.HandleOutOfMemoryError),
@@ -352,8 +352,8 @@ public class GENESIS_Movement implements Serializable {
 //            return result;
 //        }
 //        result = new Vector_Network2D();
-//        long row = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(_Origin_Point2D.Y, _Environment.HandleOutOfMemoryError);
-//        long col = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(_Origin_Point2D.X, _Environment.HandleOutOfMemoryError);
+//        long row = _Environment._network_Grid2DSquareCellDouble.getRow(_Origin_Point2D.Y, _Environment.HandleOutOfMemoryError);
+//        long col = _Environment._network_Grid2DSquareCellDouble.getCellCol(_Origin_Point2D.X, _Environment.HandleOutOfMemoryError);
 //        Vector_Point2D a_Point2D = _Origin_Point2D;
 //        Vector_Point2D b_Point2D;
 //        double _PI_By_Eight = Math.PI / 8.0d;
