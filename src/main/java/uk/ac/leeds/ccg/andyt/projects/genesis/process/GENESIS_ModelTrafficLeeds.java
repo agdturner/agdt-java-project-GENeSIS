@@ -747,8 +747,8 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                             a_Female._SpeedDefault_BigDecimal = _SpeedDefault_BigDecimal;
                             a_Female._Network2D = new Vector_Network2D(null);
                             a_Female._reporting_VectorNetwork2D = new Vector_Network2D(null);
-                            a_Female._reporting_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(a_Household._Point2D.Y, HandleOutOfMemoryError),
-                                    ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(a_Household._Point2D.X, HandleOutOfMemoryError),
+                            a_Female._reporting_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(a_Household._Point2D.Y, HandleOutOfMemoryError),
+                                    ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(a_Household._Point2D.X, HandleOutOfMemoryError),
                                     HandleOutOfMemoryError);
 //                        a_Female._Network2D.addToNetwork(
 //                                a_Female.Location,

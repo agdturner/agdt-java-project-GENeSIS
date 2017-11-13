@@ -34,8 +34,8 @@ public class GENESIS_Grids extends GENESIS_Object {
         //   BigDecimal toRoundBigDecimal,
         //  BigDecimal toRoundToBigDecimal);
         Vector_Point2D result;
-        long row = g.getCellRowIndex(p.Y, handleOutOfMemoryError);
-        long col = g.getCellColIndex(p.X, handleOutOfMemoryError);
+        long row = g.getRow(p.Y, handleOutOfMemoryError);
+        long col = g.getCol(p.X, handleOutOfMemoryError);
         result = new Vector_Point2D(
                 ge.ve,
                 g.getCellXBigDecimal(
@@ -182,8 +182,8 @@ public class GENESIS_Grids extends GENESIS_Object {
         Vector_Point2D result;
         int counter = 0;
         do {
-            long col = g.getCellColIndex(random, handleOutOfMemoryError);
-            long row = g.getCellColIndex(random, handleOutOfMemoryError);
+            long col = g.getCol(random, handleOutOfMemoryError);
+            long row = g.getCol(random, handleOutOfMemoryError);
             result = new Vector_Point2D(
                     null,
                     g.getCellXBigDecimal(col, handleOutOfMemoryError),

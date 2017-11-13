@@ -650,13 +650,13 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         long reportingCol;
         BigDecimal distanceToHeading_BigDecimal;
         while (tdistance_BigDecimal.compareTo(BigDecimal.ZERO) == 1 && !movementDone) {
-            networkRow = ge._network_Grid2DSquareCellDouble.getCellRowIndex(Location.Y,
+            networkRow = ge._network_Grid2DSquareCellDouble.getRow(Location.Y,
                     ge.HandleOutOfMemoryError);
-            networkCol = ge._network_Grid2DSquareCellDouble.getCellColIndex(Location.X,
+            networkCol = ge._network_Grid2DSquareCellDouble.getCol(Location.X,
                     ge.HandleOutOfMemoryError);
-            reportingRow = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(Location.Y,
+            reportingRow = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y,
                     ge.HandleOutOfMemoryError);
-            reportingCol = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(Location.X,
+            reportingCol = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(Location.X,
                     ge.HandleOutOfMemoryError);
             /*
              * If distanceToHeading is less than tdistance_BigDecimal, then get
@@ -867,8 +867,8 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
 
                 BigDecimal next_x = ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(networkCol, ge.HandleOutOfMemoryError);
                 BigDecimal next_y = ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, ge.HandleOutOfMemoryError);
-                Grids_2D_ID_long next_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellRowIndex(next_y, ge.HandleOutOfMemoryError),
-                        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellColIndex(next_x, ge.HandleOutOfMemoryError),
+                Grids_2D_ID_long next_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(next_y, ge.HandleOutOfMemoryError),
+                        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(next_x, ge.HandleOutOfMemoryError),
                         ge.HandleOutOfMemoryError);
                 if (next_CellID.compareTo(_reporting_CellID) != 0) {
                     Vector_Point2D a_VectorPoint2D = new Vector_Point2D(

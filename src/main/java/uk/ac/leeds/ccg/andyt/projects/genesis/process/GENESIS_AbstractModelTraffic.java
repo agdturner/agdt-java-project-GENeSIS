@@ -983,8 +983,8 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
             Vector_Point2D a_Point2D) {
         Vector_Point2D result_Point2D;
         Vector_Point2D b_Point2D;
-        long aRowIndex = ge._network_Grid2DSquareCellDouble.getCellRowIndex(a_Point2D.Y, ge.HandleOutOfMemoryError);
-        long aColIndex = ge._network_Grid2DSquareCellDouble.getCellColIndex(a_Point2D.X, ge.HandleOutOfMemoryError);
+        long aRowIndex = ge._network_Grid2DSquareCellDouble.getRow(a_Point2D.Y, ge.HandleOutOfMemoryError);
+        long aColIndex = ge._network_Grid2DSquareCellDouble.getCol(a_Point2D.X, ge.HandleOutOfMemoryError);
         long resultRowIndex = 0L;
         long resultColIndex = 0L;
         do {

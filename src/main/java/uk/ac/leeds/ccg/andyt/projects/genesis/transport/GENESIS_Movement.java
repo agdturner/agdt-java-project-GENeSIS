@@ -269,9 +269,9 @@ public class GENESIS_Movement implements Serializable {
             return result;
         }
         result = new Vector_Network2D(this._Environment.ve);
-        long row = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(_Origin_Point2D.Y,
+        long row = _Environment._network_Grid2DSquareCellDouble.getRow(_Origin_Point2D.Y,
                 _Environment.HandleOutOfMemoryError);
-        long col = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(_Origin_Point2D.X,
+        long col = _Environment._network_Grid2DSquareCellDouble.getCol(_Origin_Point2D.X,
                 _Environment.HandleOutOfMemoryError);
         Vector_Point2D a_Point2D = grids.getCellCentroid_Point2D(
                 this._Environment._network_Grid2DSquareCellDouble,
@@ -429,10 +429,10 @@ public class GENESIS_Movement implements Serializable {
         boolean HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
         //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HandleOutOfMemoryError);
         //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HandleOutOfMemoryError);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(origin_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(origin_Point2D.X, HandleOutOfMemoryError);
-        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(destination_Point2D.Y, HandleOutOfMemoryError);
-        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(destination_Point2D.X, HandleOutOfMemoryError);
+        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(origin_Point2D.Y, HandleOutOfMemoryError);
+        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(origin_Point2D.X, HandleOutOfMemoryError);
+        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getRow(destination_Point2D.Y, HandleOutOfMemoryError);
+        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCol(destination_Point2D.X, HandleOutOfMemoryError);
         int _Movement;
         long rowDiff = _DestinationRow - _Point2DRow;
         if (rowDiff < 0) {
@@ -478,13 +478,13 @@ public class GENESIS_Movement implements Serializable {
         boolean HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
         //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HandleOutOfMemoryError);
         //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HandleOutOfMemoryError);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(origin_Point2D.Y,
+        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(origin_Point2D.Y,
                 HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(origin_Point2D.X,
+        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(origin_Point2D.X,
                 HandleOutOfMemoryError);
-        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(destination_Point2D.Y,
+        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getRow(destination_Point2D.Y,
                 HandleOutOfMemoryError);
-        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(destination_Point2D.X,
+        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCol(destination_Point2D.X,
                 HandleOutOfMemoryError);
         int _Movement = 4;
         long rowDiff = _DestinationRow - _Point2DRow;
@@ -535,8 +535,8 @@ public class GENESIS_Movement implements Serializable {
             int _Movement) {
         Vector_Point2D result;
         boolean HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(_Point2D.X, HandleOutOfMemoryError);
+        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(_Point2D.Y, HandleOutOfMemoryError);
+        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(_Point2D.X, HandleOutOfMemoryError);
         if (_Movement == 4) {
             return _Point2D;
         }
@@ -685,8 +685,8 @@ public class GENESIS_Movement implements Serializable {
 
         long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HandleOutOfMemoryError);
         long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HandleOutOfMemoryError);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getCellRowIndex(_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCellColIndex(_Point2D.X, HandleOutOfMemoryError);
+        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(_Point2D.Y, HandleOutOfMemoryError);
+        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(_Point2D.X, HandleOutOfMemoryError);
         long resultRow;
         long resultCol;
 
