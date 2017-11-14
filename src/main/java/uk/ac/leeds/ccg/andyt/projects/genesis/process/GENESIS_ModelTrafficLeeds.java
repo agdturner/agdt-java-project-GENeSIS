@@ -26,6 +26,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataRecord;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataHandler;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataRecord;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.statistics.Grids_GridDoubleStatisticsNotUpdated;
+import uk.ac.leeds.ccg.andyt.grids.process.Grids_Processor;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
 import uk.ac.leeds.ccg.andyt.vector.projection.Vector_OSGBtoLatLon;
@@ -37,8 +38,9 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
     /**
      * A class to generate a society Commuting to work in Leeds SWS.
      */
-    protected GENESIS_ModelTrafficLeeds() {}
-    
+    protected GENESIS_ModelTrafficLeeds() {
+    }
+
     public GENESIS_ModelTrafficLeeds(GENESIS_Environment ge) {
         super(ge);
     }
@@ -469,15 +471,22 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         int networkChunkNRows = 512;
         Grids_AbstractGridChunkDoubleFactory network_GDCF;
         network_GDCF = new Grids_GridChunkDoubleMapFactory();
+        Grids_Environment gridsEnv;
+        gridsEnv = ge.ge;
+        Grids_Processor gp;
+        gp = gridsEnv.getProcessor();
         ge._network_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
                 ge.ge,
                 aDirectory_File,
+                //gridsEnv.getFiles().getGeneratedGridDoubleDir(),
+                gp.GridChunkDoubleFactory,
+                network_GDCF,
+                //gp.DefaultGridChunkDoubleFactory,
                 -Double.MAX_VALUE,
                 networkChunkNRows,
                 networkChunkNCols,
                 new Grids_Dimensions(networkNRows_long, networkNCols_long),
-                new Grids_GridDoubleStatisticsNotUpdated(ge.ge),
-                network_GDCF);
+                new Grids_GridDoubleStatisticsNotUpdated(ge.ge));
         Grids_Dimensions network_Dimensions = new Grids_Dimensions(
                 reportingCellsize,
                 minx,
@@ -512,15 +521,22 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         int reportingChunkNCols = 512;
         int reportingChunkNRows = 512;
         Grids_AbstractGridChunkDoubleFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_GridChunkDoubleMapFactory();
+        Grids_Environment gridsEnv;
+        gridsEnv = ge.ge;
+        Grids_Processor gp;
+        gp = gridsEnv.getProcessor();
         ge._reporting_Grid2DSquareCellDoubleFactory = new Grids_GridDoubleFactory(
-                ge.ge,
+                gridsEnv,
                 aDirectory_File,
+                //gridsEnv.getFiles().getGeneratedGridDoubleDir(),
+                gp.GridChunkDoubleFactory,
+                reporting_Grid2DSquareCellDoubleChunkFactory,
+                //gp.DefaultGridChunkDoubleFactory,
                 -Double.MAX_VALUE,
                 reportingChunkNRows,
                 reportingChunkNCols,
                 network_Dimensions,
-                new Grids_GridDoubleStatisticsNotUpdated(ge.ge),
-                reporting_Grid2DSquareCellDoubleChunkFactory);
+                new Grids_GridDoubleStatisticsNotUpdated(gridsEnv));
         BigDecimal maxX;
         BigDecimal maxY;
         BigDecimal reportingScaleGeneralisation = network_Dimensions.getCellsize().divide(reportingCellsize);
@@ -664,8 +680,8 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
-                    Vector_OSGBtoLatLon OSGBtoLatLon = ge.ve.getOSGBtoLatLon();
-                    GENESIS_Grids grids = ge.getGENESIS_Grids();
+            Vector_OSGBtoLatLon OSGBtoLatLon = ge.ve.getOSGBtoLatLon();
+            GENESIS_Grids grids = ge.getGENESIS_Grids();
             Census_SWSDataRecord a_SWSDataRecord;
             Census_CASAreaEastingNorthingDataRecord home_CASAreaEastingNorthingDataRecord;
             Census_CASAreaEastingNorthingDataRecord work_CASAreaEastingNorthingDataRecord;
