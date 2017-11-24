@@ -212,7 +212,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     ge.Directory.getParentFile(),
                     Census_CASAreaEastingNorthingDataHandler.class.getCanonicalName() + ".thisFile");
             Generic_StaticIO.writeObject(a_CASAreaEastingNorthingDataHandler, file);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
             return a_CASAreaEastingNorthingDataHandler;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -241,7 +241,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             System.out.println("a_SWSDataHandler.getNDataRecords() " + a_SWSDataHandler.getNDataRecords());
             Census_SWSDataRecord a_SWSDataRecord = (Census_SWSDataRecord) a_SWSDataHandler.getDataRecord(0L);
             System.out.println("a_SWSDataRecord " + a_SWSDataRecord);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
             return a_SWSDataHandler;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -322,7 +322,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     nDataRecords,
                     a_FemaleCollection,
                     handleOutOfMemoryError);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -347,7 +347,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             boolean handleOutOfMemoryError) {
         try {
             _ImageExporter = new Grids_ImageExporter(ge.ge);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -370,7 +370,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             ge._TSMisc = new GENESIS_TravelingSalesman(
                     ge,
                     aMap_File);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -403,7 +403,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     _GENESIS_AgentCollectionManager,
                     handleOutOfMemoryError);
             ge.AgentEnvironment = a_GENESIS_AgentEnvironment;
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -431,7 +431,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     Math.max(ge._ToRoundToX_BigDecimal.scale(),
                             ge._ToRoundToY_BigDecimal.scale()));
             ge._DecimalPlacePrecisionForNetworkCalculations = ge._DecimalPlacePrecisionForNetwork + 2;
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {

@@ -43,7 +43,7 @@ public class GENESIS_Environment
     //= Logger.getLogger(sourcePackage);
 
     protected GENESIS_Files Files;
-    
+
     /**
      *
      */
@@ -93,7 +93,7 @@ public class GENESIS_Environment
      * moving.
      */
     public transient Grids_GridDouble _reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble;
-    
+
     public GENESIS_Grids Grids;
     /**
      * For storing the Envelope containing reporting grids. It is here for
@@ -143,14 +143,13 @@ public class GENESIS_Environment
     }
 
     /**
-     * Creates a new ge based on a_GENESIS_Environment.
-     * Because an instance of ge holds a references to all the
- data in a simulation this does not deep copy everything. Also most
- GENESIS Objects contain references to a ge instance, so
- that duplication is necessarily a multi stage process that has to use
- dummies to get all the references set up. This can be implemented more
- comprehensively as needed, but the depth of the copy is unlikely to go to
- the rootRoundIfNecessary of everything.
+     * Creates a new ge based on a_GENESIS_Environment. Because an instance of
+     * ge holds a references to all the data in a simulation this does not deep
+     * copy everything. Also most GENESIS Objects contain references to a ge
+     * instance, so that duplication is necessarily a multi stage process that
+     * has to use dummies to get all the references set up. This can be
+     * implemented more comprehensively as needed, but the depth of the copy is
+     * unlikely to go to the rootRoundIfNecessary of everything.
      *
      * @param ge The ge to deep copy.
      */
@@ -311,7 +310,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             initMemoryReserve();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -475,7 +474,7 @@ public class GENESIS_Environment
     public boolean swapDataAny(boolean handleOutOfMemoryError) {
         try {
             boolean result = swapDataAny();
-            tryToEnsureThereIsEnoughMemoryToContinue(
+            checkAndMaybeFreeMemory(
                     HandleOutOfMemoryErrorFalse);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -643,7 +642,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             swapChunks();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -665,7 +664,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             long result = swapChunks_Account();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -691,18 +690,19 @@ public class GENESIS_Environment
 
     protected long swapChunk_Account() {
         if (ge.isDataToSwap()) {
-            return ge.swapChunk_Account(
-                    HandleOutOfMemoryErrorFalse);
-        } else {
-            return 0;
+            if (ge.swapChunk(
+                    HandleOutOfMemoryErrorFalse)) {
+                return 1L;
+            }
         }
+        return 0L;
     }
 
     public void swapChunk(
             boolean handleOutOfMemoryError) {
         try {
             swapChunk();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -730,7 +730,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollections();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -748,7 +748,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             long result = swapToFile_AgentCollections_Account();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -770,7 +770,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             long result = swapToFile_AgentCollection_Account();
-            tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -800,10 +800,10 @@ public class GENESIS_Environment
      * @return
      */
     @Override
-    public boolean tryToEnsureThereIsEnoughMemoryToContinue(
+    public boolean checkAndMaybeFreeMemory(
             boolean handleOutOfMemoryError) {
         try {
-            if (tryToEnsureThereIsEnoughMemoryToContinue()) {
+            if (checkAndMaybeFreeMemory()) {
                 return true;
             } else {
                 String message
@@ -838,7 +838,7 @@ public class GENESIS_Environment
                                 + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)");
                     }
                 }
-                return tryToEnsureThereIsEnoughMemoryToContinue(
+                return checkAndMaybeFreeMemory(
                         handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -852,7 +852,7 @@ public class GENESIS_Environment
      * @return
      */
     @Override
-    protected boolean tryToEnsureThereIsEnoughMemoryToContinue() {
+    protected boolean checkAndMaybeFreeMemory() {
         while (getTotalFreeMemory() < Memory_Threshold) {
             if (!swapDataAny()) {
                 return false;
@@ -867,16 +867,16 @@ public class GENESIS_Environment
 //     * @param a_GENESIS_AgentCollection An AgentCollection not to be swapped.
 //     * @param handleOutOfMemoryError
 //     */
-//    public void tryToEnsureThereIsEnoughMemoryToContinue(
+//    public void checkAndMaybeFreeMemory(
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection,
 //            boolean handleOutOfMemoryError) {
 //        try {
-//            if (!tryToEnsureThereIsEnoughMemoryToContinue(
+//            if (!checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection)) {
 //                String message = new String(
 //                        "Warning! Not enough data to swap in "
 //                        + this.getClass().getName()
-//                        + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_AgentCollection,boolean)");
+//                        + ".checkAndMaybeFreeMemory(GENESIS_AgentCollection,boolean)");
 //                log(message);
 //                // Set to exit method with OutOfMemoryError
 //                handleOutOfMemoryError = false;
@@ -892,7 +892,7 @@ public class GENESIS_Environment
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
 //                                + this.getClass().getName()
-//                                + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_AgentCollection,boolean)");
+//                                + ".checkAndMaybeFreeMemory(GENESIS_AgentCollection,boolean)");
 //                        log(message);
 //                        throw a_OutOfMemoryError;
 //                    }
@@ -911,10 +911,10 @@ public class GENESIS_Environment
 //                        log(
 //                                "Struggling to ensure there is enough memory in "
 //                                + this.getClass().getName()
-//                                + ".tryToEnsureThereIsEnoughMemoryToContinue(GENESIS_AgentCollection,boolean)");
+//                                + ".checkAndMaybeFreeMemory(GENESIS_AgentCollection,boolean)");
 //                    }
 //                }
-//                tryToEnsureThereIsEnoughMemoryToContinue(
+//                checkAndMaybeFreeMemory(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
 //            } else {
@@ -1120,7 +1120,7 @@ public class GENESIS_Environment
 //     * @param a_AgentCollection_ID ID of an AgentCollection not to be swapped.
 //     * @param handleOutOfMemoryError
 //     */
-//    public void tryToEnsureThereIsEnoughMemoryToContinue(
+//    public void checkAndMaybeFreeMemory(
 //            long a_AgentCollection_ID,
 //            boolean handleOutOfMemoryError) {
 //        try {
@@ -1128,12 +1128,12 @@ public class GENESIS_Environment
 //                    AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
 //                    HandleOutOfMemoryErrorFalse);
-//            if (!tryToEnsureThereIsEnoughMemoryToContinue(
+//            if (!checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection)) {
 //                String message = new String(
 //                        "Warning! Not enough data to swap in "
 //                        + this.getClass().getName()
-//                        + ".tryToEnsureThereIsEnoughMemoryToContinue(long,boolean)");
+//                        + ".checkAndMaybeFreeMemory(long,boolean)");
 //                log(message);
 //                // Set to exit method with OutOfMemoryError
 //                handleOutOfMemoryError = false;
@@ -1153,7 +1153,7 @@ public class GENESIS_Environment
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
 //                                + this.getClass().getName()
-//                                + ".tryToEnsureThereIsEnoughMemoryToContinue(long,boolean)");
+//                                + ".checkAndMaybeFreeMemory(long,boolean)");
 //                        log(message);
 //                        throw a_OutOfMemoryError;
 //                    }
@@ -1172,10 +1172,10 @@ public class GENESIS_Environment
 //                        log(
 //                                "Struggling to ensure there is enough memory in "
 //                                + this.getClass().getName()
-//                                + ".tryToEnsureThereIsEnoughMemoryToContinue(long,boolean)");
+//                                + ".checkAndMaybeFreeMemory(long,boolean)");
 //                    }
 //                }
-//                tryToEnsureThereIsEnoughMemoryToContinue(
+//                checkAndMaybeFreeMemory(
 //                        a_AgentCollection_ID,
 //                        handleOutOfMemoryError);
 //            } else {
@@ -1363,7 +1363,7 @@ public class GENESIS_Environment
             boolean handleOutOfMemoryError) {
         try {
             File result = get_Directory();
-            tryToEnsureThereIsEnoughMemoryToContinue(
+            checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -1396,14 +1396,13 @@ public class GENESIS_Environment
             String message) {
         Logger.getLogger(GENESIS_Log.DefaultLoggerName).log(level, message);
     }
-    
-    public GENESIS_Files getGENESIS_Files(){
+
+    public GENESIS_Files getGENESIS_Files() {
         return Files;
     }
-    
-    public GENESIS_Grids getGENESIS_Grids(){
+
+    public GENESIS_Grids getGENESIS_Grids() {
         return Grids;
     }
-    
-    
+
 }

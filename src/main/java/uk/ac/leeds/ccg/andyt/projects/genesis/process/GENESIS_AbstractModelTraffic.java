@@ -90,7 +90,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
                     cellsize_BigDecimal,
                     minx,
                     miny);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -1318,7 +1318,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
             boolean handleOutOfMemoryError) {
         try {
             init_Shifts();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {

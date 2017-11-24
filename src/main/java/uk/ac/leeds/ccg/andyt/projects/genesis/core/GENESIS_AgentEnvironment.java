@@ -81,11 +81,11 @@ public class GENESIS_AgentEnvironment
             GENESIS_AgentCollectionManager result = getAgentCollectionManager();
             /*
              * To use:
-             * tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * checkAndMaybeFreeMemory(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action 
              * performed to prevent a loop.
              */
-            tryToEnsureThereIsEnoughMemoryToContinue();
+            checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
@@ -116,7 +116,7 @@ public class GENESIS_AgentEnvironment
             boolean handleOutOfMemoryError) {
         try {
             set_AgentCollectionManager(a_GENESIS_AgentCollectionManager);
-            tryToEnsureThereIsEnoughMemoryToContinue();
+            checkAndMaybeFreeMemory();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -149,11 +149,11 @@ public class GENESIS_AgentEnvironment
             initMemoryReserve();
             /*
              * To use:
-             * tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * checkAndMaybeFreeMemory(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            tryToEnsureThereIsEnoughMemoryToContinue();
+            checkAndMaybeFreeMemory();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
@@ -426,7 +426,7 @@ public class GENESIS_AgentEnvironment
 //                            initMemoryReserve(
 //                                    a_GENESIS_AgentCollection,
 //                                    HandleOutOfMemoryErrorFalse);
-//                            tryToEnsureThereIsEnoughMemoryToContinue(
+//                            checkAndMaybeFreeMemory(
 //                                    a_GENESIS_AgentCollection,
 //                                    handleOutOfMemoryError);
 //                            createdRoom = true;
@@ -451,10 +451,10 @@ public class GENESIS_AgentEnvironment
      * @return 
      */
     @Override
-    public boolean tryToEnsureThereIsEnoughMemoryToContinue(
+    public boolean checkAndMaybeFreeMemory(
             boolean handleOutOfMemoryError) {
         try {
-            if (tryToEnsureThereIsEnoughMemoryToContinue()) {
+            if (checkAndMaybeFreeMemory()) {
                 return true;
             } else {
                 String message = "Warning! Not enough data to swap in "
@@ -482,7 +482,7 @@ public class GENESIS_AgentEnvironment
                         }
                         ge.initMemoryReserve(
                                 HandleOutOfMemoryErrorFalse);
-                        tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                        checkAndMaybeFreeMemory(handleOutOfMemoryError);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = "Struggling to create room in "
@@ -502,7 +502,7 @@ public class GENESIS_AgentEnvironment
     }
 
     @Override
-    protected boolean tryToEnsureThereIsEnoughMemoryToContinue() {
+    protected boolean checkAndMaybeFreeMemory() {
         while (getTotalFreeMemory() < ge.Memory_Threshold) {
             if (AgentCollectionManager.swapAgentCollection_Account() < 1) {
                 return false;
@@ -687,7 +687,7 @@ public class GENESIS_AgentEnvironment
 //     * @param a_AgentCollection_ID ID of an AgentCollection not to be swapped.
 //     * @param handleOutOfMemoryError
 //     */
-//    public void tryToEnsureThereIsEnoughMemoryToContinue(
+//    public void checkAndMaybeFreeMemory(
 //            long a_AgentCollection_ID,
 //            boolean handleOutOfMemoryError) {
 //        try {
@@ -695,7 +695,7 @@ public class GENESIS_AgentEnvironment
 //                    AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
 //                    handleOutOfMemoryError);
-//            tryToEnsureThereIsEnoughMemoryToContinue(
+//            checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -725,14 +725,14 @@ public class GENESIS_AgentEnvironment
 //                        String message = new String(
 //                                "Struggling to create room in "
 //                                + this.getClass().getName()
-//                                + ".tryToEnsureThereIsEnoughMemoryToContinue(long,boolean)");
+//                                + ".checkAndMaybeFreeMemory(long,boolean)");
 //                        log(message);
 //                        if (!handleOutOfMemoryError) {
 //                            throw b_OutOfMemoryError;
 //                        }
 //                    }
 //                }
-//                tryToEnsureThereIsEnoughMemoryToContinue(
+//                checkAndMaybeFreeMemory(
 //                        a_GENESIS_AgentCollection,
 //                        handleOutOfMemoryError);
 //            } else {
@@ -1488,11 +1488,11 @@ public class GENESIS_AgentEnvironment
             boolean result = AgentCollectionManager.swapAgentCollection();
             /*
              * To use:
-             * tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * checkAndMaybeFreeMemory(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            tryToEnsureThereIsEnoughMemoryToContinue();
+            checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {

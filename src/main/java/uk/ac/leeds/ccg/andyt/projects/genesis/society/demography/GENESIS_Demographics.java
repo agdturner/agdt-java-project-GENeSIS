@@ -1148,8 +1148,8 @@ public class GENESIS_Demographics implements Serializable {
 //                    a_Male_Population_Alive_ID_HashSet,
 //                    a_Time,
 //                    _GENESIS_Environment);
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
-//            // OutOfMemoryErrorHandler.tryToEnsureThereIsEnoughMemoryToContinue();
+//            _GENESIS_Environment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+//            // OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
 //            return result;
 //        } catch (OutOfMemoryError _OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {

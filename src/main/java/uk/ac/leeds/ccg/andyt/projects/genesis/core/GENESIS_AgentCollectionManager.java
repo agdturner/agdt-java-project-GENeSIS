@@ -482,11 +482,11 @@ public class GENESIS_AgentCollectionManager
             Long result = get_NextFemaleID();
             /*
              * To use:
-             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+            ge.AgentEnvironment.checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -558,11 +558,11 @@ public class GENESIS_AgentCollectionManager
             Long result = get_NextMaleID();
             /*
              * To use:
-             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
              * It's success needs to be assessed and appropriate action
              * performed to prevent a loop.
              */
-            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+            ge.AgentEnvironment.checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -632,7 +632,7 @@ public class GENESIS_AgentCollectionManager
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            Long result = get_NextFemaleID();
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            increment_NextAgentID(handleOutOfMemoryError);
@@ -661,11 +661,11 @@ public class GENESIS_AgentCollectionManager
 //            Long result = get_NextFemaleID();
 //            /*
 //             * To use:
-//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.checkAndMaybeFreeMemory();
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -694,7 +694,7 @@ public class GENESIS_AgentCollectionManager
 //            boolean handleOutOfMemoryError) {
 //        try {
 //            Long result = get_NextMaleID();
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            increment_NextAgentID(handleOutOfMemoryError);
@@ -723,11 +723,11 @@ public class GENESIS_AgentCollectionManager
 //            Long result = get_NextMaleID();
 //            /*
 //             * To use:
-//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.checkAndMaybeFreeMemory();
 //            increment_NextAgentID(handleOutOfMemoryError);
 //            return result;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -760,7 +760,7 @@ public class GENESIS_AgentCollectionManager
 //        try {
 //            Long a_NextAgentID = get_NextAgentID();
 //            a_NextAgentID++;
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            _NextAgentID = a_NextAgentID;
@@ -789,11 +789,11 @@ public class GENESIS_AgentCollectionManager
 //            a_NextAgentID++;
 //            /*
 //             * To use:
-//             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+//             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
 //             * It's success needs to be assessed and appropriate action
 //             * performed to prevent a loop.
 //             */
-//            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+//            ge.AgentEnvironment.checkAndMaybeFreeMemory();
 //            _NextAgentID = a_NextAgentID;
 //        } catch (OutOfMemoryError a_OutOfMemoryError) {
 //            if (handleOutOfMemoryError) {
@@ -824,7 +824,7 @@ public class GENESIS_AgentCollectionManager
 ////        try {
 ////            Long a_NextAgentID = get_NextAgentID();
 ////            a_NextAgentID++;
-////            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+////            ge.checkAndMaybeFreeMemory(
 ////                    a_GENESIS_AgentCollection,
 ////                    handleOutOfMemoryError);
 ////            _NextAgentID = a_NextAgentID;
@@ -853,11 +853,11 @@ public class GENESIS_AgentCollectionManager
 ////            a_NextAgentID++;
 ////            /*
 ////             * To use:
-////             * ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+////             * ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
 ////             * It's success needs to be assessed and appropriate action
 ////             * performed to prevent a loop.
 ////             */
-////            ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+////            ge.AgentEnvironment.checkAndMaybeFreeMemory();
 ////            _NextAgentID = a_NextAgentID;
 ////        } catch (OutOfMemoryError a_OutOfMemoryError) {
 ////            if (handleOutOfMemoryError) {
@@ -1076,7 +1076,7 @@ public class GENESIS_AgentCollectionManager
 //            GENESIS_Agent result = getAgent(
 //                    a_Agent_ID,
 //                    a_GENESIS_AgentCollection);
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            return result;
@@ -1240,7 +1240,7 @@ public class GENESIS_AgentCollectionManager
 //            Long result = getAgentCollection_ID(
 //                    a_Agent_ID);
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection = getAgentCollection(result);
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
 //            return result;
@@ -1519,7 +1519,7 @@ public class GENESIS_AgentCollectionManager
 //        try {
 //            GENESIS_AgentCollection result = getAgentCollection(
 //                    a_GENESIS_AgentCollection_ID);
-//            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+//            ge.checkAndMaybeFreeMemory(
 //                    result,
 //                    handleOutOfMemoryError);
 //            return result;
@@ -1793,9 +1793,9 @@ public class GENESIS_AgentCollectionManager
             boolean result = swapAgentCollection();
             try {
                 if (!result) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -2650,9 +2650,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_FemaleCollection(a_GENESIS_FemaleCollection);
             try {
                 if (!success) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -2670,7 +2670,7 @@ public class GENESIS_AgentCollectionManager
                         }
                     }
                     ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
-                    createdRoom = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    createdRoom = ge.AgentEnvironment.checkAndMaybeFreeMemory(
                             handleOutOfMemoryError);
                 }
             } else {
@@ -2714,9 +2714,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_MaleCollection(a_GENESIS_MaleCollection);
             try {
                 if (!success) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError
@@ -2734,7 +2734,7 @@ public class GENESIS_AgentCollectionManager
                         }
                     }
                     ge.initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
-                    createdRoom = ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    createdRoom = ge.AgentEnvironment.checkAndMaybeFreeMemory(
                             handleOutOfMemoryError);
                 }
             } else {
@@ -2966,9 +2966,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_FemaleCollections();
             try {
                 if (!success) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -3025,9 +3025,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_MaleCollections();
             try {
                 if (!success) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(
                             handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -3084,9 +3084,9 @@ public class GENESIS_AgentCollectionManager
             boolean success = swapToFile_AgentCollections();
             try {
                 if (!success) {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue();
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory();
                 } else {
-                    ge.AgentEnvironment.tryToEnsureThereIsEnoughMemoryToContinue(handleOutOfMemoryError);
+                    ge.AgentEnvironment.checkAndMaybeFreeMemory(handleOutOfMemoryError);
                 }
             } catch (OutOfMemoryError a_OutOfMemoryError) {
                 // Set handleOutOfMemoryError = false to exit method by throwing OutOfMemoryError

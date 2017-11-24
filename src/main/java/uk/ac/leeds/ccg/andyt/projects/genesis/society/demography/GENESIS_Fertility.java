@@ -672,7 +672,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //        return (BigDecimal) result;
 //    }
 //    public int initialisePregnancies() {
-//        _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//        _GENESIS_Environment.checkAndMaybeFreeMemory(
 //                _GENESIS_Environment._HandleOutOfMemoryError_boolean);
 //        log(Level.FINE, "<initialisePregnancies>");
 //        String type = GENESIS_Person.getTypeLivingFemale_String();
@@ -743,7 +743,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //        HashSet<Long> newlyConceived = new HashSet<Long>();
 //        a_Iterator = _NotPregnantFemale_ID_HashSet.iterator();
 //        while (a_Iterator.hasNext()) {
-//            _GENESIS_Environment.tryToEnsureThereIsEnoughMemoryToContinue(
+//            _GENESIS_Environment.checkAndMaybeFreeMemory(
 //                    _GENESIS_Environment._HandleOutOfMemoryError_boolean);
 //            Long a_Agent_ID = a_Iterator.next();
 //            a_Female = _GENESIS_AgentCollectionManager.getFemale(

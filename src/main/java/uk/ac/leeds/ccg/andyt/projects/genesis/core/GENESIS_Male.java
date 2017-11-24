@@ -215,7 +215,7 @@ public class GENESIS_Male extends GENESIS_Person {
     public int getGender(boolean handleOutOfMemoryError) {
         try {
             int result = getGender();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
+            ge.checkAndMaybeFreeMemory(
                     handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
