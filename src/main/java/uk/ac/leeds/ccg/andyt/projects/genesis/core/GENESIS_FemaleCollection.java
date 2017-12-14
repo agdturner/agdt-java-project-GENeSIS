@@ -67,7 +67,7 @@ public class GENESIS_FemaleCollection
 //                    getAgentCollectionManager().getFemaleCollection_ID(
 //                    getAgentCollectionManager()._IndexOfLastBornFemale,
 //                    Type,
-//                    ge.HandleOutOfMemoryErrorFalse);
+//                    ge.HOOMEF);
             Directory = new File(
                     Generic_StaticIO.getObjectDirectory(theGENESIS_AgentCollectionManager._LivingFemaleDirectory,
                     agentID,
@@ -116,17 +116,15 @@ public class GENESIS_FemaleCollection
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
                         getAgentCollectionManager();
                 Long a_FemaleCollection_ID =
-                        a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(
-                        a_Agent_ID,
+                        a_GENESIS_AgentCollectionManager.getFemaleCollection_ID(a_Agent_ID,
                         Type,
-                        ge.HandleOutOfMemoryErrorFalse);
+                        ge.HOOMEF);
                 GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
                         a_GENESIS_AgentCollectionManager.getFemaleCollection(
                         a_FemaleCollection_ID,
                         Type);
                 ge.swapDataAnyExcept(a_GENESIS_FemaleCollection);
-                ge.initMemoryReserve(
-                        this, ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(this, ge.HOOMEF);
                 return getFemale(
                         a_Agent_ID,
                         handleOutOfMemoryError);
@@ -211,9 +209,8 @@ public class GENESIS_FemaleCollection
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAnyExcept(this);
-                ge.initMemoryReserve(
-                        this,
-                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(this,
+                        ge.HOOMEF);
                 write(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;

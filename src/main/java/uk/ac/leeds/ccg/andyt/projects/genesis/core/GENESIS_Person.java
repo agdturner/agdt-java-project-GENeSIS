@@ -531,22 +531,22 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     GENESIS_Female a_Female = (GENESIS_Female) this;
                     GENESIS_FemaleCollection a_GENESIS_FemaleCollection = a_Female.get_FemaleCollection(
                             handleOutOfMemoryError);
-                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse) < 1) {
-                        ge.swapChunk(ge.HandleOutOfMemoryErrorFalse);
+                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
+                            ge.HOOMEF) < 1) {
+                        ge.swapChunk(ge.HOOMEF);
                     }
                     ge.initMemoryReserve(a_GENESIS_FemaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse);
+                            ge.HOOMEF);
                 } else {
                     GENESIS_Male a_Male = (GENESIS_Male) this;
                     GENESIS_MaleCollection a_GENESIS_MaleCollection = a_Male.get_MaleCollection(
                             handleOutOfMemoryError);
-                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse).swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse) < 1) {
-                        ge.swapChunk(ge.HandleOutOfMemoryErrorFalse);
+                    if (ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
+                            ge.HOOMEF) < 1) {
+                        ge.swapChunk(ge.HOOMEF);
                     }
                     ge.initMemoryReserve(a_GENESIS_MaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse);
+                            ge.HOOMEF);
                 }
                 move(grids, halfCellsize, tollerance, handleOutOfMemoryError);
             } else {
@@ -574,10 +574,10 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         if (getIsWorkTime()) {
             if (Location.equals(_Work_Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HOOME),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HOOME),
                         _SpeedDefault_BigDecimal.doubleValue(),
-                        ge.HandleOutOfMemoryError);
+                        ge.HOOME);
                 _Speed_BigDecimal = BigDecimal.ZERO;
                 return BigDecimal.ZERO;
             } else {
@@ -601,10 +601,10 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         } else {
             if (Location.equals(_Household._Point2D)) {
                 ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HandleOutOfMemoryError),
-                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HandleOutOfMemoryError),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y, _GENESIS_Environment.HOOME),
+                        //_GENESIS_Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellCol(Location.X, _GENESIS_Environment.HOOME),
                         _SpeedDefault_BigDecimal.doubleValue(),
-                        ge.HandleOutOfMemoryError);
+                        ge.HOOME);
                 _Speed_BigDecimal = BigDecimal.ZERO;
                 return BigDecimal.ZERO;
             } else {
@@ -651,13 +651,13 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
         BigDecimal distanceToHeading_BigDecimal;
         while (tdistance_BigDecimal.compareTo(BigDecimal.ZERO) == 1 && !movementDone) {
             networkRow = ge._network_Grid2DSquareCellDouble.getRow(Location.Y,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             networkCol = ge._network_Grid2DSquareCellDouble.getCol(Location.X,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             reportingRow = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(Location.Y,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             reportingCol = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(Location.X,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             /*
              * If distanceToHeading is less than tdistance_BigDecimal, then get
              * point that will be moved to and use this as basis for
@@ -683,11 +683,10 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
              * +---+---+---+ | 7 | 8 | 1 | +---+---+---+ | 6 | 0 | 2 |
              * +---+---+---+ | 5 | 4 | 3 | +---+---+---+
              */
-            Grids_Dimensions bounds = ge._network_Grid2DSquareCellDouble.getCellDimensions(
-                    halfCellsize,
+            Grids_Dimensions bounds = ge._network_Grid2DSquareCellDouble.getCellDimensions(halfCellsize,
                     networkRow,
                     networkCol,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             BigDecimal xmin;
             BigDecimal ymin;
             BigDecimal xmax;
@@ -753,11 +752,11 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(reportingRow,
                                 reportingCol,
                                 distanceToHeading_BigDecimal.doubleValue(),
-                                ge.HandleOutOfMemoryError);
+                                ge.HOOME);
                         ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble.addToCell(reportingRow,
                                 reportingCol,
                                 distanceToHeading_BigDecimal.doubleValue(),
-                                ge.HandleOutOfMemoryError);
+                                ge.HOOME);
                         Location = HeadingLocation;
                         //result = distanceToHeading_BigDecimal;
                         tdistance_BigDecimal = tdistance_BigDecimal.subtract(distanceToHeading_BigDecimal);
@@ -774,11 +773,11 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                     ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.addToCell(reportingRow,
                             reportingCol,
                             tdistance_BigDecimal.doubleValue(),
-                            ge.HandleOutOfMemoryError);
+                            ge.HOOME);
                     ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble.addToCell(reportingRow,
                             reportingCol,
                             distanceToHeading_BigDecimal.doubleValue(),
-                            ge.HandleOutOfMemoryError);
+                            ge.HOOME);
                     tdistance_BigDecimal = BigDecimal.ZERO;
                     movementDone = true;
                     _Speed_BigDecimal = BigDecimal.ZERO;
@@ -856,29 +855,29 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                         //reportingCol,
                         //distanceToHeading_BigDecimal.doubleValue(),
                         distanceTravelledInCell_BigDecimal.doubleValue(),
-                        ge.HandleOutOfMemoryError);
+                        ge.HOOME);
                 ge._reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble.addToCell(_reporting_CellID,
                         //reportingRow,
                         //reportingCol,
                         //distanceToHeading_BigDecimal.doubleValue(),
                         distanceTravelledInCell_BigDecimal.doubleValue(),
-                        ge.HandleOutOfMemoryError);
+                        ge.HOOME);
                 Location = a_Point2D;
 
-                BigDecimal next_x = ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(networkCol, ge.HandleOutOfMemoryError);
-                BigDecimal next_y = ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, ge.HandleOutOfMemoryError);
-                Grids_2D_ID_long next_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(next_y, ge.HandleOutOfMemoryError),
-                        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(next_x, ge.HandleOutOfMemoryError),
-                        ge.HandleOutOfMemoryError);
+                BigDecimal next_x = ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(networkCol, ge.HOOME);
+                BigDecimal next_y = ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, ge.HOOME);
+                Grids_2D_ID_long next_CellID = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellID(ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getRow(next_y, ge.HOOME),
+                        ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCol(next_x, ge.HOOME),
+                        ge.HOOME);
                 if (next_CellID.compareTo(_reporting_CellID) != 0) {
                     Vector_Point2D a_VectorPoint2D = new Vector_Point2D(
                             ge.ve,
-                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(_reporting_CellID, ge.HandleOutOfMemoryError),
-                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(_reporting_CellID, ge.HandleOutOfMemoryError));
+                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(_reporting_CellID, ge.HOOME),
+                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(_reporting_CellID, ge.HOOME));
                     Vector_Point2D b_VectorPoint2D = new Vector_Point2D(
                             ge.ve,
-                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(next_CellID, ge.HandleOutOfMemoryError),
-                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(next_CellID, ge.HandleOutOfMemoryError));
+                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellXBigDecimal(next_CellID, ge.HOOME),
+                            ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getCellYBigDecimal(next_CellID, ge.HOOME));
                     _reporting_VectorNetwork2D.addToNetwork(
                             b_VectorPoint2D,
                             a_VectorPoint2D);
@@ -887,8 +886,8 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
                 tdistance_BigDecimal = tdistance_BigDecimal.subtract(distanceTravelledInCell_BigDecimal);
 
 //                Vector_Point2D newHeading_Point2D = new Vector_Point2D(
-//                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(col, _GENESIS_Environment.HandleOutOfMemoryError),
-//                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, _GENESIS_Environment.HandleOutOfMemoryError));
+//                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(col, _GENESIS_Environment.HOOME),
+//                        this._GENESIS_Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(networkRow, _GENESIS_Environment.HOOME));
 //                GENESIS_Movement nextPartMovement = new GENESIS_Movement(_GENESIS_Environment, Location, newHeading_Point2D);
 //                GENESIS_Movement totalMovement = this.GENESIS_Movement;
 //                GENESIS_Movement = nextPartMovement;
@@ -916,15 +915,14 @@ public abstract class GENESIS_Person extends GENESIS_Agent {
             BigDecimal distance0_BigDecimal) {
         Connection nextConnection = getNextConnectionOnRoute();
         if (nextConnection == null) {
-            HeadingLocation = grids.getRandomCellCentroid_Point2D(
-                    ge._network_Grid2DSquareCellDouble,
+            HeadingLocation = grids.getRandomCellCentroid_Point2D(ge._network_Grid2DSquareCellDouble,
                     ge._AbstractModel.get_Random(0),
                     Location,
                     distance0_BigDecimal,
                     ge._DecimalPlacePrecisionForNetwork,
                     ge._ToRoundToX_BigDecimal,
                     ge._ToRoundToY_BigDecimal,
-                    ge.HandleOutOfMemoryError);
+                    ge.HOOME);
             setMovement(grids);
         } else {
             HeadingLocation = nextConnection.Location;

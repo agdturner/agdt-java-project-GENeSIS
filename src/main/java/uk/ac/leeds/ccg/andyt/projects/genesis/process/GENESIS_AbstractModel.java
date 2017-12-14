@@ -136,7 +136,7 @@ public abstract class GENESIS_AbstractModel extends GENESIS_Object implements Se
 //                ge.Directory, 
 //                GENESIS_Log.GENESIS_DefaultLoggerName);
         ge.AgentEnvironment.ge = ge;
-        _GENESIS_AgentCollectionManager = ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorFalse);
+        _GENESIS_AgentCollectionManager = ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF);
         _GENESIS_AgentCollectionManager.ge = ge;
     }
     

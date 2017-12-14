@@ -54,9 +54,9 @@ public class GENESIS_RenderNetwork2D
         while (a_Iterator.hasNext()) {
             a_AgentID = (Long) a_Iterator.next();
             a_Person =
-                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
+                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMET).getMale(a_AgentID,
                     GENESIS_Person.getTypeLivingMale_String(),
-                    ge.HandleOutOfMemoryErrorTrue);
+                    ge.HOOMET);
             a_Network2D = a_Person._reporting_VectorNetwork2D;
             Set<Vector_Point2D> keys = a_Network2D.Connections.keySet();
             Iterator bIterator;
@@ -75,9 +75,9 @@ public class GENESIS_RenderNetwork2D
         while (a_Iterator.hasNext()) {
             a_AgentID = (Long) a_Iterator.next();
             a_Person =
-                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HandleOutOfMemoryErrorTrue).getMale(a_AgentID,
+                    ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMET).getMale(a_AgentID,
                     GENESIS_Person.getTypeLivingFemale_String(),
-                    ge.HandleOutOfMemoryErrorTrue);
+                    ge.HOOMET);
             a_Network2D = a_Person._reporting_VectorNetwork2D;
             Set<Vector_Point2D> keys = a_Network2D.Connections.keySet();
             Iterator bIterator;
@@ -98,7 +98,7 @@ public class GENESIS_RenderNetwork2D
 //    public void draw(
 //            Vector_Point2D a_Point2D,
 //            HashSet<Connection> a_Connection_HashSet) {
-//        boolean handleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
+//        boolean handleOutOfMemoryError = _Environment.HOOME;
 //        BigDecimal[] reportingDimensions = _Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
 //        BigDecimal[] networkDimensions = _Environment._network_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
 //        int scale = reportingDimensions[0].divide(networkDimensions[0]).intValue();
@@ -126,7 +126,7 @@ public class GENESIS_RenderNetwork2D
     public void draw(
             Vector_Point2D a_Point2D,
             HashSet<Connection> a_Connection_HashSet) {
-        boolean handleOutOfMemoryError = ge.HandleOutOfMemoryError;
+        boolean handleOutOfMemoryError = ge.HOOME;
         Grids_Dimensions reportingDimensions;
         reportingDimensions = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getDimensions(handleOutOfMemoryError);
         Grids_Dimensions networkDimensions = ge._network_Grid2DSquareCellDouble.getDimensions(handleOutOfMemoryError);

@@ -576,7 +576,7 @@ public class CompareProbabilities {
                 startDemographics,
                 endDemographics,
                 decimalPlacePrecisionForCalculations,
-                _GENESIS_Environment.HandleOutOfMemoryError);
+                _GENESIS_Environment.HOOME);
         BigDecimal sumOfSquaredErrors = (BigDecimal) expectedAndSumOfSquaredDifference[0];
         TreeMap<Integer, BigDecimal> femaleTheoreticalEndYearAgedPopulation = (TreeMap<Integer, BigDecimal>) expectedAndSumOfSquaredDifference[1];
         TreeMap<Integer, BigDecimal> maleTheoreticalEndYearAgedPopulation = (TreeMap<Integer, BigDecimal>) expectedAndSumOfSquaredDifference[2];

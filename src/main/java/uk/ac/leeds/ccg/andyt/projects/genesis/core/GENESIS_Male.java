@@ -91,11 +91,11 @@ public class GENESIS_Male extends GENESIS_Person {
             Vector_Point2D point2D) {
         LogManager.getLogManager().addLogger(Logger.getLogger(GENESIS_Log.DefaultLoggerName));
         AgentCollectionManager = acm;
-        ID = acm.get_NextMaleID(ge.HandleOutOfMemoryError);
+        ID = acm.get_NextMaleID(ge.HOOME);
         Type = getTypeLivingMale_String();
         CollectionID = acm.getMaleCollection_ID(ID,
                 Type,
-                ge.HandleOutOfMemoryError);
+                ge.HOOME);
         Generic_StaticIO.addToArchive(AgentCollectionManager.getLivingMaleDirectory(),
                 AgentCollectionManager.MaximumNumberOfObjectsPerDirectory,
                 CollectionID);
@@ -178,7 +178,7 @@ public class GENESIS_Male extends GENESIS_Person {
         if (MaleCollection == null) {
             MaleCollection = getAgentCollectionManager().getMaleCollection(CollectionID,
                     Type,
-                    ge.HandleOutOfMemoryErrorFalse);
+                    ge.HOOMEF);
         }
         if (MaleCollection.ge == null) {
             MaleCollection.ge = ge;
@@ -198,8 +198,7 @@ public class GENESIS_Male extends GENESIS_Person {
                 ge.clearMemoryReserve();
                 ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.initMemoryReserve(
-                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HOOMEF);
                 return get_MaleCollection_ID(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;
@@ -223,8 +222,7 @@ public class GENESIS_Male extends GENESIS_Person {
                 ge.clearMemoryReserve();
                 ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.initMemoryReserve(
-                        ge.HandleOutOfMemoryErrorFalse);
+                ge.initMemoryReserve(ge.HOOMEF);
                 return getGender(handleOutOfMemoryError);
             } else {
                 throw a_OutOfMemoryError;

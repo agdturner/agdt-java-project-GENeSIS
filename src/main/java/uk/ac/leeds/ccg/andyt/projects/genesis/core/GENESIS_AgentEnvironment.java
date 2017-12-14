@@ -64,7 +64,7 @@ public class GENESIS_AgentEnvironment
 //        this.Directory = new File(a_GENESIS_AgentEnvironment.Directory.toString());
         this.ge = ge;
 //        //this._Generic_TestMemory no need to set this
-//        this.HandleOutOfMemoryError = a_GENESIS_AgentEnvironment.HandleOutOfMemoryError;
+//        this.HOOME = a_GENESIS_AgentEnvironment.HOOME;
 //        this._PersonFactory = a_GENESIS_AgentEnvironment._PersonFactory;
         //throw new UnsupportedOperationException();
     }
@@ -90,10 +90,10 @@ public class GENESIS_AgentEnvironment
         } catch (OutOfMemoryError e) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
+                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
                     throw e;
                 }
-                initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(ge.HOOMEF);
                 return get_AgentCollectionManager(
                         handleOutOfMemoryError);
             } else {
@@ -120,10 +120,10 @@ public class GENESIS_AgentEnvironment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
+                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(ge.HOOMEF);
                 set_AgentCollectionManager(
                         a_GENESIS_AgentCollectionManager,
                         handleOutOfMemoryError);
@@ -157,10 +157,10 @@ public class GENESIS_AgentEnvironment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse) < 1) {
+                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                initMemoryReserve(ge.HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(ge.HOOMEF);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -200,14 +200,13 @@ public class GENESIS_AgentEnvironment
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 Object[] result =
-                        AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
+                        AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(ge.HOOMEF);
 //                HashSet<Long> result = AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
-//                        ge.HandleOutOfMemoryErrorFalse);
+//                        ge.HOOMEF);
                 if ((Boolean) result[0]) {
                     throw a_OutOfMemoryError;
                 }
-                Object[] potentialPartResult = initMemoryReserve_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = initMemoryReserve_AccountDetail(HOOMEF);
                 GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                 return result;
             } else {
@@ -230,14 +229,13 @@ public class GENESIS_AgentEnvironment
                 long result = AgentCollectionManager.swapToFile_MaleCollection_Account();
                 if (result < 1) {
                     result = AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse);
+                            ge.HOOMEF);
                     if (result < 1) {
                         throw a_OutOfMemoryError;
                     }
                 }
-                result += initMemoryReserve_Account(
-                        a_GENESIS_FemaleCollection,
-                        HandleOutOfMemoryErrorFalse);
+                result += initMemoryReserve_Account(a_GENESIS_FemaleCollection,
+                        HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -257,16 +255,15 @@ public class GENESIS_AgentEnvironment
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 long result = AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
-                        ge.HandleOutOfMemoryErrorFalse);
+                        ge.HOOMEF);
                 if (result < 1) {
                     result = AgentCollectionManager.swapToFile_FemaleCollection_Account();
                     if (result < 1) {
                         throw a_OutOfMemoryError;
                     }
                 }
-                result += initMemoryReserve_Account(
-                        a_GENESIS_MaleCollection,
-                        HandleOutOfMemoryErrorFalse);
+                result += initMemoryReserve_Account(a_GENESIS_MaleCollection,
+                        HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -287,13 +284,13 @@ public class GENESIS_AgentEnvironment
 //                clearMemoryReserve();
 //                long result = AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection,
-//                        ge.HandleOutOfMemoryErrorFalse);
+//                        ge.HOOMEF);
 //                if (result < 1) {
 //                    throw a_OutOfMemoryError;
 //                }
 //                result += initMemoryReserve_Account(
 //                        a_GENESIS_AgentCollection,
-//                        HandleOutOfMemoryErrorFalse);
+//                        HOOMEF);
 //                return result;
 //            } else {
 //                throw a_OutOfMemoryError;
@@ -311,8 +308,7 @@ public class GENESIS_AgentEnvironment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                Object[] result = AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                Object[] result = AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(HOOMEF);
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult = AgentCollectionManager.swapToFile_FemaleCollectionExcept_AccountDetail(
                             a_GENESIS_FemaleCollection);
@@ -325,9 +321,8 @@ public class GENESIS_AgentEnvironment
                                 result, potentialPartResult);
                     }
                 }
-                Object[] potentialPartResult = initMemoryReserve_AccountDetail(
-                        a_GENESIS_FemaleCollection,
-                        HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = initMemoryReserve_AccountDetail(a_GENESIS_FemaleCollection,
+                        HOOMEF);
                 GENESIS_AgentCollectionManager.combine(
                         result, potentialPartResult);
                 return result;
@@ -352,8 +347,7 @@ public class GENESIS_AgentEnvironment
                         a_GENESIS_MaleCollection);
                 if (!(Boolean) result[0]) {
                     Object[] potentialPartResult =
-                            AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(
-                            HandleOutOfMemoryErrorFalse);
+                            AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(HOOMEF);
                     if (!(Boolean) result[0]) {
                         if (ge.swapChunk_Account() < 1) {
                             throw a_OutOfMemoryError;
@@ -363,9 +357,8 @@ public class GENESIS_AgentEnvironment
                                 result, potentialPartResult);
                     }
                 }
-                Object[] potentialPartResult = initMemoryReserve_AccountDetail(
-                        a_GENESIS_MaleCollection,
-                        HandleOutOfMemoryErrorFalse);
+                Object[] potentialPartResult = initMemoryReserve_AccountDetail(a_GENESIS_MaleCollection,
+                        HOOMEF);
                 GENESIS_AgentCollectionManager.combine(
                         result, potentialPartResult);
                 return result;
@@ -393,7 +386,7 @@ public class GENESIS_AgentEnvironment
 //                }
 //                HashSet<Long> potentialPartResult = initMemoryReserve_AccountDetail(
 //                        a_GENESIS_AgentCollection,
-//                        HandleOutOfMemoryErrorFalse);
+//                        HOOMEF);
 //                if (!potentialPartResult.isEmpty()) {
 //                    result.addAll(potentialPartResult);
 //                }
@@ -415,7 +408,7 @@ public class GENESIS_AgentEnvironment
 //                    boolean createdRoom = false;
 //                    GENESIS_AgentCollection a_GENESIS_AgentCollection = AgentCollectionManager.getAgentCollection(
 //                            a_AgentCollection_ID,
-//                            HandleOutOfMemoryErrorFalse);
+//                            HOOMEF);
 //                    while (!createdRoom) {
 //                        try {
 //                            if (AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
@@ -425,7 +418,7 @@ public class GENESIS_AgentEnvironment
 //                            }
 //                            initMemoryReserve(
 //                                    a_GENESIS_AgentCollection,
-//                                    HandleOutOfMemoryErrorFalse);
+//                                    HOOMEF);
 //                            checkAndMaybeFreeMemory(
 //                                    a_GENESIS_AgentCollection,
 //                                    handleOutOfMemoryError);
@@ -480,8 +473,7 @@ public class GENESIS_AgentEnvironment
                             handleOutOfMemoryError = false;
                             throw a_OutOfMemoryError;
                         }
-                        ge.initMemoryReserve(
-                                HandleOutOfMemoryErrorFalse);
+                        ge.initMemoryReserve(HOOMEF);
                         checkAndMaybeFreeMemory(handleOutOfMemoryError);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
@@ -556,9 +548,8 @@ public class GENESIS_AgentEnvironment
                         } else {
                             //totalAccount += account;
                         }
-                        ge.initMemoryReserve(
-                                a_FemaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        ge.initMemoryReserve(a_FemaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = 
@@ -621,9 +612,8 @@ public class GENESIS_AgentEnvironment
                                 throw a_OutOfMemoryError;
                             }
                         }
-                        ge.initMemoryReserve(
-                                a_MaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        ge.initMemoryReserve(a_MaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = 
@@ -704,7 +694,7 @@ public class GENESIS_AgentEnvironment
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection =
 //                        AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
-//                        HandleOutOfMemoryErrorFalse);
+//                        HOOMEF);
 //                long account = 0;
 //                boolean createdRoom = false;
 //                while (!createdRoom) {
@@ -719,7 +709,7 @@ public class GENESIS_AgentEnvironment
 //                        }
 //                        ge.initMemoryReserve(
 //                                a_GENESIS_AgentCollection,
-//                                HandleOutOfMemoryErrorFalse);
+//                                HOOMEF);
 //                        createdRoom = true;
 //                    } catch (OutOfMemoryError b_OutOfMemoryError) {
 //                        String message = new String(
@@ -777,8 +767,7 @@ public class GENESIS_AgentEnvironment
                         } else {
                             totalAccount += account;
                         }
-                        totalAccount += initMemoryReserve_Account(
-                                HandleOutOfMemoryErrorFalse);
+                        totalAccount += initMemoryReserve_Account(HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = 
@@ -815,7 +804,7 @@ public class GENESIS_AgentEnvironment
             long totalCount = 0L;
             long count;
             while (getTotalFreeMemory() < ge.Memory_Threshold) {
-                count = AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HandleOutOfMemoryErrorFalse);
+                count = AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF);
                 if (count < 1) {
                     result[0] = false;
                     result[1] = totalCount;
@@ -876,9 +865,8 @@ public class GENESIS_AgentEnvironment
                         } else {
                             result += account;
                         }
-                        result += initMemoryReserve_Account(
-                                a_GENESIS_FemaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        result += initMemoryReserve_Account(a_GENESIS_FemaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = 
@@ -934,8 +922,7 @@ public class GENESIS_AgentEnvironment
                         account = AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
                                 a_GENESIS_MaleCollection);
                         if (account < 1) {
-                            account = AgentCollectionManager.swapToFile_FemaleCollection_Account(
-                                    HandleOutOfMemoryErrorFalse);
+                            account = AgentCollectionManager.swapToFile_FemaleCollection_Account(HOOMEF);
                             if (account < 1) {
                                 // handleOutOfMemoryError changed to avoid problematic
                                 // recursion and allow error to be thrown from method
@@ -947,9 +934,8 @@ public class GENESIS_AgentEnvironment
                         } else {
                             result += account;
                         }
-                        result += initMemoryReserve_Account(
-                                a_GENESIS_MaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        result += initMemoryReserve_Account(a_GENESIS_MaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = 
@@ -991,7 +977,7 @@ public class GENESIS_AgentEnvironment
                 account = AgentCollectionManager.swapToFile_MaleCollection_Account();
                 if (account < 1) {
                     account = AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
-                            ge.HandleOutOfMemoryErrorFalse);
+                            ge.HOOMEF);
                     if (account < 1) {
                         result[0] = false;
                         result[1] = result1;
@@ -1027,7 +1013,7 @@ public class GENESIS_AgentEnvironment
             long account;
             while (getTotalFreeMemory() < ge.Memory_Threshold) {
                 account = AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
-                        ge.HandleOutOfMemoryErrorFalse);
+                        ge.HOOMEF);
                 if (account < 1) {
                     account = AgentCollectionManager.swapToFile_FemaleCollection_Account();
                     if (account < 1) {
@@ -1085,10 +1071,10 @@ public class GENESIS_AgentEnvironment
                 while (!createdRoom) {
                     try {
                         Object[] potentialPartResult =
-                                AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
+                                AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(ge.HOOMEF);
                         if (!(Boolean) potentialPartResult[0]) {
                             potentialPartResult =
-                                    AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(ge.HandleOutOfMemoryErrorFalse);
+                                    AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(ge.HOOMEF);
                             if (!(Boolean) potentialPartResult[0]) {
                                 // handleOutOfMemoryError changed to avoid problematic
                                 // recursion and allow error to be thrown from method
@@ -1100,8 +1086,7 @@ public class GENESIS_AgentEnvironment
                         } else {
                             GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         }
-                        potentialPartResult = initMemoryReserve_AccountDetail(
-                                HandleOutOfMemoryErrorFalse);
+                        potentialPartResult = initMemoryReserve_AccountDetail(HOOMEF);
                         GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         potentialPartResult = tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                                 handleOutOfMemoryError);
@@ -1211,8 +1196,7 @@ public class GENESIS_AgentEnvironment
                 while (!createdRoom) {
                     try {
                         Object[] potentialPartResult =
-                                AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(
-                                HandleOutOfMemoryErrorFalse);
+                                AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(HOOMEF);
                         if (!(Boolean) potentialPartResult[0]) {
                             potentialPartResult = AgentCollectionManager.swapToFile_FemaleCollectionExcept_AccountDetail(
                                     a_GENESIS_FemaleCollection);
@@ -1227,9 +1211,8 @@ public class GENESIS_AgentEnvironment
                         } else {
                             GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         }
-                        potentialPartResult = initMemoryReserve_AccountDetail(
-                                a_GENESIS_FemaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        potentialPartResult = initMemoryReserve_AccountDetail(a_GENESIS_FemaleCollection,
+                                HOOMEF);
                         GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         potentialPartResult = tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                                 a_GENESIS_FemaleCollection,
@@ -1296,8 +1279,7 @@ public class GENESIS_AgentEnvironment
                                 a_GENESIS_MaleCollection);
                         if (!(Boolean) potentialPartResult[0]) {
                             potentialPartResult =
-                                    AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(
-                                    HandleOutOfMemoryErrorFalse);
+                                    AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(HOOMEF);
                             if (!(Boolean) potentialPartResult[0]) {
                                 // handleOutOfMemoryError changed to avoid problematic
                                 // recursion and allow error to be thrown from method
@@ -1309,9 +1291,8 @@ public class GENESIS_AgentEnvironment
                         } else {
                             GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         }
-                        potentialPartResult = initMemoryReserve_AccountDetail(
-                                a_GENESIS_MaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        potentialPartResult = initMemoryReserve_AccountDetail(a_GENESIS_MaleCollection,
+                                HOOMEF);
                         GENESIS_AgentCollectionManager.combine(result, potentialPartResult);
                         potentialPartResult = tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
                                 a_GENESIS_MaleCollection,
@@ -1342,8 +1323,7 @@ public class GENESIS_AgentEnvironment
             Object[] result = new Object[3];
             while (getTotalFreeMemory() < ge.Memory_Threshold) {
                 Object[] potentialPartResult =
-                        AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                        AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(HOOMEF);
                 if (!(Boolean) potentialPartResult[0]) {
                     potentialPartResult =
                             AgentCollectionManager.swapToFile_FemaleCollectionExcept_AccountDetail(
@@ -1374,8 +1354,7 @@ public class GENESIS_AgentEnvironment
                         a_MaleCollection);
                 if (!(Boolean) potentialPartResult[0]) {
                     potentialPartResult =
-                            AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(
-                            HandleOutOfMemoryErrorTrue);
+                            AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(HOOMET);
                     if (!(Boolean) potentialPartResult[0]) {
                         result[0] = false;
                         return result;
@@ -1409,7 +1388,7 @@ public class GENESIS_AgentEnvironment
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection =
 //                    AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
-//                    ge.HandleOutOfMemoryErrorFalse);
+//                    ge.HOOMEF);
 //            return tryToEnsureThereIsEnoughMemoryToContinue_AccountDetail(
 //                    a_GENESIS_AgentCollection,
 //                    handleOutOfMemoryError);
@@ -1419,7 +1398,7 @@ public class GENESIS_AgentEnvironment
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection =
 //                        AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
-//                        ge.HandleOutOfMemoryErrorFalse);
+//                        ge.HOOMEF);
 //                HashSet<Long> result = new HashSet<Long>();
 //                boolean createdRoom = false;
 //                while (!createdRoom) {
@@ -1443,7 +1422,7 @@ public class GENESIS_AgentEnvironment
 //                        }
 //                        potentialPartResult = initMemoryReserve_AccountDetail(
 //                                a_GENESIS_AgentCollection,
-//                                HandleOutOfMemoryErrorFalse);
+//                                HOOMEF);
 //                        if (potentialPartResult != null) {
 //                            if (!potentialPartResult.isEmpty()) {
 //                                result.addAll(potentialPartResult);
@@ -1497,8 +1476,7 @@ public class GENESIS_AgentEnvironment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                boolean result = swapDataAny(
-                        HandleOutOfMemoryErrorFalse);
+                boolean result = swapDataAny(HOOMEF);
                 if (!result) {
                     throw a_OutOfMemoryError;
                 }

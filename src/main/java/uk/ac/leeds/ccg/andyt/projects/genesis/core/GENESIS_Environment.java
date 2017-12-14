@@ -169,7 +169,7 @@ public class GENESIS_Environment
 //                a_GENESIS_Environment.AgentEnvironment);
 //        this._Generic_BigDecimal = new Generic_BigDecimal(a_GENESIS_Environment._Generic_BigDecimal);
 //        this._Grids_Environment = new Grids_Environment(a_GENESIS_Environment._Grids_Environment);
-//        this.HandleOutOfMemoryError = a_GENESIS_Environment.HandleOutOfMemoryError;
+//        this.HOOME = a_GENESIS_Environment.HOOME;
 //        this.MemoryReserve = a_GENESIS_Environment.MemoryReserve;
 //        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
@@ -232,7 +232,7 @@ public class GENESIS_Environment
                 a_Time);
         this._network_Grid2DSquareCellDoubleFactory = network_Grid2DSquareCellDoubleFactory;
         this._reporting_Grid2DSquareCellDoubleFactory = reporting_Grid2DSquareCellDoubleFactory;
-        this.HandleOutOfMemoryError = handleOutOfMemoryError;
+        this.HOOME = handleOutOfMemoryError;
     }
 
     private void init_Generic_BigDecimal() {
@@ -272,7 +272,7 @@ public class GENESIS_Environment
         this._AbstractModel = a_Model;
         this.Time = new GENESIS_Time(_Time);
         this._network_Grid2DSquareCellDoubleFactory = _Grid2DSquareCellDoubleFactory;
-        this.HandleOutOfMemoryError = handleOutOfMemoryError;
+        this.HOOME = handleOutOfMemoryError;
     }
 
     public GENESIS_AbstractModelTraffic getTrafficModel() {
@@ -284,10 +284,9 @@ public class GENESIS_Environment
 
     public Vector_Envelope2D get_reporting_VectorEnvelope2D() {
         if (_reporting_VectorEnvelope2D == null) {
-            //BigDecimal[] a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.get_Dimensions(HandleOutOfMemoryError);
+            //BigDecimal[] a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.get_Dimensions(HOOME);
             Grids_Dimensions a_Grid2DSquareCell_Dimensions;
-            a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.getDimensions(
-                    HandleOutOfMemoryError);
+            a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.getDimensions(HOOME);
             Vector_Point2D a_VectorPoint2D = new Vector_Point2D(
                     ve,
                     a_Grid2DSquareCell_Dimensions.getXMin(),
@@ -333,8 +332,7 @@ public class GENESIS_Environment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                long result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_Account(
-                        HandleOutOfMemoryErrorFalse);
+                long result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_Account(HOOMEF);
                 if (result < 1) {
                     swapChunk();
                 }
@@ -361,8 +359,7 @@ public class GENESIS_Environment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                Object[] result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                Object[] result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(HOOMEF);
                 if (!(Boolean) result[0]) {
                     swapChunk();
                 }
@@ -457,7 +454,7 @@ public class GENESIS_Environment
 //                clearMemoryReserve();
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection = AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
-//                        HandleOutOfMemoryErrorFalse);
+//                        HOOMEF);
 //                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection) < 1) {
 //                    swapChunk();
@@ -474,15 +471,13 @@ public class GENESIS_Environment
     public boolean swapDataAny(boolean handleOutOfMemoryError) {
         try {
             boolean result = swapDataAny();
-            checkAndMaybeFreeMemory(
-                    HandleOutOfMemoryErrorFalse);
+            checkAndMaybeFreeMemory(HOOMEF);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                boolean result = swapDataAny(
-                        HandleOutOfMemoryErrorFalse);
-                initMemoryReserve(HandleOutOfMemoryErrorFalse);
+                boolean result = swapDataAny(HOOMEF);
+                initMemoryReserve(HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -521,16 +516,15 @@ public class GENESIS_Environment
         try {
             boolean result = swapDataAnyExcept(
                     a_GENESIS_FemaleCollection);
-            tryToEnsureThereIsEnoughMemoryToContinue(
-                    a_GENESIS_FemaleCollection,
-                    HandleOutOfMemoryErrorFalse);
+            tryToEnsureThereIsEnoughMemoryToContinue(a_GENESIS_FemaleCollection,
+                    HOOMEF);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 boolean result = swapDataAnyExcept(
                         a_GENESIS_FemaleCollection);
-                initMemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -544,16 +538,15 @@ public class GENESIS_Environment
         try {
             boolean result = swapDataAnyExcept(
                     a_GENESIS_MaleCollection);
-            tryToEnsureThereIsEnoughMemoryToContinue(
-                    a_GENESIS_MaleCollection,
-                    HandleOutOfMemoryErrorFalse);
+            tryToEnsureThereIsEnoughMemoryToContinue(a_GENESIS_MaleCollection,
+                    HOOMEF);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 boolean result = swapDataAnyExcept(
                         a_GENESIS_MaleCollection);
-                initMemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -657,7 +650,7 @@ public class GENESIS_Environment
     }
 
     protected void swapChunks() {
-        ge.swapChunks(HandleOutOfMemoryErrorFalse);
+        ge.swapChunks(HOOMEF);
     }
 
     public long swapChunks_Account(
@@ -684,14 +677,12 @@ public class GENESIS_Environment
     }
 
     protected long swapChunks_Account() {
-        return ge.swapChunks_Account(
-                HandleOutOfMemoryErrorFalse);
+        return ge.swapChunks_Account(HOOMEF);
     }
 
     protected long swapChunk_Account() {
         if (ge.isDataToSwap()) {
-            if (ge.swapChunk(
-                    HandleOutOfMemoryErrorFalse)) {
+            if (ge.swapChunk(HOOMEF)) {
                 return 1L;
             }
         }
@@ -722,8 +713,7 @@ public class GENESIS_Environment
      * overhead...
      */
     protected void swapChunk() {
-        ge.swapChunk(
-                HandleOutOfMemoryErrorFalse);
+        ge.swapChunk(HOOMEF);
     }
 
     public void swapToFile_AgentCollections(
@@ -781,7 +771,7 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                 }
-                initMemoryReserve(HandleOutOfMemoryErrorFalse);
+                initMemoryReserve(HOOMEF);
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -828,8 +818,7 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        initMemoryReserve(
-                                HandleOutOfMemoryErrorFalse);
+                        initMemoryReserve(HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         log(
@@ -887,7 +876,7 @@ public class GENESIS_Environment
 //                clearMemoryReserve();
 //                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection,
-//                        HandleOutOfMemoryErrorFalse) < 1) {
+//                        HOOMEF) < 1) {
 //                    if (swapChunk_Account() < 1) {
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
@@ -905,7 +894,7 @@ public class GENESIS_Environment
 //                    try {
 //                        initMemoryReserve(
 //                                a_GENESIS_AgentCollection,
-//                                HandleOutOfMemoryErrorFalse);
+//                                HOOMEF);
 //                        createdRoom = true;
 //                    } catch (OutOfMemoryError b_OutOfMemoryError) {
 //                        log(
@@ -951,9 +940,8 @@ public class GENESIS_Environment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
-                        a_GENESIS_FemaleCollection,
-                        HandleOutOfMemoryErrorFalse) < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(a_GENESIS_FemaleCollection,
+                        HOOMEF) < 1) {
                     if (swapChunk_Account() < 1) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
@@ -969,9 +957,8 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        initMemoryReserve(
-                                a_GENESIS_FemaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        initMemoryReserve(a_GENESIS_FemaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = "Struggling to ensure there is enough memory in "
@@ -1018,9 +1005,8 @@ public class GENESIS_Environment
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
-                if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
-                        a_GENESIS_MaleCollection,
-                        HandleOutOfMemoryErrorFalse) < 1) {
+                if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(a_GENESIS_MaleCollection,
+                        HOOMEF) < 1) {
                     if (swapChunk_Account() < 1) {
                         String message = "Warning! Not enough data to swap in "
                                 + this.getClass().getName()
@@ -1036,9 +1022,8 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        initMemoryReserve(
-                                a_GENESIS_MaleCollection,
-                                HandleOutOfMemoryErrorFalse);
+                        initMemoryReserve(a_GENESIS_MaleCollection,
+                                HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = "Struggling to ensure there is enough memory in "
@@ -1127,7 +1112,7 @@ public class GENESIS_Environment
 //            GENESIS_AgentCollection a_GENESIS_AgentCollection =
 //                    AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                    a_AgentCollection_ID,
-//                    HandleOutOfMemoryErrorFalse);
+//                    HOOMEF);
 //            if (!checkAndMaybeFreeMemory(
 //                    a_GENESIS_AgentCollection)) {
 //                String message = new String(
@@ -1145,10 +1130,10 @@ public class GENESIS_Environment
 //                GENESIS_AgentCollection a_GENESIS_AgentCollection =
 //                        AgentEnvironment._GENESIS_AgentCollectionManager.getAgentCollection(
 //                        a_AgentCollection_ID,
-//                        HandleOutOfMemoryErrorFalse);
+//                        HOOMEF);
 //                if (AgentEnvironment._GENESIS_AgentCollectionManager.swapToFile_AgentCollectionExcept_Account(
 //                        a_GENESIS_AgentCollection,
-//                        HandleOutOfMemoryErrorFalse) < 1) {
+//                        HOOMEF) < 1) {
 //                    if (swapChunk_Account() < 1) {
 //                        String message = new String(
 //                                "Warning! Not enough data to swap in "
@@ -1166,7 +1151,7 @@ public class GENESIS_Environment
 //                    try {
 //                        initMemoryReserve(
 //                                a_GENESIS_AgentCollection,
-//                                HandleOutOfMemoryErrorFalse);
+//                                HOOMEF);
 //                        createdRoom = true;
 //                    } catch (OutOfMemoryError b_OutOfMemoryError) {
 //                        log(
@@ -1222,8 +1207,7 @@ public class GENESIS_Environment
                         throw a_OutOfMemoryError;
                     }
                     try {
-                        result += initMemoryReserve_AccountAgentCollections(
-                                HandleOutOfMemoryErrorFalse);
+                        result += initMemoryReserve_AccountAgentCollections(HOOMEF);
                         createdRoom = true;
                     } catch (OutOfMemoryError b_OutOfMemoryError) {
                         String message = "Struggling to ensure there is enough memory in "
@@ -1294,11 +1278,9 @@ public class GENESIS_Environment
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager = AgentEnvironment.getAgentCollectionManager();
-                Object[] result = a_GENESIS_AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                Object[] result = a_GENESIS_AgentCollectionManager.swapToFile_MaleCollection_AccountDetail(HOOMEF);
                 if (!(Boolean) result[0]) {
-                    Object[] potentialPartResult = a_GENESIS_AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(
-                            HandleOutOfMemoryErrorFalse);
+                    Object[] potentialPartResult = a_GENESIS_AgentCollectionManager.swapToFile_FemaleCollection_AccountDetail(HOOMEF);
                     if (!(Boolean) potentialPartResult[0]) {
                         if (swapChunk_Account() < 1) {
                             throw a_OutOfMemoryError;
@@ -1338,8 +1320,7 @@ public class GENESIS_Environment
             Object[] result = new Object[3];
             Object[] potentialPartResult;
             while (getTotalFreeMemory() < Memory_Threshold) {
-                potentialPartResult = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(
-                        HandleOutOfMemoryErrorFalse);
+                potentialPartResult = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_AccountDetail(HOOMEF);
                 if (potentialPartResult == null) {
                     if (swapChunk_Account() < 1) {
                         result[0] = false;

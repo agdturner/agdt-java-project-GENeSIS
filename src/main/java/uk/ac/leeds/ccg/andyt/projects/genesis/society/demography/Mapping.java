@@ -31,7 +31,7 @@ public class Mapping {
                 _Environment.ge.getProcessor(),
                 _File,
                 _Type,
-                _Environment.HandleOutOfMemoryError);
+                _Environment.HOOME);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Mapping {
             Grids_ImageExporter _ImageExporter,
             GENESIS_Environment _Environment,
             Object[] _Population) {
-        boolean _HandleOutOfMemoryError = _Environment.HandleOutOfMemoryError;
+        boolean _HandleOutOfMemoryError = _Environment.HOOME;
         Grids_GridDouble _Denisty_Map_Population = (Grids_GridDouble) _Environment._reporting_Grid2DSquareCellDoubleFactory.create(
                 _Environment._reporting_Grid2DSquareCellDouble);
         //long _NRows = _Denisty_Map_Population.getNRows(_HandleOutOfMemoryError);
