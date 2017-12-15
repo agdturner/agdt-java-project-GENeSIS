@@ -841,7 +841,7 @@ public class GENESIS_Environment
      * @return
      */
     @Override
-    protected boolean checkAndMaybeFreeMemory() {
+    public boolean checkAndMaybeFreeMemory() {
         while (getTotalFreeMemory() < Memory_Threshold) {
             if (!swapDataAny()) {
                 return false;

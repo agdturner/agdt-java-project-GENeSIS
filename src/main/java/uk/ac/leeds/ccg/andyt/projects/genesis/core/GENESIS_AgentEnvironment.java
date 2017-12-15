@@ -494,7 +494,7 @@ public class GENESIS_AgentEnvironment
     }
 
     @Override
-    protected boolean checkAndMaybeFreeMemory() {
+    public boolean checkAndMaybeFreeMemory() {
         while (getTotalFreeMemory() < ge.Memory_Threshold) {
             if (AgentCollectionManager.swapAgentCollection_Account() < 1) {
                 return false;
@@ -642,7 +642,7 @@ public class GENESIS_AgentEnvironment
      * @param a_FemaleCollection An FemaleCollection not to be swapped.
      * @return 
      */
-    protected boolean tryToEnsureThereIsEnoughMemoryToContinue(
+    public boolean tryToEnsureThereIsEnoughMemoryToContinue(
             GENESIS_FemaleCollection a_FemaleCollection) {
         while (getTotalFreeMemory() < ge.Memory_Threshold) {
             if (AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
@@ -660,7 +660,7 @@ public class GENESIS_AgentEnvironment
      * @param a_MaleCollection An MaleCollection not to be swapped.
      * @return 
      */
-    protected boolean tryToEnsureThereIsEnoughMemoryToContinue(
+    public boolean tryToEnsureThereIsEnoughMemoryToContinue(
             GENESIS_MaleCollection a_MaleCollection) {
         while (getTotalFreeMemory() < ge.Memory_Threshold) {
             if (AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
@@ -798,7 +798,7 @@ public class GENESIS_AgentEnvironment
      * continue and the second element being a count of the total number of 
      * agent collections swapped in the process.
      */
-    protected Object[] tryToEnsureThereIsEnoughMemoryToContinue_Account() {
+    public Object[] tryToEnsureThereIsEnoughMemoryToContinue_Account() {
         if (getTotalFreeMemory() < ge.Memory_Threshold) {
             Object[] result = new Object[2];
             long totalCount = 0L;
