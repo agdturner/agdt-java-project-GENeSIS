@@ -25,7 +25,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataHandler
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CASAreaEastingNorthingDataRecord;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataHandler;
 import uk.ac.leeds.ccg.andyt.census.sws.Census_SWSDataRecord;
-import uk.ac.leeds.ccg.andyt.grids.core.grid.statistics.Grids_GridDoubleStatisticsNotUpdated;
+import uk.ac.leeds.ccg.andyt.grids.core.grid.stats.Grids_GridDoubleStatsNotUpdated;
 import uk.ac.leeds.ccg.andyt.grids.process.Grids_Processor;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Network2D;
 import uk.ac.leeds.ccg.andyt.vector.geometry.Vector_Point2D;
@@ -485,7 +485,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                 networkChunkNRows,
                 networkChunkNCols,
                 new Grids_Dimensions(networkNRows_long, networkNCols_long),
-                new Grids_GridDoubleStatisticsNotUpdated(ge.ge));
+                new Grids_GridDoubleStatsNotUpdated(ge.ge));
         Grids_Dimensions network_Dimensions = new Grids_Dimensions(
                 reportingCellsize,
                 minx,
@@ -535,7 +535,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                 reportingChunkNRows,
                 reportingChunkNCols,
                 network_Dimensions,
-                new Grids_GridDoubleStatisticsNotUpdated(gridsEnv));
+                new Grids_GridDoubleStatsNotUpdated(gridsEnv));
         BigDecimal maxX;
         BigDecimal maxY;
         BigDecimal reportingScaleGeneralisation = network_Dimensions.getCellsize().divide(reportingCellsize);
