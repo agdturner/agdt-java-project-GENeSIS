@@ -355,7 +355,7 @@ public class GENESIS_ModelDemographic
         int startDay = parameters.getStartDay();
         log(Level.FINE, "startDay " + startDay);
         ge.Time = new GENESIS_Time(startYear, startDay);
-        ge._initial_Time = new GENESIS_Time(startYear, startDay); // To be changed if this is a continuation simulation
+        ge.InitialTime = new GENESIS_Time(startYear, startDay); // To be changed if this is a continuation simulation
         /*
          * Set _InitialPopulation_File using
          * a_Parameters.getPopulationCountFile(); or Set
@@ -441,12 +441,12 @@ public class GENESIS_ModelDemographic
 //                _GENESIS_Environment.HOOME).MaximumNumberOfObjectsPerDirectory;
         ge.AgentEnvironment.set_AgentCollectionManager(_GENESIS_AgentCollectionManager,
                 HandleOutOfMemoryError);
-        ge._PersonFactory = new GENESIS_PersonFactory(
+        ge.PersonFactory = new GENESIS_PersonFactory(
                 ge,
                 _GENESIS_AgentCollectionManager);
         log(Level.FINE,
                 "_TestMemory.getTotalFreeMemory() "
-                + ge.getTotalFreeMemory(ge.HOOME));
+                + ge.getTotalFreeMemory());
         Long lastRunIndex_Long;
         Long runIndex_Long;
         String underscore = "_";
@@ -659,7 +659,7 @@ public class GENESIS_ModelDemographic
             //_GENESIS_Environment.Time.addDay();
             int initialYear = new Integer(seedRun_Metadata.getInitialYear());
             int initialDay = new Integer(seedRun_Metadata.getInitialDay());
-            ge._initial_Time = new GENESIS_Time(initialYear, initialDay);
+            ge.InitialTime = new GENESIS_Time(initialYear, initialDay);
             // Initialise metadata
             run_Metadata.setInitialYear(seedRun_Metadata.getInitialYear());
             run_Metadata.setInitialDay(seedRun_Metadata.getInitialDay());
@@ -715,7 +715,7 @@ public class GENESIS_ModelDemographic
                     _GENESIS_AgentCollectionManager.getMaleCollection(aIndexOfLastLivingMaleCollection,
                     GENESIS_Person.getTypeLivingMale_String(),
                     HandleOutOfMemoryError);
-            _GENESIS_AgentCollectionManager._IndexOfLastBornMale =
+            _GENESIS_AgentCollectionManager.IndexOfLastBornMale =
                     lastLivingMaleCollection.getMaxAgentID();
             /*
              * Initialise: _PregnantFemaleIDs;
@@ -966,7 +966,7 @@ public class GENESIS_ModelDemographic
 //                    a_Male._GENESIS_Environment = _GENESIS_Environment;
 //                }
 //            }
-            //_GENESIS_Environment._AbstractModel._Random = _Random;
+            //_GENESIS_Environment.AbstractModel._Random = _Random;
 //            run_Metadata.setPseudoRandomNumberSeed(
 //                    seedRun_Metadata.getPseudoRandomNumberSeed());
             singleYearOfAgeRegionPopulation = _Demographics._Population;
@@ -1099,7 +1099,7 @@ public class GENESIS_ModelDemographic
 //            //_GENESIS_Environment.Time.addDay();
 //            int initialYear = new Integer(seedRun_Metadata.getInitialYear());
 //            int initialDay = new Integer(seedRun_Metadata.getInitialDay());
-//            _GENESIS_Environment._initial_Time = new GENESIS_Time(initialYear, initialDay);
+//            _GENESIS_Environment.InitialTime = new GENESIS_Time(initialYear, initialDay);
 //            // Initialise metadata
 //            run_Metadata.setInitialYear(seedRun_Metadata.getInitialYear());
 //            run_Metadata.setInitialDay(seedRun_Metadata.getInitialDay());
@@ -1157,7 +1157,7 @@ public class GENESIS_ModelDemographic
 //                    aIndexOfLastLivingMaleCollection,
 //                    GENESIS_Person.getTypeLivingMale_String(),
 //                    HOOME);
-//            AgentCollectionManager._IndexOfLastBornMale =
+//            AgentCollectionManager.IndexOfLastBornMale =
 //                    lastLivingMaleCollection.getMaxAgentID();
 //            /*
 //             * Initialise: _PregnantFemaleIDs;
@@ -1386,7 +1386,7 @@ public class GENESIS_ModelDemographic
 ////                    a_Male._GENESIS_Environment = _GENESIS_Environment;
 ////                }
 ////            }
-//            //_GENESIS_Environment._AbstractModel._Random = _Random;
+//            //_GENESIS_Environment.AbstractModel._Random = _Random;
 ////            run_Metadata.setPseudoRandomNumberSeed(
 ////                    seedRun_Metadata.getPseudoRandomNumberSeed());
         } else {
@@ -1501,7 +1501,7 @@ public class GENESIS_ModelDemographic
             writeOutStartPopulations(resultMetadataDirectory_File);
             log(Level.FINE,
                     "_TestMemory.getTotalFreeMemory() "
-                    + ge.getTotalFreeMemory(ge.HOOME));
+                    + ge.getTotalFreeMemory());
             //_GENESIS_Environment.Time.subtractDay();
             // Initialise metadata
             run_Metadata.setInitialYear(startYear);
@@ -1604,7 +1604,7 @@ public class GENESIS_ModelDemographic
  AgentCollectionManager._DeadMaleCollection_HashMap.
      */
     protected void writeOutDeadCollectionNotAlreadyStoredOnFile() {
-        ge.checkAndMaybeFreeMemory(HandleOutOfMemoryError);
+        ge.checkAndMaybeFreeMemory();
         File outputFile;
         System.out.println("Write out Dead Collections...");
         // Dead Female Collection
@@ -1647,24 +1647,22 @@ public class GENESIS_ModelDemographic
      * Writes out Living Collections that are not already stored on File from:
  AgentCollectionManager.LivingFemales; and,
  AgentCollectionManager.LivingMales.
-     * @param handleOutOfMemoryError
+     * @param hoome
      */
     protected void writeOutLivingCollectionNotAlreadyStoredOnFile(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             writeOutLivingCollectionNotAlreadyStoredOnFile();
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            ge.checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(ge.HOOMEF);
-                writeOutLivingCollectionNotAlreadyStoredOnFile(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                writeOutLivingCollectionNotAlreadyStoredOnFile(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -1861,8 +1859,8 @@ public class GENESIS_ModelDemographic
 //                a_Birth_Time = GENESIS_Time.getRandomTime(
 //                        minBirth_Time,
 //                        maxBirth_Time,
-//                        _GENESIS_Environment._AbstractModel._Random);
-//                a_Female = _GENESIS_Environment._PersonFactory.createFemale(
+//                        _GENESIS_Environment.AbstractModel._Random);
+//                a_Female = _GENESIS_Environment.PersonFactory.createFemale(
 //                        a_Birth_Time,
 //                        a_Household,
 //                        a_VectorPoint2D,
@@ -1895,8 +1893,8 @@ public class GENESIS_ModelDemographic
 //                a_Birth_Time = GENESIS_Time.getRandomTime(
 //                        minBirth_Time,
 //                        maxBirth_Time,
-//                        _GENESIS_Environment._AbstractModel._Random);
-//                a_Male = _GENESIS_Environment._PersonFactory.createMale(
+//                        _GENESIS_Environment.AbstractModel._Random);
+//                a_Male = _GENESIS_Environment.PersonFactory.createMale(
 //                        a_Birth_Time,
 //                        a_Household,
 //                        a_VectorPoint2D,
@@ -1925,7 +1923,7 @@ public class GENESIS_ModelDemographic
             TreeMap<String, TreeMap<String, GENESIS_Population>> inputPopulation,
             GENESIS_Time a_Time) {
         try {
-            ge.checkAndMaybeFreeMemory(ge.HOOME);
+            ge.checkAndMaybeFreeMemory();
             TreeMap<String, TreeMap<String, GENESIS_Population>> result;
             result = new TreeMap<String, TreeMap<String, GENESIS_Population>>();
             BigDecimal population;
@@ -1938,7 +1936,7 @@ public class GENESIS_ModelDemographic
             // Iterate over inputPopulation LADs
             ite = inputPopulation.keySet().iterator();
             while (ite.hasNext()) {
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                ge.checkAndMaybeFreeMemory();
                 String regionID = ite.next();
                 if (!regionID.equalsIgnoreCase("Total")) {
                     TreeSet<String> subregionIDs = new TreeSet<String>();
@@ -1951,7 +1949,7 @@ public class GENESIS_ModelDemographic
                     // Iterate over inputLADPopulation OAs
                     Iterator<String> ite2 = inputLADPopulation.keySet().iterator();
                     while (ite2.hasNext()) {
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         String subregionID = ite2.next();
                         if (!subregionID.equalsIgnoreCase(regionID)) {
                             subregionIDs.add(regionID);
@@ -1963,7 +1961,7 @@ public class GENESIS_ModelDemographic
                             // Females
                             ite3 = inputLADPopulationNotNecessarilyInSingleYearsOfAge._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                             while (ite3.hasNext()) {
-                                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                                ge.checkAndMaybeFreeMemory();
                                 ageBound = ite3.next();
                                 population = inputLADPopulationNotNecessarilyInSingleYearsOfAge._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                                 if (population.compareTo(BigDecimal.ZERO) == 1) {
@@ -1978,8 +1976,8 @@ public class GENESIS_ModelDemographic
                                     for (BigInteger i = BigInteger.ZERO; i.compareTo(population_BigInteger) == -1; i = i.add(BigInteger.ONE)) {
                                         GENESIS_Time age_Time = GENESIS_Time.getRandomTime(ageMinTime,
                                                 ageMaxTime,
-                                                ge._AbstractModel._RandomArray[0],
-                                                ge._AbstractModel._RandomArray[1]);
+                                                ge.AbstractModel._RandomArray[0],
+                                                ge.AbstractModel._RandomArray[1]);
                                         GENESIS_Time birth_Time = a_Time.subtract(age_Time);
                                         GENESIS_Age age = new GENESIS_Age(
                                                 ge,
@@ -2000,7 +1998,7 @@ public class GENESIS_ModelDemographic
                             // Males
                             ite3 = inputLADPopulationNotNecessarilyInSingleYearsOfAge._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                             while (ite3.hasNext()) {
-                                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                                ge.checkAndMaybeFreeMemory();
                                 ageBound = ite3.next();
                                 population = inputLADPopulationNotNecessarilyInSingleYearsOfAge._MaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                                 if (population.compareTo(BigDecimal.ZERO) == 1) {
@@ -2015,8 +2013,8 @@ public class GENESIS_ModelDemographic
                                     for (BigInteger i = BigInteger.ZERO; i.compareTo(population_BigInteger) == -1; i = i.add(BigInteger.ONE)) {
                                         GENESIS_Time age_Time = GENESIS_Time.getRandomTime(ageMinTime,
                                                 ageMaxTime,
-                                                ge._AbstractModel._RandomArray[0],
-                                                ge._AbstractModel._RandomArray[1]);
+                                                ge.AbstractModel._RandomArray[0],
+                                                ge.AbstractModel._RandomArray[1]);
                                         GENESIS_Time birth_Time = a_Time.subtract(age_Time);
                                         GENESIS_Age age = new GENESIS_Age(
                                                 ge,
@@ -2042,7 +2040,7 @@ public class GENESIS_ModelDemographic
             // and calculate totals
             ite = result.keySet().iterator();
             while (ite.hasNext()) {
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                ge.checkAndMaybeFreeMemory();
                 String aLADCode = ite.next();
                 TreeMap<String, GENESIS_Population> individualYearLADPopulation;
                 individualYearLADPopulation = result.get(aLADCode);
@@ -2052,7 +2050,7 @@ public class GENESIS_ModelDemographic
                 // Iterate over individualYearLADPopulation
                 Iterator<String> ite2 = individualYearLADPopulation.keySet().iterator();
                 while (ite2.hasNext()) {
-                    ge.checkAndMaybeFreeMemory(ge.HOOME);
+                    ge.checkAndMaybeFreeMemory();
                     String aOACode = ite2.next();
                     GENESIS_Population individualYearAgeBoundPopulation;
                     individualYearAgeBoundPopulation = individualYearLADPopulation.get(aOACode);
@@ -2079,27 +2077,27 @@ public class GENESIS_ModelDemographic
      */
     public void initialiseSubregionPopulations(
             TreeMap<String, TreeMap<String, GENESIS_Population>> singleYearAgeRegionPopulation) {
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         ge.Time.subtractDay();
         Iterator<String> ite = singleYearAgeRegionPopulation.keySet().iterator();
         while (ite.hasNext()) {
             String regionID = ite.next();
-            TreeSet<String> subregionIDs = new TreeSet<String>();
+            TreeSet<String> subregionIDs = new TreeSet<>();
             _regionIDs.put(regionID, subregionIDs);
             String msg;
             msg = "Initialising population for regionID " + regionID;
             log(Level.FINE, msg);
             System.out.println(msg);
             TreeMap<String, TreeSet<Long>> regionLivingFemaleIDs;
-            regionLivingFemaleIDs = new TreeMap<String, TreeSet<Long>>();
+            regionLivingFemaleIDs = new TreeMap<>();
             _LivingFemaleIDs.put(regionID, regionLivingFemaleIDs);
             TreeMap<String, TreeSet<Long>> regionLivingMaleIDs;
-            regionLivingMaleIDs = new TreeMap<String, TreeSet<Long>>();
+            regionLivingMaleIDs = new TreeMap<>();
             _LivingMaleIDs.put(regionID, regionLivingMaleIDs);
             TreeMap<String, TreeSet<Long>> regionNotPregnantFemaleIDs;
             regionNotPregnantFemaleIDs = _NotPregnantFemaleIDs.get(regionID);
             if (regionNotPregnantFemaleIDs == null) {
-                regionNotPregnantFemaleIDs = new TreeMap<String, TreeSet<Long>>();
+                regionNotPregnantFemaleIDs = new TreeMap<>();
                 _NotPregnantFemaleIDs.put(regionID, regionNotPregnantFemaleIDs);
             }
             TreeMap<String, GENESIS_Population> regionPopulation;
@@ -2135,7 +2133,7 @@ public class GENESIS_ModelDemographic
                     // Initialise females in subregion
                     ite3 = subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                     while (ite3.hasNext()) {
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         GENESIS_AgeBound ageBound = ite3.next();
                         Long population = subregionPopulation._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound).longValue();
                         for (int p = 0; p < population; p++) {
@@ -2150,7 +2148,7 @@ public class GENESIS_ModelDemographic
                     // Initialise males in subregion
                     ite3 = subregionPopulation._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
                     while (ite3.hasNext()) {
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         GENESIS_AgeBound ageBound = ite3.next();
                         Long population = subregionPopulation._MaleAgeBoundPopulationCount_TreeMap.get(ageBound).longValue();
                         for (int p = 0; p < population; p++) {
@@ -2172,7 +2170,7 @@ public class GENESIS_ModelDemographic
 //            System.out.println(msg);
         }
         System.out.println("IndexOfLastBornFemale " + this._GENESIS_AgentCollectionManager._IndexOfLastBornFemale);
-        System.out.println("IndexOfLastBornMale " + this._GENESIS_AgentCollectionManager._IndexOfLastBornMale);
+        System.out.println("IndexOfLastBornMale " + this._GENESIS_AgentCollectionManager.IndexOfLastBornMale);
         ge.Time.addDay();
         int totalInitialisedPregnancies = initialisePregnancies();
         log(Level.FINE, "totalInitialisedPregnancies " + totalInitialisedPregnancies);
@@ -2225,7 +2223,7 @@ public class GENESIS_ModelDemographic
             TreeSet<Long> subregionNotPregnantFemaleIDs) {
         GENESIS_Female result;
         GENESIS_Age age = getRandomAge(ageBound);
-        result = ge._PersonFactory.createFemale(age,
+        result = ge.PersonFactory.createFemale(age,
                 null,
                 null,
                 ge.HOOME);
@@ -2280,7 +2278,7 @@ public class GENESIS_ModelDemographic
             TreeSet<Long> subregionLivingMaleIDs) {
         GENESIS_Male result;
         GENESIS_Age age = getRandomAge(ageBound);
-        result = ge._PersonFactory.createMale(age,
+        result = ge.PersonFactory.createMale(age,
                 null,
                 null,
                 ge.HOOME);
@@ -2308,8 +2306,8 @@ public class GENESIS_ModelDemographic
         GENESIS_Time ageMaxTime = new GENESIS_Time(ageMax, 0);
         GENESIS_Time age_Time = GENESIS_Time.getRandomTime(ageMinTime,
                 ageMaxTime,
-                ge._AbstractModel._RandomArray[0],
-                ge._AbstractModel._RandomArray[1]);
+                ge.AbstractModel._RandomArray[0],
+                ge.AbstractModel._RandomArray[1]);
         GENESIS_Time birth_Time = ge.Time.subtract(age_Time);
         result = new GENESIS_Age(
                 ge,
@@ -2358,8 +2356,8 @@ public class GENESIS_ModelDemographic
 //            a_Birth_Time = GENESIS_Time.getRandomTime(
 //                    minBirth_Time,
 //                    maxBirth_Time,
-//                    _GENESIS_Environment._AbstractModel._Random);
-//            a_Female = _GENESIS_Environment._PersonFactory.createFemale(
+//                    _GENESIS_Environment.AbstractModel._Random);
+//            a_Female = _GENESIS_Environment.PersonFactory.createFemale(
 //                    a_Birth_Time,
 //                    null,
 //                    null,
@@ -2383,8 +2381,8 @@ public class GENESIS_ModelDemographic
 //            a_Birth_Time = GENESIS_Time.getRandomTime(
 //                    minBirth_Time,
 //                    maxBirth_Time,
-//                    _GENESIS_Environment._AbstractModel._Random);
-//            a_Male = _GENESIS_Environment._PersonFactory.createMale(
+//                    _GENESIS_Environment.AbstractModel._Random);
+//            a_Male = _GENESIS_Environment.PersonFactory.createMale(
 //                    a_Birth_Time,
 //                    null,
 //                    null,
@@ -2514,7 +2512,7 @@ public class GENESIS_ModelDemographic
         String xAxisLabel = "Population";
         String yAxisLabel = "Age";
         boolean drawOriginLinesOnPlot = false;
-        //int decimalPlacePrecisionForCalculations = _GENESIS_Environment._DecimalPlacePrecisionForCalculations;
+        //int decimalPlacePrecisionForCalculations = _GENESIS_Environment.DecimalPlacePrecisionForCalculations;
         int decimalPlacePrecisionForCalculations = 10;
         int significantDigits = 3;
         RoundingMode roundingMode = RoundingMode.HALF_UP;
@@ -2641,7 +2639,7 @@ public class GENESIS_ModelDemographic
         String xAxisLabel = "Population";
         String yAxisLabel = "Age";
         boolean drawOriginLinesOnPlot = false;
-        //int decimalPlacePrecisionForCalculations = _GENESIS_Environment._DecimalPlacePrecisionForCalculations;
+        //int decimalPlacePrecisionForCalculations = _GENESIS_Environment.DecimalPlacePrecisionForCalculations;
         int decimalPlacePrecisionForCalculations = 10;
         int significantDigits = 3;
         RoundingMode roundingMode = RoundingMode.HALF_UP;
@@ -2712,7 +2710,7 @@ public class GENESIS_ModelDemographic
     public HashSet<Future> simulate(
             int years) {
         HashSet<Future> result = new HashSet<Future>();
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         int significantDigits = 4;
         int decimalPlacePrecisionForCalculations = 10;
         int dataWidthForScatterAndRegressionPlots = 300;
@@ -2802,7 +2800,7 @@ public class GENESIS_ModelDemographic
         GENESIS_Migration migration = _Demographics._Migration;
 //        // Loop for all years
 //        for (int year = startYear; year < endYear; year++) {
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         int allBirthsInYear = 0;
         int singleBirthsInYear = 0;
         int twinBirthsInYear = 0;
@@ -2865,7 +2863,7 @@ public class GENESIS_ModelDemographic
 
         Iterator<String> ite = this._regionIDs.keySet().iterator();
         while (ite.hasNext()) {
-            ge.checkAndMaybeFreeMemory(ge.HOOME);
+            ge.checkAndMaybeFreeMemory();
             String regionID = ite.next();
             // Indexes
             // Death
@@ -2935,7 +2933,7 @@ public class GENESIS_ModelDemographic
             Iterator<String> ite2;
             ite2 = subregionIDs.iterator();
             while (ite2.hasNext()) {
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                ge.checkAndMaybeFreeMemory();
                 String subregionID = ite2.next();
                 regionDeadFemaleIDs.put(
                         subregionID, new TreeSet<Long>());
@@ -2981,16 +2979,16 @@ public class GENESIS_ModelDemographic
                         new TreeMap<GENESIS_AgeBound, BigDecimal>());
             }
         }
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         GENESIS_Demographics startYear_Demographics = new GENESIS_Demographics(
                 new GENESIS_Environment(ge),
                 _Demographics);
         // Loop for all days in a year
         // (currently assumes a fixed number of days in a year)
         //for (int day = startDay; day < startDay + 2; day++) {
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         for (int day = startDay; day < startDay + GENESIS_Time.NormalDaysInYear_int; day++) {
-            ge.checkAndMaybeFreeMemory(ge.HOOME);
+            ge.checkAndMaybeFreeMemory();
             String message;
 //                message = "Year " + year + " day " + day;
 //                log(Level.FINE, message);
@@ -2998,7 +2996,7 @@ public class GENESIS_ModelDemographic
             message = "Year " + ge.Time.getYear() + " day " + ge.Time.getDayOfYear();
             log(Level.FINE, message);
             System.out.println(message);
-            ge.checkAndMaybeFreeMemory(ge.HOOME);
+            ge.checkAndMaybeFreeMemory();
             // Iterate over each region
             ite = this._regionIDs.keySet().iterator();
             while (ite.hasNext()) {
@@ -3101,7 +3099,7 @@ public class GENESIS_ModelDemographic
                 Iterator<String> ite2;
                 ite2 = subregionIDs.iterator();
                 while (ite2.hasNext()) {
-                    ge.checkAndMaybeFreeMemory(ge.HOOME);
+                    ge.checkAndMaybeFreeMemory();
                     String subregionID = ite2.next();
                     HashSet<Long> dead_Female_ID_HashSet = null;
                     HashSet<Long> dead_Male_ID_HashSet = null;
@@ -3170,7 +3168,7 @@ public class GENESIS_ModelDemographic
                         HashSet<Long> babyBoy_IDs = null;
                         Iterator<Long> ite3;
                         // Simulate Males first as Males do not give birth.
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         type = GENESIS_Person.getTypeLivingMale_String();
                         ite3 = subregionLivingMaleIDs.iterator();
                         while (ite3.hasNext()) {
@@ -3368,7 +3366,7 @@ public class GENESIS_ModelDemographic
                             }
                         }
                         // Simulate Females
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         type = GENESIS_Person.getTypeLivingFemale_String();
                         ite3 = subregionLivingFemaleIDs.iterator();
                         while (ite3.hasNext()) {
@@ -3940,7 +3938,7 @@ public class GENESIS_ModelDemographic
             System.out.println("Simulate In migration and Immigration");
             ite = _regionIDs.keySet().iterator();
             while (ite.hasNext()) {
-                ge.checkAndMaybeFreeMemory(true);
+                ge.checkAndMaybeFreeMemory();
                 String regionID = ite.next();
                 System.out.println("regionID " + regionID);
 //                TreeMap<String, TreeMap<GENESIS_AgeBound, BigDecimal>> regionImmigration;
@@ -4024,7 +4022,7 @@ public class GENESIS_ModelDemographic
             // Move migrating people
             Iterator<String> ites;
             // Female
-            ge.checkAndMaybeFreeMemory(ge.HOOME);
+            ge.checkAndMaybeFreeMemory();
             System.out.println("Move migrating people");
 
             ites = outMigratingFemaleIDs.keySet().iterator();
@@ -4034,8 +4032,6 @@ public class GENESIS_ModelDemographic
             String regionID = "XXXX";
             int messageLength = 100;
             String message2;
-            message2 = this.ge.initString(messageLength,
-                    ge.HOOME);
             String destinationRegionID = "XXXX";
             String destinationSubregionID = destinationRegionID + "XXXX";
             String femaleSubregionID = destinationRegionID + "XXXX";
@@ -4053,18 +4049,16 @@ public class GENESIS_ModelDemographic
             Iterator<String> ites2 = regionOutMigratingFemaleIDs.keySet().iterator();
             GENESIS_Female a_Female;
             while (ites.hasNext()) {
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                ge.checkAndMaybeFreeMemory();
                 regionID = ites.next();
                 message2 = "regionID " + regionID;
                 System.out.println(message2);
-                message2 = this.ge.initString(messageLength,
-                        ge.HOOME);
                 regionOutMigratingFemaleIDs = outMigratingFemaleIDs.get(regionID);
 //                TreeMap<String, TreeSet<Long>> regionLivingFemaleIDs;
 //                regionLivingFemaleIDs = _LivingFemaleIDs.get(regionID);
                 ites2 = regionOutMigratingFemaleIDs.keySet().iterator();
                 while (ites2.hasNext()) {
-                    ge.checkAndMaybeFreeMemory(ge.HOOME);
+                    ge.checkAndMaybeFreeMemory();
                     subregionID = ites2.next();
                     message2 = "subregionID " + subregionID;
                     System.out.println(message2);
@@ -4073,9 +4067,6 @@ public class GENESIS_ModelDemographic
                     if (subregionID.equalsIgnoreCase("00DBFK0029")) {
                         int debug = 1;
                     }
-
-                    message2 = this.ge.initString(messageLength,
-                            ge.HOOME);
 //                    if (subregionID.equalsIgnoreCase("00DBFT0029")) {
 //                        System.out.println("subregionID " + subregionID);
 //                        int debug = 1;
@@ -4084,7 +4075,7 @@ public class GENESIS_ModelDemographic
                     itel = agentIDs.iterator();
                     while (itel.hasNext()) {
                         try {
-                            ge.checkAndMaybeFreeMemory(ge.HOOME);
+                            ge.checkAndMaybeFreeMemory();
                             a_Agent_ID = itel.next();
 
                             // DEBUG
@@ -4239,23 +4230,21 @@ public class GENESIS_ModelDemographic
             System.out.println("male");
             GENESIS_Male a_Male;
             TreeMap<String, HashSet<Long>> regionOutMigratingMaleIDs = new TreeMap<String, HashSet<Long>>();
-            ge.checkAndMaybeFreeMemory(true);
+            ge.checkAndMaybeFreeMemory();
             ites = outMigratingMaleIDs.keySet().iterator();
             type = GENESIS_Person.getTypeLivingMale_String();
             while (ites.hasNext()) {
-                ge.checkAndMaybeFreeMemory(true);
+                ge.checkAndMaybeFreeMemory();
                 regionID = ites.next();
                 message2 = "regionID " + regionID;
                 System.out.println(message2);
-                message2 = this.ge.initString(messageLength,
-                        ge.HOOME);
                 regionOutMigratingMaleIDs = outMigratingMaleIDs.get(regionID);
 //                TreeMap<String, TreeSet<Long>> regionLivingMaleIDs;
 //                regionLivingMaleIDs = _LivingMaleIDs.get(regionID);
                 ites2 = regionOutMigratingMaleIDs.keySet().iterator();
                 while (ites2.hasNext()) {
                     try {
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         subregionID = ites2.next();
                         message2 = "subregionID " + subregionID;
                         System.out.println(message2);
@@ -4266,14 +4255,11 @@ public class GENESIS_ModelDemographic
                         if (subregionID.equalsIgnoreCase("00DAFN0036")) {
                             int debug = 1;
                         }
-
-                        message2 = this.ge.initString(messageLength,
-                                ge.HOOME);
                         agentIDs = regionOutMigratingMaleIDs.get(subregionID);
                         itel = agentIDs.iterator();
                         while (itel.hasNext()) {
                             try {
-                                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                                ge.checkAndMaybeFreeMemory();
                                 a_Agent_ID = itel.next();
 
                                 // DEBUG
@@ -4405,7 +4391,7 @@ public class GENESIS_ModelDemographic
             _Demographics._Migration.rationaliseMigrationData();
 
             // Debug
-            ge.checkAndMaybeFreeMemory(true);
+            ge.checkAndMaybeFreeMemory();
             String msg = "totalDeathsInYear " + totalDeathsInYear
                     + ", allBirthsInYear " + allBirthsInYear
                     + ", singleBirthsInYear " + singleBirthsInYear
@@ -5022,7 +5008,7 @@ public class GENESIS_ModelDemographic
                 if (dailyCount_long > 1) {
                     // Create in migrants
                     for (long i = 0; i < dailyCount_long; i++) {
-                        ge.checkAndMaybeFreeMemory(true);
+                        ge.checkAndMaybeFreeMemory();
                         String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKFemale(
                                 ageBound,
                                 regionID,
@@ -5119,7 +5105,7 @@ public class GENESIS_ModelDemographic
                 if (dailyCount_long > 1) {
                     // Create immigrants
                     for (long i = 0; i < dailyCount_long; i++) {
-                        ge.checkAndMaybeFreeMemory(true);
+                        ge.checkAndMaybeFreeMemory();
                         String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKMale(
                                 ageBound,
                                 regionID,
@@ -5226,12 +5212,12 @@ public class GENESIS_ModelDemographic
             Iterator<GENESIS_AgeBound> ite;
             ite = pop._FemaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
             while (ite.hasNext()) {
-                ge.checkAndMaybeFreeMemory(true);
+                ge.checkAndMaybeFreeMemory();
                 GENESIS_AgeBound ageBound = ite.next();
                 BigDecimal dailyCount_BigDecimal = pop._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                 long dailyCount_long = dailyCount_BigDecimal.toBigInteger().longValue();
                 if (dailyCount_long > 1) {
-                    ge.checkAndMaybeFreeMemory(true);
+                    ge.checkAndMaybeFreeMemory();
                     // Create immigrants
                     for (long i = 0; i < dailyCount_long; i++) {
                         // Assume same distribution for Immigration as Internal to UK migration!
@@ -5273,7 +5259,7 @@ public class GENESIS_ModelDemographic
                     }
                     result++;
                 }
-                ge.checkAndMaybeFreeMemory(true);
+                ge.checkAndMaybeFreeMemory();
 // for the remaining population add based on random
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
@@ -5318,17 +5304,17 @@ public class GENESIS_ModelDemographic
                     result++;
                 }
             }
-            ge.checkAndMaybeFreeMemory(true);
+            ge.checkAndMaybeFreeMemory();
             ite = pop._MaleAgeBoundPopulationCount_TreeMap.keySet().iterator();
             while (ite.hasNext()) {
                 GENESIS_AgeBound ageBound = ite.next();
                 BigDecimal dailyCount_BigDecimal = pop._MaleAgeBoundPopulationCount_TreeMap.get(ageBound);
                 long dailyCount_long = dailyCount_BigDecimal.toBigInteger().longValue();
                 if (dailyCount_long > 1) {
-                    ge.checkAndMaybeFreeMemory(true);
+                    ge.checkAndMaybeFreeMemory();
 // Create immigrants
                     for (long i = 0; i < dailyCount_long; i++) {
-                        ge.checkAndMaybeFreeMemory(true);
+                        ge.checkAndMaybeFreeMemory();
 // Assume same distribution for Immigration as Internal to UK migration!
                         String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKMale(
                                 ageBound,
@@ -5367,7 +5353,7 @@ public class GENESIS_ModelDemographic
                 }
                 // for the remaining population add based on random
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
-                ge.checkAndMaybeFreeMemory(true);
+                ge.checkAndMaybeFreeMemory();
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
                 if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
                         remainingDailyCount_BigDecimal,
@@ -5496,7 +5482,7 @@ public class GENESIS_ModelDemographic
 
     @Deprecated
     public void updateNearlyDuePregnantFemaleIDs() {
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         String type = GENESIS_Person.getTypeLivingFemale_String();
         Iterator<String> ite = _regionIDs.keySet().iterator();
         String regionID;
@@ -5516,7 +5502,7 @@ public class GENESIS_ModelDemographic
                     subregionNearlyDuePregnantFemaleIDs = regionNearlyDuePregnantFemaleIDs.get(subregionID);
                     Iterator<Long> ite3 = subregionPregnantFemaleIDs.iterator();
                     while (ite3.hasNext()) {
-                        ge.checkAndMaybeFreeMemory(ge.HOOME);
+                        ge.checkAndMaybeFreeMemory();
                         long a_Agent_ID = (Long) ite3.next();
                         GENESIS_Female a_Female = _GENESIS_AgentCollectionManager.getFemale(a_Agent_ID,
                                 type,
@@ -5673,7 +5659,7 @@ public class GENESIS_ModelDemographic
      * @return 
      */
     public int initialisePregnancies() {
-        ge.checkAndMaybeFreeMemory(ge.HOOME);
+        ge.checkAndMaybeFreeMemory();
         log(Level.FINE, "<initialisePregnancies>");
         String type = GENESIS_Person.getTypeLivingFemale_String();
         int totalPregnancies = 0;
@@ -5825,7 +5811,7 @@ public class GENESIS_ModelDemographic
                 // Loop over notPregnant population (which is all to begin with)
                 // Set them to be pregnant based on probabilities
                 while (ite5.hasNext()) {
-                    ge.checkAndMaybeFreeMemory(ge.HOOME);
+                    ge.checkAndMaybeFreeMemory();
                     Long a_Agent_ID = ite5.next();
 
 //                    // debug
@@ -5892,7 +5878,7 @@ public class GENESIS_ModelDemographic
                                     log(Level.FINE, "<dayOfPregnancy>");
                                     log(Level.FINE, "" + numberOfDaysUntilDue);
                                     log(Level.FINE, "</dayOfPregnancy>");
-                                    boolean isPregnant = a_Female.set_Pregnant(_Demographics._Fertility.get(regionID).get(regionID),
+                                    boolean isPregnant = a_Female.setPregnant(_Demographics._Fertility.get(regionID).get(regionID),
                                             numberOfDaysUntilDue,
                                             ge.HOOME);
                                     if (isPregnant) {

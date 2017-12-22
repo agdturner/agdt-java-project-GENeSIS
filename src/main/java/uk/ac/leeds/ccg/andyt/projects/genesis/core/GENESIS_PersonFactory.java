@@ -41,9 +41,10 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
     /**
      *
      * a_GENESIS_AgentCollection Not to be swapped
+     *
      * @param handleOutOfMemoryError
      * @param a_GENESIS_FemaleCollection
-     * @return 
+     * @return
      */
     public GENESIS_Female createFemale(
             GENESIS_Age age,
@@ -64,8 +65,8 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
-            AgentCollectionManager._IndexOfLastBornFemale =
-                    result.getAgentID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornFemale
+                    = result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -96,7 +97,7 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
     /**
      * @param handleOutOfMemoryError
      * @param a_VectorPoint2D
-     * @return 
+     * @return
      */
     public GENESIS_Female createFemale(
             GENESIS_Age age,
@@ -113,13 +114,13 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
                     age,
                     a_Household,
                     a_VectorPoint2D);
-            GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
-                    result.get_FemaleCollection(ge.HOOMEF);
+            GENESIS_FemaleCollection a_GENESIS_FemaleCollection
+                    = result.get_FemaleCollection(ge.HOOMEF);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_FemaleCollection,
                     handleOutOfMemoryError);
-            AgentCollectionManager._IndexOfLastBornFemale =
-                    result.getAgentID(handleOutOfMemoryError);
+            AgentCollectionManager._IndexOfLastBornFemale
+                    = result.getAgentID(handleOutOfMemoryError);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
@@ -130,11 +131,11 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
                         age,
                         a_Household,
                         a_VectorPoint2D);
-                GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
-                        result.get_FemaleCollection(ge.HOOMEF);
+                GENESIS_FemaleCollection a_GENESIS_FemaleCollection
+                        = result.get_FemaleCollection(ge.HOOMEF);
                 ge.swapDataAnyExcept(a_GENESIS_FemaleCollection,
                         ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
+                ge.initMemoryReserve();
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -144,9 +145,9 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
 
     public GENESIS_Male createMale(
             GENESIS_Age age,
-            GENESIS_Household a_Household,
-            Vector_Point2D a_VectorPoint2D,
-            boolean handleOutOfMemoryError) {
+            GENESIS_Household household,
+            Vector_Point2D point,
+            boolean hoome) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
 //                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
@@ -155,33 +156,28 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
                     ge,
                     AgentCollectionManager,
                     age,
-                    a_Household,
-                    a_VectorPoint2D);
-            GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                    result.get_MaleCollection(ge.HOOMEF);
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    a_GENESIS_MaleCollection,
-                    handleOutOfMemoryError);
-            AgentCollectionManager._IndexOfLastBornMale =
-                    result.getAgentID(handleOutOfMemoryError);
+                    household,
+                    point);
+            GENESIS_MaleCollection mc
+                    = result.get_MaleCollection(ge.HOOMEF);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(mc, hoome);
+            AgentCollectionManager.IndexOfLastBornMale = result.getAgentID(hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 GENESIS_Male result = new GENESIS_Male(
                         ge,
                         AgentCollectionManager,
                         age,
-                        a_Household,
-                        a_VectorPoint2D);
-                GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                        result.get_MaleCollection(ge.HOOMEF);
-                ge.swapDataAnyExcept(a_GENESIS_MaleCollection,
-                        ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
+                        household,
+                        point);
+                GENESIS_MaleCollection mc = result.get_MaleCollection(ge.HOOMEF);
+                ge.swapDataAnyExcept(mc, ge.HOOMEF);
+                ge.initMemoryReserve();
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -190,8 +186,8 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
             GENESIS_Age age,
             GENESIS_Household a_Household,
             Vector_Point2D a_VectorPoint2D,
-            GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
-            boolean handleOutOfMemoryError) {
+            GENESIS_FemaleCollection fc,
+            boolean hoome) {
         try {
 //            GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
 //                    ge._GENESIS_AgentEnvironment.get_AgentCollectionManager(
@@ -202,26 +198,26 @@ public class GENESIS_PersonFactory extends GENESIS_Object implements Serializabl
                     age,
                     a_Household,
                     a_VectorPoint2D);
-            GENESIS_MaleCollection a_GENESIS_MaleCollection =
-                    result.get_MaleCollection(ge.HOOMEF);
+            GENESIS_MaleCollection a_GENESIS_MaleCollection
+                    = result.get_MaleCollection(ge.HOOMEF);
             ge.tryToEnsureThereIsEnoughMemoryToContinue(
                     a_GENESIS_MaleCollection,
-                    handleOutOfMemoryError);
-            AgentCollectionManager._IndexOfLastBornMale =
-                    result.getAgentID(handleOutOfMemoryError);
+                    hoome);
+            AgentCollectionManager.IndexOfLastBornMale
+                    = result.getAgentID(hoome);
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(a_GENESIS_FemaleCollection,
+                ge.swapDataAnyExcept(fc,
                         ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
+                ge.initMemoryReserve();
                 return createMale(
                         age,
                         a_Household,
                         a_VectorPoint2D,
-                        a_GENESIS_FemaleCollection,
-                        handleOutOfMemoryError);
+                        fc,
+                        hoome);
             } else {
                 throw a_OutOfMemoryError;
             }

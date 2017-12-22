@@ -777,7 +777,7 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
 //                    //pregnancyProbability = ageSpecificPregnancyProbability_HashMap.get(-1);
 //                    if (pregnancyProbability.compareTo(BigDecimal.ZERO) == 1) {
 ////                    if (Generic_BigDecimal.randomUniformTest(
-////                            _GENESIS_Environment._AbstractModel._Random,
+////                            _GENESIS_Environment.AbstractModel._Random,
 ////                            pregnancyProbability,
 ////                            //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
 ////                            GENESIS_Environment.RoundingModeForPopulationProbabilities)) {
@@ -955,8 +955,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             BigDecimal dayAmount = Generic_BigDecimal.divideRoundIfNecessary(
                     probabilityOfLabour,
                     GENESIS_Time.NormalDaysInYear_BigInteger,
-                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                    GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                    ge.DecimalPlacePrecisionForPopulationProbabilities,
+                    ge.RoundingModeForPopulationProbabilities);
             //System.out.println("expectedLaboursInADay " + dayAmount);            
             int day = GENESIS_Female.NormalGestationPeriod_int;
             sumOfAllPregnancies = sumOfAllPregnancies.add(dayAmount);
@@ -964,8 +964,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             BigDecimal probability = Generic_BigDecimal.divideRoundIfNecessary(
                     dayAmount,
                     population,
-                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                    GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                    ge.DecimalPlacePrecisionForPopulationProbabilities,
+                    ge.RoundingModeForPopulationProbabilities);
             daysProbability.put(day, probability);
             cumulativeProbability = cumulativeProbability.add(probability);
             BigDecimal mortalitySurvivalProbability = BigDecimal.ONE.subtract(
@@ -987,16 +987,16 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
                     dayAmount = Generic_BigDecimal.divideRoundIfNecessary(
                             dayAmount,
                             pregnancySurvivalInLateStage,
-                            GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                            GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                            ge.DecimalPlacePrecisionForPopulationProbabilities,
+                            ge.RoundingModeForPopulationProbabilities);
                 }
                 daysCount.put(day, dayAmount);
                 sumOfAllPregnancies = sumOfAllPregnancies.add(dayAmount);
                 probability = Generic_BigDecimal.divideRoundIfNecessary(
                         dayAmount,
                         population,
-                        GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                        GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                        ge.DecimalPlacePrecisionForPopulationProbabilities,
+                        ge.RoundingModeForPopulationProbabilities);
                 daysProbability.put(day, probability);
                 cumulativeProbability = cumulativeProbability.add(probability);
                 day--;
@@ -1017,8 +1017,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
                     dayAmount = Generic_BigDecimal.divideRoundIfNecessary(
                             dayAmount,
                             pregnancySurvivalInEarlyStage,
-                            GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                            GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                            ge.DecimalPlacePrecisionForPopulationProbabilities,
+                            ge.RoundingModeForPopulationProbabilities);
                 }
                 /*
                  * Removed for the time being and assumed that death of mother
@@ -1034,8 +1034,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
                 probability = Generic_BigDecimal.divideRoundIfNecessary(
                         dayAmount,
                         population,
-                        GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                        GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                        ge.DecimalPlacePrecisionForPopulationProbabilities,
+                        ge.RoundingModeForPopulationProbabilities);
                 daysProbability.put(day, probability);
                 cumulativeProbability = cumulativeProbability.add(probability);
                 day--;
@@ -1047,8 +1047,8 @@ public class GENESIS_Fertility extends FertilityType implements Serializable {
             BigDecimal proportionOfNonPregnancies = Generic_BigDecimal.divideRoundIfNecessary(
                     numberOfNonPregnancies,
                     population,
-                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                    GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                    ge.DecimalPlacePrecisionForPopulationProbabilities,
+                    ge.RoundingModeForPopulationProbabilities);
             _DailyPregnancyAgeBoundProbabilities_TreeMap.put(ageBound, probability);
             daysProbability.put(-2, pregnancyInEarlyStageProbability);
             daysProbability.put(-3, pregnancyInLateStageProbability);

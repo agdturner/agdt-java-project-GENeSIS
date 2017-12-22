@@ -112,7 +112,7 @@ public class GENESIS_TravelingSalesman extends GENESIS_Object implements Seriali
         double originNearestNode_Distance_Origin = Math.sqrt(
                 (originLatitiudeDiff * originLatitiudeDiff)
                 - (originLongitudeDiff * originLongitudeDiff));
-        double cellsize = ge._network_Grid2DSquareCellDouble.getCellsizeDouble(true);
+        double cellsize = ge.NetworkGridDouble.getCellsizeDouble();
         if (originNearestNode_Distance_Origin > 3.0d * cellsize) {
             System.out.println(
                     "NearestStreetSelector to origin is "
@@ -120,7 +120,7 @@ public class GENESIS_TravelingSalesman extends GENESIS_Object implements Seriali
                     + " cellsizes away!");
         }
 
-        if (!ge._network_Grid2DSquareCellDouble.isInGrid(originNearestNodeLongitude, originNearestNodeLatitude, true)) {
+        if (!ge.NetworkGridDouble.isInGrid(originNearestNodeLongitude, originNearestNodeLatitude)) {
             return null;
         }
         //Node startNode = NodeHelper.findNearestNode(osmData, startCoord);
@@ -151,7 +151,7 @@ public class GENESIS_TravelingSalesman extends GENESIS_Object implements Seriali
                     + " cellsizes away");
         }
 
-        if (!ge._network_Grid2DSquareCellDouble.isInGrid(destinationNearestNodeLongitude, destinationNearestNodeLatitude, true)) {
+        if (!ge.NetworkGridDouble.isInGrid(destinationNearestNodeLongitude, destinationNearestNodeLatitude)) {
             return null;
         }
         //Router router = new TurnRestrictedMultiTargetDijkstraRouter();

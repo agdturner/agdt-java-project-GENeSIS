@@ -74,7 +74,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionToRegionMigration(boolean)");
                 return getRegionToRegionMigration(handleOutOfMemoryError);
             } else {
@@ -108,7 +108,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInMigration(boolean)");
                 return getRegionInMigration(handleOutOfMemoryError);
             } else {
@@ -141,7 +141,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionOutMigration(boolean)");
                 return getRegionOutMigration(handleOutOfMemoryError);
             } else {
@@ -173,7 +173,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInternalMigration(boolean)");
                 return getRegionInternalMigration(handleOutOfMemoryError);
             } else {
@@ -205,7 +205,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionImmigration(boolean)");
                 return getRegionInternalMigration(handleOutOfMemoryError);
             } else {
@@ -239,7 +239,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInMigration(boolean)");
                 return getSubregionInMigration(handleOutOfMemoryError);
             } else {
@@ -273,7 +273,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionOutMigration(boolean)");
                 return getSubregionOutMigration(handleOutOfMemoryError);
             } else {
@@ -307,7 +307,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInternalInMigration(boolean)");
                 return getSubregionInternalInMigration(handleOutOfMemoryError);
             } else {
@@ -341,7 +341,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (handleOutOfMemoryError) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getSubregionInternalOutMigration(boolean)");
                 return getSubregionInternalOutMigration(handleOutOfMemoryError);
             } else {
@@ -382,7 +382,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 if (!ge.swapDataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionInMigrationRates(boolean)");
                 return getRegionInMigrationRates(handleOutOfMemoryError);
             } else {
@@ -420,7 +420,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 if (!ge.swapDataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getRegionOutMigrationRates(boolean)");
                 return getRegionOutMigrationRates(handleOutOfMemoryError);
             } else {
@@ -458,7 +458,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 if (!ge.swapDataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.getImmigrationRates(boolean)");
                 return getImmigrationRates(handleOutOfMemoryError);
             } else {
@@ -495,7 +495,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 if (!ge.swapDataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.cumulativeSumRescaledRegionOutMigration(boolean)");
                 return getCumulativeSumRescaledRegionOutMigration(handleOutOfMemoryError);
             } else {
@@ -532,7 +532,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 if (!ge.swapDataAny()) {
                     rationaliseMigrationData(); // Swap other migration data!
                 }
-                ge.initMemoryReserve(handleOutOfMemoryError);
+                ge.initMemoryReserve();
                 System.err.println(e.getMessage() + " GENESIS_Migration.cumulativeSumRescaledRegionInMigration(boolean)");
                 return getCumulativeSumRescaledSubregionInMigration(handleOutOfMemoryError);
             } else {

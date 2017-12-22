@@ -68,7 +68,7 @@ public class CompareProbabilities {
 //                Directory + "/DemographicModel_Aspatial_1/0_99/0/data/Demographics/0_99/0/");
 //        _GENESIS_Environment.Directory = Directory;
 //        _GENESIS_Environment.Time = new GENESIS_Time(1993, 0);
-//        _GENESIS_Environment._DecimalPlacePrecisionForCalculations = 10;
+//        _GENESIS_Environment.DecimalPlacePrecisionForCalculations = 10;
 //        String fileSeparator = System.getProperty("file.separator");
 //        /**
 //         * Initialise input_Demographics
@@ -112,7 +112,7 @@ public class CompareProbabilities {
 //                input_Demographics,
 //                output_Demographics,
 //                output_Directory,
-//                _GENESIS_Environment._DecimalPlacePrecisionForCalculations);
+//                _GENESIS_Environment.DecimalPlacePrecisionForCalculations);
 //        System.out.println("sumOfSquaredErrors " + sumOfSquaredErrors);
 //        System.out.println("</test0>");
 //    }

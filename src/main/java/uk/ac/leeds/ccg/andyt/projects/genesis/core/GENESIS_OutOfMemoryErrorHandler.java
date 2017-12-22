@@ -16,5 +16,5 @@ public abstract class GENESIS_OutOfMemoryErrorHandler
         implements Serializable, GENESIS_OutOfMemoryErrorHandlerInterface {
 
     //static final long serialVersionUID = 1L;
-    public static long Memory_Threshold = 10000000;
+    public long Memory_Threshold = 10000000;
 }

@@ -217,7 +217,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 range);
         executorService = getExecutorService();
         futures = new HashSet<Future>();
-        ge._AbstractModel = this;
+        ge.AbstractModel = this;
 
         _StartYear = getStartYearForResult(resultsToCompare[0], underscore);
         _EndYear = _StartYear + 1L;
@@ -362,7 +362,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         message = "</list of results to compare>";
         log(Level.INFO, message);
         System.out.println(message);
-        ge._AbstractModel = this;
+        ge.AbstractModel = this;
         //_HandleOutOfMemoryError = false;
         // Generate comparison plots
         generateComparisonPlots();
@@ -1686,7 +1686,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         //String fileSeparator = System.getProperty("file.separator");
         int lastYear = metadata_Metadata.getEndYear();
         ge.Time = new GENESIS_Time(lastYear, 0);
-        ge._AbstractModel.ge = ge;
+        ge.AbstractModel.ge = ge;
 
         // Initialise start GENESIS_Demographics
         message = "Initialise start Demographics";
@@ -1721,7 +1721,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                     startDemographics,
                     endDemographics,
                     dataDirectory_File,
-                    ge._DecimalPlacePrecisionForCalculations));
+                    ge.DecimalPlacePrecisionForCalculations));
             message = "Similarity (sum of squared differences between simulated "
                     + "and theoretical results) for area " + areaCode + " is " + sse;
         }
@@ -1930,7 +1930,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 a_GENESIS_AgentCollectionManager.getMaleCollection(aIndexOfLastLivingMaleCollection,
                 GENESIS_Person.getTypeLivingMale_String(),
                 HandleOutOfMemoryError);
-        a_GENESIS_AgentCollectionManager._IndexOfLastBornMale =
+        a_GENESIS_AgentCollectionManager.IndexOfLastBornMale =
                 a_LastLivingMaleCollection.getMaxAgentID();
 
         GENESIS_AgentCollectionManager b_GENESIS_AgentCollectionManager =
@@ -1971,7 +1971,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 b_GENESIS_AgentCollectionManager.getMaleCollection(bIndexOfLastLivingMaleCollection,
                 GENESIS_Person.getTypeLivingMale_String(),
                 HandleOutOfMemoryError);
-        b_GENESIS_AgentCollectionManager._IndexOfLastBornMale =
+        b_GENESIS_AgentCollectionManager.IndexOfLastBornMale =
                 b_LastLivingMaleCollection.getMaxAgentID();
 
         if (a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale
@@ -1989,12 +1989,12 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             resultsTheSame = false;
         }
 
-        if (a_GENESIS_AgentCollectionManager._IndexOfLastBornMale
-                == b_GENESIS_AgentCollectionManager._IndexOfLastBornMale) {
+        if (a_GENESIS_AgentCollectionManager.IndexOfLastBornMale
+                == b_GENESIS_AgentCollectionManager.IndexOfLastBornMale) {
             message =
                     "a_GENESIS_AgentCollectionManager._IndexOfLastBornMale == "
                     + "b_GENESIS_AgentCollectionManager._IndexOfLastBornMale "
-                    + a_GENESIS_AgentCollectionManager._IndexOfLastBornMale;
+                    + a_GENESIS_AgentCollectionManager.IndexOfLastBornMale;
             report(message);
         } else {
             message =
@@ -2205,7 +2205,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //            }
             GENESIS_Male a_GENESIS_Male;
             GENESIS_Male b_GENESIS_Male;
-            for (long a_ID = 0L; a_ID < b_GENESIS_AgentCollectionManager._IndexOfLastBornMale; a_ID++) {
+            for (long a_ID = 0L; a_ID < b_GENESIS_AgentCollectionManager.IndexOfLastBornMale; a_ID++) {
                 a_GENESIS_Male = a_GENESIS_AgentCollectionManager.getMale(a_ID,
                         GENESIS_Person.getTypeLivingMale_String(),
                         HandleOutOfMemoryError);

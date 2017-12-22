@@ -189,7 +189,7 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //    public void print_Age(Calendar _Calendar) {
 //        //Date _TimeOfBirth_Date = _TimeOfBirth_Calendar.getTime();
 //        //Date Time = _Time_Calendar.getTime();
-//        //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
+//        //_GENESIS_Environment.AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
 //        int _DAY_OF_YEAR = _Calendar.get(Calendar.DAY_OF_YEAR);
 //        int _Calendar_Birth_DAY_OF_YEAR = _Birth_Calendar.get(Calendar.DAY_OF_YEAR);
 //        int _Age_Day;
@@ -213,7 +213,7 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //        } else {
 //            //Date _TimeOfBirth_Date = _TimeOfBirth_Calendar.getTime();
 //            //Date Time = _Time_Calendar.getTime();
-//            //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
+//            //_GENESIS_Environment.AbstractModel._GENESIS_Log.log("_Date " + Time + " _TimeOfBirth_Date " + _TimeOfBirth_Date);
 //            int _Time_Birth_DAY_OF_YEAR = _Birth_Calendar.get(Calendar.DAY_OF_YEAR);
 //            _Age_Year = _Calendar.get(Calendar.YEAR) - _Birth_Calendar.get(Calendar.YEAR);
 //            int _Age_Day;
@@ -279,7 +279,7 @@ public class GENESIS_Age extends Age implements Comparable, Serializable {
 //        } else {
 //            result += (_DAY_OF_YEAR - _Calendar_Birth_DAY_OF_YEAR) / _DaysInYear;
 //        }
-//        //_GENESIS_Environment._AbstractModel._GENESIS_Log.log("_Age " + _Age);
+//        //_GENESIS_Environment.AbstractModel._GENESIS_Log.log("_Age " + _Age);
 //        return result;
 //    }
     /**

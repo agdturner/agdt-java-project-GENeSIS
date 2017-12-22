@@ -80,7 +80,7 @@ public abstract class GENESIS_AbstractModelDemographic
     @Override
     public void init_Environment(GENESIS_Environment ge) {
         super.init_Environment(ge);
-        ge._PersonFactory = new GENESIS_PersonFactory(
+        ge.PersonFactory = new GENESIS_PersonFactory(
                 ge,
                 _GENESIS_AgentCollectionManager);
         get_Demographics()._GENESIS_Environment = ge;

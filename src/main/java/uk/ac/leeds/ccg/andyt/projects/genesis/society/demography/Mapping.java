@@ -21,72 +21,65 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Person;
  */
 public class Mapping {
 
-    public static void _OutputMap(
-            Grids_AbstractGridNumber _Grid2DSquareCell,
-            File _File,
-            String _Type,
-            Grids_ImageExporter _ImageExporter,
-            GENESIS_Environment _Environment) {
-        _ImageExporter.toGreyScaleImage(_Grid2DSquareCell,
-                _Environment.ge.getProcessor(),
-                _File,
-                _Type,
-                _Environment.HOOME);
+    public static void outputMap(
+            Grids_AbstractGridNumber g,
+            File file,
+            String type,
+            Grids_ImageExporter ie,
+            GENESIS_Environment ge) {
+        ie.toGreyScaleImage(g, ge.ge.getProcessor(), file, type);
     }
 
     /**
      * Map locations with living population.
      *
-     * @param _File
-     * @param _Type
-     * @param _ImageExporter
-     * @param _Environment
-     * @param _Population
+     * @param f
+     * @param type
+     * @param ie
+     * @param ge
+     * @param population
      */
-    public static void _Map_Population(
-            File _File,
-            String _Type,
-            Grids_ImageExporter _ImageExporter,
-            GENESIS_Environment _Environment,
-            Object[] _Population) {
-        boolean _HandleOutOfMemoryError = _Environment.HOOME;
-        Grids_GridDouble _Denisty_Map_Population = (Grids_GridDouble) _Environment._reporting_Grid2DSquareCellDoubleFactory.create(
-                _Environment._reporting_Grid2DSquareCellDouble);
+    public static void mapPopulation(
+            File f,
+            String type,
+            Grids_ImageExporter ie,
+            GENESIS_Environment ge,
+            Object[] population) {
+        boolean _HandleOutOfMemoryError = ge.HOOME;
+        Grids_GridDouble denistyMapPopulation = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(ge.ReportingGridDouble);
         //long _NRows = _Denisty_Map_Population.getNRows(_HandleOutOfMemoryError);
         //long _NCols = _Denisty_Map_Population.getNCols(_HandleOutOfMemoryError);
         //long row;
         //long col;
         Iterator _Iterator;
-        HashSet _Females = (HashSet) _Population[0];
+        HashSet _Females = (HashSet) population[0];
         GENESIS_Female _Female;
         _Iterator = _Females.iterator();
         while (_Iterator.hasNext()) {
             _Female = (GENESIS_Female) _Iterator.next();
             if (_Female.TimeOfDeath == null) {
-                _Denisty_Map_Population.setCell(
-                        _Denisty_Map_Population.getRow(_Female.Location.Y, _HandleOutOfMemoryError),
-                        _Denisty_Map_Population.getCol(_Female.Location.X, _HandleOutOfMemoryError),
-                        1.0d,
-                        _HandleOutOfMemoryError);
+                denistyMapPopulation.setCell(
+                        denistyMapPopulation.getRow(_Female.Location.Y),
+                        denistyMapPopulation.getCol(_Female.Location.X),
+                        1.0d);
             }
         }
-        HashSet _Males = (HashSet) _Population[1];
+        HashSet _Males = (HashSet) population[1];
         GENESIS_Male _Male;
         _Iterator = _Males.iterator();
         while (_Iterator.hasNext()) {
             _Male = (GENESIS_Male) _Iterator.next();
             if (_Male.TimeOfDeath == null) {
-                _Denisty_Map_Population.setCell(
-                        _Denisty_Map_Population.getRow(_Male.Location.Y, _HandleOutOfMemoryError),
-                        _Denisty_Map_Population.getCol(_Male.Location.X, _HandleOutOfMemoryError),
-                        1.0d,
-                        _HandleOutOfMemoryError);
+                denistyMapPopulation.setCell(
+                        denistyMapPopulation.getRow(_Male.Location.Y),
+                        denistyMapPopulation.getCol(_Male.Location.X),
+                        1.0d);
             }
         }
-        _ImageExporter.toGreyScaleImage(
-                _Denisty_Map_Population,
-                _Environment.ge.getProcessor(),
-                _File, _Type, _HandleOutOfMemoryError);
+        ie.toGreyScaleImage(
+                denistyMapPopulation,
+                ge.ge.getProcessor(),
+                f, type);
 
     }
 
@@ -106,26 +99,21 @@ public class Mapping {
             double _CompositionLatency,
             boolean _HandleOutOfMemoryError) {
         // Divide values by _CompositionLatency
-        long _NRows = _Population_Location_Composite_Map.getNRows(
-                _HandleOutOfMemoryError);
-        long _NCols = _Population_Location_Composite_Map.getNCols(
-                _HandleOutOfMemoryError);
+        long _NRows = _Population_Location_Composite_Map.getNRows();
+        long _NCols = _Population_Location_Composite_Map.getNCols();
         long row;
         long col;
         double value;
         double newValue;
-        double _NoDataValue = _Population_Location_Composite_Map.getNoDataValue(_HandleOutOfMemoryError);
+        double _NoDataValue = _Population_Location_Composite_Map.getNoDataValue();
         for (row = 0; row < _NRows; row++) {
             for (col = 0; col < _NCols; col++) {
-                value = _Population_Location_Composite_Map.getCell(
-                        row, col, _HandleOutOfMemoryError);
+                value = _Population_Location_Composite_Map.getCell(                        row, col);
                 if (value != _NoDataValue && value != 0) {
                     newValue = value / _CompositionLatency;
-                    _Population_Location_Composite_Map.setCell(
-                            row, col, newValue, _HandleOutOfMemoryError);
+                    _Population_Location_Composite_Map.setCell(                            row, col, newValue);
                 } else {
-                    _Population_Location_Composite_Map.setCell(
-                            row, col, 0, _HandleOutOfMemoryError);
+                    _Population_Location_Composite_Map.setCell(                            row, col, 0);
                 }
             }
         }
@@ -138,11 +126,10 @@ public class Mapping {
             if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
                 _Population_Location_Composite_Map.addToCell(
                         _Population_Location_Composite_Map.getRow(
-                        _Person.Location.Y, _HandleOutOfMemoryError),
+                                _Person.Location.Y),
                         _Population_Location_Composite_Map.getCol(
-                        _Person.Location.X, _HandleOutOfMemoryError),
-                        1.0d,
-                        _HandleOutOfMemoryError);
+                                _Person.Location.X),
+                        1.0d);
             }
         }
         _Iterator = _Population_Alive_Male.iterator();
@@ -152,11 +139,10 @@ public class Mapping {
             if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
                 _Population_Location_Composite_Map.addToCell(
                         _Population_Location_Composite_Map.getRow(
-                        _Person.Location.Y, _HandleOutOfMemoryError),
+                                _Person.Location.Y),
                         _Population_Location_Composite_Map.getCol(
-                        _Person.Location.X, _HandleOutOfMemoryError),
-                        1.0d,
-                        _HandleOutOfMemoryError);
+                                _Person.Location.X),
+                        1.0d);
 //                _Population_Location_Composite_Map.setCell(
 //                        _Person._Location._Row, 
 //                        _Person._Location._Col, 

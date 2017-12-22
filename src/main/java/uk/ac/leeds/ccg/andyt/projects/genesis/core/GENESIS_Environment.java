@@ -51,7 +51,7 @@ public class GENESIS_Environment
     /**
      * Always initialised
      */
-    public transient GENESIS_AbstractModel _AbstractModel;
+    public transient GENESIS_AbstractModel AbstractModel;
 //    public transient CommonFactory _CommonFactory;
 //    public transient PopulationFactory _PopulationFactory;
 //    public transient MortalityFactory _MortalityFactory;
@@ -60,7 +60,7 @@ public class GENESIS_Environment
 //    public transient MetadataFactory _MetadataFactory;
 //    public transient ParametersFactory _ParametersFactory;
 //    public GENESIS_AbstractModelTraffic _TrafficModel;
-    public transient GENESIS_PersonFactory _PersonFactory;
+    public transient GENESIS_PersonFactory PersonFactory;
     public transient GENESIS_AgentEnvironment AgentEnvironment;
     /**
      * For mathematical uses
@@ -75,48 +75,48 @@ public class GENESIS_Environment
     /**
      * A factory for creating Grid2DSquareCellDouble of reporting dimensions
      */
-    public transient Grids_GridDoubleFactory _reporting_Grid2DSquareCellDoubleFactory;
+    public transient Grids_GridDoubleFactory ReportingGridDoubleFactory;
     /**
      * An example of a reporting grid for tidy coding.
      */
-    public transient Grids_GridDouble _reporting_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble ReportingGridDouble;
     /**
      * A grid for storing Population Density at any tick.
      */
-    public transient Grids_GridDouble _reportingPopulationDensity_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble ReportingPopulationDensityGridDouble;
     /**
      * A grid for storing cumulative Population Density.
      */
-    public transient Grids_GridDouble _reportingPopulationDensityAggregate_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble ReportingPopulationDensityAggregateGridDouble;
     /**
      * A grid for storing cumulative Population Density of people that are
      * moving.
      */
-    public transient Grids_GridDouble _reportingPopulationDensityMovingAggregate_Grid2DSquareCellDouble;
+    public transient Grids_GridDouble ReportingPopulationDensityMovingAggregateGridDouble;
 
     public GENESIS_Grids Grids;
     /**
      * For storing the Envelope containing reporting grids. It is here for
-     * convenience instead of repeatedly generating it from
-     * _reporting_Grid2DSquareCellDouble._Dimensions
+ convenience instead of repeatedly generating it from
+ ReportingGridDouble._Dimensions
      */
-    public transient Vector_Envelope2D _reporting_VectorEnvelope2D;
+    public transient Vector_Envelope2D ReportingEnvelope;
     /**
      * A factory for creating Grid2DSquareCellDouble of network dimensions
      */
-    public transient Grids_GridDoubleFactory _network_Grid2DSquareCellDoubleFactory;
+    public transient Grids_GridDoubleFactory NetworkGridDoubleFactory;
     /**
      * An example of a network grid for tidy coding.
      */
-    public transient Grids_GridDouble _network_Grid2DSquareCellDouble;
-    public static final int DecimalPlacePrecisionForPopulationProbabilities = 8;
-    public static final RoundingMode RoundingModeForPopulationProbabilities = RoundingMode.HALF_EVEN;
-    public static final MathContext MathContextForPopulationProbabilities = new MathContext(
+    public transient Grids_GridDouble NetworkGridDouble;
+    public final int DecimalPlacePrecisionForPopulationProbabilities = 8;
+    public final RoundingMode RoundingModeForPopulationProbabilities = RoundingMode.HALF_EVEN;
+    public final MathContext MathContextForPopulationProbabilities = new MathContext(
             DecimalPlacePrecisionForPopulationProbabilities,
             RoundingModeForPopulationProbabilities);
-    public int _DecimalPlacePrecisionForCalculations;
-    public int _DecimalPlacePrecisionForNetworkCalculations;
-    public int _DecimalPlacePrecisionForNetwork;
+    public int DecimalPlacePrecisionForCalculations;
+    public int DecimalPlacePrecisionForNetworkCalculations;
+    public int DecimalPlacePrecisionForNetwork;
     public BigDecimal _ToRoundToX_BigDecimal;
     public BigDecimal _ToRoundToY_BigDecimal;
 //    public Grid2DSquareCellDouble _World_Grid2DSquareCellDouble;
@@ -124,12 +124,12 @@ public class GENESIS_Environment
 //    public double _YRange_double;
 //    public double _XMin_double;
 //    public double _YMin_double;
-    public transient Grids_AbstractGridNumber _Resource_Grid2DSquareCellDouble;
+    public transient Grids_AbstractGridNumber ResourceGridDouble;
 //    public Random _Random;
     public GENESIS_Time Time;
-    public GENESIS_Time _initial_Time;
+    public GENESIS_Time InitialTime;
 //    public VectorNetwork2D _Network2D;
-    public transient GENESIS_TravelingSalesman _TSMisc;
+    public transient GENESIS_TravelingSalesman TS;
 //    protected static long Memory_Threshold = 10000000L;
     //private static long Memory_Threshold_TenThousand = 10000L;
     //private static long Memory_Threshold_TwoMillion = 2000000L;
@@ -154,10 +154,10 @@ public class GENESIS_Environment
      * @param ge The ge to deep copy.
      */
     public GENESIS_Environment(GENESIS_Environment ge) {
-        this._AbstractModel = ge._AbstractModel;
-//        this._DecimalPlacePrecisionForCalculations = a_GENESIS_Environment._DecimalPlacePrecisionForCalculations;
-//        this._DecimalPlacePrecisionForNetwork = a_GENESIS_Environment._DecimalPlacePrecisionForNetwork;
-//        this._DecimalPlacePrecisionForNetworkCalculations = a_GENESIS_Environment._DecimalPlacePrecisionForNetworkCalculations;
+        this.AbstractModel = ge.AbstractModel;
+//        this.DecimalPlacePrecisionForCalculations = a_GENESIS_Environment.DecimalPlacePrecisionForCalculations;
+//        this.DecimalPlacePrecisionForNetwork = a_GENESIS_Environment.DecimalPlacePrecisionForNetwork;
+//        this.DecimalPlacePrecisionForNetworkCalculations = a_GENESIS_Environment.DecimalPlacePrecisionForNetworkCalculations;
 //        this.DecimalPlacePrecisionForPopulationProbabilities = a_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities;
 //        this.Directory = new File(a_GENESIS_Environment.Directory.toString());
 ////        // Create a new dummy GENESIS_AgentEnvironment using 
@@ -171,7 +171,7 @@ public class GENESIS_Environment
 //        this._Grids_Environment = new Grids_Environment(a_GENESIS_Environment._Grids_Environment);
 //        this.HOOME = a_GENESIS_Environment.HOOME;
 //        this.MemoryReserve = a_GENESIS_Environment.MemoryReserve;
-//        this._PersonFactory = a_GENESIS_Environment._PersonFactory;
+//        this.PersonFactory = a_GENESIS_Environment.PersonFactory;
 //        this.RoundingModeForPopulationProbabilities = a_GENESIS_Environment.RoundingModeForPopulationProbabilities;
         this.Time = new GENESIS_Time(ge.Time);
 //        this = a_GENESIS_Environment.;
@@ -199,7 +199,7 @@ public class GENESIS_Environment
             GENESIS_AbstractModel a_Model,
             GENESIS_Time a_Time) {
         init_GENESIS_Environment(Directory);
-        this._AbstractModel = a_Model;
+        this.AbstractModel = a_Model;
         this.Time = new GENESIS_Time(a_Time);
     }
 
@@ -230,8 +230,8 @@ public class GENESIS_Environment
                 Directory,
                 a_Model,
                 a_Time);
-        this._network_Grid2DSquareCellDoubleFactory = network_Grid2DSquareCellDoubleFactory;
-        this._reporting_Grid2DSquareCellDoubleFactory = reporting_Grid2DSquareCellDoubleFactory;
+        this.NetworkGridDoubleFactory = network_Grid2DSquareCellDoubleFactory;
+        this.ReportingGridDoubleFactory = reporting_Grid2DSquareCellDoubleFactory;
         this.HOOME = handleOutOfMemoryError;
     }
 
@@ -269,78 +269,57 @@ public class GENESIS_Environment
             Grids_GridDoubleFactory _Grid2DSquareCellDoubleFactory,
             Grids_GridDouble _World_Grid2DSquareCellDouble,
             boolean handleOutOfMemoryError) {
-        this._AbstractModel = a_Model;
+        this.AbstractModel = a_Model;
         this.Time = new GENESIS_Time(_Time);
-        this._network_Grid2DSquareCellDoubleFactory = _Grid2DSquareCellDoubleFactory;
+        this.NetworkGridDoubleFactory = _Grid2DSquareCellDoubleFactory;
         this.HOOME = handleOutOfMemoryError;
     }
 
     public GENESIS_AbstractModelTraffic getTrafficModel() {
-        if (_AbstractModel instanceof GENESIS_AbstractModelTraffic) {
-            return (GENESIS_AbstractModelTraffic) _AbstractModel;
+        if (AbstractModel instanceof GENESIS_AbstractModelTraffic) {
+            return (GENESIS_AbstractModelTraffic) AbstractModel;
         }
         return null;
     }
 
     public Vector_Envelope2D get_reporting_VectorEnvelope2D() {
-        if (_reporting_VectorEnvelope2D == null) {
-            //BigDecimal[] a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.get_Dimensions(HOOME);
-            Grids_Dimensions a_Grid2DSquareCell_Dimensions;
-            a_Grid2DSquareCell_Dimensions = _reportingPopulationDensity_Grid2DSquareCellDouble.getDimensions(HOOME);
+        if (ReportingEnvelope == null) {
+            //BigDecimal[] a_Grid2DSquareCell_Dimensions = ReportingPopulationDensityGridDouble.get_Dimensions(HOOME);
+            Grids_Dimensions dimensions;
+            dimensions = ReportingPopulationDensityGridDouble.getDimensions();
             Vector_Point2D a_VectorPoint2D = new Vector_Point2D(
                     ve,
-                    a_Grid2DSquareCell_Dimensions.getXMin(),
-                    a_Grid2DSquareCell_Dimensions.getYMin());
+                    dimensions.getXMin(),
+                    dimensions.getYMin());
             Vector_Point2D b_VectorPoint2D = new Vector_Point2D(
                     ve,
-                    a_Grid2DSquareCell_Dimensions.getXMax(),
-                    a_Grid2DSquareCell_Dimensions.getYMax());
+                    dimensions.getXMax(),
+                    dimensions.getYMax());
             Vector_Envelope2D a_VectorEnvelope2D = new Vector_Envelope2D(
                     a_VectorPoint2D);
             Vector_Envelope2D b_VectorEnvelope2D = new Vector_Envelope2D(
                     b_VectorPoint2D);
-            _reporting_VectorEnvelope2D = a_VectorEnvelope2D.envelope(b_VectorEnvelope2D);
+            ReportingEnvelope = a_VectorEnvelope2D.envelope(b_VectorEnvelope2D);
         }
-        return _reporting_VectorEnvelope2D;
-    }
-
-    @Override
-    public void initMemoryReserve(
-            boolean handleOutOfMemoryError) {
-        try {
-            initMemoryReserve();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
-                clearMemoryReserve();
-                if (!swapDataAny()) {
-                    throw a_OutOfMemoryError;
-                }
-                initMemoryReserve(handleOutOfMemoryError);
-            } else {
-                throw a_OutOfMemoryError;
-            }
-        }
+        return ReportingEnvelope;
     }
 
     public long initMemoryReserve_AccountAgentCollections(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             initMemoryReserve();
-            return tryToEnsureThereIsEnoughMemoryToContinue_AccountAgentCollections(
-                    handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            return tryToEnsureThereIsEnoughMemoryToContinue_AccountAgentCollections(hoome);
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 long result = AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollection_Account(HOOMEF);
                 if (result < 1) {
                     swapChunk();
                 }
-                result += initMemoryReserve_AccountAgentCollections(
-                        handleOutOfMemoryError);
+                result += initMemoryReserve_AccountAgentCollections(hoome);
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -471,13 +450,13 @@ public class GENESIS_Environment
     public boolean swapDataAny(boolean handleOutOfMemoryError) {
         try {
             boolean result = swapDataAny();
-            checkAndMaybeFreeMemory(HOOMEF);
+            checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
             if (handleOutOfMemoryError) {
                 clearMemoryReserve();
                 boolean result = swapDataAny(HOOMEF);
-                initMemoryReserve(HOOMEF);
+                initMemoryReserve();
                 return result;
             } else {
                 throw a_OutOfMemoryError;
@@ -511,62 +490,56 @@ public class GENESIS_Environment
     }
 
     public boolean swapDataAnyExcept(
-            GENESIS_FemaleCollection a_GENESIS_FemaleCollection,
-            boolean handleOutOfMemoryError) {
+            GENESIS_FemaleCollection fc,
+            boolean hoome) {
         try {
-            boolean result = swapDataAnyExcept(
-                    a_GENESIS_FemaleCollection);
-            tryToEnsureThereIsEnoughMemoryToContinue(a_GENESIS_FemaleCollection,
-                    HOOMEF);
+            boolean result = swapDataAnyExcept(                    fc);
+            tryToEnsureThereIsEnoughMemoryToContinue(fc,hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
-                boolean result = swapDataAnyExcept(
-                        a_GENESIS_FemaleCollection);
-                initMemoryReserve(HOOMEF);
+                boolean result = swapDataAnyExcept(                        fc);
+                initMemoryReserve();
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     public boolean swapDataAnyExcept(
-            GENESIS_MaleCollection a_GENESIS_MaleCollection,
-            boolean handleOutOfMemoryError) {
+            GENESIS_MaleCollection mc,
+            boolean hoome) {
         try {
-            boolean result = swapDataAnyExcept(
-                    a_GENESIS_MaleCollection);
-            tryToEnsureThereIsEnoughMemoryToContinue(a_GENESIS_MaleCollection,
-                    HOOMEF);
+            boolean result = swapDataAnyExcept(                    mc);
+            tryToEnsureThereIsEnoughMemoryToContinue(mc,hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
-                boolean result = swapDataAnyExcept(
-                        a_GENESIS_MaleCollection);
-                initMemoryReserve(HOOMEF);
+                boolean result = swapDataAnyExcept(                        mc);
+                initMemoryReserve();
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     protected boolean swapDataAnyExcept(
-            GENESIS_MaleCollection a_GENESIS_MaleCollection) {
+            GENESIS_MaleCollection mc) {
         long swapChunk_Account = 0;
         try {
             swapChunk_Account += swapChunk_Account();
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
             log(
                     "Caught OutOfMemoryError in "
                     + this.getClass().getName() + ".swapDataAnyExcept(GENESIS_MaleCollection)");
         }
         if (swapChunk_Account < 1) {
             if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollectionExcept_Account(
-                    a_GENESIS_MaleCollection) < 1) {
+                    mc) < 1) {
                 if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollection_Account() < 1) {
                     log(
                             "Found no data to swap in "
@@ -580,11 +553,11 @@ public class GENESIS_Environment
     }
 
     protected boolean swapDataAnyExcept(
-            GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
+            GENESIS_FemaleCollection fc) {
         long swapChunk_Account = 0;
         try {
             swapChunk_Account += swapChunk_Account();
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
             log(
                     "Caught OutOfMemoryError in "
                     + this.getClass().getName() + ".swapDataAnyExcept(GENESIS_FemaleCollection)");
@@ -592,7 +565,7 @@ public class GENESIS_Environment
         if (swapChunk_Account < 1) {
             if (AgentEnvironment.AgentCollectionManager.swapToFile_MaleCollection_Account() < 1) {
                 if (AgentEnvironment.AgentCollectionManager.swapToFile_FemaleCollectionExcept_Account(
-                        a_GENESIS_FemaleCollection) < 1) {
+                        fc) < 1) {
                     log(
                             "Found no data to swap in "
                             + this.getClass().getName()
@@ -632,19 +605,19 @@ public class GENESIS_Environment
     }
 
     public void swapChunks(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             swapChunks();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 if (swapChunks_Account() < 1) {
                     AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                initMemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve();
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -654,24 +627,23 @@ public class GENESIS_Environment
     }
 
     public long swapChunks_Account(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             long result = swapChunks_Account();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 long result = swapChunk_Account();
                 if (result < 1) {
                     AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                initMemoryReserve(handleOutOfMemoryError);
-                result += swapChunks_Account(
-                        handleOutOfMemoryError);
+                initMemoryReserve();
+                result += swapChunks_Account(                        hoome);
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -690,20 +662,20 @@ public class GENESIS_Environment
     }
 
     public void swapChunk(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             swapChunk();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 long result = swapChunk_Account();
                 if (result < 1) {
                     AgentEnvironment.AgentCollectionManager.swapAgentCollection();
                 }
-                initMemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve();
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -717,37 +689,37 @@ public class GENESIS_Environment
     }
 
     public void swapToFile_AgentCollections(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             AgentEnvironment.AgentCollectionManager.swapToFile_AgentCollections();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 if (swapToFile_AgentCollection_Account() < 1) {
                     swapChunk();
                 }
-                initMemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve();
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     public long swapToFile_AgentCollections_Account(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             long result = swapToFile_AgentCollections_Account();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 long result = swapToFile_AgentCollections_Account();
-                initMemoryReserve(handleOutOfMemoryError);
+                initMemoryReserve();
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -757,82 +729,30 @@ public class GENESIS_Environment
     }
 
     public long swapToFile_AgentCollection_Account(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             long result = swapToFile_AgentCollection_Account();
-            checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 long result = swapToFile_AgentCollection_Account();
                 if (result < 1) {
                     if (swapChunk_Account() < 1) {
-                        throw a_OutOfMemoryError;
+                        throw e;
                     }
                 }
-                initMemoryReserve(HOOMEF);
+                initMemoryReserve();
                 return result;
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     protected long swapToFile_AgentCollection_Account() {
         return AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account();
-    }
-
-    /**
-     * A method to ensure there is enough memory to continue.
-     *
-     * @param handleOutOfMemoryError
-     * @return
-     */
-    @Override
-    public boolean checkAndMaybeFreeMemory(
-            boolean handleOutOfMemoryError) {
-        try {
-            if (checkAndMaybeFreeMemory()) {
-                return true;
-            } else {
-                String message
-                        = "Warning! Not enough data to swap in "
-                        + this.getClass().getName()
-                        + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
-                log(message);
-                // Set to exit method with OutOfMemoryError
-                handleOutOfMemoryError = false;
-                throw new OutOfMemoryError();
-            }
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
-                clearMemoryReserve();
-                boolean createdRoom = false;
-                while (!createdRoom) {
-                    if (!swapDataAny()) {
-                        String message = "Warning! Not enough data to swap in "
-                                + this.getClass().getName()
-                                + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
-                        log(message);
-                        throw a_OutOfMemoryError;
-                    }
-                    try {
-                        initMemoryReserve(HOOMEF);
-                        createdRoom = true;
-                    } catch (OutOfMemoryError b_OutOfMemoryError) {
-                        log(
-                                "Struggling to ensure there is enough memory in "
-                                + this.getClass().getName()
-                                + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)");
-                    }
-                }
-                return checkAndMaybeFreeMemory(
-                        handleOutOfMemoryError);
-            } else {
-                throw a_OutOfMemoryError;
-            }
-        }
     }
 
     /**
@@ -1337,25 +1257,23 @@ public class GENESIS_Environment
     }
 
     /**
-     * @param handleOutOfMemoryError
+     * @param hoome
      * @return Directory
      */
     public File get_Directory(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             File result = get_Directory();
-            checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
+            checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 clearMemoryReserve();
                 swapDataAny();
                 initMemoryReserve();
-                return get_Directory(
-                        handleOutOfMemoryError);
+                return get_Directory(                        hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }

@@ -24,8 +24,8 @@ public class GENESIS_Female extends GENESIS_Person {
 
     /**
      * Gestation period in humans taken as 266 days
- http://en.wikipedia.org/wiki/Gestation_period If TimeDueToGiveBirth !=
- null then female is pregnant
+     * http://en.wikipedia.org/wiki/Gestation_period If TimeDueToGiveBirth !=
+     * null then female is pregnant
      */
     public static final int NormalGestationPeriod_int = 266;
     public static final BigDecimal NormalGestationPeriod_BigDecimal = new BigDecimal("266");
@@ -39,7 +39,7 @@ public class GENESIS_Female extends GENESIS_Person {
      * birth.
      */
     public boolean[] GenderOfUnborns;
-    
+
     /**
      * Expected due date. If this is set then isPregnant() returns true.
      */
@@ -61,11 +61,11 @@ public class GENESIS_Female extends GENESIS_Person {
             GENESIS_AgentCollectionManager acm,
             GENESIS_Age age) {
         this(ge,
-             acm,
-             null,
-             age,
-             null,
-             null);
+                acm,
+                null,
+                age,
+                null,
+                null);
     }
 
     protected GENESIS_Female(
@@ -74,11 +74,11 @@ public class GENESIS_Female extends GENESIS_Person {
             GENESIS_Age age,
             GENESIS_Household household) {
         this(ge,
-             acm,
-             null,
-             age,
-            household,
-             household._Point2D);
+                acm,
+                null,
+                age,
+                household,
+                household._Point2D);
     }
 
     protected GENESIS_Female(
@@ -88,11 +88,11 @@ public class GENESIS_Female extends GENESIS_Person {
             GENESIS_Household household,
             Vector_Point2D point2D) {
         this(ge,
-             acm,
-             null,
-             age,
-             household,
-             point2D);
+                acm,
+                null,
+                age,
+                household,
+                point2D);
     }
 
     protected GENESIS_Female(
@@ -104,10 +104,10 @@ public class GENESIS_Female extends GENESIS_Person {
             Vector_Point2D point2D) {
         super(ge);
         init(acm,
-             directory,
-             age,
-             household,
-             point2D);
+                directory,
+                age,
+                household,
+                point2D);
     }
 
     protected final void init(
@@ -128,7 +128,7 @@ public class GENESIS_Female extends GENESIS_Person {
                 AgentCollectionManager.getLivingFemaleDirectory(),
                 AgentCollectionManager.MaximumNumberOfObjectsPerDirectory,
                 CollectionID);
-        this.FemaleCollection = get_FemaleCollection();
+        this.FemaleCollection = getFemaleCollection();
         this.FemaleCollection.getAgentID_Agent_Map().put(ID, this);
         this._Directory = directory;
         this.Age = new GENESIS_Age(ge, age);
@@ -144,7 +144,7 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = super.toString();
         result += ", _Time_DueToGiveBirth " + TimeDueToGiveBirth;
         if (Miscarriages != null) {
@@ -158,6 +158,7 @@ public class GENESIS_Female extends GENESIS_Person {
         }
         return result;
     }
+
     /**
      * @return A copy of this._Agent_ID
      */
@@ -166,58 +167,50 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     @Override
-    public Long getAgentID(boolean handleOutOfMemoryError) {
+    public Long getAgentID(boolean hoome) {
         try {
             Long result = get_Female_ID();
-            GENESIS_FemaleCollection a_FemaleCollection =
-                    get_FemaleCollection();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    a_FemaleCollection,
-                    handleOutOfMemoryError);
+            GENESIS_FemaleCollection fc = getFemaleCollection();
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(fc, hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_FemaleCollection());
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                return getAgentID(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(getFemaleCollection());
+                ge.initMemoryReserve();
+                return getAgentID(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     @Override
     protected GENESIS_AgentCollection get_AgentCollection() {
-        return get_FemaleCollection();
+        return getFemaleCollection();
     }
 
     public GENESIS_FemaleCollection get_FemaleCollection(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
-            GENESIS_FemaleCollection result = get_FemaleCollection();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    result,
-                    handleOutOfMemoryError);
+            GENESIS_FemaleCollection result = getFemaleCollection();
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(result, hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 if (ge.AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account() < 1) {
                     ge.swapChunk();
                 }
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                return get_FemaleCollection(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                return get_FemaleCollection(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
-    protected GENESIS_FemaleCollection get_FemaleCollection() {
+    protected GENESIS_FemaleCollection getFemaleCollection() {
         if (FemaleCollection == null) {
             FemaleCollection = getAgentCollectionManager().getFemaleCollection(CollectionID,
                     Type,
@@ -229,21 +222,20 @@ public class GENESIS_Female extends GENESIS_Person {
         return FemaleCollection;
     }
 
-    public Long get_FemaleCollection_ID(boolean handleOutOfMemoryError) {
+    public Long get_FemaleCollection_ID(boolean hoome) {
         try {
             Long result = get_FemaleCollection_ID();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    get_FemaleCollection(),
-                    handleOutOfMemoryError);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(getFemaleCollection(),
+                    hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.swapDataAnyExcept(FemaleCollection);
-                ge.initMemoryReserve(ge.HOOMEF);
-                return get_FemaleCollection_ID(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                return get_FemaleCollection_ID(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -253,21 +245,19 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     @Override
-    public int getGender(boolean handleOutOfMemoryError) {
+    public int getGender(boolean hoome) {
         try {
             int result = getGender();
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_FemaleCollection());
-                ge.initMemoryReserve(ge.HOOMEF);
-                return GENESIS_Female.this.getGender(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(getFemaleCollection());
+                ge.initMemoryReserve();
+                return GENESIS_Female.this.getGender(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -300,8 +290,8 @@ public class GENESIS_Female extends GENESIS_Person {
 //    }
 //
 //    protected void init_Fertility() {
-//        this.LengthOfFertilityPeriod = 2 + this.ge._AbstractModel._Random.nextInt(5);
-//        this.StartOfFertiliyPeriod = this.ge._AbstractModel._Random.nextInt(28 - LengthOfFertilityPeriod);
+//        this.LengthOfFertilityPeriod = 2 + this.ge.AbstractModel._Random.nextInt(5);
+//        this.StartOfFertiliyPeriod = this.ge.AbstractModel._Random.nextInt(28 - LengthOfFertilityPeriod);
 //        //this._FertileDays_HashSet.add(_startOfFertiliyPeriod);
 //    }
 //
@@ -378,34 +368,30 @@ public class GENESIS_Female extends GENESIS_Person {
      * This sets the due date assuming 266 day gestation, but that pregnancy is
      * already at day days. Sets the number and gender of unborns.
      *
-     * @param handleOutOfMemoryError
+     * @param fertility
+     * @param hoome
      * @param numberOfDaysUntilDue
-     * @return 
+     * @return
      * @TODO Implement multiple births
      */
-    public boolean set_Pregnant(
-            GENESIS_Fertility a_Fertility,
+    public boolean setPregnant(
+            GENESIS_Fertility fertility,
             int numberOfDaysUntilDue,
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
-            boolean result = set_Pregnant(
-                    a_Fertility,
-                    numberOfDaysUntilDue);
-            ge.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            boolean result = set_Pregnant(fertility, numberOfDaysUntilDue);
+            ge.checkAndMaybeFreeMemory();
             //OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_AgentCollection(ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
-                return set_Pregnant(
-                        a_Fertility,
-                        numberOfDaysUntilDue,
-                        handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                ge.checkAndMaybeFreeMemory();
+                return setPregnant(fertility, numberOfDaysUntilDue, hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -414,22 +400,23 @@ public class GENESIS_Female extends GENESIS_Person {
      * This sets the due date assuming 266 day gestation, but that pregnancy is
      * already at day days. Sets the number and gender of unborns.
      *
-     * @param a_Fertility
+     * @param fertility
      * @param numberOfDaysUntilDue
-     * @return 
+     * @return
      * @TODO Implement multiple births
      */
     protected boolean set_Pregnant(
-            GENESIS_Fertility a_Fertility,
+            GENESIS_Fertility fertility,
             int numberOfDaysUntilDue) {
         boolean result;
-        set_Pregnant(a_Fertility);
-        GENESIS_Time _DueDate = new GENESIS_Time(ge.Time);
-        _DueDate.addDays(numberOfDaysUntilDue);
-        GENESIS_Time ageCheck = new GENESIS_Time(this.getCopyOfAge().getAge_Time(_DueDate));
+        set_Pregnant(fertility);
+        GENESIS_Time dueDate = new GENESIS_Time(ge.Time);
+        dueDate.addDays(numberOfDaysUntilDue);
+        GENESIS_Time ageCheck;
+        ageCheck = new GENESIS_Time(getCopyOfAge().getAge_Time(dueDate));
         GENESIS_AgeBound ageBoundCheck = new GENESIS_AgeBound(ageCheck.getYear());
-        if (a_Fertility._AnnualLiveBirthFertilityAgeBoundRate_TreeMap.containsKey(ageBoundCheck)) {
-            this.TimeDueToGiveBirth = _DueDate;
+        if (fertility._AnnualLiveBirthFertilityAgeBoundRate_TreeMap.containsKey(ageBoundCheck)) {
+            this.TimeDueToGiveBirth = dueDate;
             result = true;
         } else {
             // At this age the female is set to not be pregnant.
@@ -444,25 +431,25 @@ public class GENESIS_Female extends GENESIS_Person {
      * gender of unborns.
      *
      * @param a_Fertility
-     * @param handleOutOfMemoryError
+     * @param hoome
      * @TODO Implement multiple births
      */
     public void set_Pregnant(
             GENESIS_Fertility a_Fertility,
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             set_Pregnant(a_Fertility);
-            ge.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             //OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
         } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_AgentCollection(ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
+                ge.initMemoryReserve();
+                ge.checkAndMaybeFreeMemory();
                 set_Pregnant(
                         a_Fertility,
-                        handleOutOfMemoryError);
+                        hoome);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -478,10 +465,10 @@ public class GENESIS_Female extends GENESIS_Person {
      */
     protected void set_Pregnant(GENESIS_Fertility a_Fertility) {
         GENESIS_Time _DueDate = new GENESIS_Time(ge.Time);
-        //Fertility a_Fertility = ((DemographicModel_Aspatial_1)ge._AbstractModel)._Demographics._Fertility;
+        //Fertility a_Fertility = ((DemographicModel_Aspatial_1)ge.AbstractModel)._Demographics._Fertility;
         int numberOfBabies = 1;
         if (Generic_BigDecimal.randomUniformTest(
-                ge._AbstractModel.get_Random(10),
+                ge.AbstractModel.get_Random(10),
                 a_Fertility.getTwinProbability_BigDecimal(this),
                 //a_Fertility._MultiplePregnancyTwinProbabilityScale_int,
                 ge.RoundingModeForPopulationProbabilities)) {
@@ -489,7 +476,7 @@ public class GENESIS_Female extends GENESIS_Person {
             numberOfBabies = 2;
         } else {
             if (Generic_BigDecimal.randomUniformTest(
-                    ge._AbstractModel.get_Random(11),
+                    ge.AbstractModel.get_Random(11),
                     a_Fertility.getTripletProbability_BigDecimal(this),
                     //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
                     ge.RoundingModeForPopulationProbabilities)) {
@@ -497,13 +484,13 @@ public class GENESIS_Female extends GENESIS_Person {
                 numberOfBabies = 3;
             }
         }
-//        HashMap<Integer, BigDecimal> probabilityOfTwins = ((DemographicModel_Aspatial_1) ge._AbstractModel)._Fertility._ProbabilityOfTwins_HashMap;
+//        HashMap<Integer, BigDecimal> probabilityOfTwins = ((DemographicModel_Aspatial_1) ge.AbstractModel)._Fertility._ProbabilityOfTwins_HashMap;
 //        Integer age_Integer = get_AgeInYears_int();
 //        BigDecimal probability = probabilityOfTwins.get(age_Integer);
 //        // Test
         GenderOfUnborns = new boolean[numberOfBabies];
         for (int i = 0; i < numberOfBabies; i++) {
-            if (ge._AbstractModel.get_Random(12).nextBoolean()) {
+            if (ge.AbstractModel.get_Random(12).nextBoolean()) {
                 GenderOfUnborns[i] = false;
             } else {
                 GenderOfUnborns[i] = true;
@@ -512,29 +499,28 @@ public class GENESIS_Female extends GENESIS_Person {
         for (int i = 0; i < NormalGestationPeriod_int; i++) {
             _DueDate.addDay();
         }
-        
+
         // debug
-        if (this.getAgentID(false) == 58061){ 
+        if (this.getAgentID(false) == 58061) {
             int debug = 1;
         }
-        
-        
+
         this.TimeDueToGiveBirth = _DueDate;
     }
 
-    public boolean isPregnant(boolean handleOutOfMemoryError) {
+    public boolean isPregnant(boolean hoome) {
         try {
             boolean result = isPregnant();
-            ge.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             //OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_AgentCollection(ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
-                return isPregnant(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                ge.checkAndMaybeFreeMemory();
+                return isPregnant(hoome);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -570,7 +556,7 @@ public class GENESIS_Female extends GENESIS_Person {
 //        GENESIS_Person result;
 //        TimeDueToGiveBirth = null;
 //        // Equal probabilty of male and female to start
-//        if (ge._AbstractModel._Random.nextBoolean()) {
+//        if (ge.AbstractModel._Random.nextBoolean()) {
 //            result = new GENESIS_Male(
 //                    ge,
 //                    ge.AgentEnvironment.getAgentCollectionManager(
@@ -592,73 +578,76 @@ public class GENESIS_Female extends GENESIS_Person {
 //        return result;
 //    }
     /**
-     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new
- people given GenderOfUnborns and returns an Object with three elements:
- HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
+     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new people
+     * given GenderOfUnborns and returns an Object with three elements:
+     * HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
      * number of babies born.
-     * @param handleOutOfMemoryError
-     * @return 
+     *
+     * @param hoome
+     * @return
      */
-    public Object[] giveBirthSimple(boolean handleOutOfMemoryError) {
+    public Object[] giveBirthSimple(boolean hoome) {
         try {
             Object[] result = giveBirthSimple();
             //OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
-            ge.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_AgentCollection(ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
-                return giveBirthSimple(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                ge.checkAndMaybeFreeMemory();
+                return giveBirthSimple(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     /**
-     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new
- people given GenderOfUnborns and returns an Object with three elements:
- HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
+     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new people
+     * given GenderOfUnborns and returns an Object with three elements:
+     * HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
      * number of babies born.
-     * @param handleOutOfMemoryError
-     * @return 
+     *
+     * @param hoome
+     * @return
      */
     @Deprecated
-    public GENESIS_Person[] giveBirthSimpleOld(boolean handleOutOfMemoryError) {
+    public GENESIS_Person[] giveBirthSimpleOld(boolean hoome) {
         try {
             GENESIS_Person[] result = giveBirthSimpleOld();
             //OutOfMemoryErrorHandler.checkAndMaybeFreeMemory();
-            ge.checkAndMaybeFreeMemory(handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.AgentEnvironment.get_AgentCollectionManager(ge.HOOMEF).swapToFile_AgentCollection(ge.HOOMEF);
-                ge.initMemoryReserve(ge.HOOMEF);
-                ge.checkAndMaybeFreeMemory(ge.HOOME);
-                return giveBirthSimpleOld(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                ge.checkAndMaybeFreeMemory();
+                return giveBirthSimpleOld(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
 
     /**
-     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new
- people given GenderOfUnborns and returns an Object with three elements:
- HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
+     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates new people
+     * given GenderOfUnborns and returns an Object with three elements:
+     * HashSet<Long> babyGirl_IDs, HashSet<Long> babyBoy_IDs, Integer of the
      * number of babies born.
-     * @return 
+     *
+     * @return
      */
     protected Object[] giveBirthSimple() {
         Object[] result = new Object[3];
         HashSet<Long> babyGirl_IDs = new HashSet<Long>();
         HashSet<Long> babyBoy_IDs = new HashSet<Long>();
-        GENESIS_FemaleCollection a_GENESIS_FemaleCollection =
-                get_FemaleCollection();
+        GENESIS_FemaleCollection fc
+                = getFemaleCollection();
         if (GenderOfUnborns.length == 1) {
             //_GENESIS_Environment_AbstractModel._GENESIS_Log.log("Single Birth");
             result[2] = 1;
@@ -673,10 +662,10 @@ public class GENESIS_Female extends GENESIS_Person {
         }
         for (int i = 0; i < GenderOfUnborns.length; i++) {
             if (GenderOfUnborns[i]) {
-                GENESIS_Male babyBoy = ge._PersonFactory.createMale(new GENESIS_Age(ge, ge.Time),
+                GENESIS_Male babyBoy = ge.PersonFactory.createMale(new GENESIS_Age(ge, ge.Time),
                         _Household,
                         Location,
-                        a_GENESIS_FemaleCollection,
+                        fc,
                         ge.HOOMEF);
                 Long agent_ID = babyBoy.getAgentID(false);
                 babyBoy._Family.set_Mother(ID);
@@ -684,10 +673,10 @@ public class GENESIS_Female extends GENESIS_Person {
                 this._Family.add_Child(agent_ID);
                 babyBoy_IDs.add(agent_ID);
             } else {
-                GENESIS_Female babyGirl = ge._PersonFactory.createFemale(new GENESIS_Age(ge, ge.Time),
+                GENESIS_Female babyGirl = ge.PersonFactory.createFemale(new GENESIS_Age(ge, ge.Time),
                         _Household,
                         Location,
-                        a_GENESIS_FemaleCollection,
+                        fc,
                         ge.HOOMEF);
                 babyGirl._Family.set_Mother(ID);
                 babyGirl.ResidentialSubregionIDs.add(getSubregionID());
@@ -704,8 +693,8 @@ public class GENESIS_Female extends GENESIS_Person {
     }
 
     /**
-     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates and
-     * returns a GENESIS_Person[] of newborns.
+     * Sets TimeDueToGiveBirth and GenderOfUnborns to null. Creates and returns
+     * a GENESIS_Person[] of newborns.
      *
      * @return Array containing newborns
      */
@@ -714,16 +703,16 @@ public class GENESIS_Female extends GENESIS_Person {
         GENESIS_Person[] result = new GENESIS_Person[GenderOfUnborns.length];
         for (int i = 0; i < GenderOfUnborns.length; i++) {
             if (GenderOfUnborns[i]) {
-                result[i] = ge._PersonFactory.createMale(new GENESIS_Age(ge, ge.Time),
+                result[i] = ge.PersonFactory.createMale(new GENESIS_Age(ge, ge.Time),
                         _Household,
                         Location,
-                        get_FemaleCollection(),
+                        getFemaleCollection(),
                         ge.HOOMEF);
             } else {
-                result[i] = ge._PersonFactory.createFemale(new GENESIS_Age(ge, ge.Time),
+                result[i] = ge.PersonFactory.createFemale(new GENESIS_Age(ge, ge.Time),
                         _Household,
                         Location,
-                        get_FemaleCollection(),
+                        getFemaleCollection(),
                         ge.HOOMEF);
             }
             result[i]._Family.set_Mother(ID);
@@ -739,8 +728,8 @@ public class GENESIS_Female extends GENESIS_Person {
             long a_Agent_ID,
             GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
         GENESIS_Female result;
-        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager =
-                a_GENESIS_FemaleCollection.getAgentCollectionManager();
+        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
+                = a_GENESIS_FemaleCollection.getAgentCollectionManager();
         File a_FemaleDirectory_File = Generic_StaticIO.getObjectDirectory(a_GENESIS_AgentCollectionManager._LivingFemaleDirectory,
                 a_Agent_ID,
                 a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale,
@@ -753,18 +742,17 @@ public class GENESIS_Female extends GENESIS_Person {
 
     @Deprecated
     @Override
-    public void write(boolean handleOutOfMemoryError) {
+    public void write(boolean hoome) {
         try {
             write();
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_FemaleCollection());
-                ge.initMemoryReserve(handleOutOfMemoryError);
-                write(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(getFemaleCollection());
+                ge.initMemoryReserve();
+                write(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -822,12 +810,12 @@ public class GENESIS_Female extends GENESIS_Person {
         public String toString() {
             String result = "Time " + Time;
             result += "DueDate " + DueDate;
-            for (int i = 0; i < GenderOfUnborns.length; i ++) {
+            for (int i = 0; i < GenderOfUnborns.length; i++) {
                 result += "GenderOfUnborn[" + i + "] " + GenderOfUnborns[i];
             }
             return result;
         }
-        
+
         @Override
         public int compareTo(Object o) {
             return Time.compareTo(((Miscarriage) o).Time);

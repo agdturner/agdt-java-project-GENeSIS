@@ -65,7 +65,7 @@ public class GENESIS_AgentEnvironment
         this.ge = ge;
 //        //this._Generic_TestMemory no need to set this
 //        this.HOOME = a_GENESIS_AgentEnvironment.HOOME;
-//        this._PersonFactory = a_GENESIS_AgentEnvironment._PersonFactory;
+//        this.PersonFactory = a_GENESIS_AgentEnvironment.PersonFactory;
         //throw new UnsupportedOperationException();
     }
 
@@ -93,7 +93,7 @@ public class GENESIS_AgentEnvironment
                 if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
                     throw e;
                 }
-                initMemoryReserve(ge.HOOMEF);
+                initMemoryReserve();
                 return get_AgentCollectionManager(
                         handleOutOfMemoryError);
             } else {
@@ -123,7 +123,7 @@ public class GENESIS_AgentEnvironment
                 if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
                     throw a_OutOfMemoryError;
                 }
-                initMemoryReserve(ge.HOOMEF);
+                initMemoryReserve();
                 set_AgentCollectionManager(
                         a_GENESIS_AgentCollectionManager,
                         handleOutOfMemoryError);
@@ -136,35 +136,6 @@ public class GENESIS_AgentEnvironment
     protected void set_AgentCollectionManager(
             GENESIS_AgentCollectionManager _AgentCollectionManager) {
         this.AgentCollectionManager = _AgentCollectionManager;
-    }
-
-    /**
-     * Initialises MemoryReserve.
-     *
-     */
-    @Override
-    public void initMemoryReserve(
-            boolean handleOutOfMemoryError) {
-        try {
-            initMemoryReserve();
-            /*
-             * To use:
-             * checkAndMaybeFreeMemory(handleOutOfMemoryError);
-             * It's success needs to be assessed and appropriate action
-             * performed to prevent a loop.
-             */
-            checkAndMaybeFreeMemory();
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
-                clearMemoryReserve();
-                if (AgentCollectionManager.swapToFile_AgentCollection_Account(ge.HOOMEF) < 1) {
-                    throw a_OutOfMemoryError;
-                }
-                initMemoryReserve(ge.HOOMEF);
-            } else {
-                throw a_OutOfMemoryError;
-            }
-        }
     }
 
     public long initMemoryReserve_Account(
@@ -440,59 +411,8 @@ public class GENESIS_AgentEnvironment
     /**
      * A method to try to ensure there is enough memory to continue.
      *
-     * @param handleOutOfMemoryError
      * @return 
      */
-    @Override
-    public boolean checkAndMaybeFreeMemory(
-            boolean handleOutOfMemoryError) {
-        try {
-            if (checkAndMaybeFreeMemory()) {
-                return true;
-            } else {
-                String message = "Warning! Not enough data to swap in "
-                        + this.getClass().getName()
-                        + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
-                log(message);
-                // Set to exit method with OutOfMemoryError
-                handleOutOfMemoryError = false;
-//                throw new OutOfMemoryError(message);
-                throw new OutOfMemoryError();
-            }
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
-                ge.clearMemoryReserve();
-                long account;
-                boolean createdRoom = false;
-                while (!createdRoom) {
-                    try {
-                        account = AgentCollectionManager.swapAgentCollection_Account();
-                        if (account < 1) {
-                            // handleOutOfMemoryError changed to avoid problematic 
-                            // recursion and allow error to be thrown from method
-                            handleOutOfMemoryError = false;
-                            throw a_OutOfMemoryError;
-                        }
-                        ge.initMemoryReserve(HOOMEF);
-                        checkAndMaybeFreeMemory(handleOutOfMemoryError);
-                        createdRoom = true;
-                    } catch (OutOfMemoryError b_OutOfMemoryError) {
-                        String message = "Struggling to create room in "
-                                + this.getClass().getName()
-                                + ".tryToEnsureThereIsEnoughMemoryToContinue(boolean)";
-                        log(message);
-                        if (!handleOutOfMemoryError) {
-                            throw b_OutOfMemoryError;
-                        }
-                    }
-                }
-                return true;
-            } else {
-                throw a_OutOfMemoryError;
-            }
-        }
-    }
-
     @Override
     public boolean checkAndMaybeFreeMemory() {
         while (getTotalFreeMemory() < ge.Memory_Threshold) {

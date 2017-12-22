@@ -28,20 +28,17 @@ public class GENESIS_Grids extends GENESIS_Object {
             Grids_AbstractGridNumber g,
             Vector_Point2D p,
             BigDecimal toRoundToX_BigDecimal,
-            BigDecimal toRoundToY_BigDecimal,
-            boolean handleOutOfMemoryError) {
+            BigDecimal toRoundToY_BigDecimal) {
         //getRounded_BigDecimal(
         //   BigDecimal toRoundBigDecimal,
         //  BigDecimal toRoundToBigDecimal);
         Vector_Point2D result;
-        long row = g.getRow(p.Y, handleOutOfMemoryError);
-        long col = g.getCol(p.X, handleOutOfMemoryError);
+        long row = g.getRow(p.Y);
+        long col = g.getCol(p.X);
         result = new Vector_Point2D(
                 ge.ve,
-                g.getCellXBigDecimal(
-                        col, handleOutOfMemoryError),
-                g.getCellYBigDecimal(
-                        row, handleOutOfMemoryError),
+                g.getCellXBigDecimal(col),
+                g.getCellYBigDecimal(row),
                 toRoundToX_BigDecimal,
                 toRoundToY_BigDecimal);
         return result;
@@ -89,7 +86,7 @@ public class GENESIS_Grids extends GENESIS_Object {
                         + ".getRandom_Point2D(" + g.getClass().getName()
                         + "Random,Point2D,double,boolean )");
             }
-        } while (!g.isInGrid(x, y, handleOutOfMemoryError));
+        } while (!g.isInGrid(x, y));
         return new Vector_Point2D(
                 p.ve,
                 new BigDecimal(x),
@@ -153,8 +150,7 @@ public class GENESIS_Grids extends GENESIS_Object {
                     g,
                     pb,
                     toRoundToX_BigDecimal,
-                    toRoundToY_BigDecimal,
-                    handleOutOfMemoryError);
+                    toRoundToY_BigDecimal);
             counter++;
             if (counter > 1000) {
                 System.out.println("Stuck in " + this.getClass().getName()
@@ -182,12 +178,12 @@ public class GENESIS_Grids extends GENESIS_Object {
         Vector_Point2D result;
         int counter = 0;
         do {
-            long col = g.getCol(random, handleOutOfMemoryError);
-            long row = g.getCol(random, handleOutOfMemoryError);
+            long col = g.getCol(random);
+            long row = g.getCol(random);
             result = new Vector_Point2D(
                     null,
-                    g.getCellXBigDecimal(col, handleOutOfMemoryError),
-                    g.getCellYBigDecimal(row, handleOutOfMemoryError),
+                    g.getCellXBigDecimal(col),
+                    g.getCellYBigDecimal(row),
                     decimalPlacePrecision);
             counter++;
             if (counter > 1000) {
@@ -195,7 +191,7 @@ public class GENESIS_Grids extends GENESIS_Object {
                         + ".getRandomCellCentroid_Point2D("
                         + g.getClass().getName() + ",Random,int,boolean)");
             }
-        } while (!g.isInGrid(result.X, result.Y, handleOutOfMemoryError));
+        } while (!g.isInGrid(result.X, result.Y));
         return result;
     }
 

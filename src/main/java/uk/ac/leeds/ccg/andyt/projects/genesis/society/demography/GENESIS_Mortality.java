@@ -463,8 +463,8 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                                 Generic_BigDecimal.divideRoundIfNecessary(
                                 annualMortalityProbability_BigDecimal,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
-                                GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                                GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                                ge.DecimalPlacePrecisionForPopulationProbabilities,
+                                ge.RoundingModeForPopulationProbabilities);
                         _FemaleDailyMortalityAgeBoundProbability_TreeMap.put(ageBound, dailyMortality);
                     } else {
                         //annualMortalityProbability_BigDecimal = new BigDecimal("0.1"); // For testing
@@ -601,8 +601,8 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                                 Generic_BigDecimal.divideRoundIfNecessary(
                                 annualMortalityProbability_BigDecimal,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
-                                GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                                GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                                ge.DecimalPlacePrecisionForPopulationProbabilities,
+                                ge.RoundingModeForPopulationProbabilities);
                         _MaleDailyMortalityAgeBoundProbability_TreeMap.put(ageBound, dailyMortality);
                     } else {
                         //annualMortalityProbability_BigDecimal = new BigDecimal("0.1"); // For testing

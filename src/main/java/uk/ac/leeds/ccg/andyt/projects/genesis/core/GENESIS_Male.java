@@ -26,11 +26,11 @@ public class GENESIS_Male extends GENESIS_Person {
             GENESIS_AgentCollectionManager acm,
             GENESIS_Age age) {
         this(ge,
-             acm,
-             null,
-             age,
-             null,
-             null);
+                acm,
+                null,
+                age,
+                null,
+                null);
     }
 
     protected GENESIS_Male(
@@ -39,11 +39,11 @@ public class GENESIS_Male extends GENESIS_Person {
             GENESIS_Age age,
             GENESIS_Household household) {
         this(ge,
-             acm,
-             null,
-             age,
-            household,
-             household._Point2D);
+                acm,
+                null,
+                age,
+                household,
+                household._Point2D);
     }
 
     protected GENESIS_Male(
@@ -53,11 +53,11 @@ public class GENESIS_Male extends GENESIS_Person {
             GENESIS_Household household,
             Vector_Point2D point2D) {
         this(ge,
-             acm,
-             null,
-             age,
-             household,
-             point2D);
+                acm,
+                null,
+                age,
+                household,
+                point2D);
     }
 
     protected GENESIS_Male(
@@ -69,19 +69,19 @@ public class GENESIS_Male extends GENESIS_Person {
             Vector_Point2D point2D) {
         super(ge);
         init(acm,
-             directory,
-             age,
-             household,
-             point2D);
+                directory,
+                age,
+                household,
+                point2D);
     }
 
     /**
-     * 
+     *
      * @param acm
      * @param directory
      * @param age
      * @param household
-     * @param point2D 
+     * @param point2D
      */
     protected final void init(
             GENESIS_AgentCollectionManager acm,
@@ -123,25 +123,20 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     @Override
-    public Long getAgentID(boolean handleOutOfMemoryError) {
+    public Long getAgentID(boolean hoome) {
         try {
             Long result = get_Male_ID();
-            GENESIS_MaleCollection a_MaleCollection =
-                    get_MaleCollection();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    a_MaleCollection,
-                    handleOutOfMemoryError);
+            GENESIS_MaleCollection mc = get_MaleCollection();
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(mc, hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_MaleCollection());
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                return getAgentID(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(get_MaleCollection());
+                ge.initMemoryReserve();
+                return getAgentID(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -152,24 +147,21 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     public GENESIS_MaleCollection get_MaleCollection(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             GENESIS_MaleCollection result = get_MaleCollection();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    result,
-                    handleOutOfMemoryError);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(result, hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 if (ge.AgentEnvironment.AgentCollectionManager.swapAgentCollection_Account() < 1) {
                     ge.swapChunk();
                 }
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                return get_MaleCollection(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                return get_MaleCollection(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -186,22 +178,19 @@ public class GENESIS_Male extends GENESIS_Person {
         return MaleCollection;
     }
 
-    public Long get_MaleCollection_ID(boolean handleOutOfMemoryError) {
+    public Long get_MaleCollection_ID(boolean hoome) {
         try {
             Long result = get_MaleCollection_ID();
-            ge.tryToEnsureThereIsEnoughMemoryToContinue(
-                    get_MaleCollection(),
-                    handleOutOfMemoryError);
+            ge.tryToEnsureThereIsEnoughMemoryToContinue(get_MaleCollection(), hoome);
             return result;
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_MaleCollection());
-                ge.initMemoryReserve(ge.HOOMEF);
-                return get_MaleCollection_ID(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(get_MaleCollection());
+                ge.initMemoryReserve();
+                return get_MaleCollection_ID(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -211,19 +200,17 @@ public class GENESIS_Male extends GENESIS_Person {
     }
 
     @Override
-    public int getGender(boolean handleOutOfMemoryError) {
+    public int getGender(boolean hoome) {
         try {
             int result = getGender();
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
+            ge.checkAndMaybeFreeMemory();
             return result;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            if (hoome) {
                 ge.clearMemoryReserve();
-                ge.swapDataAnyExcept(
-                        get_MaleCollection());
-                ge.initMemoryReserve(ge.HOOMEF);
-                return getGender(handleOutOfMemoryError);
+                ge.swapDataAnyExcept(                        get_MaleCollection());
+                ge.initMemoryReserve();
+                return getGender(hoome);
             } else {
                 throw a_OutOfMemoryError;
             }
@@ -244,7 +231,7 @@ public class GENESIS_Male extends GENESIS_Person {
 //        File a_MaleDirectory_File = Generic_StaticIO.getObjectDirectory(
 //                a_GENESIS_AgentCollectionManager._Male_Directory,
 //                a_Agent_ID,
-//                a_GENESIS_AgentCollectionManager._IndexOfLastBornMale,
+//                a_GENESIS_AgentCollectionManager.IndexOfLastBornMale,
 //                a_GENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory);
 //        File a_Male_File = new File(
 //                a_MaleDirectory_File,
@@ -253,18 +240,18 @@ public class GENESIS_Male extends GENESIS_Person {
 //    }
     @Deprecated
     @Override
-    public void write(boolean handleOutOfMemoryError) {
+    public void write(boolean hoome) {
         try {
             write();
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.swapDataAnyExcept(
                         get_MaleCollection());
-                ge.initMemoryReserve(handleOutOfMemoryError);
-                write(handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                write(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }

@@ -495,8 +495,8 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                                 Generic_BigDecimal.divideRoundIfNecessary(
                                 earlyPregnancyLossProbability,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
-                                GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                                GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                                ge.DecimalPlacePrecisionForPopulationProbabilities,
+                                ge.RoundingModeForPopulationProbabilities);
                         _DailyEarlyPregnancyLossAgeBoundProbability_TreeMap.put(ageBound, dailyProbability);
                     } else {
                         double exponent = 1.0d / (double) numberOfDaysInEarlyPregnancy;
@@ -549,8 +549,8 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                                 Generic_BigDecimal.divideRoundIfNecessary(
                                 clinicalMiscarriageProbability,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
-                                GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
-                                GENESIS_Environment.RoundingModeForPopulationProbabilities);
+                                ge.DecimalPlacePrecisionForPopulationProbabilities,
+                                ge.RoundingModeForPopulationProbabilities);
                         _DailyClinicalMiscarriageAgeBoundProbability_TreeMap.put(ageBound, dailyProbability);
                     } else {
                         double exponent = 1.0d / getNumberOfDaysInLatePregnancy_double();

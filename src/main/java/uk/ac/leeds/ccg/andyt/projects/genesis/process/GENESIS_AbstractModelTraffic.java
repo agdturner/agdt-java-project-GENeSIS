@@ -74,37 +74,29 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 //    public double resourcePersonInitial_double;
 //    public double resourcePersonMax_double;
 
-    protected GENESIS_AbstractModelTraffic(){}
-    
-    public GENESIS_AbstractModelTraffic(GENESIS_Environment ge){
+    protected GENESIS_AbstractModelTraffic() {
+    }
+
+    public GENESIS_AbstractModelTraffic(GENESIS_Environment ge) {
         super(ge);
     }
-    
+
     public void init_Rounding(
             BigDecimal cellsize_BigDecimal,
             BigDecimal minx,
             BigDecimal miny,
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
-            init_Rounding(
-                    cellsize_BigDecimal,
-                    minx,
-                    miny);
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            init_Rounding(cellsize_BigDecimal, minx, miny);
+            ge.checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                init_Rounding(
-                        cellsize_BigDecimal,
-                        minx,
-                        miny,
-                        handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                init_Rounding(cellsize_BigDecimal, minx, miny, hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }
@@ -113,9 +105,8 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
             BigDecimal cellsize_BigDecimal,
             BigDecimal minx,
             BigDecimal miny) {
-        BigDecimal halfCellsize = cellsize_BigDecimal.divide(
-                new BigDecimal("2"),
-                ge._DecimalPlacePrecisionForCalculations,
+        BigDecimal halfCellsize = cellsize_BigDecimal.divide(new BigDecimal("2"),
+                ge.DecimalPlacePrecisionForCalculations,
                 RoundingMode.UNNECESSARY).stripTrailingZeros();
         int halfCellsize_scale = halfCellsize.scale();
         if (minx.scale() < halfCellsize_scale) {
@@ -333,30 +324,21 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
     }
 
     public void visualiseNetworkOnGrid(
-            Grids_AbstractGridNumber a_Grid2DSquareCell,
+            Grids_AbstractGridNumber g,
             HashSet<Vector_Network2D> a_Network2D_HashSet,
             File a_Directory) {
-        boolean handleOutOfMemoryError = ge.HOOME;
-        int width = (int) a_Grid2DSquareCell.getNCols(handleOutOfMemoryError);
-        int height = (int) a_Grid2DSquareCell.getNRows(handleOutOfMemoryError);
+        int width = (int) g.getNCols();
+        int height = (int) g.getNRows();
         String time_String = ge.Time.toString();
-        Grids_ImageExporter aImageExporter = new Grids_ImageExporter(ge.ge);
+        Grids_ImageExporter ie = new Grids_ImageExporter(ge.ge);
         //String type = "PNG";
         String type = "JPEG";
         File file = new File(
                 a_Directory,
                 time_String + "." + type);
-        aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getProcessor(),
-                file,
-                type,
-                ge.HOOME);
+        ie.toGreyScaleImage(g, ge.ge.getProcessor(), file, type);
         Vector_RenderNetwork2D a_RenderNetwork2D = new Vector_RenderNetwork2D(
-                ge.ve,
-                new JFrame(),
-                width,
-                height,
-                a_Network2D_HashSet);
+                ge.ve, new JFrame(), width, height, a_Network2D_HashSet);
         Vector_OverlayComponent_Network2D a_OverlayComponent_Network2D
                 = new Vector_OverlayComponent_Network2D(a_RenderNetwork2D);
         try {
@@ -410,28 +392,18 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
 
     public void visualiseNetworkOnGrid(
             HashSet<Vector_Network2D> a_Network2D_HashSet,
-            Grids_AbstractGridNumber a_Grid2DSquareCell,
+            Grids_AbstractGridNumber g,
             File a_Directory) {
-        int width = (int) a_Grid2DSquareCell.getNCols(ge.HOOME);
-        int height = (int) a_Grid2DSquareCell.getNRows(ge.HOOME);
+        int width = (int) g.getNCols();
+        int height = (int) g.getNRows();
         String time_String = ge.Time.toString();
         Grids_ImageExporter aImageExporter = new Grids_ImageExporter(ge.ge);
         //String type = "PNG";
         String type = "JPEG";
-        File file = new File(
-                a_Directory,
-                time_String + "." + type);
-        aImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
-                ge.ge.getProcessor(),
-                file,
-                type,
-                ge.HOOME);
+        File file = new File(a_Directory, time_String + "." + type);
+        aImageExporter.toGreyScaleImage(g, ge.ge.getProcessor(), file, type);
         Vector_RenderNetwork2D a_RenderNetwork2D = new Vector_RenderNetwork2D(
-                ge.ve,
-                new JFrame(),
-                width,
-                height,
-                a_Network2D_HashSet);
+                ge.ve, new JFrame(), width, height, a_Network2D_HashSet);
         Vector_OverlayComponent_Network2D a_OverlayComponent_Network2D
                 = new Vector_OverlayComponent_Network2D(a_RenderNetwork2D);
         try {
@@ -441,9 +413,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
         }
         a_RenderNetwork2D.add(a_OverlayComponent_Network2D);
         a_OverlayComponent_Network2D._BufferedImage = Vector_ImageManipulation.resize(
-                a_OverlayComponent_Network2D._BufferedImage,
-                width,
-                height);
+                a_OverlayComponent_Network2D._BufferedImage, width, height);
         //a_OverlayComponent_Network2D.setBounds(0, 0, width, height);
         a_OverlayComponent_Network2D.setVisible(true);
         a_RenderNetwork2D.setVisible(true);
@@ -484,13 +454,13 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
     /**
      *
      * @param a_VectorEnvelope
-     * @param a_Grid2DSquareCell The grid to visualise on.
+     * @param g The grid to visualise on.
      */
     public void visualiseNetworkOnGrid1(
-            Grids_AbstractGridNumber a_Grid2DSquareCell,
+            Grids_AbstractGridNumber g,
             Vector_Envelope2D a_VectorEnvelope) {
-        int width = (int) a_Grid2DSquareCell.getNCols(true);
-        int height = (int) a_Grid2DSquareCell.getNRows(true);
+        int width = (int) g.getNCols();
+        int height = (int) g.getNRows();
         String a_Time_toString = ge.Time.toString();
         String type = "PNG";
         File directory = new File(
@@ -500,11 +470,10 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
         File file = new File(
                 directory,
                 a_Time_toString + "." + type);
-        _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
+        _ImageExporter.toGreyScaleImage(g,
                 ge.ge.getProcessor(),
                 file,
-                type,
-                ge.HOOME);
+                type);
         JFrame a_JFrame = new JFrame();
         GENESIS_RenderNetwork2D a_RenderNetwork2D = new GENESIS_RenderNetwork2D(
                 ge,
@@ -583,15 +552,15 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
     /**
      *
      * @param a_Network2D_HashSet
-     * @param a_Grid2DSquareCell The grid to visualise on.
+     * @param g The grid to visualise on.
      * @param a_VectorEnvelope
      */
     public void visualiseNetworkOnGrid1(
             HashSet<Vector_Network2D> a_Network2D_HashSet,
-            Grids_AbstractGridNumber a_Grid2DSquareCell,
+            Grids_AbstractGridNumber g,
             Vector_Envelope2D a_VectorEnvelope) {
-        int width = (int) a_Grid2DSquareCell.getNCols(true);
-        int height = (int) a_Grid2DSquareCell.getNRows(true);
+        int width = (int) g.getNCols();
+        int height = (int) g.getNRows();
         String a_Time_toString = ge.Time.toString();
         String type = "PNG";
         File directory = new File(
@@ -601,11 +570,10 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
         File file = new File(
                 directory,
                 a_Time_toString + "." + type);
-        _ImageExporter.toGreyScaleImage(a_Grid2DSquareCell,
+        _ImageExporter.toGreyScaleImage(g,
                 ge.ge.getProcessor(),
                 file,
-                type,
-                ge.HOOME);
+                type);
         JFrame a_JFrame = new JFrame();
         Vector_RenderNetwork2D a_RenderNetwork2D = new Vector_RenderNetwork2D(
                 ge.ve,
@@ -705,9 +673,9 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      * required... At the same time variable _Speed should be handled...
      */
     public void simulateMovement(
-                  GENESIS_Grids grids,
-        BigDecimal halfCellsize,
-      BigDecimal tollerance) {
+            GENESIS_Grids grids,
+            BigDecimal halfCellsize,
+            BigDecimal tollerance) {
         Iterator<Long> a_Iterator;
         a_Iterator = _FemalePopulation_HashSet.iterator();
         if (_FemalePopulation_HashSet.isEmpty()) {
@@ -968,71 +936,60 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
             Vector_Point2D a_Point2D) {
         Vector_Point2D result_Point2D;
         Vector_Point2D b_Point2D;
-        long aRowIndex = ge._network_Grid2DSquareCellDouble.getRow(a_Point2D.Y, ge.HOOME);
-        long aColIndex = ge._network_Grid2DSquareCellDouble.getCol(a_Point2D.X, ge.HOOME);
-        long resultRowIndex = 0L;
-        long resultColIndex = 0L;
+        long row = ge.NetworkGridDouble.getRow(a_Point2D.Y);
+        long col = ge.NetworkGridDouble.getCol(a_Point2D.X);
+        long resultRow = 0L;
+        long resultCol = 0L;
         do {
             int cell = _RandomArray[0].nextInt(8);
             switch (cell) {
                 case 0:
-                    resultRowIndex = aRowIndex - 1;
-                    resultColIndex
-                            = aColIndex - 1;
+                    resultRow = row - 1;
+                    resultCol = col - 1;
                     break;
 
                 case 1:
-                    resultRowIndex = aRowIndex - 1;
-                    resultColIndex
-                            = aColIndex;
+                    resultRow = row - 1;
+                    resultCol = col;
                     break;
 
                 case 2:
-                    resultRowIndex = aRowIndex - 1;
-                    resultColIndex
-                            = aColIndex + 1;
+                    resultRow = row - 1;
+                    resultCol = col + 1;
                     break;
 
                 case 3:
-                    resultRowIndex = aRowIndex;
-                    resultColIndex
-                            = aColIndex - 1;
+                    resultRow = row;
+                    resultCol = col - 1;
                     break;
 
                 case 4:
-                    resultRowIndex = aRowIndex;
-                    resultColIndex
-                            = aColIndex + 1;
+                    resultRow = row;
+                    resultCol = col + 1;
                     break;
 
                 case 5:
-                    resultRowIndex = aRowIndex + 1;
-                    resultColIndex
-                            = aColIndex - 1;
+                    resultRow = row + 1;
+                    resultCol = col - 1;
                     break;
 
                 case 6:
-                    resultRowIndex = aRowIndex + 1;
-                    resultColIndex
-                            = aColIndex;
+                    resultRow = row + 1;
+                    resultCol = col;
                     break;
 
                 case 7:
-                    resultRowIndex = aRowIndex + 1;
-                    resultColIndex
-                            = aColIndex + 1;
+                    resultRow = row + 1;
+                    resultCol = col + 1;
                     break;
 
             }
-        } while (!ge._network_Grid2DSquareCellDouble.isInGrid(resultRowIndex,
-                resultColIndex,
-                ge.HOOME));
+        } while (!ge.NetworkGridDouble.isInGrid(resultRow,
+                resultCol));
         return new Vector_Point2D(
                 a_Point2D.ve,
-                ge._network_Grid2DSquareCellDouble.getCellXBigDecimal(resultColIndex,
-                        ge.HOOME),
-                ge._network_Grid2DSquareCellDouble.getCellYBigDecimal(resultRowIndex,
-                        ge.HOOME));
+                ge.NetworkGridDouble.getCellXBigDecimal(resultCol),
+                ge.NetworkGridDouble.getCellYBigDecimal(resultRow));
     }
 
     /**
@@ -1069,7 +1026,7 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
      * @return
      */
     public Vector_Point2D get_OSGB_To_LatLon_Point2D(
-            Vector_OSGBtoLatLon OSGBtoLatLon, 
+            Vector_OSGBtoLatLon OSGBtoLatLon,
             Census_CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord,
             int a_DecimalPlacePrecision) {
         Vector_Point2D result;
@@ -1161,12 +1118,11 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
         long nextCellRowIndex = aPersonPoint2DRowIndex;
         long nextCellColIndex = aPersonPoint2DColIndex;
         Grids_Dimensions dimensions;
-        dimensions = g.getDimensions(HandleOutOfMemoryError);
-        
-        Grids_Dimensions cellDimensions = g.getCellDimensions(dimensions.getHalfCellsize(),
+        dimensions = g.getDimensions();
+        Grids_Dimensions cellDimensions = g.getCellDimensions(
+                dimensions.getHalfCellsize(),
                 aPersonPoint2DRowIndex,
-                aPersonPoint2DColIndex,
-                ge.HOOME);
+                aPersonPoint2DColIndex);
         BigDecimal xMin = cellDimensions.getXMin();
         BigDecimal yMin = cellDimensions.getYMin();
         BigDecimal xMax = cellDimensions.getXMax();
@@ -1299,21 +1255,18 @@ public abstract class GENESIS_AbstractModelTraffic extends GENESIS_AbstractModel
     public HashMap _Shifts;
 
     public void init_Shifts(
-            boolean handleOutOfMemoryError) {
+            boolean hoome) {
         try {
             init_Shifts();
-            ge.checkAndMaybeFreeMemory(
-                    handleOutOfMemoryError);
-        } catch (OutOfMemoryError a_OutOfMemoryError) {
-            if (handleOutOfMemoryError) {
+            ge.checkAndMaybeFreeMemory();
+        } catch (OutOfMemoryError e) {
+            if (hoome) {
                 ge.clearMemoryReserve();
                 ge.swapDataAny();
-                ge.initMemoryReserve(
-                        handleOutOfMemoryError);
-                init_Shifts(
-                        handleOutOfMemoryError);
+                ge.initMemoryReserve();
+                init_Shifts(hoome);
             } else {
-                throw a_OutOfMemoryError;
+                throw e;
             }
         }
     }

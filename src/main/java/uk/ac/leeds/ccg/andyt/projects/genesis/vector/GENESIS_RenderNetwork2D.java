@@ -99,8 +99,8 @@ public class GENESIS_RenderNetwork2D
 //            Vector_Point2D a_Point2D,
 //            HashSet<Connection> a_Connection_HashSet) {
 //        boolean handleOutOfMemoryError = _Environment.HOOME;
-//        BigDecimal[] reportingDimensions = _Environment._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
-//        BigDecimal[] networkDimensions = _Environment._network_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
+//        BigDecimal[] reportingDimensions = _Environment.ReportingPopulationDensityAggregateGridDouble.get_Dimensions(handleOutOfMemoryError);
+//        BigDecimal[] networkDimensions = _Environment.NetworkGridDouble.get_Dimensions(handleOutOfMemoryError);
 //        int scale = reportingDimensions[0].divide(networkDimensions[0]).intValue();
 //        this._Graphics2D.setPaint(Color.RED);
 //        int ax = (int) (a_Point2D.X.doubleValue() / scale);
@@ -128,10 +128,10 @@ public class GENESIS_RenderNetwork2D
             HashSet<Connection> a_Connection_HashSet) {
         boolean handleOutOfMemoryError = ge.HOOME;
         Grids_Dimensions reportingDimensions;
-        reportingDimensions = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.getDimensions(handleOutOfMemoryError);
-        Grids_Dimensions networkDimensions = ge._network_Grid2DSquareCellDouble.getDimensions(handleOutOfMemoryError);
-//        BigDecimal[] reportingDimensions = ge._reportingPopulationDensityAggregate_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
-//        BigDecimal[] networkDimensions = ge._network_Grid2DSquareCellDouble.get_Dimensions(handleOutOfMemoryError);
+        reportingDimensions = ge.ReportingPopulationDensityAggregateGridDouble.getDimensions();
+        Grids_Dimensions networkDimensions = ge.NetworkGridDouble.getDimensions();
+//        BigDecimal[] reportingDimensions = ge.ReportingPopulationDensityAggregateGridDouble.get_Dimensions(handleOutOfMemoryError);
+//        BigDecimal[] networkDimensions = ge.NetworkGridDouble.get_Dimensions(handleOutOfMemoryError);
         BigDecimal reportingDimensionXrange_BigDecimal = reportingDimensions.getWidth();
         BigDecimal reportingDimensionYrange_BigDecimal = reportingDimensions.getHeight();
         BigDecimal scale_BigDecimal = reportingDimensions.getCellsize().divide(networkDimensions.getCellsize());

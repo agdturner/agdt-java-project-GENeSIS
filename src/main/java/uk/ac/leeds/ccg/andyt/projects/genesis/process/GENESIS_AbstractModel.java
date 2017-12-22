@@ -129,8 +129,8 @@ public abstract class GENESIS_AbstractModel extends GENESIS_Object implements Se
 
     public void init_Environment(
             GENESIS_Environment ge) {
-        ge._AbstractModel = this;
-//        ge._AbstractModel._GENESIS_Log = new GENESIS_Log(
+        ge.AbstractModel = this;
+//        ge.AbstractModel._GENESIS_Log = new GENESIS_Log(
 //                ge,
 //                GENESIS_Log.GENESIS_DefaultLogLevel,
 //                ge.Directory, 

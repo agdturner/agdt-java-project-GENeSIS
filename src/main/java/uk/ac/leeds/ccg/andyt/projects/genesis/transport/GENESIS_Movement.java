@@ -142,15 +142,15 @@ public class GENESIS_Movement implements Serializable {
 //            double a_Lon,
 //            int a_DecimalPlacePrecision) {
 //        Vector_Point2D result;
-//        long a_NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(true);
-//        long a_NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(true);
+//        long a_NCols = _Environment.NetworkGridDouble.getNCols(true);
+//        long a_NRows = _Environment.NetworkGridDouble.getNRows(true);
 //        double a_x = ((a_Lon - _Environment._XMin_double) * (double) a_NCols) / _Environment._XRange_double;
 //        double a_y = ((a_Lat - _Environment._YMin_double) * (double) a_NRows) / _Environment._YRange_double;
-//        long a_row = this._Environment._network_Grid2DSquareCellDouble.getRow(a_y, _Environment.HOOME);
-//        long a_col = this._Environment._network_Grid2DSquareCellDouble.getRow(a_x, _Environment.HOOME);
+//        long a_row = this._Environment.NetworkGridDouble.getRow(a_y, _Environment.HOOME);
+//        long a_col = this._Environment.NetworkGridDouble.getRow(a_x, _Environment.HOOME);
 //        result = new Vector_Point2D(
-//                this._Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(a_col, _Environment.HOOME),
-//                this._Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(a_row, _Environment.HOOME),
+//                this._Environment.NetworkGridDouble.getCellXBigDecimal(a_col, _Environment.HOOME),
+//                this._Environment.NetworkGridDouble.getCellYBigDecimal(a_row, _Environment.HOOME),
 //                a_DecimalPlacePrecision);
 //        return result;
 //    }
@@ -195,13 +195,12 @@ public class GENESIS_Movement implements Serializable {
                         this._Environment.ve,
                         startLon,
                         startLat,
-                        _Environment._DecimalPlacePrecisionForNetwork);
+                        _Environment.DecimalPlacePrecisionForNetwork);
                 // Get Nearest cell centroid of start_Point2D
-                centroid_Start_Point = grids.getCellCentroid_Point2D(_Environment._network_Grid2DSquareCellDouble,
+                centroid_Start_Point = grids.getCellCentroid_Point2D(_Environment.NetworkGridDouble,
                         start_Point2D,
                         _Environment._ToRoundToX_BigDecimal,
-                        _Environment._ToRoundToY_BigDecimal,
-                        _Environment.HOOME);
+                        _Environment._ToRoundToY_BigDecimal);
                 if (counter != 0) {
                     result.addToNetwork(
                             end_Point2D,
@@ -211,11 +210,10 @@ public class GENESIS_Movement implements Serializable {
                 } else {
                     //need to get people to road to start with...
                     //This should probably not be done here, but prior to this method being called!
-                    Vector_Point2D centroid_Origin_Point = grids.getCellCentroid_Point2D(_Environment._network_Grid2DSquareCellDouble,
+                    Vector_Point2D centroid_Origin_Point = grids.getCellCentroid_Point2D(_Environment.NetworkGridDouble,
                             _Origin_Point2D,
                             _Environment._ToRoundToX_BigDecimal,
-                            _Environment._ToRoundToY_BigDecimal,
-                            _Environment.HOOME);
+                            _Environment._ToRoundToY_BigDecimal);
                     GENESIS_Movement getToRoad_Movement = new GENESIS_Movement(
                             _Environment,
                             centroid_Origin_Point,
@@ -232,13 +230,12 @@ public class GENESIS_Movement implements Serializable {
                         this._Environment.ve,
                         endLon,
                         endLat,
-                        _Environment._DecimalPlacePrecisionForNetwork);
+                        _Environment.DecimalPlacePrecisionForNetwork);
                 // Get Nearest cell centroid of end_Point2D
-                centroid_End_Point = grids.getCellCentroid_Point2D(_Environment._network_Grid2DSquareCellDouble,
+                centroid_End_Point = grids.getCellCentroid_Point2D(_Environment.NetworkGridDouble,
                         end_Point2D,
                         _Environment._ToRoundToX_BigDecimal,
-                        _Environment._ToRoundToY_BigDecimal,
-                        _Environment.HOOME);
+                        _Environment._ToRoundToY_BigDecimal);
                 GENESIS_Movement a_Movement = new GENESIS_Movement(
                         this._Environment,
                         centroid_Start_Point,
@@ -257,7 +254,7 @@ public class GENESIS_Movement implements Serializable {
 
     /**
      * @return The path between _Origin_Point2D and _Destination_Point2D using
-     * the grid network in _Environment._network_Grid2DSquareCellDouble
+ the grid network in _Environment.NetworkGridDouble
      */
     public Vector_Network2D getShortStraightNetworkPath(
             GENESIS_Grids grids) {
@@ -266,20 +263,16 @@ public class GENESIS_Movement implements Serializable {
             return result;
         }
         result = new Vector_Network2D(this._Environment.ve);
-        long row = _Environment._network_Grid2DSquareCellDouble.getRow(_Origin_Point2D.Y,
-                _Environment.HOOME);
-        long col = _Environment._network_Grid2DSquareCellDouble.getCol(_Origin_Point2D.X,
-                _Environment.HOOME);
-        Vector_Point2D a_Point2D = grids.getCellCentroid_Point2D(this._Environment._network_Grid2DSquareCellDouble,
+        long row = _Environment.NetworkGridDouble.getRow(_Origin_Point2D.Y);
+        long col = _Environment.NetworkGridDouble.getCol(_Origin_Point2D.X);
+        Vector_Point2D a_Point2D = grids.getCellCentroid_Point2D(this._Environment.NetworkGridDouble,
                 _Origin_Point2D,
                 _Environment._ToRoundToX_BigDecimal,
-                _Environment._ToRoundToY_BigDecimal,
-                this._Environment.HOOME);
-        Vector_Point2D destination_Point2D = grids.getCellCentroid_Point2D(this._Environment._network_Grid2DSquareCellDouble,
+                _Environment._ToRoundToY_BigDecimal);
+        Vector_Point2D destination_Point2D = grids.getCellCentroid_Point2D(this._Environment.NetworkGridDouble,
                 _Destination_Point2D,
                 _Environment._ToRoundToX_BigDecimal,
-                _Environment._ToRoundToY_BigDecimal,
-                this._Environment.HOOME);
+                _Environment._ToRoundToY_BigDecimal);
         Vector_Point2D b_Point2D = destination_Point2D;
         double _PI_By_Eight = Math.PI / 8.0d;
         while (!a_Point2D.equals(destination_Point2D)) {
@@ -323,8 +316,8 @@ public class GENESIS_Movement implements Serializable {
             }
             b_Point2D = new Vector_Point2D(
                     this._Environment.ve,
-                    _Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(col, _Environment.HOOME),
-                    _Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(row, _Environment.HOOME),
+                    _Environment.NetworkGridDouble.getCellXBigDecimal(col),
+                    _Environment.NetworkGridDouble.getCellYBigDecimal(row),
                     _Environment._ToRoundToX_BigDecimal,
                     _Environment._ToRoundToY_BigDecimal);
             result.addToNetwork(
@@ -339,7 +332,7 @@ public class GENESIS_Movement implements Serializable {
 //    /**
 //     *
 //     * @return The path between _Origin_Point2D and _Destination_Point2D using the
-//     * grid network in _Environment._network_Grid2DSquareCellDouble
+//     * grid network in _Environment.NetworkGridDouble
 //     */
 //    public Vector_Network2D getShortStraightNetworkPath() {
 //        Vector_Network2D result = null;
@@ -347,8 +340,8 @@ public class GENESIS_Movement implements Serializable {
 //            return result;
 //        }
 //        result = new Vector_Network2D();
-//        long row = _Environment._network_Grid2DSquareCellDouble.getRow(_Origin_Point2D.Y, _Environment.HOOME);
-//        long col = _Environment._network_Grid2DSquareCellDouble.getCellCol(_Origin_Point2D.X, _Environment.HOOME);
+//        long row = _Environment.NetworkGridDouble.getRow(_Origin_Point2D.Y, _Environment.HOOME);
+//        long col = _Environment.NetworkGridDouble.getCellCol(_Origin_Point2D.X, _Environment.HOOME);
 //        Vector_Point2D a_Point2D = _Origin_Point2D;
 //        Vector_Point2D b_Point2D;
 //        double _PI_By_Eight = Math.PI / 8.0d;
@@ -392,8 +385,8 @@ public class GENESIS_Movement implements Serializable {
 //                }
 //            }
 //            b_Point2D = new Vector_Point2D(
-//                    _Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(col, _Environment.HOOME),
-//                    _Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(row, _Environment.HOOME));
+//                    _Environment.NetworkGridDouble.getCellXBigDecimal(col, _Environment.HOOME),
+//                    _Environment.NetworkGridDouble.getCellYBigDecimal(row, _Environment.HOOME));
 //            result.addToNetwork(a_Point2D, b_Point2D, 1);
 //            a_Point2D = b_Point2D;
 //        }
@@ -402,10 +395,10 @@ public class GENESIS_Movement implements Serializable {
     //    /**
 //     *
 //     * @return The path between _Origin_Point2D and _Destination_Point2D using the
-//     * grid network in _Environment._network_Grid2DSquareCellDouble
+//     * grid network in _Environment.NetworkGridDouble
 //     */
 //    public Network getOptimalPath(Network _Network){
-//        _Environment._network_Grid2DSquareCellDouble
+//        _Environment.NetworkGridDouble
 //
 //    }
     /**
@@ -422,12 +415,12 @@ public class GENESIS_Movement implements Serializable {
             Vector_Point2D destination_Point2D,
             GENESIS_Environment _Environment) {
         boolean HandleOutOfMemoryError = _Environment.HOOME;
-        //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HOOME);
-        //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HOOME);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(origin_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(origin_Point2D.X, HandleOutOfMemoryError);
-        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getRow(destination_Point2D.Y, HandleOutOfMemoryError);
-        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCol(destination_Point2D.X, HandleOutOfMemoryError);
+        //long _NRows = _Environment.NetworkGridDouble.getNRows(HOOME);
+        //long _NCols = _Environment.NetworkGridDouble.getNCols(HOOME);
+        long _Point2DRow = _Environment.NetworkGridDouble.getRow(origin_Point2D.Y);
+        long _Point2DCol = _Environment.NetworkGridDouble.getCol(origin_Point2D.X);
+        long _DestinationRow = _Environment.NetworkGridDouble.getRow(destination_Point2D.Y);
+        long _DestinationCol = _Environment.NetworkGridDouble.getCol(destination_Point2D.X);
         int _Movement;
         long rowDiff = _DestinationRow - _Point2DRow;
         if (rowDiff < 0) {
@@ -459,28 +452,22 @@ public class GENESIS_Movement implements Serializable {
      * @param origin_Point2D
      * @param _Point2D
      * @param destination_Point2D
-     * @param _Environment
+     * @param ge
      * @return
      */
     public Vector_Point2D getNewPoint2D_1(
             Vector_Point2D origin_Point2D,
             Vector_Point2D destination_Point2D,
-            GENESIS_Environment _Environment) {
+            GENESIS_Environment ge) {
         if (origin_Point2D.equals(destination_Point2D)) {
             return origin_Point2D;
         }
-
-        boolean HandleOutOfMemoryError = _Environment.HOOME;
-        //long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HOOME);
-        //long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HOOME);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(origin_Point2D.Y,
-                HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(origin_Point2D.X,
-                HandleOutOfMemoryError);
-        long _DestinationRow = _Environment._network_Grid2DSquareCellDouble.getRow(destination_Point2D.Y,
-                HandleOutOfMemoryError);
-        long _DestinationCol = _Environment._network_Grid2DSquareCellDouble.getCol(destination_Point2D.X,
-                HandleOutOfMemoryError);
+        //long _NRows = _Environment.NetworkGridDouble.getNRows(HOOME);
+        //long _NCols = _Environment.NetworkGridDouble.getNCols(HOOME);
+        long _Point2DRow = ge.NetworkGridDouble.getRow(origin_Point2D.Y);
+        long _Point2DCol = ge.NetworkGridDouble.getCol(origin_Point2D.X);
+        long _DestinationRow = ge.NetworkGridDouble.getRow(destination_Point2D.Y);
+        long _DestinationCol = ge.NetworkGridDouble.getCol(destination_Point2D.X);
         int _Movement = 4;
         long rowDiff = _DestinationRow - _Point2DRow;
         long colDiff = _DestinationCol - _Point2DCol;
@@ -508,11 +495,11 @@ public class GENESIS_Movement implements Serializable {
                 return getNewPoint2D_0(
                         origin_Point2D,
                         destination_Point2D,
-                        _Environment);
+                        ge);
             }
 
         }
-        return getNewPoint2D(origin_Point2D, _Movement, _Environment);
+        return getNewPoint2D(origin_Point2D, _Movement, ge);
     }
 
     /**
@@ -529,9 +516,8 @@ public class GENESIS_Movement implements Serializable {
             Vector_Point2D _Point2D,
             int _Movement) {
         Vector_Point2D result;
-        boolean HandleOutOfMemoryError = _Environment.HOOME;
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(_Point2D.X, HandleOutOfMemoryError);
+        long _Point2DRow = _Environment.NetworkGridDouble.getRow(_Point2D.Y);
+        long _Point2DCol = _Environment.NetworkGridDouble.getCol(_Point2D.X);
         if (_Movement == 4) {
             return _Point2D;
         }
@@ -560,8 +546,8 @@ public class GENESIS_Movement implements Serializable {
         }
         result = new Vector_Point2D(new Vector_Point2D(
                 this._Environment.ve,
-                _Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(resultCol, HandleOutOfMemoryError),
-                _Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(resultRow, HandleOutOfMemoryError)));
+                _Environment.NetworkGridDouble.getCellXBigDecimal(resultCol),
+                _Environment.NetworkGridDouble.getCellYBigDecimal(resultRow)));
         return result;
     }
 
@@ -675,13 +661,12 @@ public class GENESIS_Movement implements Serializable {
             return _Point2D;
         }
 
-        boolean HandleOutOfMemoryError = _Environment.HOOME;
         Vector_Point2D result;
 
-        long _NRows = _Environment._network_Grid2DSquareCellDouble.getNRows(HandleOutOfMemoryError);
-        long _NCols = _Environment._network_Grid2DSquareCellDouble.getNCols(HandleOutOfMemoryError);
-        long _Point2DRow = _Environment._network_Grid2DSquareCellDouble.getRow(_Point2D.Y, HandleOutOfMemoryError);
-        long _Point2DCol = _Environment._network_Grid2DSquareCellDouble.getCol(_Point2D.X, HandleOutOfMemoryError);
+        long _NRows = _Environment.NetworkGridDouble.getNRows();
+        long _NCols = _Environment.NetworkGridDouble.getNCols();
+        long _Point2DRow = _Environment.NetworkGridDouble.getRow(_Point2D.Y);
+        long _Point2DCol = _Environment.NetworkGridDouble.getCol(_Point2D.X);
         long resultRow;
         long resultCol;
 
@@ -727,8 +712,8 @@ public class GENESIS_Movement implements Serializable {
         }
         result = new Vector_Point2D(new Vector_Point2D(
                 this._Environment.ve,
-                _Environment._network_Grid2DSquareCellDouble.getCellXBigDecimal(resultCol, HandleOutOfMemoryError),
-                _Environment._network_Grid2DSquareCellDouble.getCellYBigDecimal(resultRow, HandleOutOfMemoryError)));
+                _Environment.NetworkGridDouble.getCellXBigDecimal(resultCol),
+                _Environment.NetworkGridDouble.getCellYBigDecimal(resultRow)));
         return result;
     }
 }

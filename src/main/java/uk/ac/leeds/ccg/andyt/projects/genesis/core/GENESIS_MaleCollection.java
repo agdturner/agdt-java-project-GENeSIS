@@ -57,7 +57,7 @@ public class GENESIS_MaleCollection
         GENESIS_AgentCollectionManager theGENESIS_AgentCollectionManager = getAgentCollectionManager();
         long agentID = getAgentCollectionID();
         if (Type.equalsIgnoreCase(GENESIS_Person.getTypeLivingMale_String())) {
-            Long indexOfLastBornMale = theGENESIS_AgentCollectionManager._IndexOfLastBornMale;
+            Long indexOfLastBornMale = theGENESIS_AgentCollectionManager.IndexOfLastBornMale;
             Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager.getAgentCollection_ID(
                     indexOfLastBornMale);
 //            Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager.getMaleCollection_ID(
@@ -65,7 +65,7 @@ public class GENESIS_MaleCollection
 //            Long indexOfLastBornMaleCollection = theGENESIS_AgentCollectionManager._IndexOfLastLivingMaleCollection;
 //            Long indexOfLastBornMaleCollection =
 //                    getAgentCollectionManager().getMaleCollection_ID(
-//                    getAgentCollectionManager()._IndexOfLastBornMale,
+//                    getAgentCollectionManager().IndexOfLastBornMale,
 //                    Type,
 //                    ge.HOOMEF);
             Directory = new File(

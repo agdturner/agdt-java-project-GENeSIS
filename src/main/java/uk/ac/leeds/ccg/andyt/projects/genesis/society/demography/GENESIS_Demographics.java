@@ -330,7 +330,7 @@ public class GENESIS_Demographics implements Serializable {
         maxDemographicsDirectoryID += regionIDs.size();
         maxDemographicsDirectoryID -= 1;
         File demographicsDirectory = new File(
-                _GENESIS_Environment._AbstractModel._ResultDataDirectory_File,
+                _GENESIS_Environment.AbstractModel._ResultDataDirectory_File,
                 "Demographics");
         long range = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(true).MaximumNumberOfObjectsPerDirectory;
         try {
@@ -2431,7 +2431,7 @@ public class GENESIS_Demographics implements Serializable {
                 alive_female_HashSet.add(a_Agent_ID);
             }
         }
-        for (long a_Agent_ID = 0; a_Agent_ID < a_GENESIS_AgentCollectionManager._IndexOfLastBornMale; a_Agent_ID++) {
+        for (long a_Agent_ID = 0; a_Agent_ID < a_GENESIS_AgentCollectionManager.IndexOfLastBornMale; a_Agent_ID++) {
             GENESIS_Male a_Male = (GENESIS_Male) a_GENESIS_AgentCollectionManager.getMale(a_Agent_ID,
                     GENESIS_Person.getTypeLivingMale_String(),
                     _GENESIS_Environment.HOOME);
@@ -2484,11 +2484,10 @@ public class GENESIS_Demographics implements Serializable {
         GENESIS_Fertility input_Fertility = input_Demographics._Fertility.get(regionID).get(regionID);
         // Get the theoretical (maximum likelihood) end year populations and 
         // fertility 
-        Object[] theoreticalEndYearPopulationsAndFertility = getTheoreticalEndYearPopulationsAndFertility(
-                input_Population,
+        Object[] theoreticalEndYearPopulationsAndFertility = getTheoreticalEndYearPopulationsAndFertility(input_Population,
                 input_Mortality,
                 input_Fertility,
-                this._GENESIS_Environment._DecimalPlacePrecisionForCalculations,
+                this._GENESIS_Environment.DecimalPlacePrecisionForCalculations,
                 handleOutOfMemoryError);
         GENESIS_Population theoreticalEndYearAgedPopulation =
                 (GENESIS_Population) theoreticalEndYearPopulationsAndFertility[0];
