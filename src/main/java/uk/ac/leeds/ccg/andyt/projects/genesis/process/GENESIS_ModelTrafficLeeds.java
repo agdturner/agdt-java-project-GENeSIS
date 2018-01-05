@@ -483,8 +483,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                 new File(aDirectory_File, "Network"),
                 networkNRows_long,
                 networkNCols_long,
-                network_Dimensions,
-                handleOutOfMemoryError);
+                network_Dimensions);
         // Swapped here as they contain so little data that this makes sense in terms of memory handling
         ge.NetworkGridDouble.swapChunks(handleOutOfMemoryError);
     }
@@ -538,27 +537,27 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         //_GENESIS_Environment.ReportingGridDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
         // Initialise AgentEnvironment.ReportingPopulationDensityGridDouble
         ge.ReportingPopulationDensityGridDouble
-                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(new File(aDirectory_File, "PopulationDensity"),
+                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
+                        new File(aDirectory_File, "PopulationDensity"),
                         reportingNRows_long,
                         reportingNCols_long,
-                        reporting_Dimensions,
-                        handleOutOfMemoryError);
+                        reporting_Dimensions);
         ge.ReportingPopulationDensityGridDouble.initCells(0);
         // Initialise AgentEnvironment.ReportingPopulationDensityAggregateGridDouble
         ge.ReportingPopulationDensityAggregateGridDouble
-                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(new File(aDirectory_File, "PopulationDensityAggregate"),
+                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
+                        new File(aDirectory_File, "PopulationDensityAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
-                        reporting_Dimensions,
-                        handleOutOfMemoryError);
+                        reporting_Dimensions);
         ge.ReportingPopulationDensityAggregateGridDouble.initCells(0);
         // Initialise AgentEnvironment.ReportingPopulationDensityMovingAggregateGridDouble
         ge.ReportingPopulationDensityMovingAggregateGridDouble
-                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(new File(aDirectory_File, "PopulationDensityMovingAggregate"),
+                = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
+                        new File(aDirectory_File, "PopulationDensityMovingAggregate"),
                         reportingNRows_long,
                         reportingNCols_long,
-                        reporting_Dimensions,
-                        handleOutOfMemoryError);
+                        reporting_Dimensions);
         ge.ReportingPopulationDensityMovingAggregateGridDouble.initCells(0);
     }
 
