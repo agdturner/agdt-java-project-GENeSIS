@@ -438,7 +438,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
      * @param miny
      */
     public void initNetwork_Grid2DSquareCellDoubleFactory_Grid2DSquareCellDouble(
-            File aDirectory_File,
+            File dir,
             long networkNRows_long,
             long networkNCols_long,
             BigDecimal networkNRows,
@@ -458,9 +458,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         Grids_Processor gp;
         gp = gridsEnv.getProcessor();
         ge.NetworkGridDoubleFactory = new Grids_GridDoubleFactory(
-                ge.ge,
-                aDirectory_File,
-                //gridsEnv.getFiles().getGeneratedGridDoubleDir(),
+                gridsEnv,
                 gp.GridChunkDoubleFactory,
                 network_GDCF,
                 //gp.DefaultGridChunkDoubleFactory,
@@ -480,7 +478,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         //network_Grid2DSquareCellDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
         // Initialise AgentEnvironment.NetworkGridDouble
         ge.NetworkGridDouble = (Grids_GridDouble) ge.NetworkGridDoubleFactory.create(
-                new File(aDirectory_File, "Network"),
+                new File(dir, "Network"),
                 networkNRows_long,
                 networkNCols_long,
                 network_Dimensions);
@@ -501,17 +499,15 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         // Initialise AgentEnvironment.ReportingGridDoubleFactory
         int reportingChunkNCols = 512;
         int reportingChunkNRows = 512;
-        Grids_AbstractGridChunkDoubleFactory reporting_Grid2DSquareCellDoubleChunkFactory = new Grids_GridChunkDoubleMapFactory();
+        Grids_AbstractGridChunkDoubleFactory reportingChunkFactory = new Grids_GridChunkDoubleMapFactory();
         Grids_Environment gridsEnv;
         gridsEnv = ge.ge;
         Grids_Processor gp;
         gp = gridsEnv.getProcessor();
         ge.ReportingGridDoubleFactory = new Grids_GridDoubleFactory(
                 gridsEnv,
-                aDirectory_File,
-                //gridsEnv.getFiles().getGeneratedGridDoubleDir(),
                 gp.GridChunkDoubleFactory,
-                reporting_Grid2DSquareCellDoubleChunkFactory,
+                reportingChunkFactory,
                 //gp.DefaultGridChunkDoubleFactory,
                 -Double.MAX_VALUE,
                 reportingChunkNRows,
@@ -528,11 +524,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         maxX = (reportingNCols_BigDecimal.multiply(reportingCellsize)).add(minX);
         maxY = (reportingNRows_BigDecimal.multiply(reportingCellsize)).add(minY);
         Grids_Dimensions reporting_Dimensions = new Grids_Dimensions(
-                reportingCellsize,
-                minX,
-                minY,
-                maxX,
-                maxY);
+                reportingCellsize, minX, minY, maxX, maxY);
         ge.ReportingGridDoubleFactory.setDimensions(reporting_Dimensions);
         //_GENESIS_Environment.ReportingGridDoubleFactory.initMemoryReserve(handleOutOfMemoryError);
         // Initialise AgentEnvironment.ReportingPopulationDensityGridDouble
@@ -547,17 +539,13 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
         ge.ReportingPopulationDensityAggregateGridDouble
                 = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
                         new File(aDirectory_File, "PopulationDensityAggregate"),
-                        reportingNRows_long,
-                        reportingNCols_long,
-                        reporting_Dimensions);
+                        reportingNRows_long, reportingNCols_long, reporting_Dimensions);
         ge.ReportingPopulationDensityAggregateGridDouble.initCells(0);
         // Initialise AgentEnvironment.ReportingPopulationDensityMovingAggregateGridDouble
         ge.ReportingPopulationDensityMovingAggregateGridDouble
                 = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
                         new File(aDirectory_File, "PopulationDensityMovingAggregate"),
-                        reportingNRows_long,
-                        reportingNCols_long,
-                        reporting_Dimensions);
+                        reportingNRows_long, reportingNCols_long, reporting_Dimensions);
         ge.ReportingPopulationDensityMovingAggregateGridDouble.initCells(0);
     }
 

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
+import uk.ac.leeds.ccg.andyt.grids.io.Grids_Files;
 import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -39,113 +40,93 @@ public class Mapping {
      * @param ge
      * @param population
      */
-    public static void mapPopulation(
-            File f,
-            String type,
-            Grids_ImageExporter ie,
-            GENESIS_Environment ge,
+    public static void mapPopulation(File f, String type,
+            Grids_ImageExporter ie, GENESIS_Environment ge,
             Object[] population) {
-        boolean _HandleOutOfMemoryError = ge.HOOME;
-        Grids_GridDouble denistyMapPopulation = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(ge.ReportingGridDouble);
-        //long _NRows = _Denisty_Map_Population.getNRows(_HandleOutOfMemoryError);
-        //long _NCols = _Denisty_Map_Population.getNCols(_HandleOutOfMemoryError);
-        //long row;
-        //long col;
-        Iterator _Iterator;
-        HashSet _Females = (HashSet) population[0];
-        GENESIS_Female _Female;
-        _Iterator = _Females.iterator();
-        while (_Iterator.hasNext()) {
-            _Female = (GENESIS_Female) _Iterator.next();
-            if (_Female.TimeOfDeath == null) {
-                denistyMapPopulation.setCell(
-                        denistyMapPopulation.getRow(_Female.Location.Y),
-                        denistyMapPopulation.getCol(_Female.Location.X),
-                        1.0d);
+        Grids_Files gf;
+        gf = ge.ge.getFiles();
+        File dir;
+        dir = gf.createNewFile(gf.getGeneratedGridDoubleDir());
+        Grids_GridDouble dMP; // DensityMapPopulation
+        dMP = (Grids_GridDouble) ge.ReportingGridDoubleFactory.create(
+                dir, ge.ReportingGridDouble);
+        Iterator ite;
+        HashSet females = (HashSet) population[0];
+        GENESIS_Female female;
+        ite = females.iterator();
+        while (ite.hasNext()) {
+            female = (GENESIS_Female) ite.next();
+            if (female.TimeOfDeath == null) {
+                dMP.setCell(dMP.getRow(female.Location.Y),
+                        dMP.getCol(female.Location.X), 1.0d);
             }
         }
-        HashSet _Males = (HashSet) population[1];
-        GENESIS_Male _Male;
-        _Iterator = _Males.iterator();
-        while (_Iterator.hasNext()) {
-            _Male = (GENESIS_Male) _Iterator.next();
-            if (_Male.TimeOfDeath == null) {
-                denistyMapPopulation.setCell(
-                        denistyMapPopulation.getRow(_Male.Location.Y),
-                        denistyMapPopulation.getCol(_Male.Location.X),
-                        1.0d);
+        HashSet males = (HashSet) population[1];
+        GENESIS_Male male;
+        ite = males.iterator();
+        while (ite.hasNext()) {
+            male = (GENESIS_Male) ite.next();
+            if (male.TimeOfDeath == null) {
+                dMP.setCell(dMP.getRow(male.Location.Y),
+                        dMP.getCol(male.Location.X), 1.0d);
             }
         }
-        ie.toGreyScaleImage(
-                denistyMapPopulation,
-                ge.ge.getProcessor(),
-                f, type);
+        ie.toGreyScaleImage(dMP, ge.ge.getProcessor(), f, type);
 
     }
 
     /**
      * Modifies _Population_Location_Composite_Map.
      *
-     * @param _Population_Location_Composite_Map
-     * @param _Population_Alive_Female
-     * @param _HandleOutOfMemoryError
-     * @param _Population_Alive_Male
-     * @param _CompositionLatency
+     * @param pLCM Population location composite map.
+     * @param females Population of alive females
+     * @param males Population of alive males
+     * @param hoome
+     * @param compositionLatency
      */
     public static void _AddTo_Population_Movement_Composite_Map(
-            Grids_GridDouble _Population_Location_Composite_Map,
-            HashSet _Population_Alive_Female,
-            HashSet _Population_Alive_Male,
-            double _CompositionLatency,
-            boolean _HandleOutOfMemoryError) {
+            Grids_GridDouble pLCM, HashSet females, HashSet males,
+            double compositionLatency, boolean hoome) {
         // Divide values by _CompositionLatency
-        long _NRows = _Population_Location_Composite_Map.getNRows();
-        long _NCols = _Population_Location_Composite_Map.getNCols();
+        long _NRows = pLCM.getNRows();
+        long _NCols = pLCM.getNCols();
         long row;
         long col;
         double value;
         double newValue;
-        double _NoDataValue = _Population_Location_Composite_Map.getNoDataValue();
+        double _NoDataValue = pLCM.getNoDataValue();
         for (row = 0; row < _NRows; row++) {
             for (col = 0; col < _NCols; col++) {
-                value = _Population_Location_Composite_Map.getCell(                        row, col);
+                value = pLCM.getCell(row, col);
                 if (value != _NoDataValue && value != 0) {
-                    newValue = value / _CompositionLatency;
-                    _Population_Location_Composite_Map.setCell(                            row, col, newValue);
+                    newValue = value / compositionLatency;
+                    pLCM.setCell(row, col, newValue);
                 } else {
-                    _Population_Location_Composite_Map.setCell(                            row, col, 0);
+                    pLCM.setCell(row, col, 0);
                 }
             }
         }
-        Iterator _Iterator;
-        GENESIS_Person _Person;
-        _Iterator = _Population_Alive_Female.iterator();
-        while (_Iterator.hasNext()) {
-            _Person = (GENESIS_Person) _Iterator.next();
-            //if (!_Person._Location.equals(_Person._Location_Heading) && _Person._Location_Heading != null) {
-            if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
-                _Population_Location_Composite_Map.addToCell(
-                        _Population_Location_Composite_Map.getRow(
-                                _Person.Location.Y),
-                        _Population_Location_Composite_Map.getCol(
-                                _Person.Location.X),
-                        1.0d);
+        Iterator ite;
+        GENESIS_Person person;
+        ite = females.iterator();
+        while (ite.hasNext()) {
+            person = (GENESIS_Person) ite.next();
+            //if (!person.Location.equals(person.Location_Heading) && person.Location_Heading != null) {
+            if (!person.Location.equals(person.getPreviousPoint2D())) {
+                pLCM.addToCell(pLCM.getRow(person.Location.Y),
+                        pLCM.getCol(person.Location.X), 1.0d);
             }
         }
-        _Iterator = _Population_Alive_Male.iterator();
-        while (_Iterator.hasNext()) {
-            _Person = (GENESIS_Person) _Iterator.next();
-            //if (!_Person._Location.equals(_Person._Location_Heading) && _Person._Location_Heading != null) {
-            if (!_Person.Location.equals(_Person.getPreviousPoint2D())) {
-                _Population_Location_Composite_Map.addToCell(
-                        _Population_Location_Composite_Map.getRow(
-                                _Person.Location.Y),
-                        _Population_Location_Composite_Map.getCol(
-                                _Person.Location.X),
-                        1.0d);
-//                _Population_Location_Composite_Map.setCell(
-//                        _Person._Location._Row, 
-//                        _Person._Location._Col, 
+        ite = males.iterator();
+        while (ite.hasNext()) {
+            person = (GENESIS_Person) ite.next();
+            //if (!_Person._Location.equals(_Person._Location_Heading) && _Person.Location_Heading != null) {
+            if (!person.Location.equals(person.getPreviousPoint2D())) {
+                pLCM.addToCell(pLCM.getRow(person.Location.Y),
+                        pLCM.getCol(person.Location.X), 1.0d);
+//                pLCM.setCell(
+//                        person.Location.Row, 
+//                        person.Location.Col, 
 //                        1.0d, _HandleOutOfMemoryError);
             }
         }
