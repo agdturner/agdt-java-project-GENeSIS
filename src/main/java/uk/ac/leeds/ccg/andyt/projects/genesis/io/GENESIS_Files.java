@@ -15,7 +15,8 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Strings;
  */
 public class GENESIS_Files extends Generic_Files {
 
-    
+    private GENESIS_Strings Strings;
+
     protected File GridsDirectory;
 
     protected GENESIS_Files() {
@@ -26,15 +27,9 @@ public class GENESIS_Files extends Generic_Files {
         DataDir = dataDir;
     }
 
-    public GENESIS_Strings getStrings() {
-        return (GENESIS_Strings) Strings;
-    }
-
     public final File getGridsDirectory() {
         if (GridsDirectory == null) {
-            GridsDirectory = new File(
-                    getDataDir(),
-                    getStrings().getString_Grids());
+            GridsDirectory = new File(getDataDir(), Strings.getString_Grids());
         }
         return GridsDirectory;
     }
