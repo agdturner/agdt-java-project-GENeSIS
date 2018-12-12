@@ -15,8 +15,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.population.PopulationType;
@@ -334,7 +334,7 @@ public class GENESIS_Demographics implements Serializable {
                 "Demographics");
         long range = _GENESIS_Environment.AgentEnvironment.get_AgentCollectionManager(true).MaximumNumberOfObjectsPerDirectory;
         try {
-            Generic_StaticIO.initialiseArchive(
+            Generic_IO.initialiseArchive(
                     demographicsDirectory,
                     range,
                     maxDemographicsDirectoryID);
@@ -351,7 +351,7 @@ public class GENESIS_Demographics implements Serializable {
              * region output example dir:
              * ../Demographics/0_9999/0_99/0/OODA/
              */
-            File dir = Generic_StaticIO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDirectory(
                     demographicsDirectory,
                     theDemographicsDirectoryID,
                     maxDemographicsDirectoryID,
@@ -403,7 +403,7 @@ public class GENESIS_Demographics implements Serializable {
         ite = aggregateRegionIDs.iterator();
         while (ite.hasNext()) {
             String aggregateRegionID = ite.next();
-            File dir = Generic_StaticIO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDirectory(
                     demographicsDirectory,
                     theDemographicsDirectoryID,
                     maxDemographicsDirectoryID,
@@ -799,7 +799,7 @@ public class GENESIS_Demographics implements Serializable {
         System.out.println(method);
 //        // Initialisation
 //        File demographicsDirectory_File = new File(
-//                Generic_StaticIO.getObjectDirectory(
+//                Generic_IO.getObjectDirectory(
 //                demographicsDirectoryParent_File,
 //                theDemographicsDirectoryID,
 //                maxDemographicsDirectoryID,
@@ -3172,14 +3172,14 @@ public class GENESIS_Demographics implements Serializable {
             result.put(regionID, regionPopulationMap);
             // Initialise aLADTotalPop
             GENESIS_Population regionTotalPop = new GENESIS_Population(a_GENESIS_Environment);
-            long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+            long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                     aLADDir, "_");
-            long range = Generic_StaticIO.getArchiveRange(
+            long range = Generic_IO.getArchiveRange(
                     aLADDir, "_");
             String outputAreaCode;
             GENESIS_Population pop;
             for (long i = highestLeaf; i > -1; i--) {
-                File dir = Generic_StaticIO.getObjectDirectory(
+                File dir = Generic_IO.getObjectDirectory(
                         aLADDir,
                         i,
                         highestLeaf,
@@ -3482,6 +3482,6 @@ public class GENESIS_Demographics implements Serializable {
     }
 
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

@@ -7,7 +7,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.core;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.metadata.MetadataType;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.parameters.ParametersType;
@@ -26,7 +26,7 @@ public class GENESIS_DataHandler {
             String filenamePart) {
         File resultsDemographicsDirectory = getResultsDemographicsDirectory(
                 resultDirectory_File);
-        File totalResultsDemographicsDirectory = new File(Generic_StaticIO.getArchiveHighestLeafFile(
+        File totalResultsDemographicsDirectory = new File(Generic_IO.getArchiveHighestLeafFile(
                 resultsDemographicsDirectory, UNDERSCORE).getParentFile(), "0/Total/");
         System.out.println("totalResultsDemographicsDirectory " + totalResultsDemographicsDirectory);
         MetadataType metadata = getMetadataType(
@@ -43,7 +43,7 @@ public class GENESIS_DataHandler {
 //        File resultsDemographicsDirectory = getResultsDemographicsDirectory(
 //                resultDirectory_File);
 //        File lastYearResultsDemographicsDirectory
-//                = Generic_StaticIO.getArchiveHighestLeafFile(
+//                = Generic_IO.getArchiveHighestLeafFile(
 //                resultsDemographicsDirectory, UNDERSCORE);
 //        MetadataType metadata = getMetadataType(
 //                resultDirectory_File);
@@ -59,7 +59,7 @@ public class GENESIS_DataHandler {
 //        File resultsDemographicsDirectory = getResultsDemographicsDirectory(
 //                resultDirectory_File);
 //        File lastYearResultsDemographicsDirectory
-//                = Generic_StaticIO.getArchiveHighestLeafFile(
+//                = Generic_IO.getArchiveHighestLeafFile(
 //                resultsDemographicsDirectory, UNDERSCORE);
 //        MetadataType metadata = getMetadataType(
 //                resultDirectory_File);
@@ -75,7 +75,7 @@ public class GENESIS_DataHandler {
 //        File resultsDemographicsDirectory = getResultsDemographicsDirectory(
 //                resultDirectory_File);
 //        File lastYearResultsDemographicsDirectory
-//                = Generic_StaticIO.getArchiveHighestLeafFile(
+//                = Generic_IO.getArchiveHighestLeafFile(
 //                resultsDemographicsDirectory, UNDERSCORE);
 //        MetadataType metadata = getMetadataType(
 //                resultDirectory_File);
@@ -114,7 +114,7 @@ public class GENESIS_DataHandler {
     public static ParametersType getParametersType(
             File resultsDirectory_File) {
         File parameters_File = getParametersFile(resultsDirectory_File);
-        if (!Generic_StaticIO.fileExistsAndCanBeRead(parameters_File)) {
+        if (!Generic_IO.fileExistsAndCanBeRead(parameters_File)) {
             String message = parameters_File.toString()
                     + " cannot be read";
             log(Level.ALL, message);
@@ -136,7 +136,7 @@ public class GENESIS_DataHandler {
     public static MetadataType getMetadataType(
             File resultsDirectory_File) {
         File metadata_File = getMetadataFile(resultsDirectory_File);
-        if (!Generic_StaticIO.fileExistsAndCanBeRead(metadata_File)) {
+        if (!Generic_IO.fileExistsAndCanBeRead(metadata_File)) {
             String message = metadata_File.toString() + " cannot be read";
             log(Level.ALL, message);
             System.err.println(message);
@@ -155,6 +155,6 @@ public class GENESIS_DataHandler {
     }
 
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

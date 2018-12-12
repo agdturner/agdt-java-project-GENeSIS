@@ -14,12 +14,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.generic.math.statistics.Generic_Statistics;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Execution;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.stats.Generic_Statistics;
+import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.generic.visualisation.charts.Generic_AgeGenderLineChart;
+import uk.ac.leeds.ccg.andyt.chart.Generic_AgeGenderLineChart;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
@@ -213,7 +213,7 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
             File resultsDirectory,
             GENESIS_Environment a_GENESIS_Environment) {
         HashSet<File> population_Files = new HashSet<File>();
-        HashSet<File> results_Files = Generic_StaticIO.getArchiveLeafFiles(
+        HashSet<File> results_Files = Generic_IO.getArchiveLeafFiles(
                 resultsDirectory, "_");
         Iterator<File> ite = results_Files.iterator();
         while (ite.hasNext()) {
@@ -518,6 +518,6 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
     }
 
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

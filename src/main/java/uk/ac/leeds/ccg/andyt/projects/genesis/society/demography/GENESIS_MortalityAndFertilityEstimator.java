@@ -9,8 +9,8 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -120,7 +120,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             File directory = new File(args[0]);
             File logDirectory = new File(
                     directory,
-                    GENESIS_Log.Generic_DefaultLogDirectoryName);
+                    GENESIS_Log.NAME);
             String logname = sourcePackage;
             GENESIS_Log.parseLoggingProperties(
                     directory,
@@ -591,7 +591,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                     new FileInputStream(file)));
             StreamTokenizer aStreamTokenizer =
                     new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             aStreamTokenizer.wordChars(':', ':');
             aStreamTokenizer.wordChars('<', '<');
             aStreamTokenizer.wordChars('&', '&');
@@ -599,7 +599,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             String line = "";
             //Skip the first 5 lines
             for (int i = 0; i < 5; i++) {
-                Generic_StaticIO.skipline(aStreamTokenizer);
+                Generic_IO.skipline(aStreamTokenizer);
             }
             int tokenType = aStreamTokenizer.nextToken();
             // Hardcoded Age Categories
@@ -704,7 +704,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                     new FileInputStream(file)));
             StreamTokenizer aStreamTokenizer =
                     new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             aStreamTokenizer.wordChars(':', ':');
             aStreamTokenizer.wordChars('<', '<');
             aStreamTokenizer.wordChars('"', '"');
@@ -713,7 +713,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             String line = "";
             //Skip the first 2 lines
             for (int i = 0; i < 2; i++) {
-                Generic_StaticIO.skipline(aStreamTokenizer);
+                Generic_IO.skipline(aStreamTokenizer);
             }
             int tokenType = aStreamTokenizer.nextToken();
             // Hardcoded Age Categories
@@ -1277,6 +1277,6 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
 //        return getLogger();
 //    }
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.organisations.GENESIS_Family;
@@ -96,7 +96,7 @@ public class GENESIS_Male extends GENESIS_Person {
         CollectionID = acm.getMaleCollection_ID(ID,
                 Type,
                 ge.HOOME);
-        Generic_StaticIO.addToArchive(AgentCollectionManager.getLivingMaleDirectory(),
+        Generic_IO.addToArchive(AgentCollectionManager.getLivingMaleDirectory(),
                 AgentCollectionManager.MaximumNumberOfObjectsPerDirectory,
                 CollectionID);
         this.MaleCollection = get_MaleCollection();
@@ -228,7 +228,7 @@ public class GENESIS_Male extends GENESIS_Person {
 //        GENESIS_Male result;
 //        AgentCollectionManager a_GENESIS_AgentCollectionManager =
 //                a_GENESIS_MaleCollection.getAgentCollectionManager();
-//        File a_MaleDirectory_File = Generic_StaticIO.getObjectDirectory(
+//        File a_MaleDirectory_File = Generic_IO.getObjectDirectory(
 //                a_GENESIS_AgentCollectionManager._Male_Directory,
 //                a_Agent_ID,
 //                a_GENESIS_AgentCollectionManager.IndexOfLastBornMale,
@@ -236,7 +236,7 @@ public class GENESIS_Male extends GENESIS_Person {
 //        File a_Male_File = new File(
 //                a_MaleDirectory_File,
 //                GENESIS_Male.class.getCanonicalName() + ".thisFile");
-//        return (GENESIS_Male) Generic_StaticIO.readObject(a_Male_File);
+//        return (GENESIS_Male) Generic_IO.readObject(a_Male_File);
 //    }
     @Deprecated
     @Override
@@ -265,7 +265,7 @@ public class GENESIS_Male extends GENESIS_Person {
         if (!_Directory.exists()) {
             _Directory.mkdirs();
         }
-        Generic_StaticIO.writeObject(
+        Generic_IO.writeObject(
                 this,
                 thisAgentFile);
     }

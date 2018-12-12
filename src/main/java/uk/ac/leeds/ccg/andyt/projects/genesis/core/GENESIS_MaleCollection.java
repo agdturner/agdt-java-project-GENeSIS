@@ -6,7 +6,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.core;
 
 import java.io.File;
 import java.io.Serializable;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * Each Agent has a reference to at least one AgentCollection. This class
@@ -69,7 +69,7 @@ public class GENESIS_MaleCollection
 //                    Type,
 //                    ge.HOOMEF);
             Directory = new File(
-                    Generic_StaticIO.getObjectDirectory(theGENESIS_AgentCollectionManager._LivingMaleDirectory,
+                    Generic_IO.getObjectDirectory(theGENESIS_AgentCollectionManager._LivingMaleDirectory,
                     agentID,
                     indexOfLastBornMaleCollection,
                     theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
@@ -77,10 +77,10 @@ public class GENESIS_MaleCollection
             File result = new File(Directory.toString());
             return result;
         } else {
-            Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+            Long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                     getAgentCollectionManager().getDeadMaleDirectory(), "_");
             Directory = new File(
-                    Generic_StaticIO.getObjectDirectory(theGENESIS_AgentCollectionManager.getDeadMaleDirectory(),
+                    Generic_IO.getObjectDirectory(theGENESIS_AgentCollectionManager.getDeadMaleDirectory(),
                     agentID,
                     highestLeaf,
                     theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
@@ -161,7 +161,7 @@ public class GENESIS_MaleCollection
 //            if (a_Agent_Directory.exists()) {
 //                File[] agentFiles = a_Agent_Directory.listFiles();
 //                if (agentFiles.length > 0) {
-//                    result = (GENESIS_Male) Generic_StaticIO.readObject(agentFiles[0]);
+//                    result = (GENESIS_Male) Generic_IO.readObject(agentFiles[0]);
 //                    result.init(
 //                            ge,
 //                            a_Agent_ID, this.getAgentCollection_ID());

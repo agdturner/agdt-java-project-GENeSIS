@@ -3,7 +3,7 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.utilities;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigInteger;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigInteger;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.common.Time;
 

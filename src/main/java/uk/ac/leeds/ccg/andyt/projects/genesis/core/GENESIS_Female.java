@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
@@ -124,7 +124,7 @@ public class GENESIS_Female extends GENESIS_Person {
                 Type,
                 ge.HOOME);
         ResidentialSubregionIDs = new ArrayList<>();
-        Generic_StaticIO.addToArchive(
+        Generic_IO.addToArchive(
                 AgentCollectionManager.getLivingFemaleDirectory(),
                 AgentCollectionManager.MaximumNumberOfObjectsPerDirectory,
                 CollectionID);
@@ -730,14 +730,14 @@ public class GENESIS_Female extends GENESIS_Person {
         GENESIS_Female result;
         GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
                 = a_GENESIS_FemaleCollection.getAgentCollectionManager();
-        File a_FemaleDirectory_File = Generic_StaticIO.getObjectDirectory(a_GENESIS_AgentCollectionManager._LivingFemaleDirectory,
+        File a_FemaleDirectory_File = Generic_IO.getObjectDirectory(a_GENESIS_AgentCollectionManager._LivingFemaleDirectory,
                 a_Agent_ID,
                 a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale,
                 a_GENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory);
         File a_Female_File = new File(
                 a_FemaleDirectory_File,
                 GENESIS_Female.class.getCanonicalName() + ".thisFile");
-        return (GENESIS_Female) Generic_StaticIO.readObject(a_Female_File);
+        return (GENESIS_Female) Generic_IO.readObject(a_Female_File);
     }
 
     @Deprecated
@@ -766,7 +766,7 @@ public class GENESIS_Female extends GENESIS_Person {
         if (!_Directory.exists()) {
             _Directory.mkdirs();
         }
-        Generic_StaticIO.writeObject(
+        Generic_IO.writeObject(
                 this,
                 thisAgentFile);
     }

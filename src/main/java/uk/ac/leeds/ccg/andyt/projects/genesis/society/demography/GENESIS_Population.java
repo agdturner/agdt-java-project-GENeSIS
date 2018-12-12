@@ -10,9 +10,9 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigInteger;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigInteger;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -37,11 +37,10 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_CASDataHandler;
  * two ways. They are stored as a TreeMaps, one for female counts, another for
  * male counts where the keys are GENESIS_AgeBound instances and values are
  * BigDecimal instances. It is designed that they are also read into and
- * exported from the
- * <code>super.genderedAgeBoundPopulation</code> which contains Lists of the
- * data. In general the data is manipulated and altered via the TreeMaps.
- * Instantiated objects can be serialised for swapping, but in general, before
- * exporting data to a XML file, the
+ * exported from the <code>super.genderedAgeBoundPopulation</code> which
+ * contains Lists of the data. In general the data is manipulated and altered
+ * via the TreeMaps. Instantiated objects can be serialised for swapping, but in
+ * general, before exporting data to a XML file, the
  * <code>super.genderedAgeBoundPopulation</code> are updated from the TreeMaps.
  */
 public class GENESIS_Population extends PopulationType implements Serializable {
@@ -100,6 +99,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * By default the population multiplicand is equal to one.
+     *
      * @param a_GENESIS_Environment
      * @param population_File
      */
@@ -153,9 +153,9 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         if (file.getName().endsWith("csv")) {
             BufferedReader br = null;
             try {
-                br = Generic_StaticIO.getBufferedReader(file);
+                br = Generic_IO.getBufferedReader(file);
                 StreamTokenizer aStreamTokenizer = new StreamTokenizer(br);
-                Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+                Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
                 String line;
                 int gender = 0;
                 Long minimumAgeInYears = 0L;
@@ -237,8 +237,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                         + ") from " + sourceMethod + " !population_File.getName().endsWith(xml)");
                 System.exit(Generic_ErrorAndExceptionHandler.IOException);
             }
-            PopulationType population =
-                    XMLConverter.loadPopulationFromXMLFile(file);
+            PopulationType population
+                    = XMLConverter.loadPopulationFromXMLFile(file);
             if (population == null) {
                 log(Level.WARNING, "Population not created in " + sourceClass + "." + sourceMethod);
             }
@@ -431,9 +431,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             System.out.println(System.getProperties().values().toString());
             System.out.println(System.getProperty("java.util.logging.config.file"));
             File directory = new File(args[0]);
-            File logDirectory = new File(
-                    directory,
-                    GENESIS_Log.Generic_DefaultLogDirectoryName);
+            File logDirectory = new File(directory, GENESIS_Log.NAME);
             String logname = sourcePackage;
             GENESIS_Log.parseLoggingProperties(
                     directory,
@@ -479,7 +477,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler(
                 theMOSESWorkspace, "OA");
         HashMap<String, String> lut = aCASDataHandler.get_LookUpMSOAfromOAHashMap();
-        Generic_StaticIO.writeObject(lut, lut_File);
+        Generic_IO.writeObject(lut, lut_File);
     }
 
     public static void writeLUTsForOAToMSOATreeMap() {
@@ -513,7 +511,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         HashMap<String, String> lutHashMap = aCASDataHandler.get_LookUpMSOAfromOAHashMap();
         TreeMap<String, String> lutTreeMap = new TreeMap<String, String>();
         lutTreeMap.putAll(lutHashMap);
-        Generic_StaticIO.writeObject(lutTreeMap, lut_File);
+        Generic_IO.writeObject(lutTreeMap, lut_File);
     }
 
     public void runCensusData(String[] args) {
@@ -551,19 +549,19 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                    theMOSESWorkspace,
 //                    theGENESISWorkspace,
 //                    inputAreaCode);
-            int maximumNumberOfObjectsPerDirectory =
-                    GENESIS_Environment.getDefaultMaximumNumberOfObjectsPerDirectory();
+            int maximumNumberOfObjectsPerDirectory
+                    = GENESIS_Environment.getDefaultMaximumNumberOfObjectsPerDirectory();
             Iterator<String> ite = pops.keySet().iterator();
             File dir = null;
             while (ite.hasNext()) {
                 String areaCode = ite.next();
                 GENESIS_Population pop = pops.get(areaCode);
                 if (dir == null) {
-                    dir = Generic_StaticIO.initialiseArchive(
+                    dir = Generic_IO.initialiseArchive(
                             theGENESISUKCensusDataDir,
                             maximumNumberOfObjectsPerDirectory);
                 } else {
-                    dir = Generic_StaticIO.addToArchive(
+                    dir = Generic_IO.addToArchive(
                             theGENESISUKCensusDataDir,
                             maximumNumberOfObjectsPerDirectory);
                 }
@@ -680,7 +678,6 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                     "" + regionID);
             dir.mkdirs();
 
-
             TreeMap<String, GENESIS_Population> pops = loadOAPopulations(
                     theMOSESWorkspace,
                     theGENESISWorkspace,
@@ -689,11 +686,11 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                    theMOSESWorkspace,
 //                    theGENESISWorkspace,
 //                    inputAreaCode);
-            int maximumNumberOfObjectsPerDirectory =
-                    GENESIS_Environment.getDefaultMaximumNumberOfObjectsPerDirectory();
+            int maximumNumberOfObjectsPerDirectory
+                    = GENESIS_Environment.getDefaultMaximumNumberOfObjectsPerDirectory();
             Iterator<String> ite = pops.keySet().iterator();
             long max_ID = pops.size() - 1;
-            Generic_StaticIO.initialiseArchive(
+            Generic_IO.initialiseArchive(
                     dir,
                     maximumNumberOfObjectsPerDirectory,
                     max_ID);
@@ -702,7 +699,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                 String subregionID = ite.next();
                 GENESIS_Population pop = pops.get(subregionID);
                 pop.divide(BigDecimal.TEN, 0, RoundingMode.UP);
-                File dir2 = Generic_StaticIO.getObjectDirectory(
+                File dir2 = Generic_IO.getObjectDirectory(
                         dir,
                         a_ID,
                         max_ID,
@@ -835,9 +832,9 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //        RoundingMode roundingMode = RoundingMode.HALF_UP;
 //        int startAgeOfEndYearInterval = 99;
         BigDecimal maxPopulationInAnyAgeBound = this.getMaxPopulationInAnyAgeBound();
-        int decimalPlacePrecisionForDisplay =
-                Generic_BigDecimal.getDecimalPlacePrecision(
-                maxPopulationInAnyAgeBound, significantDigits);
+        int decimalPlacePrecisionForDisplay
+                = Generic_BigDecimal.getDecimalPlacePrecision(
+                        maxPopulationInAnyAgeBound, significantDigits);
         //int startAgeOfEndYearInterval = ((Integer) data[3]).intValue();
         GENESIS_AgeGenderBarChart chart = new GENESIS_AgeGenderBarChart(
                 executorService,
@@ -887,15 +884,15 @@ public class GENESIS_Population extends PopulationType implements Serializable {
          */
 //        aRecordIDZoneCode_HashMap = aCASDataHandler.getRecordIDZoneCode_HashMap();
 //        aZoneCodeRecordID_HashMap = aCASDataHandler.getZoneCodeRecordID_HashMap();
-//        Generic_StaticIO.writeObject(
+//        Generic_IO.writeObject(
 //                aRecordIDZoneCode_HashMap,
 //                aRecordIDZoneCode_HashMap_File);
-//        Generic_StaticIO.writeObject(
+//        Generic_IO.writeObject(
 //                aZoneCodeRecordID_HashMap,
 //                aZoneCodeRecordID_HashMap_File);
-        aRecordIDZoneCode_HashMap = (HashMap<Long, String>) Generic_StaticIO.readObject(
+        aRecordIDZoneCode_HashMap = (HashMap<Long, String>) Generic_IO.readObject(
                 aRecordIDZoneCode_HashMap_File);
-        aZoneCodeRecordID_HashMap = (HashMap<String, Long>) Generic_StaticIO.readObject(
+        aZoneCodeRecordID_HashMap = (HashMap<String, Long>) Generic_IO.readObject(
                 aZoneCodeRecordID_HashMap_File);
 
         Census_CAS001DataHandler aCAS001DataHandler = aCASDataHandler.getCAS001DataHandler();
@@ -913,10 +910,10 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             aCAS001DataRecord = aCAS001DataHandler.getCAS001DataRecord(recordID);
             System.out.println(aCAS001DataRecord.toString());
             GENESIS_Population pop = new GENESIS_Population();
-            pop._FemaleAgeBoundPopulationCount_TreeMap =
-                    new TreeMap<GENESIS_AgeBound, BigDecimal>();
-            pop._MaleAgeBoundPopulationCount_TreeMap =
-                    new TreeMap<GENESIS_AgeBound, BigDecimal>();
+            pop._FemaleAgeBoundPopulationCount_TreeMap
+                    = new TreeMap<GENESIS_AgeBound, BigDecimal>();
+            pop._MaleAgeBoundPopulationCount_TreeMap
+                    = new TreeMap<GENESIS_AgeBound, BigDecimal>();
             int gender;
             gender = 0;
             for (int age = 0; age < 25; age++) {
@@ -1472,6 +1469,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Adds population from populationToAdd
+     *
      * @param populationToAdd
      */
     public void addPopulationNoUpdate(GENESIS_Population populationToAdd) {
@@ -1507,6 +1505,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Adds population from populationToAdd
+     *
      * @param populationToAdd
      */
     public void addPopulation(GENESIS_Population populationToAdd) {
@@ -1516,6 +1515,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Adds population from populationToAdd
+     *
      * @param populationToSubtract
      */
     public void subtractPopulation(GENESIS_Population populationToSubtract) {
@@ -1552,6 +1552,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Adds valueToAdd to all age gender counts in this
+     *
      * @param valueToAdd
      */
     public void addNoUpdate(BigDecimal valueToAdd) {
@@ -1581,6 +1582,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Adds valueToAdd to all age gender counts in this
+     *
      * @param valueToAdd
      */
     public void add(BigDecimal valueToAdd) {
@@ -1590,6 +1592,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Multiplies all age gender counts by value
+     *
      * @param value
      */
     public void multiplyNoUpdate(BigDecimal value) {
@@ -1619,6 +1622,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Multiplies all age gender counts by value
+     *
      * @param value
      */
     public void multiply(BigDecimal value) {
@@ -1628,6 +1632,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Divide all age gender counts by value value expected to be non-zero
+     *
      * @param value
      * @param roundingMode
      * @param decimalPlaces
@@ -1668,6 +1673,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Divide all age gender counts by value value expected to be non-zero
+     *
      * @param value
      * @param roundingMode
      * @param decimalPlaces
@@ -1685,9 +1691,10 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * divideByPopulation assumes same population structure.
+     *
      * @param roundingMode
      * @param decimalPlaces
-     * @return 
+     * @return
      */
     public GENESIS_Population divideByPopulationNoUpdate(
             GENESIS_Population populationToDivideBy,
@@ -1730,9 +1737,10 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * divideByPopulation assumes same population structure.
+     *
      * @param roundingMode
      * @param decimalPlaces
-     * @return 
+     * @return
      */
     public GENESIS_Population divideByPopulation(
             GENESIS_Population populationToDivideBy,
@@ -1770,16 +1778,17 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         thisGenderedAgeBoundPopulation.getFemale().clear();
         thisGenderedAgeBoundPopulation.getFemale().addAll(
                 GENESIS_Collections.deepCopyTo_ArrayList_AgeBound_Population(
-                _FemaleAgeBoundPopulationCount_TreeMap));
+                        _FemaleAgeBoundPopulationCount_TreeMap));
         thisGenderedAgeBoundPopulation.getMale().clear();
         thisGenderedAgeBoundPopulation.getMale().addAll(
                 GENESIS_Collections.deepCopyTo_ArrayList_AgeBound_Population(
-                _MaleAgeBoundPopulationCount_TreeMap));
+                        _MaleAgeBoundPopulationCount_TreeMap));
     }
 
     /**
      * updates genderAgePopulation using _FemaleAgeBoundPopulationCount_TreeMap
      * and _MaleAgeBoundPopulationCount_TreeMap
+     *
      * @param pops
      */
     public static void updateGenderedAgePopulation(TreeMap<String, GENESIS_Population> pops) {
@@ -1796,12 +1805,12 @@ public class GENESIS_Population extends PopulationType implements Serializable {
      * _MaleAgeBoundPopulationCount_TreeMap using genderAgePopulation
      */
     private void updateGenderAgeBoundPopulation_TreeMaps() {
-        _FemaleAgeBoundPopulationCount_TreeMap =
-                GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Population(
-                getGenderedAgeBoundPopulation().getFemale());
-        _MaleAgeBoundPopulationCount_TreeMap =
-                GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Population(
-                getGenderedAgeBoundPopulation().getMale());
+        _FemaleAgeBoundPopulationCount_TreeMap
+                = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Population(
+                        getGenderedAgeBoundPopulation().getFemale());
+        _MaleAgeBoundPopulationCount_TreeMap
+                = GENESIS_Collections.deepCopyTo_TreeMap_AgeBound_Population(
+                        getGenderedAgeBoundPopulation().getMale());
     }
 
 //    /**
@@ -1898,9 +1907,10 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 
     /**
      * Returns the sum of population values from pop.
+     *
      * @param pop
      * @param endAgeInYears
-     * @return 
+     * @return
      */
     public static BigDecimal getPopulationSum(
             Long startAgeInYears,
@@ -2667,8 +2677,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                         if (new Long(currentAgeBound.getAgeMin().getYear()).compareTo(theMaxAgeInYears) != -1) {
                             currentAgeBound = new GENESIS_AgeBound(
                                     CommonFactory.newAgeBound(
-                                    currentAgeBound.getAgeMin(),
-                                    null));
+                                            currentAgeBound.getAgeMin(),
+                                            null));
                             break;
                         }
                         currentAgeBound = new GENESIS_AgeBound(
@@ -2708,6 +2718,6 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //        return Logger.getLogger(sourcePackage);
 //    }
     public Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

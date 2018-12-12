@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.logging.Generic_Log;
-import uk.ac.leeds.ccg.andyt.generic.math.statistics.Generic_Statistics;
+import uk.ac.leeds.ccg.andyt.math.stats.Generic_Statistics;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
 import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Collections;
@@ -183,6 +183,6 @@ public class GENESIS_Statistics extends Generic_Statistics {
     private static void log(
             Level a_Level,
             String message) {
-        Logger.getLogger(Generic_Log.Generic_DefaultLoggerName).log(a_Level, message);
+        Logger.getLogger(Generic_Log.NAME).log(a_Level, message);
     }
 }

@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 
 /**
@@ -51,7 +51,7 @@ public class GENESIS_AutomatedFramework {
         File directory = new File(args[0]);
         File logDirectory = new File(
                 directory,
-                GENESIS_Log.Generic_DefaultLogDirectoryName);
+                GENESIS_Log.NAME);
         //String logname = sourcePackage;
         String logname = "uk.ac.leeds.ccg.andyt.projects.genesis";
         GENESIS_Log.parseLoggingProperties(
@@ -81,14 +81,14 @@ public class GENESIS_AutomatedFramework {
         File simulationDirectory = new File(
                 directory,
                 "GENESIS_DemographicModel");
-        Long simulationHighestLeaf = Generic_StaticIO.getArchiveHighestLeaf(simulationDirectory, "_");
+        Long simulationHighestLeaf = Generic_IO.getArchiveHighestLeaf(simulationDirectory, "_");
         long simulationRunID = simulationHighestLeaf + 1L;
         long simulationRunID0 = simulationRunID;
 
         File comparisonDirectory = new File(
                 directory,
                 "Compare_GENESIS_DemographicModel");
-        Long comparisonHighestLeaf = Generic_StaticIO.getArchiveHighestLeaf(comparisonDirectory, "_");
+        Long comparisonHighestLeaf = Generic_IO.getArchiveHighestLeaf(comparisonDirectory, "_");
         long comparisonRunID = comparisonHighestLeaf + 1L;
 
         long seed;
@@ -177,9 +177,9 @@ public class GENESIS_AutomatedFramework {
 
     public String getComparisonString(File comparisonDirectory) {
         File comparisonTopLevelArchivedir = comparisonDirectory.listFiles()[0];
-        Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(comparisonTopLevelArchivedir, "_");
-        Long range = Generic_StaticIO.getArchiveRange(comparisonTopLevelArchivedir, "_");
-        File comparisonDir = Generic_StaticIO.getObjectDirectory(
+        Long highestLeaf = Generic_IO.getArchiveHighestLeaf(comparisonTopLevelArchivedir, "_");
+        Long range = Generic_IO.getArchiveRange(comparisonTopLevelArchivedir, "_");
+        File comparisonDir = Generic_IO.getObjectDirectory(
                 comparisonDirectory, highestLeaf, highestLeaf, range);
         comparisonDir = new File(
                 comparisonDir,
@@ -204,7 +204,7 @@ public class GENESIS_AutomatedFramework {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         StreamTokenizer st = new StreamTokenizer(br);
-        Generic_StaticIO.setStreamTokenizerSyntax1(st);
+        Generic_IO.setStreamTokenizerSyntax1(st);
         try {
             result = br.readLine();
 

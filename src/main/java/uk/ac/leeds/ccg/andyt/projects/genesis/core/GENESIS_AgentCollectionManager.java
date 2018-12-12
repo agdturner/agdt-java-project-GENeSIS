@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 
 /**
@@ -357,7 +357,7 @@ public class GENESIS_AgentCollectionManager
      * highest ID
      */
     public Long getMaxDeadFemaleCollectionID() {
-        return Generic_StaticIO.getArchiveHighestLeaf(
+        return Generic_IO.getArchiveHighestLeaf(
                 getDeadFemaleDirectory(),
                 "_");
     }
@@ -367,7 +367,7 @@ public class GENESIS_AgentCollectionManager
      * highest ID
      */
     public Long getMaxDeadMaleCollectionID() {
-        return Generic_StaticIO.getArchiveHighestLeaf(
+        return Generic_IO.getArchiveHighestLeaf(
                 getDeadMaleDirectory(),
                 "_");
     }
@@ -381,7 +381,7 @@ public class GENESIS_AgentCollectionManager
             //@TODO Set _DeadFemaleCollection to null?
             String type = GENESIS_Person.getTypeDeadFemale_String();
             _LargestIndexOfDeadFemaleCollection++;
-            Generic_StaticIO.addToArchive(getDeadFemaleDirectory(),
+            Generic_IO.addToArchive(getDeadFemaleDirectory(),
                     MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadFemaleCollection);
             _DeadFemaleCollection = new GENESIS_FemaleCollection(
@@ -404,7 +404,7 @@ public class GENESIS_AgentCollectionManager
             //@TODO Set _DeadMaleCollection to null?
             String type = GENESIS_Person.getTypeDeadMale_String();
             _LargestIndexOfDeadMaleCollection++;
-            Generic_StaticIO.addToArchive(getDeadMaleDirectory(),
+            Generic_IO.addToArchive(getDeadMaleDirectory(),
                     MaximumNumberOfObjectsPerDirectory,
                     _LargestIndexOfDeadMaleCollection);
             _DeadMaleCollection = new GENESIS_MaleCollection(
@@ -426,18 +426,18 @@ public class GENESIS_AgentCollectionManager
             //long maxLivingFemaleCollectionID = getMaxLivingFemaleCollectionID();
             long maxLivingFemaleCollectionID = getMaxLivingFemaleCollectionID();
             if (_IndexOfLastBornFemale < 0) {
-                maxLivingFemaleCollectionID = Generic_StaticIO.getArchiveHighestLeaf(
+                maxLivingFemaleCollectionID = Generic_IO.getArchiveHighestLeaf(
                         getLivingFemaleDirectory(), "_");
             }
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(getLivingFemaleDirectory(),
+                    Generic_IO.getObjectDirectory(getLivingFemaleDirectory(),
                             a_Agent_ID,
                             maxLivingFemaleCollectionID,//getMaxLivingFemaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(getDeadFemaleDirectory(),
+                    Generic_IO.getObjectDirectory(getDeadFemaleDirectory(),
                             a_Agent_ID,
                             getMaxDeadFemaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
@@ -454,18 +454,18 @@ public class GENESIS_AgentCollectionManager
             //long maxLivingMaleCollectionID = getMaxLivingMaleCollectionID();
             long maxLivingMaleCollectionID = getMaxLivingMaleCollectionID();
             if (IndexOfLastBornMale < 0) {
-                maxLivingMaleCollectionID = Generic_StaticIO.getArchiveHighestLeaf(
+                maxLivingMaleCollectionID = Generic_IO.getArchiveHighestLeaf(
                         getLivingMaleDirectory(), "_");
             }
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(getLivingMaleDirectory(),
+                    Generic_IO.getObjectDirectory(getLivingMaleDirectory(),
                             a_Agent_ID,
                             maxLivingMaleCollectionID,//getMaxLivingMaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_StaticIO.getObjectDirectory(getDeadMaleDirectory(),
+                    Generic_IO.getObjectDirectory(getDeadMaleDirectory(),
                             a_Agent_ID,
                             getMaxDeadMaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
@@ -1344,7 +1344,7 @@ public class GENESIS_AgentCollectionManager
                         GENESIS_FemaleCollection.class.getName()
                         + type + ".thisFile");
                 if (a_AgentCollection_File.exists()) {
-                    result = (GENESIS_FemaleCollection) Generic_StaticIO.readObject(
+                    result = (GENESIS_FemaleCollection) Generic_IO.readObject(
                             a_AgentCollection_File);
                     result.Directory = femaleCollectionDirectory;
                     result.init(ge,
@@ -1369,7 +1369,7 @@ public class GENESIS_AgentCollectionManager
                     GENESIS_FemaleCollection.class.getName()
                     + type + ".thisFile");
             if (a_AgentCollection_File.exists()) {
-                result = (GENESIS_FemaleCollection) Generic_StaticIO.readObject(
+                result = (GENESIS_FemaleCollection) Generic_IO.readObject(
                         a_AgentCollection_File);
                 result.Directory = a_AgentCollection_File.getParentFile();
                 result.init(ge,
@@ -1458,7 +1458,7 @@ public class GENESIS_AgentCollectionManager
                         GENESIS_MaleCollection.class.getName()
                         + type + ".thisFile");
                 if (a_AgentCollection_File.exists()) {
-                    result = (GENESIS_MaleCollection) Generic_StaticIO.readObject(
+                    result = (GENESIS_MaleCollection) Generic_IO.readObject(
                             a_AgentCollection_File);
                     result.Directory = maleCollectionDirectory;
                     result.init(
@@ -1483,7 +1483,7 @@ public class GENESIS_AgentCollectionManager
                     GENESIS_MaleCollection.class.getName()
                     + type + ".thisFile");
             if (a_AgentCollection_File.exists()) {
-                result = (GENESIS_MaleCollection) Generic_StaticIO.readObject(
+                result = (GENESIS_MaleCollection) Generic_IO.readObject(
                         a_AgentCollection_File);
                 result.Directory = a_AgentCollection_File.getParentFile();
                 result.init(
@@ -1561,7 +1561,7 @@ public class GENESIS_AgentCollectionManager
 //                    "" + a_AgentCollection_ID + "_"
 //                    + GENESIS_AgentCollection.class.getName() + ".thisFile");
 //            if (a_AgentCollection_File.exists()) {
-//                result = (GENESIS_AgentCollection) Generic_StaticIO.readObject(a_AgentCollection_File);
+//                result = (GENESIS_AgentCollection) Generic_IO.readObject(a_AgentCollection_File);
 //                result.init(
 //                        ge,
 //                        a_AgentCollection_ID);

@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -130,10 +130,10 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                         new TreeMap<GENESIS_AgeBound, BigDecimal>();
                 _MaleAnnualMortalityAgeBoundRate_TreeMap =
                         new TreeMap<GENESIS_AgeBound, BigDecimal>();
-                br = Generic_StaticIO.getBufferedReader(mortality_File);
+                br = Generic_IO.getBufferedReader(mortality_File);
                 StreamTokenizer aStreamTokenizer =
                         new StreamTokenizer(br);
-                Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+                Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
                 String line;
                 int gender = 0;
                 long minimumAgeInYears = 0;
@@ -250,7 +250,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //                        new FileInputStream(mortality_File)));
 //                StreamTokenizer aStreamTokenizer =
 //                        new StreamTokenizer(aBufferedReader);
-//                Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+//                Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
 //                String line;
 //                int gender = 0;
 //                int minimumAgeInYears = 0;
@@ -339,7 +339,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
             File directory = new File(args[0]);
             File logDirectory = new File(
                     directory,
-                    GENESIS_Log.Generic_DefaultLogDirectoryName);
+                    GENESIS_Log.NAME);
             String logname = sourcePackage;
             GENESIS_Log.parseLoggingProperties(
                     directory,
@@ -883,6 +883,6 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //        return getLogger();
 //    }
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

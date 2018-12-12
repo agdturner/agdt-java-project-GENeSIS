@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.generic.memory.Generic_TestMemory;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Time;
+import uk.ac.leeds.ccg.andyt.generic.util.Generic_Time;
 import uk.ac.leeds.ccg.andyt.grids.core.*;
 import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
@@ -209,7 +209,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             File file = new File(
                     ge.Directory.getParentFile(),
                     Census_CASAreaEastingNorthingDataHandler.class.getCanonicalName() + ".thisFile");
-            Generic_StaticIO.writeObject(a_CASAreaEastingNorthingDataHandler, file);
+            Generic_IO.writeObject(a_CASAreaEastingNorthingDataHandler, file);
             ge.checkAndMaybeFreeMemory();
             return a_CASAreaEastingNorthingDataHandler;
         } catch (OutOfMemoryError a_OutOfMemoryError) {
@@ -233,7 +233,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
                     ge.Directory.getParentFile(),
                     Census_SWSDataHandler.class.getCanonicalName() + ".thisFile");
             Census_SWSDataHandler a_SWSDataHandler = new Census_SWSDataHandler();
-            Generic_StaticIO.writeObject(a_SWSDataHandler, file);
+            Generic_IO.writeObject(a_SWSDataHandler, file);
             System.out.println("a_SWSDataHandler.getNDataRecords() " + a_SWSDataHandler.getNDataRecords());
             Census_SWSDataRecord a_SWSDataRecord = (Census_SWSDataRecord) a_SWSDataHandler.getDataRecord(0L);
             System.out.println("a_SWSDataRecord " + a_SWSDataRecord);
@@ -296,7 +296,7 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
             Census_SWSDataHandler a_SWSDataHandler = new Census_SWSDataHandler();
             File SWSDataFile = new File(aDirectory_File, "SWSDataRecords.dat");
             a_SWSDataHandler.setFile(SWSDataFile);
-            Generic_StaticIO.writeObject(a_SWSDataHandler, SWSDataHandler_File);
+            Generic_IO.writeObject(a_SWSDataHandler, SWSDataHandler_File);
             Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
             a_CASAreaEastingNorthingDataHandler = init_CASAreaEastingNorthingDataHandler(
                     handleOutOfMemoryError);
@@ -761,13 +761,13 @@ public class GENESIS_ModelTrafficLeeds extends GENESIS_AbstractModelTraffic {
     public Census_SWSDataHandler getSWSDataHandler(File file) {
         Census_SWSDataHandler result = null;
         try {
-            result = (Census_SWSDataHandler) Generic_StaticIO.readObject(file);
+            result = (Census_SWSDataHandler) Generic_IO.readObject(file);
             result.init_Logger(Level.ALL, _Directory);
         } catch (Exception e) {
             if (e instanceof InvalidClassException) {
                 //} catch (InvalidClassException e) {
                 result = new Census_SWSDataHandler(this.ge.get_Directory(false), true);
-                Generic_StaticIO.writeObject(result, file);
+                Generic_IO.writeObject(result, file);
                 result.init_Logger(Level.ALL, _Directory);
             }
         }

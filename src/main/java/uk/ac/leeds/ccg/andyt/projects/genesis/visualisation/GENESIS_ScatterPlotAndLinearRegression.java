@@ -6,14 +6,13 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import uk.ac.leeds.ccg.andyt.generic.data.Generic_XYNumericalData;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Execution;
+import uk.ac.leeds.ccg.andyt.data.Generic_XYNumericalData;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.generic.visualisation.charts.Generic_ScatterPlotAndLinearRegression;
+import uk.ac.leeds.ccg.andyt.chart.Generic_ScatterPlotAndLinearRegression;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
-import uk.ac.leeds.ccg.andyt.projects.genesis.utilities.GENESIS_Collections;
 
 /**
  * An implementation of

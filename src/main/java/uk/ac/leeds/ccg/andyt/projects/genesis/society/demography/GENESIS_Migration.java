@@ -16,8 +16,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -67,7 +67,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionToRegionMigrationFile " + regionToRegionMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionToRegionMigration(boolean)");
                 }
-                regionToRegionMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(regionToRegionMigrationFile);
+                regionToRegionMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(regionToRegionMigrationFile);
             }
             return regionToRegionMigration;
         } catch (OutOfMemoryError e) {
@@ -101,7 +101,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionInMigrationFile " + regionInMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionInMigration(boolean)");
                 }
-                regionInMigration = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(regionInMigrationFile);
+                regionInMigration = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(regionInMigrationFile);
             }
             return regionInMigration;
         } catch (OutOfMemoryError e) {
@@ -134,7 +134,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionOutMigrationFile " + regionOutMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionOutMigration(boolean)");
                 }
-                regionOutMigration = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(regionOutMigrationFile);
+                regionOutMigration = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(regionOutMigrationFile);
             }
             return regionOutMigration;
         } catch (OutOfMemoryError e) {
@@ -166,7 +166,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionInternalMigrationFile " + regionInternalMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionInternalMigration(boolean)");
                 }
-                regionInMigration = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(regionInternalMigrationFile);
+                regionInMigration = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(regionInternalMigrationFile);
             }
             return regionInternalMigration;
         } catch (OutOfMemoryError e) {
@@ -198,7 +198,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionImmigrationFile " + regionImmigrationFile
                             + " does not exist in GENESIS_Migration.getRegionImmigration(boolean)");
                 }
-                regionImmigration = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(regionImmigrationFile);
+                regionImmigration = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(regionImmigrationFile);
             }
             return regionImmigration;
         } catch (OutOfMemoryError e) {
@@ -232,7 +232,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "subregionInMigrationFile " + subregionInMigrationFile
                             + " does not exist in GENESIS_Migration.getSubregionInMigration(boolean)");
                 }
-                subregionInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(subregionInMigrationFile);
+                subregionInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(subregionInMigrationFile);
             }
             return subregionInMigration;
         } catch (OutOfMemoryError e) {
@@ -266,7 +266,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "subregionOutMigrationFile " + subregionOutMigrationFile
                             + " does not exist in GENESIS_Migration.getSubregionOutMigration(boolean)");
                 }
-                subregionOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(subregionOutMigrationFile);
+                subregionOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(subregionOutMigrationFile);
             }
             return subregionOutMigration;
         } catch (OutOfMemoryError e) {
@@ -300,7 +300,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "subregionInternalInMigrationFile " + subregionInternalInMigrationFile
                             + " does not exist in GENESIS_Migration.getSubregionInternalInMigration(boolean)");
                 }
-                subregionInternalInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(subregionInternalInMigrationFile);
+                subregionInternalInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(subregionInternalInMigrationFile);
             }
             return subregionInternalInMigration;
         } catch (OutOfMemoryError e) {
@@ -334,7 +334,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "subregionInternalOutMigrationFile " + subregionInternalOutMigrationFile
                             + " does not exist in GENESIS_Migration.getSubregionInternalOutMigration(boolean)");
                 }
-                subregionInternalOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(subregionInternalOutMigrationFile);
+                subregionInternalOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(subregionInternalOutMigrationFile);
             }
             return subregionInternalOutMigration;
         } catch (OutOfMemoryError e) {
@@ -373,7 +373,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionInMigrationRatesFile " + regionInMigrationRatesFile
                             + " does not exist in GENESIS_Migration.getRegionInMigrationRates(boolean)");
                 }
-                regionInMigrationRates = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(regionInMigrationRatesFile);
+                regionInMigrationRates = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(regionInMigrationRatesFile);
             }
             return regionInMigrationRates;
         } catch (OutOfMemoryError e) {
@@ -411,7 +411,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "regionOutMigrationRatesFile " + regionOutMigrationRatesFile
                             + " does not exist in GENESIS_Migration.getRegionOutMigrationRates(boolean)");
                 }
-                regionOutMigrationRates = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(regionOutMigrationRatesFile);
+                regionOutMigrationRates = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(regionOutMigrationRatesFile);
             }
             return regionOutMigrationRates;
         } catch (OutOfMemoryError e) {
@@ -449,7 +449,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "immigrationRatesFile " + immigrationRatesFile
                             + " does not exist in GENESIS_Migration.getImmigrationRates(boolean)");
                 }
-                immigrationRates = (TreeMap<String, GENESIS_Population>) Generic_StaticIO.readObject(immigrationRatesFile);
+                immigrationRates = (TreeMap<String, GENESIS_Population>) Generic_IO.readObject(immigrationRatesFile);
             }
             return immigrationRates;
         } catch (OutOfMemoryError e) {
@@ -486,7 +486,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "cumulativeSumRescaledRegionOutMigrationFile " + cumulativeSumRescaledRegionOutMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionInMigrationRates(boolean)");
                 }
-                cumulativeSumRescaledRegionOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(cumulativeSumRescaledRegionOutMigrationFile);
+                cumulativeSumRescaledRegionOutMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(cumulativeSumRescaledRegionOutMigrationFile);
             }
             return cumulativeSumRescaledRegionOutMigration;
         } catch (OutOfMemoryError e) {
@@ -523,7 +523,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                             "cumulativeSumRescaledRegionInMigrationFile " + cumulativeSumRescaledRegionInMigrationFile
                             + " does not exist in GENESIS_Migration.getRegionInMigrationRates(boolean)");
                 }
-                cumulativeSumRescaledSubregionInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_StaticIO.readObject(cumulativeSumRescaledRegionInMigrationFile);
+                cumulativeSumRescaledSubregionInMigration = (TreeMap<String, TreeMap<String, GENESIS_Population>>) Generic_IO.readObject(cumulativeSumRescaledRegionInMigrationFile);
             }
             return cumulativeSumRescaledSubregionInMigration;
         } catch (OutOfMemoryError e) {
@@ -564,73 +564,73 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         File regionToRegionMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionToRegionMigration_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionToRegionMigration, regionToRegionMigrationFile);
+        Generic_IO.writeObject(regionToRegionMigration, regionToRegionMigrationFile);
         //regionToRegionMigration = null;
         // Swap regionInMigration
         File regionInMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionInMigration_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionInMigration, regionInMigrationFile);
+        Generic_IO.writeObject(regionInMigration, regionInMigrationFile);
         //regionInMigration = null;
         // Swap regionOutMigration
         File regionOutMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionOutMigration_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionOutMigration, regionOutMigrationFile);
+        Generic_IO.writeObject(regionOutMigration, regionOutMigrationFile);
         //regionOutMigration = null;
         // Swap regionInternalMigration
         File regionInternalMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionInternalMigration_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionInternalMigration, regionInternalMigrationFile);
+        Generic_IO.writeObject(regionInternalMigration, regionInternalMigrationFile);
         //regionInternalMigration = null;
         // Swap regionImmigration
         File regionImmigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionImmigration_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionImmigration, regionImmigrationFile);
+        Generic_IO.writeObject(regionImmigration, regionImmigrationFile);
         //regionImmigration = null;
         // Swap subregionInMigration
         File subregionInMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "subregionInMigration_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(subregionInMigration, subregionInMigrationFile);
+        Generic_IO.writeObject(subregionInMigration, subregionInMigrationFile);
         //subregionInMigration = null;
         // Swap subregionOutMigration
         File subregionOutMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "subregionOutMigration_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(subregionOutMigration, subregionOutMigrationFile);
+        Generic_IO.writeObject(subregionOutMigration, subregionOutMigrationFile);
         //subregionOutMigration = null;
         // Swap subregionInternalInMigration
         File subregionInternalInMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "subregionInternalInMigration_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(subregionInternalInMigration, subregionInternalInMigrationFile);
+        Generic_IO.writeObject(subregionInternalInMigration, subregionInternalInMigrationFile);
         //subregionInternalInMigration = null;
         // Swap subregionInternalInMigration
         File subregionInternalOutMigrationFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "subregionInternalOutMigration_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(subregionInternalOutMigration, subregionInternalOutMigrationFile);
+        Generic_IO.writeObject(subregionInternalOutMigration, subregionInternalOutMigrationFile);
         //subregionInternalOutMigration = null;
         // Swap regionInMigrationRates
         File regionInMigrationRatesFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionInMigrationRates_TreeMapStringTreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionInMigrationRates, regionInMigrationRatesFile);
+        Generic_IO.writeObject(regionInMigrationRates, regionInMigrationRatesFile);
         //regionInMigrationRates = null;
         // Swap regionOutMigrationRates
         File regionOutMigrationRatesFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "regionOutMigrationRates_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(regionOutMigrationRates, regionOutMigrationRatesFile);
+        Generic_IO.writeObject(regionOutMigrationRates, regionOutMigrationRatesFile);
         //regionOutMigrationRates = null;
         // Swap immigrationRates
         File immigrationRatesFile = new File(
                 getDirectory(handleOutOfMemoryError),
                 "immigrationRates_TreeMapStringGENESIS_Population.thisFile");
-        Generic_StaticIO.writeObject(immigrationRates, immigrationRatesFile);
+        Generic_IO.writeObject(immigrationRates, immigrationRatesFile);
         //immigrationRates = null;
     }
 
@@ -726,18 +726,18 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             File directory = new File(args[0]);
             File logDirectory = new File(
                     directory,
-                    GENESIS_Log.Generic_DefaultLogDirectoryName);
+                    GENESIS_Log.NAME);
             String logname = "uk.ac.leeds.ccg.andyt.projects.genesis";
             GENESIS_Log.parseLoggingProperties(
                     directory,
                     logDirectory,
                     logname);
-            GENESIS_Environment _GENESIS_Environment =
-                    new GENESIS_Environment(directory);
-            _GENESIS_Environment.Directory = directory;
-            _GENESIS_Environment.Time = new GENESIS_Time(CommonFactory.newTime(2001L));
+            GENESIS_Environment ge;
+            ge = new GENESIS_Environment(directory);
+            ge.Directory = directory;
+            ge.Time = new GENESIS_Time(CommonFactory.newTime(2001L));
             GENESIS_Migration instance = new GENESIS_Migration(
-                    _GENESIS_Environment);
+                    ge);
             //instance.run();
             instance.runTest();
             GENESIS_Log.reset();
@@ -765,8 +765,8 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 dir,
                 "GENESIS_Migration.thisFile");
         runFormatData();
-        Generic_StaticIO.writeObject(this, serialisedMigrationFile);
-        Object obj = Generic_StaticIO.readObject(serialisedMigrationFile);
+        Generic_IO.writeObject(this, serialisedMigrationFile);
+        Object obj = Generic_IO.readObject(serialisedMigrationFile);
         GENESIS_Migration mig = (GENESIS_Migration) obj;
         mig.ge = ge;
 //        mig.runFormatData();
@@ -783,8 +783,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //                originSubregionID,
 //                destinationSubregionID);
 
-
-//        Generic_StaticIO.writeObject(mig, serialisedMigrationFile);
+//        Generic_IO.writeObject(mig, serialisedMigrationFile);
         ////mig.writeRegionRateSummaries();
         //System.out.println("regionOutMigration.size() " + mig.regionOutMigration.size());
         //System.out.println("regionImmigration.size() " + mig.regionImmigration.size());
@@ -806,8 +805,8 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 dir,
                 "GENESIS_Migration.thisFile");
         runFormatData();
-        Generic_StaticIO.writeObject(this, serialisedMigrationFile);
-        Object obj = Generic_StaticIO.readObject(serialisedMigrationFile);
+        Generic_IO.writeObject(this, serialisedMigrationFile);
+        Object obj = Generic_IO.readObject(serialisedMigrationFile);
         GENESIS_Migration mig = (GENESIS_Migration) obj;
         mig.ge = ge;
 //        mig.runFormatData();
@@ -824,8 +823,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //                originSubregionID,
 //                destinationSubregionID);
 
-
-//        Generic_StaticIO.writeObject(mig, serialisedMigrationFile);
+//        Generic_IO.writeObject(mig, serialisedMigrationFile);
         ////mig.writeRegionRateSummaries();
         //System.out.println("regionOutMigration.size() " + mig.regionOutMigration.size());
         //System.out.println("regionImmigration.size() " + mig.regionImmigration.size());
@@ -1084,7 +1082,6 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //                originRegionID,
 //                destinationRegionID,
 //                pop);
-
 //        // OutMigration region
 //        // Female
 //        System.out.println("Female");
@@ -1358,10 +1355,10 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (!file.exists()) {
                 int debug = 0;
             }
-            BufferedReader aBufferedReader = Generic_StaticIO.getBufferedReader(file);
-            StreamTokenizer aStreamTokenizer =
-                    new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            BufferedReader aBufferedReader = Generic_IO.getBufferedReader(file);
+            StreamTokenizer aStreamTokenizer
+                    = new StreamTokenizer(aBufferedReader);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             aStreamTokenizer.wordChars(':', ':');
             aStreamTokenizer.wordChars('<', '<');
             aStreamTokenizer.wordChars('_', '_');
@@ -1372,7 +1369,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             String line = "";
             //Skip the first 5 lines
             for (int i = 0; i < 5; i++) {
-                Generic_StaticIO.skipline(aStreamTokenizer);
+                Generic_IO.skipline(aStreamTokenizer);
             }
             int tokenType = aStreamTokenizer.nextToken();
             TreeMap<String, String> nameToCodeMap = new TreeMap<String, String>();
@@ -1437,10 +1434,10 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (!file.exists()) {
                 int debug = 0;
             }
-            BufferedReader aBufferedReader = Generic_StaticIO.getBufferedReader(file);
-            StreamTokenizer aStreamTokenizer =
-                    new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            BufferedReader aBufferedReader = Generic_IO.getBufferedReader(file);
+            StreamTokenizer aStreamTokenizer
+                    = new StreamTokenizer(aBufferedReader);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             aStreamTokenizer.wordChars(';', ';');
             aStreamTokenizer.wordChars(':', ':');
             aStreamTokenizer.wordChars('[', '[');
@@ -1452,7 +1449,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             aStreamTokenizer.wordChars(')', ')');
             //Skip the first 3 lines
             for (int i = 0; i < 3; i++) {
-                Generic_StaticIO.skipline(aStreamTokenizer);
+                Generic_IO.skipline(aStreamTokenizer);
             }
             int tokenType = aStreamTokenizer.nextToken();
             int lineCounter = 0;
@@ -1517,7 +1514,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                                     // If this is the first time this is encountered then it is midway down the file
                                     // Skip 7 lines
                                     for (int i = 0; i < 7; i++) {
-                                        Generic_StaticIO.skipline(aStreamTokenizer);
+                                        Generic_IO.skipline(aStreamTokenizer);
                                     }
                                     firstNotes = false;
                                 } else {
@@ -1723,10 +1720,10 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             if (!file.exists()) {
                 int debug = 0;
             }
-            BufferedReader aBufferedReader = Generic_StaticIO.getBufferedReader(file);
-            StreamTokenizer aStreamTokenizer =
-                    new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            BufferedReader aBufferedReader = Generic_IO.getBufferedReader(file);
+            StreamTokenizer aStreamTokenizer
+                    = new StreamTokenizer(aBufferedReader);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             int tokenType = aStreamTokenizer.nextToken();
             int lineCounter = 0;
             String line = null;
@@ -2333,7 +2330,6 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //        if (result == null) {
 //            int debug = 1;
 //        }
-
             return result;
         } catch (OutOfMemoryError e) {
             throw e;
@@ -2418,7 +2414,6 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //        if (result == null) {
 //            int debug = 1;
 //        }
-
             return result;
         } catch (OutOfMemoryError e) {
             throw e;
@@ -2505,7 +2500,6 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
 //        if (result == null) {
 //            int debug = 1;
 //        }
-
             return result;
         } catch (OutOfMemoryError e) {
             throw e;
@@ -2759,14 +2753,14 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
     public File getDirectory(boolean handleOutOfMemoryError) {
         File result;
         File archive = ge.get_Directory(handleOutOfMemoryError);
-        long archiveRange = Generic_StaticIO.getArchiveRange(archive, "_");
-        long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(archive, "_");
+        long archiveRange = Generic_IO.getArchiveRange(archive, "_");
+        long highestLeaf = Generic_IO.getArchiveHighestLeaf(archive, "_");
         File directory = new File(
-                Generic_StaticIO.getObjectDirectory(
-                archive,
-                highestLeaf,
-                archiveRange, //highestLeaf,
-                archiveRange),
+                Generic_IO.getObjectDirectory(
+                        archive,
+                        highestLeaf,
+                        archiveRange, //highestLeaf,
+                        archiveRange),
                 "" + highestLeaf);
         File dataDirectory = new File(
                 directory,

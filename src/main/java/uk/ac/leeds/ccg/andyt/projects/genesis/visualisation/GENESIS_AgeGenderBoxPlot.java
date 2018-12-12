@@ -13,12 +13,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.generic.math.statistics.Generic_Statistics;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Execution;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.stats.Generic_Statistics;
+import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.generic.visualisation.charts.Generic_AgeGenderBoxPlot;
+import uk.ac.leeds.ccg.andyt.chart.Generic_AgeGenderBoxPlot;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_DataHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.CommonFactory;
@@ -208,7 +208,7 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
             File resultsDirectory,
             GENESIS_Environment a_GENESIS_Environment) {
         HashSet<File> population_Files = new HashSet<File>();
-        HashSet<File> results_Files = Generic_StaticIO.getArchiveLeafFiles(
+        HashSet<File> results_Files = Generic_IO.getArchiveLeafFiles(
                 resultsDirectory, "_");
         Iterator<File> ite = results_Files.iterator();
         while (ite.hasNext()) {
@@ -328,6 +328,6 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
     }
 
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

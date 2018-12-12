@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.grids.io.Grids_ImageExporter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_AgentCollectionManager;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
@@ -153,7 +153,7 @@ public abstract class GENESIS_AbstractModel extends GENESIS_Object implements Se
             String method) {
         File result = null;
         try {
-            result = Generic_StaticIO.getFileThatExists(
+            result = Generic_IO.getFileThatExists(
                     directory, filename);
         } catch (FileNotFoundException e) {
             System.err.println(
@@ -170,6 +170,6 @@ public abstract class GENESIS_AbstractModel extends GENESIS_Object implements Se
     }
 
     public static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 }

@@ -11,8 +11,8 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Execution;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.StartNameFileFilter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -62,9 +62,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             System.out.println(System.getProperties().values().toString());
             //System.out.println(System.getProperty("java.util.logging.config.file").trim());
             File directory = new File(args[1]);
-            File logDirectory = new File(
-                    directory,
-                    GENESIS_Log.Generic_DefaultLogDirectoryName);
+            File logDirectory = new File(                    directory,                    GENESIS_Log.NAME);
             //String logname = sourcePackage;
             String logname = "uk.ac.leeds.ccg.andyt.projects.genesis";
             GENESIS_Log.parseLoggingProperties(
@@ -86,11 +84,11 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //            long range = 100;
 //            instance._GENESIS_Environment.Directory = theCompare_DemographicModel_Aspatial_File;
 //            if (instance._GENESIS_Environment.Directory.list().length == 0) {
-//                instance._GENESIS_Environment.Directory = Generic_StaticIO.initialiseArchive(
+//                instance._GENESIS_Environment.Directory = Generic_IO.initialiseArchive(
 //                        instance._GENESIS_Environment.Directory, 
 //                        range);
 //            } else {
-//                instance._GENESIS_Environment.Directory = Generic_StaticIO.addToArchive(
+//                instance._GENESIS_Environment.Directory = Generic_IO.addToArchive(
 //                        instance._GENESIS_Environment.Directory,
 //                        range);
 //            }
@@ -172,7 +170,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 log(Level.INFO, message);
                 System.out.println(message);
                 for (int i = 0; i < resultsToCompare.length; i++) {
-                    File resultToCompare = Generic_StaticIO.getArchiveHighestLeafFile(
+                    File resultToCompare = Generic_IO.getArchiveHighestLeafFile(
                             new File(resultsToCompare[i].toString() + "/DemographicModel_Aspatial_1/"),
                             "_");
 
@@ -213,7 +211,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 
         long range = 100L;
         ge.Directory = comparisonResultsDirectory;
-        ge.Directory = Generic_StaticIO.initialiseArchive(ge.Directory,
+        ge.Directory = Generic_IO.initialiseArchive(ge.Directory,
                 range);
         executorService = getExecutorService();
         futures = new HashSet<Future>();
@@ -250,7 +248,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
     /**
      * Updates resultsToCompare_TreeMap to include resultToCompare mapping in
      * the pseudoRandomNumberSeed from the metadata directory as the key for the
-     * map. Generic_StaticIO.recursiveFileList(resultToCompareBase, 2) is
+     * map. Generic_IO.recursiveFileList(resultToCompareBase, 2) is
      * reported if resultToCompareBase is not null.
      *
      * @param resultToCompare
@@ -270,7 +268,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             message = resultToCompareBase.toString();
             log(Level.INFO, message);
             System.out.println(message);
-            TreeSet<String> recursiveFileList = Generic_StaticIO.recursiveFileList(resultToCompareBase, 2);
+            TreeSet<String> recursiveFileList = Generic_IO.recursiveFileList(resultToCompareBase, 2);
             Iterator<String> ite = recursiveFileList.iterator();
             while (ite.hasNext()) {
                 message = ite.next();
@@ -303,10 +301,10 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         long range = 100;
         ge.Directory = theCompare_DemographicModel_Aspatial_File;
         if (ge.Directory.list().length == 0) {
-            ge.Directory = Generic_StaticIO.initialiseArchive(ge.Directory,
+            ge.Directory = Generic_IO.initialiseArchive(ge.Directory,
                     range);
         } else {
-            ge.Directory = Generic_StaticIO.addToArchive(ge.Directory,
+            ge.Directory = Generic_IO.addToArchive(ge.Directory,
                     range);
         }
         ge.Directory.mkdirs();
@@ -335,11 +333,11 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         // Initialise the TreeMap<Long, File> resultsToCompare
         TreeMap<Long, File> resultsToCompare;
         if (args.length == 2) {
-            resultsToCompare = Generic_StaticIO.getArchiveLeafFiles_TreeMap(
+            resultsToCompare = Generic_IO.getArchiveLeafFiles_TreeMap(
                     a_File,
                     underscore);
         } else {
-            resultsToCompare = Generic_StaticIO.getArchiveLeafFiles_TreeMap(
+            resultsToCompare = Generic_IO.getArchiveLeafFiles_TreeMap(
                     a_File,
                     underscore,
                     Long.valueOf(args[2]).longValue(),
@@ -416,16 +414,16 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         //            File demographicsArchiveTopLevelDirectory_File = new File(
         //                    demographicsArchiveAboveTopLevelDirectory_File,
         //                    demographicsTopLevelDirectoryName);
-        long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+        long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                 demographicsArchiveTopLevelDirectory_File,
                 "_");
-        long range = Generic_StaticIO.getArchiveRange(
+        long range = Generic_IO.getArchiveRange(
                 demographicsArchiveTopLevelDirectory_File,
                 "_");
         // Initialise Archive for results and create numeric look up for resultsDirectories
         TreeMap<Long, File> areaCode_TreeMap = null;
         try {
-            areaCode_TreeMap = Generic_StaticIO.initialiseArchiveReturnTreeMapLongFile(ge.Directory,
+            areaCode_TreeMap = Generic_IO.initialiseArchiveReturnTreeMapLongFile(ge.Directory,
                     range,
                     highestLeaf);
         } catch (IOException ex) {
@@ -439,7 +437,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             System.out.println("Leaf " + l);
             File resultDirectory = areaCode_TreeMap.get(Long.valueOf(l));
             String areaCode = new File(
-                    Generic_StaticIO.getObjectDirectory(
+                    Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -714,7 +712,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_StaticIO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -821,7 +819,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_StaticIO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -907,7 +905,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_StaticIO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -1020,7 +1018,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_StaticIO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -1134,7 +1132,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_StaticIO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDirectory(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -1216,7 +1214,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             log(Level.INFO, message);
             System.out.println(message);
             // Check a_parameters_File exists and can be read
-            if (!Generic_StaticIO.fileExistsAndCanBeRead(parameters_File)) {
+            if (!Generic_IO.fileExistsAndCanBeRead(parameters_File)) {
                 message = parameters_File.toString() + " cannot be read";
                 log(Level.INFO, message);
                 System.err.println(message);
@@ -1257,21 +1255,21 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //        String fileSeparator = System.getProperty("file.separator");
 //        String underscore = "_";
 //        // The following will return errors if these are not archives (from multiple runs)
-//        long numberOfAResults = Generic_StaticIO.getArchiveHighestLeaf(
+//        long numberOfAResults = Generic_IO.getArchiveHighestLeaf(
 //                a_File,
 //                underscore);
-//        a_File = Generic_StaticIO.getArchiveHighestLeafFile(a_File, underscore).getParentFile();
+//        a_File = Generic_IO.getArchiveHighestLeafFile(a_File, underscore).getParentFile();
 //        File a_File0 = new File(a_File.toString());
 //        BigDecimal closestSimilarity = BigDecimal.valueOf(Double.MAX_VALUE);
 //        BigDecimal similarity;
-//        long rangeA = Generic_StaticIO.getArchiveRange(
+//        long rangeA = Generic_IO.getArchiveRange(
 //                a_File,
 //                underscore);
 //        File bestResult = null;
 //        File parameters_File;
 //        for (long a = 0; a < numberOfAResults; a++) {
 //            if (multipleRun) {
-//                a_File = Generic_StaticIO.getObjectDirectory(
+//                a_File = Generic_IO.getObjectDirectory(
 //                        a_File0,
 //                        a,
 //                        numberOfAResults,
@@ -1338,14 +1336,14 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         result._Mortality = new TreeMap<String, TreeMap<String, GENESIS_Mortality>>();
 //        result._Miscarriage = new TreeMap<String, TreeMap<String, GENESIS_Miscarriage>>();
 //        result._Fertility = new TreeMap<String, TreeMap<String, GENESIS_Fertility>>();
-        long range = Generic_StaticIO.getArchiveRange(
+        long range = Generic_IO.getArchiveRange(
                     demographicsDirectory,
                     underscore);
-        long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+        long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                 demographicsDirectory,
                 underscore);
         for (long l = 0; l <= highestLeaf; l ++) {
-            File dir = Generic_StaticIO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDirectory(
                     demographicsDirectory,
                     l,
                     highestLeaf,
@@ -1449,14 +1447,14 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             File dir = new File(
                     basePopultionDir,
                     regionID);
-            Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+            Long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                     dir,
                     underscore);
-            long range = Generic_StaticIO.getArchiveRange(
+            long range = Generic_IO.getArchiveRange(
                     dir,
                     underscore);
             for (long l = 0; l <= highestLeaf; l++) {
-                File dir2 = Generic_StaticIO.getObjectDirectory(
+                File dir2 = Generic_IO.getObjectDirectory(
                         dir,
                         l,
                         highestLeaf,
@@ -1515,19 +1513,19 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             File fertilityDir = new File(
                     baseFertilityDir,
                     regionID);
-            Long highestLeaf = Generic_StaticIO.getArchiveHighestLeaf(
+            Long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                     fertilityDir,
                     underscore);
-            long range = Generic_StaticIO.getArchiveRange(
+            long range = Generic_IO.getArchiveRange(
                     fertilityDir,
                     underscore);
             for (long l = 0; l <= highestLeaf; l++) {
-                File dirMortality2 = Generic_StaticIO.getObjectDirectory(
+                File dirMortality2 = Generic_IO.getObjectDirectory(
                         mortalityDir,
                         l,
                         highestLeaf,
                         range);
-                File dirFertility2 = Generic_StaticIO.getObjectDirectory(
+                File dirFertility2 = Generic_IO.getObjectDirectory(
                         fertilityDir,
                         l,
                         highestLeaf,
@@ -1906,7 +1904,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         a_GENESIS_AgentCollectionManager.setLivingFemaleDirectory(
                 a_FemaleDirectory_File);
         long aIndexOfLastLivingFemaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 a_FemaleDirectory_File,
                 "_");
         GENESIS_FemaleCollection a_LastLivingFemaleCollection =
@@ -1923,7 +1921,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         a_GENESIS_AgentCollectionManager.setLivingMaleDirectory(
                 a_MaleDirectory_File);
         long aIndexOfLastLivingMaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 a_MaleDirectory_File,
                 "_");
         GENESIS_MaleCollection a_LastLivingMaleCollection =
@@ -1947,7 +1945,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         b_GENESIS_AgentCollectionManager.setLivingFemaleDirectory(
                 b_FemaleDirectory_File);
         long bIndexOfLastLivingFemaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 b_FemaleDirectory_File,
                 "_");
         GENESIS_FemaleCollection b_LastLivingFemaleCollection =
@@ -1964,7 +1962,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         b_GENESIS_AgentCollectionManager.setLivingMaleDirectory(
                 b_MaleDirectory_File);
         long bIndexOfLastLivingMaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 b_MaleDirectory_File,
                 "_");
         GENESIS_MaleCollection b_LastLivingMaleCollection =
@@ -2014,23 +2012,23 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         inputFile = new File(
                 a_DataDirectory_File,
                 "PregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> a_PregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> a_PregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 a_DataDirectory_File,
                 "NearlyDuePregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> a_NearlyDuePregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> a_NearlyDuePregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 a_DataDirectory_File,
                 "NotPregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> a_NotPregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> a_NotPregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 a_DataDirectory_File,
                 "Female_ID_HashSet.thisFile");
-        HashSet<Long> a_Female_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> a_Female_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 a_DataDirectory_File,
                 "Male_ID_HashSet.thisFile");
-        HashSet<Long> a_Male_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> a_Male_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
 
         /**
          * Dead
@@ -2040,7 +2038,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 a_DataDirectory_File,
                 "DeadFemales"));
         a_GENESIS_AgentCollectionManager._LargestIndexOfDeadFemaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 a_FemaleDirectory_File,
                 "_");
         a_GENESIS_AgentCollectionManager.setDeadMaleDirectory(
@@ -2048,7 +2046,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 a_DataDirectory_File,
                 "DeadMales"));
         a_GENESIS_AgentCollectionManager._LargestIndexOfDeadMaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 a_MaleDirectory_File,
                 "_");
 
@@ -2056,7 +2054,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * Initialise _GENESIS_AgentCollectionManager._DeadFemaleCollection
          */
         a_GENESIS_AgentCollectionManager._DeadFemaleCollection =
-                (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
+                (GENESIS_FemaleCollection) Generic_IO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_FemaleCollection.thisFile"));
         a_GENESIS_AgentCollectionManager._DeadFemaleCollection.ge = ge;
@@ -2064,7 +2062,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection
          */
         a_GENESIS_AgentCollectionManager._DeadMaleCollection =
-                (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
+                (GENESIS_MaleCollection) Generic_IO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_MaleCollection.thisFile"));
         a_GENESIS_AgentCollectionManager._DeadMaleCollection.ge = ge;
@@ -2073,7 +2071,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap
          */
         a_GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap =
-                (HashMap) Generic_StaticIO.readObject(new File(
+                (HashMap) Generic_IO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_Female_HashMap.thisFile"));
         /**
@@ -2081,14 +2079,14 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap
          */
         a_GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap =
-                (HashMap) Generic_StaticIO.readObject(new File(
+                (HashMap) Generic_IO.readObject(new File(
                 a_DataDirectory_File,
                 "Dead_GENESIS_Male_HashMap.thisFile"));
         /**
          * Load _Demographics._Population
          */
         GENESIS_Demographics a_Demographics =
-                (GENESIS_Demographics) Generic_StaticIO.readObject(
+                (GENESIS_Demographics) Generic_IO.readObject(
                 new File(
                 a_DataDirectory_File,
                 "Demographics.thisFile"));
@@ -2103,23 +2101,23 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         inputFile = new File(
                 b_DataDirectory_File,
                 "PregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> b_PregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> b_PregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 b_DataDirectory_File,
                 "NearlyDuePregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> b_NearlyDuePregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> b_NearlyDuePregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 b_DataDirectory_File,
                 "NotPregnantFemale_ID_HashSet.thisFile");
-        HashSet<Long> b_NotPregnantFemale_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> b_NotPregnantFemale_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 b_DataDirectory_File,
                 "Female_ID_HashSet.thisFile");
-        HashSet<Long> b_Female_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> b_Female_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
         inputFile = new File(
                 b_DataDirectory_File,
                 "Male_ID_HashSet.thisFile");
-        HashSet<Long> b_Male_ID_HashSet = (HashSet<Long>) Generic_StaticIO.readObject(inputFile);
+        HashSet<Long> b_Male_ID_HashSet = (HashSet<Long>) Generic_IO.readObject(inputFile);
 
         /**
          * Dead
@@ -2129,7 +2127,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 b_DataDirectory_File,
                 "DeadFemales"));
         b_GENESIS_AgentCollectionManager._LargestIndexOfDeadFemaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 b_FemaleDirectory_File,
                 "_");
         b_GENESIS_AgentCollectionManager.setDeadMaleDirectory(
@@ -2137,7 +2135,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 b_DataDirectory_File,
                 "DeadMales"));
         b_GENESIS_AgentCollectionManager._LargestIndexOfDeadMaleCollection =
-                Generic_StaticIO.getArchiveHighestLeaf(
+                Generic_IO.getArchiveHighestLeaf(
                 b_MaleDirectory_File,
                 "_");
 
@@ -2145,7 +2143,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * Initialise _GENESIS_AgentCollectionManager._DeadFemaleCollection
          */
         b_GENESIS_AgentCollectionManager._DeadFemaleCollection =
-                (GENESIS_FemaleCollection) Generic_StaticIO.readObject(new File(
+                (GENESIS_FemaleCollection) Generic_IO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_FemaleCollection.thisFile"));
         b_GENESIS_AgentCollectionManager._DeadFemaleCollection.ge = ge;
@@ -2153,7 +2151,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * Initialise _GENESIS_AgentCollectionManager._DeadMaleCollection
          */
         b_GENESIS_AgentCollectionManager._DeadMaleCollection =
-                (GENESIS_MaleCollection) Generic_StaticIO.readObject(new File(
+                (GENESIS_MaleCollection) Generic_IO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_MaleCollection.thisFile"));
         b_GENESIS_AgentCollectionManager._DeadMaleCollection.ge = ge;
@@ -2162,7 +2160,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * _GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap
          */
         b_GENESIS_AgentCollectionManager._DeadFemaleCollection_HashMap =
-                (HashMap) Generic_StaticIO.readObject(new File(
+                (HashMap) Generic_IO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_Female_HashMap.thisFile"));
         /**
@@ -2170,14 +2168,14 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
          * _GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap
          */
         b_GENESIS_AgentCollectionManager._DeadMaleCollection_HashMap =
-                (HashMap) Generic_StaticIO.readObject(new File(
+                (HashMap) Generic_IO.readObject(new File(
                 b_DataDirectory_File,
                 "Dead_GENESIS_Male_HashMap.thisFile"));
         /**
          * Load _Demographics._Population
          */
         GENESIS_Demographics b_Demographics =
-                (GENESIS_Demographics) Generic_StaticIO.readObject(
+                (GENESIS_Demographics) Generic_IO.readObject(
                 new File(
                 b_DataDirectory_File,
                 "Demographics.thisFile"));
@@ -2288,7 +2286,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         File theDemographicModel_Aspatial_File = new File(
                 resultDirectory,
                 "GENESIS_DemographicModel");
-        File aResult = Generic_StaticIO.getArchiveHighestLeafFile(
+        File aResult = Generic_IO.getArchiveHighestLeafFile(
                 theDemographicModel_Aspatial_File.listFiles()[0],
                 underscore);
         File metadataDir = new File(

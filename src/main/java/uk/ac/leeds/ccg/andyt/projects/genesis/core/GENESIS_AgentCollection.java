@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * Each Agent has a reference to at least one AgentCollection. This class
@@ -41,7 +41,7 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
     
     public HashMap<Long, GENESIS_Agent> getAgentID_Agent_Map() {
         if (AgentID_Agent_Map == null) {
-            AgentID_Agent_Map = (HashMap<Long, GENESIS_Agent>) Generic_StaticIO.readObject(
+            AgentID_Agent_Map = (HashMap<Long, GENESIS_Agent>) Generic_IO.readObject(
                     get_File());
         }
         return AgentID_Agent_Map;
@@ -93,7 +93,7 @@ public abstract class GENESIS_AgentCollection extends GENESIS_Object implements 
         if (!parent_File.exists()) {
             parent_File.mkdirs();
         }
-        Generic_StaticIO.writeObject(
+        Generic_IO.writeObject(
                 this,
                 file);
     }

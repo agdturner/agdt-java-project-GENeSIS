@@ -1286,7 +1286,7 @@ public class CompareProbabilities {
     }
 
     private static Logger getLogger() {
-        return GENESIS_Log.logger;
+        return GENESIS_Log.LOGGER;
     }
 //    private static void log(
 //            Level level,
