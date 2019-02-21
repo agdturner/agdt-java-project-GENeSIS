@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -983,7 +983,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         while (ite.hasNext()) {
             GENESIS_AgeBound ageBound = ite.next();
             BigDecimal count = internalMigrationCount._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
-            BigDecimal rate = Generic_BigDecimal.divideRoundIfNecessary(
+            BigDecimal rate = Math_BigDecimal.divideRoundIfNecessary(
                     count,
                     new BigDecimal(GENESIS_Time.NormalDaysInYear_BigInteger),
                     decimalPlacePrecision,
@@ -1011,7 +1011,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         while (ite.hasNext()) {
             GENESIS_AgeBound ageBound = ite.next();
             BigDecimal count = internalMigrationCount._FemaleAgeBoundPopulationCount_TreeMap.get(ageBound);
-            BigDecimal rate = Generic_BigDecimal.divideRoundIfNecessary(
+            BigDecimal rate = Math_BigDecimal.divideRoundIfNecessary(
                     count,
                     new BigDecimal(GENESIS_Time.NormalDaysInYear_BigInteger),
                     decimalPlacePrecision,
@@ -2068,7 +2068,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 BigDecimal pop = regionPopulation.getFemalePopulationSum(ageMinYear, ageMaxYear);
                 BigDecimal dailyRate = BigDecimal.ZERO;
                 if (pop.compareTo(BigDecimal.ZERO) != 0) {
-                    dailyRate = Generic_BigDecimal.divideRoundIfNecessary(
+                    dailyRate = Math_BigDecimal.divideRoundIfNecessary(
                             rate, pop, decimalPlaces, roundingMode);
                 }
                 System.out.println("" + ageMinYear + ", " + ageMaxYear + ", "
@@ -2097,7 +2097,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
                 BigDecimal pop = regionPopulation.getMalePopulationSum(ageMinYear, ageMaxYear);
                 BigDecimal dailyRate = BigDecimal.ZERO;
                 if (pop.compareTo(BigDecimal.ZERO) != 0) {
-                    dailyRate = Generic_BigDecimal.divideRoundIfNecessary(
+                    dailyRate = Math_BigDecimal.divideRoundIfNecessary(
                             rate, pop, decimalPlaces, roundingMode);
                 }
                 System.out.println("" + ageMinYear + ", " + ageMaxYear + ", "
@@ -2223,7 +2223,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             Set<String> regionIDs,
             int decimalPlaces,
             RoundingMode roundingMode) {
-//        BigDecimal oneDiv365 = Generic_BigDecimal.divideRoundIfNecessary(
+//        BigDecimal oneDiv365 = Math_BigDecimal.divideRoundIfNecessary(
 //                BigDecimal.ONE, 
 //                BigDecimal.valueOf(365L),
 //                decimalPlaces,
@@ -2304,7 +2304,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             String result = originRegionID;
             TreeMap<String, GENESIS_Population> destinationMap;
             destinationMap = cumulativeSumRescaledRegionOutMigration.get(originRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2390,7 +2390,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(destinationRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2476,7 +2476,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledSubregionInMigration.get(destinationRegionID);
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(destinationRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2601,7 +2601,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             TreeMap<String, GENESIS_Population> destinationMap;
             //destinationMap = cumulativeSumRescaledRegionOutMigration.get(originRegionID);
             destinationMap = getCumulativeSumRescaledRegionOutMigration(ge.HOOME).get(originRegionID);
-            BigDecimal value = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+            BigDecimal value = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                     random,
                     decimalPlaces,
                     BigDecimal.ZERO,
@@ -2685,9 +2685,9 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             maxYear = ageMax.getYear();
         }
         BigInteger yearRange = BigInteger.valueOf(maxYear - minYear);
-        result = Generic_BigDecimal.divideRoundIfNecessary(
+        result = Math_BigDecimal.divideRoundIfNecessary(
                 result, yearRange, decimalPlaces, roundingMode);
-//        result = Generic_BigDecimal.divideRoundIfNecessary(
+//        result = Math_BigDecimal.divideRoundIfNecessary(
 //                result,
 //                pop,
 //                decimalPlaces,
@@ -2724,9 +2724,9 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
             maxYear = ageMax.getYear();
         }
         BigInteger yearRange = BigInteger.valueOf(maxYear - minYear);
-        result = Generic_BigDecimal.divideRoundIfNecessary(
+        result = Math_BigDecimal.divideRoundIfNecessary(
                 result, yearRange, decimalPlaces, roundingMode);
-//        result = Generic_BigDecimal.divideRoundIfNecessary(
+//        result = Math_BigDecimal.divideRoundIfNecessary(
 //                result,
 //                pop,
 //                decimalPlaces,
@@ -2756,7 +2756,7 @@ public class GENESIS_Migration extends GENESIS_Object implements Serializable {
         long archiveRange = Generic_IO.getArchiveRange(archive, "_");
         long highestLeaf = Generic_IO.getArchiveHighestLeaf(archive, "_");
         File directory = new File(
-                Generic_IO.getObjectDirectory(
+                Generic_IO.getObjectDir(
                         archive,
                         highestLeaf,
                         archiveRange, //highestLeaf,

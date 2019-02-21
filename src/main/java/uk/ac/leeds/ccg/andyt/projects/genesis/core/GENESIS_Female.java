@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Age;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
@@ -467,7 +467,7 @@ public class GENESIS_Female extends GENESIS_Person {
         GENESIS_Time _DueDate = new GENESIS_Time(ge.Time);
         //Fertility a_Fertility = ((DemographicModel_Aspatial_1)ge.AbstractModel)._Demographics._Fertility;
         int numberOfBabies = 1;
-        if (Generic_BigDecimal.randomUniformTest(
+        if (Math_BigDecimal.randomUniformTest(
                 ge.AbstractModel.get_Random(10),
                 a_Fertility.getTwinProbability_BigDecimal(this),
                 //a_Fertility._MultiplePregnancyTwinProbabilityScale_int,
@@ -475,7 +475,7 @@ public class GENESIS_Female extends GENESIS_Person {
             log("Twin pregnancy for Female " + toString());
             numberOfBabies = 2;
         } else {
-            if (Generic_BigDecimal.randomUniformTest(
+            if (Math_BigDecimal.randomUniformTest(
                     ge.AbstractModel.get_Random(11),
                     a_Fertility.getTripletProbability_BigDecimal(this),
                     //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -726,18 +726,14 @@ public class GENESIS_Female extends GENESIS_Person {
     @Deprecated
     public static GENESIS_Female read(
             long a_Agent_ID,
-            GENESIS_FemaleCollection a_GENESIS_FemaleCollection) {
-        GENESIS_Female result;
-        GENESIS_AgentCollectionManager a_GENESIS_AgentCollectionManager
-                = a_GENESIS_FemaleCollection.getAgentCollectionManager();
-        File a_FemaleDirectory_File = Generic_IO.getObjectDirectory(a_GENESIS_AgentCollectionManager._LivingFemaleDirectory,
-                a_Agent_ID,
-                a_GENESIS_AgentCollectionManager._IndexOfLastBornFemale,
-                a_GENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory);
-        File a_Female_File = new File(
-                a_FemaleDirectory_File,
+            GENESIS_FemaleCollection c) {
+        GENESIS_AgentCollectionManager acm = c.getAgentCollectionManager();
+        File dir = Generic_IO.getObjectDir(acm._LivingFemaleDirectory,
+                a_Agent_ID, acm._IndexOfLastBornFemale,
+                acm.MaximumNumberOfObjectsPerDirectory);
+        File f = new File(dir,
                 GENESIS_Female.class.getCanonicalName() + ".thisFile");
-        return (GENESIS_Female) Generic_IO.readObject(a_Female_File);
+        return (GENESIS_Female) Generic_IO.readObject(f);
     }
 
     @Deprecated

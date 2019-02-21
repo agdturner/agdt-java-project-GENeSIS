@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.population.PopulationType;
@@ -351,7 +351,7 @@ public class GENESIS_Demographics implements Serializable {
              * region output example dir:
              * ../Demographics/0_9999/0_99/0/OODA/
              */
-            File dir = Generic_IO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDir(
                     demographicsDirectory,
                     theDemographicsDirectoryID,
                     maxDemographicsDirectoryID,
@@ -403,7 +403,7 @@ public class GENESIS_Demographics implements Serializable {
         ite = aggregateRegionIDs.iterator();
         while (ite.hasNext()) {
             String aggregateRegionID = ite.next();
-            File dir = Generic_IO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDir(
                     demographicsDirectory,
                     theDemographicsDirectoryID,
                     maxDemographicsDirectoryID,
@@ -1339,19 +1339,19 @@ public class GENESIS_Demographics implements Serializable {
                             BigDecimal.ZERO);
                 } else {
 //                    numberOfYearsOfAgeInYears =
-//                            Generic_BigDecimal.divideRoundIfNecessary(
+//                            Math_BigDecimal.divideRoundIfNecessary(
 //                            numberOfDays_BigDecimal,
 //                            numberOfDaysInYear_BigDecimal,
 //                            decimalPlacePrecisionForCalculations,
 //                            roundingMode);
 //                    annualFertilityProbability_BigDecimal =
-//                            Generic_BigDecimal.divideRoundIfNecessary(
+//                            Math_BigDecimal.divideRoundIfNecessary(
 //                            countOfBirths_BigDecimal,
 //                            numberOfYearsOfAgeInYears,
 //                            decimalPlacePrecisionForCalculations,
 //                            roundingMode);
                     annualFertilityProbability_BigDecimal =
-                            Generic_BigDecimal.divideRoundIfNecessary(
+                            Math_BigDecimal.divideRoundIfNecessary(
                             countOfBirths_BigDecimal.multiply(numberOfDaysInYear_BigDecimal),
                             numberOfDays_BigDecimal,
                             decimalPlacePrecisionForCalculations,
@@ -1373,7 +1373,7 @@ public class GENESIS_Demographics implements Serializable {
             if (countOfTwins_BigDecimal == null) {
                 twinsProbability_BigDecimal = BigDecimal.ZERO;
             } else {
-                twinsProbability_BigDecimal = Generic_BigDecimal.divideRoundIfNecessary(
+                twinsProbability_BigDecimal = Math_BigDecimal.divideRoundIfNecessary(
                         countOfTwins_BigDecimal,
                         countOfBirths_BigDecimal,
                         decimalPlacePrecisionForCalculations,
@@ -1393,7 +1393,7 @@ public class GENESIS_Demographics implements Serializable {
             if (countOfTriplets_BigDecimal == null) {
                 tripletProbability_BigDecimal = BigDecimal.ZERO;
             } else {
-                tripletProbability_BigDecimal = Generic_BigDecimal.divideRoundIfNecessary(
+                tripletProbability_BigDecimal = Math_BigDecimal.divideRoundIfNecessary(
                         countOfTriplets_BigDecimal,
                         countOfBirths_BigDecimal,
                         decimalPlacePrecisionForCalculations,
@@ -1505,12 +1505,12 @@ public class GENESIS_Demographics implements Serializable {
             } else {
                 numberOfDays_BigDecimal = femaleAgeInYearsCountOfDaysInPregnancy_TreeMap.get(
                         ageBound);
-                BigDecimal divisor = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal divisor = Math_BigDecimal.divideRoundIfNecessary(
                         numberOfDays_BigDecimal,
                         numberOfDaysInLatePregnancy,
                         decimalPlacePrecisionForCalculation,
                         a_RoundingMode);
-                BigDecimal miscarriageRate = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal miscarriageRate = Math_BigDecimal.divideRoundIfNecessary(
                         countOfMiscarriages_BigDecimal,
                         divisor,
                         decimalPlacePrecisionForCalculation,
@@ -1555,9 +1555,9 @@ public class GENESIS_Demographics implements Serializable {
             } else {
                 numberOfDays_BigDecimal = femaleAgeInYearsCountOfDaysInPregnancy_TreeMap.get(
                         ageBound);
-                BigDecimal divisor = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal divisor = Math_BigDecimal.divideRoundIfNecessary(
                         numberOfDays_BigDecimal, numberOfDaysInEarlyPregnancy, scale, a_RoundingMode);
-                BigDecimal miscarriageRate = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal miscarriageRate = Math_BigDecimal.divideRoundIfNecessary(
                         countOfMiscarriages_BigDecimal, divisor, scale, a_RoundingMode);
                 observedEarlyPregnancyLoss.put(ageBound, miscarriageRate);
             }
@@ -1638,19 +1638,19 @@ public class GENESIS_Demographics implements Serializable {
                         //BigDecimal.ONE);
                     } else {
 //                        numberOfYearsOfAgeInYears =
-//                                Generic_BigDecimal.divideRoundIfNecessary(
+//                                Math_BigDecimal.divideRoundIfNecessary(
 //                                numberOfDays_BigDecimal,
 //                                numberOfDaysInYear_BigDecimal,
 //                                decimalPlacePrecisionForCalculations,
 //                                a_RoundingMode);
 //                        annualMortalityRate =
-//                                Generic_BigDecimal.divideRoundIfNecessary(
+//                                Math_BigDecimal.divideRoundIfNecessary(
 //                                countOfDeaths_BigDecimal,
 //                                numberOfYearsOfAgeInYears,
 //                                decimalPlacePrecisionForCalculations,
 //                                a_RoundingMode);
                         annualMortalityRate =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 countOfDeaths_BigDecimal.multiply(numberOfDaysInYear_BigDecimal),
                                 numberOfDays_BigDecimal,
                                 decimalPlacePrecisionForCalculations,
@@ -1689,25 +1689,25 @@ public class GENESIS_Demographics implements Serializable {
                         //BigDecimal.ONE);
                     } else {
 //                        numberOfYearsOfAgeInYears =
-//                                Generic_BigDecimal.divideRoundIfNecessary(
+//                                Math_BigDecimal.divideRoundIfNecessary(
 //                                numberOfDays_BigDecimal,
 //                                numberOfDaysInYear_BigDecimal,
 //                                decimalPlacePrecisionForCalculations,
 //                                a_RoundingMode);
 //                        annualMortalityRate =
-//                                Generic_BigDecimal.divideRoundIfNecessary(
+//                                Math_BigDecimal.divideRoundIfNecessary(
 //                                countOfDeaths_BigDecimal,
 //                                numberOfYearsOfAgeInYears,
 //                                decimalPlacePrecisionForCalculations,
 //                                a_RoundingMode);
 //                    annualMortalityProbability_BigDecimal =
-//                            Generic_BigDecimal.divideRoundIfNecessary(
+//                            Math_BigDecimal.divideRoundIfNecessary(
 //                            countOfDeaths_BigDecimal,
 //                            numberOfDays_BigDecimal,
 //                            decimalPlacePrecisionForCalculation,
 //                            a_RoundingMode);
                         annualMortalityRate =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 countOfDeaths_BigDecimal.multiply(numberOfDaysInYear_BigDecimal),
                                 numberOfDays_BigDecimal,
                                 decimalPlacePrecisionForCalculations,
@@ -1832,7 +1832,7 @@ public class GENESIS_Demographics implements Serializable {
             int decimalPlacePrecisionForCalculations,
             int significantDigits) {
         //Future result = null;
-        int decimalPlacePrecisionForDisplay = Generic_BigDecimal.getDecimalPlacePrecision(
+        int decimalPlacePrecisionForDisplay = Math_BigDecimal.getDecimalPlacePrecision(
                 pop.getMaxPopulationInAnyAgeBound(),
                 significantDigits);
         // Output AgeGenderPlot
@@ -2185,19 +2185,19 @@ public class GENESIS_Demographics implements Serializable {
 //        int decimalPlaces = 3;
 //        if (convertDaysToYears) {
 //            femaleMaxAgeInYearsCount_BigDecimal =
-//                    Generic_BigDecimal.divideRoundIfNecessary(
+//                    Math_BigDecimal.divideRoundIfNecessary(
 //                    femaleMaxAgeInYearsCount_BigDecimal,
 //                    GENESIS_Time.NormalDaysInYear_BigInteger,
 //                    decimalPlaces,
 //                    a_RoundingMode);
 //            maleMaxAgeInYearsCount_BigDecimal =
-//                    Generic_BigDecimal.divideRoundIfNecessary(
+//                    Math_BigDecimal.divideRoundIfNecessary(
 //                    maleMaxAgeInYearsCount_BigDecimal,
 //                    GENESIS_Time.NormalDaysInYear_BigInteger,
 //                    decimalPlaces,
 //                    a_RoundingMode);
 //        }
-//        BigDecimal maxAgeInYearsCount_BigDecimal = Generic_BigDecimal.max(
+//        BigDecimal maxAgeInYearsCount_BigDecimal = Math_BigDecimal.max(
 //                maleMaxAgeInYearsCount_BigDecimal,
 //                femaleMaxAgeInYearsCount_BigDecimal);
 //        log(Level.FINE, "maxAgeInYears " + maxAgeInYears);
@@ -2221,7 +2221,7 @@ public class GENESIS_Demographics implements Serializable {
 //            // Convert to years
 //            if (convertDaysToYears) {
 //                maleAgeInYearsCount_BigDecimal =
-//                        Generic_BigDecimal.divideRoundIfNecessary(
+//                        Math_BigDecimal.divideRoundIfNecessary(
 //                        count,
 //                        GENESIS_Time.NormalDaysInYear_BigInteger,
 //                        decimalPlaces,
@@ -2242,7 +2242,7 @@ public class GENESIS_Demographics implements Serializable {
 //            // Convert to years
 //            if (convertDaysToYears) {
 //                femaleAgeInYearsCount_BigDecimal =
-//                        Generic_BigDecimal.divideRoundIfNecessary(
+//                        Math_BigDecimal.divideRoundIfNecessary(
 //                        count,
 //                        GENESIS_Time.NormalDaysInYear_BigInteger,
 //                        decimalPlaces,
@@ -3010,7 +3010,7 @@ public class GENESIS_Demographics implements Serializable {
                         mortality_BigDecimal = BigDecimal.ZERO;
                     }
                     BigDecimal survivalProbability = BigDecimal.ONE.subtract(mortality_BigDecimal);
-                    populationExpectedToSurvive_BigDecimal = Generic_BigDecimal.multiplyRoundIfNecessary(
+                    populationExpectedToSurvive_BigDecimal = Math_BigDecimal.multiplyRoundIfNecessary(
                             survivalProbability,
                             population_BigDecimal,
                             mortality_BigDecimal.scale(),
@@ -3055,7 +3055,7 @@ public class GENESIS_Demographics implements Serializable {
                         mortality_BigDecimal = BigDecimal.ZERO;
                     }
                     BigDecimal survivalProbability = BigDecimal.ONE.subtract(mortality_BigDecimal);
-                    populationExpectedToSurvive_BigDecimal = Generic_BigDecimal.multiplyRoundIfNecessary(
+                    populationExpectedToSurvive_BigDecimal = Math_BigDecimal.multiplyRoundIfNecessary(
                             survivalProbability,
                             population_BigDecimal,
                             mortality_BigDecimal.scale(),
@@ -3179,7 +3179,7 @@ public class GENESIS_Demographics implements Serializable {
             String outputAreaCode;
             GENESIS_Population pop;
             for (long i = highestLeaf; i > -1; i--) {
-                File dir = Generic_IO.getObjectDirectory(
+                File dir = Generic_IO.getObjectDir(
                         aLADDir,
                         i,
                         highestLeaf,
@@ -3336,7 +3336,7 @@ public class GENESIS_Demographics implements Serializable {
                     if (pop.compareTo(BigDecimal.ZERO) == 0) {
                         rate = BigDecimal.ONE;
                     } else {
-                        rate = Generic_BigDecimal.divideRoundIfNecessary(
+                        rate = Math_BigDecimal.divideRoundIfNecessary(
                                 deathPop,
                                 pop,
                                 decimalPlaces,
@@ -3365,7 +3365,7 @@ public class GENESIS_Demographics implements Serializable {
                     if (pop.compareTo(BigDecimal.ZERO) == 0) {
                         rate = BigDecimal.ONE;
                     } else {
-                        rate = Generic_BigDecimal.divideRoundIfNecessary(
+                        rate = Math_BigDecimal.divideRoundIfNecessary(
                                 deathPop,
                                 pop,
                                 decimalPlaces,
@@ -3416,7 +3416,7 @@ public class GENESIS_Demographics implements Serializable {
                     if (pop.compareTo(BigDecimal.ZERO) == 0) {
                         rate = BigDecimal.ONE;
                     } else {
-                        rate = Generic_BigDecimal.divideRoundIfNecessary(
+                        rate = Math_BigDecimal.divideRoundIfNecessary(
                                 deathPop,
                                 pop,
                                 decimalPlaces,

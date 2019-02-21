@@ -3,13 +3,11 @@ package uk.ac.leeds.ccg.andyt.projects.genesis.utilities;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigInteger;
+import uk.ac.leeds.ccg.andyt.math.Math_BigInteger;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.common.Time;
 
-public class GENESIS_Time
-        extends Time
-        implements Comparable, Serializable {
+public class GENESIS_Time        extends Time        implements Comparable, Serializable {
 
     public static final int NormalDaysInYear_int = 365;
     public static final int NormalHoursInDay_int = 24;
@@ -131,15 +129,15 @@ public class GENESIS_Time
         GENESIS_Time result = new GENESIS_Time(a_LowerTimeLimit);
         BigInteger differenceInDays_BigInteger = a_LowerTimeLimit.getDifferenceInDays_BigInteger(
                 a_UpperTimeLimit);
-        if (differenceInDays_BigInteger.compareTo(Generic_BigInteger.Integer_MAX_VALUE) == 1
+        if (differenceInDays_BigInteger.compareTo(Math_BigInteger.INTEGER_MAX_VALUE) == 1
                 || differenceInDays_BigInteger.compareTo(BigInteger.ZERO) != 1) {
             throw new UnsupportedOperationException("Trouble at mill!");
         }
-        //Generic_BigInteger a_Generic_BigInteger = new Generic_BigInteger();
+        //Math_BigInteger a_Math_BigInteger = new Math_BigInteger();
         int randomDayValue = randomDay.nextInt(differenceInDays_BigInteger.intValue());
         result.addDays(randomDayValue);
         int remainingDifferenceInSeconds_int = (int) (a_UpperTimeLimit.getSecondOfDay() - result.getSecondOfDay());
-        //Generic_BigInteger a_Generic_BigInteger = new Generic_BigInteger();
+        //Math_BigInteger a_Math_BigInteger = new Math_BigInteger();
         if (remainingDifferenceInSeconds_int != 0) {
             int randomSecondValue = randomSecond.nextInt(remainingDifferenceInSeconds_int);
             result.addSeconds(randomSecondValue);
@@ -234,9 +232,9 @@ public class GENESIS_Time
 
     public void addSeconds(BigInteger seconds) {
         BigInteger a_BigInteger = new BigInteger(seconds.toString());
-        while (a_BigInteger.compareTo(Generic_BigInteger.Long_MAX_VALUE) == 1) {
-            addSeconds(Generic_BigInteger.Long_MAX_VALUE);
-            a_BigInteger = a_BigInteger.subtract(Generic_BigInteger.Long_MAX_VALUE);
+        while (a_BigInteger.compareTo(Math_BigInteger.LONG_MAX_VALUE) == 1) {
+            addSeconds(Math_BigInteger.LONG_MAX_VALUE);
+            a_BigInteger = a_BigInteger.subtract(Math_BigInteger.LONG_MAX_VALUE);
         }
         addSeconds(a_BigInteger.longValue());
     }
@@ -379,23 +377,23 @@ public class GENESIS_Time
         if (days.compareTo(BigInteger.ZERO) == 0) {
             return;
         }
-        if (days.compareTo(Generic_BigInteger.Long_MAX_VALUE) != 1
-                && days.compareTo(Generic_BigInteger.Long_MIN_VALUE) != -1) {
+        if (days.compareTo(Math_BigInteger.LONG_MAX_VALUE) != 1
+                && days.compareTo(Math_BigInteger.LONG_MIN_VALUE) != -1) {
             addDays(days.longValue());
             return;
         }
         if (days.compareTo(BigInteger.ZERO) == 1) {
             BigInteger remainingDaysToAdd = new BigInteger(days.toString());
-            while (remainingDaysToAdd.compareTo(Generic_BigInteger.Long_MAX_VALUE) == 1) {
-                addDays(Generic_BigInteger.Long_MAX_VALUE);
-                remainingDaysToAdd = remainingDaysToAdd.subtract(Generic_BigInteger.Long_MAX_VALUE);
+            while (remainingDaysToAdd.compareTo(Math_BigInteger.LONG_MAX_VALUE) == 1) {
+                addDays(Math_BigInteger.LONG_MAX_VALUE);
+                remainingDaysToAdd = remainingDaysToAdd.subtract(Math_BigInteger.LONG_MAX_VALUE);
             }
             addDays(remainingDaysToAdd);
         } else {
             BigInteger remainingDaysToAdd = new BigInteger(days.toString());
-            while (remainingDaysToAdd.compareTo(Generic_BigInteger.Long_MIN_VALUE) == -1) {
-                addDays(Generic_BigInteger.Long_MIN_VALUE);
-                remainingDaysToAdd = remainingDaysToAdd.add(Generic_BigInteger.Long_MIN_VALUE);
+            while (remainingDaysToAdd.compareTo(Math_BigInteger.LONG_MIN_VALUE) == -1) {
+                addDays(Math_BigInteger.LONG_MIN_VALUE);
+                remainingDaysToAdd = remainingDaysToAdd.add(Math_BigInteger.LONG_MIN_VALUE);
             }
             addDays(remainingDaysToAdd);
         }

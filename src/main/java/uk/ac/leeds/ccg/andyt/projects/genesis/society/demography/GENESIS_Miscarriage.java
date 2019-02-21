@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -492,7 +492,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                                 + "most likely because it was calculated as "
                                 + "((no of miscarriages) / ((no of days) / (no of days in year))");
                         BigDecimal dailyProbability =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 earlyPregnancyLossProbability,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
                                 ge.DecimalPlacePrecisionForPopulationProbabilities,
@@ -546,7 +546,7 @@ public class GENESIS_Miscarriage extends MiscarriageType implements Serializable
                                 + "most likely because it was calculated as "
                                 + "((no of miscarriages) / ((no of days) / (no of days in year))");
                         BigDecimal dailyProbability =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 clinicalMiscarriageProbability,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
                                 ge.DecimalPlacePrecisionForPopulationProbabilities,

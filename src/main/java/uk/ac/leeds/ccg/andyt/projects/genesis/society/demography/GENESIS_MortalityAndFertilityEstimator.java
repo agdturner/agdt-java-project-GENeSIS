@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -439,7 +439,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             if (femalePop.compareTo(BigDecimal.ZERO) == 0) {
                 femaleFertility = BigDecimal.ZERO;
             } else {
-                femaleFertility = Generic_BigDecimal.divideRoundIfNecessary(
+                femaleFertility = Math_BigDecimal.divideRoundIfNecessary(
                         femaleBirths,
                         femalePop,
                         decimalPlaces,
@@ -482,7 +482,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             if (femalePop.compareTo(BigDecimal.ZERO) == 0) {
                 femaleMortality = BigDecimal.ZERO;
             } else {
-                femaleMortality = Generic_BigDecimal.divideRoundIfNecessary(
+                femaleMortality = Math_BigDecimal.divideRoundIfNecessary(
                         femaleDeaths,
                         femalePop,
                         decimalPlaces,
@@ -498,7 +498,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             if (malePop.compareTo(BigDecimal.ZERO) == 0) {
                 maleMortality = BigDecimal.ZERO;
             } else {
-                maleMortality = Generic_BigDecimal.divideRoundIfNecessary(
+                maleMortality = Math_BigDecimal.divideRoundIfNecessary(
                         maleDeaths,
                         malePop,
                         decimalPlaces,
@@ -982,11 +982,11 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             }
             if (minAgeYear == 0) {
                 BigDecimal theoreticalBirths = (BigDecimal) theoreticalFertilityAndNewBornPopulation[3];
-                BigDecimal expectedBirths = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal expectedBirths = Math_BigDecimal.divideRoundIfNecessary(
                         birthPopulation.getFemalePopulationTotal(),
                         two, decimalPlacePrecision, roundingMode);
                 BigDecimal expectedDeaths = deathPopulation.getFemalePopulation(aAgeBound);
-                theoreticalMidYearPop = Generic_BigDecimal.divideRoundIfNecessary(
+                theoreticalMidYearPop = Math_BigDecimal.divideRoundIfNecessary(
                         startPop.add(theoreticalBirths).subtract(theoreticalDeaths),
                         two, decimalPlacePrecision, roundingMode);
                 BigDecimal endYearPop = theoreticalSurvivedPopulation._FemaleAgeBoundPopulationCount_TreeMap.get(aAgeBound);
@@ -1001,7 +1001,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                     endYearPop = BigDecimal.ZERO;
                 }
                 BigDecimal expectedDeaths = deathPopulation.getFemalePopulation(aAgeBound);
-                theoreticalMidYearPop = Generic_BigDecimal.divideRoundIfNecessary(
+                theoreticalMidYearPop = Math_BigDecimal.divideRoundIfNecessary(
                         startPop.add(endYearPop), two, decimalPlacePrecision, roundingMode);
                 System.out.println(
                         "" + minAgeYear + ", " + maxAgeYear + ", " + startPop + ", "
@@ -1029,11 +1029,11 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             }
             if (minAgeYear == 0) {
                 BigDecimal theoreticalBirths = (BigDecimal) theoreticalFertilityAndNewBornPopulation[4];
-                BigDecimal expectedBirths = Generic_BigDecimal.divideRoundIfNecessary(
+                BigDecimal expectedBirths = Math_BigDecimal.divideRoundIfNecessary(
                         birthPopulation.getFemalePopulationTotal(),
                         two, decimalPlacePrecision, roundingMode);
                 BigDecimal expectedDeaths = deathPopulation.getMalePopulation(aAgeBound);
-                theoreticalMidYearPop = Generic_BigDecimal.divideRoundIfNecessary(
+                theoreticalMidYearPop = Math_BigDecimal.divideRoundIfNecessary(
                         startPop.add(theoreticalBirths).subtract(theoreticalDeaths),
                         two, decimalPlacePrecision, roundingMode);
                 BigDecimal endYearPop = theoreticalSurvivedPopulation._MaleAgeBoundPopulationCount_TreeMap.get(aAgeBound);
@@ -1048,7 +1048,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                     endYearPop = BigDecimal.ZERO;
                 }
                 BigDecimal expectedDeaths = deathPopulation.getMalePopulation(aAgeBound);
-                theoreticalMidYearPop = Generic_BigDecimal.divideRoundIfNecessary(
+                theoreticalMidYearPop = Math_BigDecimal.divideRoundIfNecessary(
                         startPop.add(endYearPop), two, decimalPlacePrecision, roundingMode);
                 System.out.println(
                         "" + minAgeYear + ", " + maxAgeYear + ", " + startPop + ", "
@@ -1085,11 +1085,11 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             BigDecimal initialEstimatedMortalityRate = initialEstimateOfMortality.getAnnualMortalityFemale(aAgeBound);
             BigDecimal expectedDead = deathPopulation._FemaleAgeBoundPopulationCount_TreeMap.get(aAgeBound);
             BigDecimal modelledDead = BigDecimal.ZERO;
-            BigDecimal halfExpectedDead = Generic_BigDecimal.divideRoundIfNecessary(
+            BigDecimal halfExpectedDead = Math_BigDecimal.divideRoundIfNecessary(
                     expectedDead, two, decimalPlacePrecision, roundingMode);
-//            BigDecimal reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+//            BigDecimal reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
 //                    expectedDead, midYearPop, decimalPlacePrecision, roundingMode);
-//            BigDecimal reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+//            BigDecimal reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
 //                    expectedDead, endYearPop, decimalPlacePrecision, roundingMode);
             BigDecimal reEstimatedMortalityRate;
             if (halfExpectedDead.compareTo(BigDecimal.ZERO) == 0) {
@@ -1098,7 +1098,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                 if (midYearPop.compareTo(BigDecimal.ZERO) == 0) {
                     reEstimatedMortalityRate = BigDecimal.ZERO;
                 } else {
-                    reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+                    reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
                             halfExpectedDead, midYearPop, decimalPlacePrecision, roundingMode);
                 }
             }
@@ -1154,11 +1154,11 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             BigDecimal initialEstimatedMortalityRate = initialEstimateOfMortality.getAnnualMortalityMale(aAgeBound);
             BigDecimal expectedDead = deathPopulation._MaleAgeBoundPopulationCount_TreeMap.get(aAgeBound);
             BigDecimal modelledDead = BigDecimal.ZERO;
-            BigDecimal halfExpectedDead = Generic_BigDecimal.divideRoundIfNecessary(
+            BigDecimal halfExpectedDead = Math_BigDecimal.divideRoundIfNecessary(
                     expectedDead, two, decimalPlacePrecision, roundingMode);
-//            BigDecimal reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+//            BigDecimal reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
 //                    expectedDead, midYearPop, decimalPlacePrecision, roundingMode);
-//            BigDecimal reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+//            BigDecimal reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
 //                    expectedDead, endYearPop, decimalPlacePrecision, roundingMode);
             BigDecimal reEstimatedMortalityRate;
             if (halfExpectedDead.compareTo(BigDecimal.ZERO) == 0) {
@@ -1167,7 +1167,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
                 if (midYearPop.compareTo(BigDecimal.ZERO) == 0) {
                     reEstimatedMortalityRate = BigDecimal.ZERO;
                 } else {
-                    reEstimatedMortalityRate = Generic_BigDecimal.divideRoundIfNecessary(
+                    reEstimatedMortalityRate = Math_BigDecimal.divideRoundIfNecessary(
                             halfExpectedDead, midYearPop, decimalPlacePrecision, roundingMode);
                 }
             }
@@ -1225,7 +1225,7 @@ public class GENESIS_MortalityAndFertilityEstimator extends PopulationType imple
             BigDecimal initialEstimatedFertilityRate = initialEstimateOfFertility.getAnnualLiveBirthFertility(aAgeBound);
             BigDecimal expectedBirth = birthPopulation._FemaleAgeBoundPopulationCount_TreeMap.get(aAgeBound);
             BigDecimal modelledBirth = BigDecimal.ZERO;
-            BigDecimal reEstimatedFertilityRate = Generic_BigDecimal.divideRoundIfNecessary(
+            BigDecimal reEstimatedFertilityRate = Math_BigDecimal.divideRoundIfNecessary(
                     expectedBirth, midYearPop, decimalPlacePrecision, roundingMode);
             for (long ageInYear = aAgeBoundMinYear; ageInYear < aAgeBoundMaxYear; ageInYear++) {
                 GENESIS_AgeBound yearAgeBound = new GENESIS_AgeBound(ageInYear, ageInYear + 1L);

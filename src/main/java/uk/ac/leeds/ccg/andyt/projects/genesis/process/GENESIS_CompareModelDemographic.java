@@ -333,11 +333,11 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         // Initialise the TreeMap<Long, File> resultsToCompare
         TreeMap<Long, File> resultsToCompare;
         if (args.length == 2) {
-            resultsToCompare = Generic_IO.getArchiveLeafFiles_TreeMap(
+            resultsToCompare = Generic_IO.getArchiveLeafFilesMap(
                     a_File,
                     underscore);
         } else {
-            resultsToCompare = Generic_IO.getArchiveLeafFiles_TreeMap(
+            resultsToCompare = Generic_IO.getArchiveLeafFilesMap(
                     a_File,
                     underscore,
                     Long.valueOf(args[2]).longValue(),
@@ -423,9 +423,8 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
         // Initialise Archive for results and create numeric look up for resultsDirectories
         TreeMap<Long, File> areaCode_TreeMap = null;
         try {
-            areaCode_TreeMap = Generic_IO.initialiseArchiveReturnTreeMapLongFile(ge.Directory,
-                    range,
-                    highestLeaf);
+            areaCode_TreeMap = Generic_IO.initialiseArchiveAndReturnFileMap(
+                    ge.Directory,                    range,                    highestLeaf);
         } catch (IOException ex) {
             System.err.println(ex.getMessage() + " in " + GENESIS_CompareModelDemographic.class.getName() + ".generateComparisonPlots()");
             Logger.getLogger(GENESIS_CompareModelDemographic.class.getName()).log(Level.SEVERE, null, ex);
@@ -437,7 +436,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             System.out.println("Leaf " + l);
             File resultDirectory = areaCode_TreeMap.get(Long.valueOf(l));
             String areaCode = new File(
-                    Generic_IO.getObjectDirectory(
+                    Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -712,7 +711,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_IO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -739,7 +738,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                     popFile);
             pops.add(pop);
         }
-        livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
+        //livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
         livingPop_GENESIS_AgeGenderLineChart.setData(
                 pops,
                 ageIntervals,
@@ -819,7 +818,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_IO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -852,7 +851,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             pop.updateGenderedAgePopulation();
             pops.add(pop);
         }
-        livingPop_GENESIS_AgeGenderLineChart0.setTitle("" + areaCode + " " + title);
+        //livingPop_GENESIS_AgeGenderLineChart0.setTitle("" + areaCode + " " + title);
         livingPop_GENESIS_AgeGenderLineChart0.setData(
                 pops,
                 ageIntervals,
@@ -905,7 +904,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_IO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -938,7 +937,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             pop.updateGenderedAgePopulation();
             pops.add(pop);
         }
-        livingPop_GENESIS_AgeGenderLineChart1.setTitle("" + areaCode + " " + title);
+        //livingPop_GENESIS_AgeGenderLineChart1.setTitle("" + areaCode + " " + title);
         livingPop_GENESIS_AgeGenderLineChart1.setData(
                 pops,
                 ageIntervals,
@@ -1018,7 +1017,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_IO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -1053,7 +1052,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             pop.updateGenderedAgePopulation();
             pops.add(pop);
         }
-        livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
+        //livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
         livingPop_GENESIS_AgeGenderLineChart.setData(
                 pops,
                 ageIntervals,
@@ -1132,7 +1131,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
 //                    demographicsArchiveAboveTopLevelDirectory_File,
 //                    demographicsTopLevelDirectoryName);
             // Get directory ./0_99/0 or ./0_9999/0_99/0 for example
-            File popDir = Generic_IO.getObjectDirectory(
+            File popDir = Generic_IO.getObjectDir(
                     demographicsArchiveTopLevelDirectory_File,
                     l,
                     highestLeaf,
@@ -1166,7 +1165,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
             pop.updateGenderedAgePopulation();
             pops.add(pop);
         }
-        livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
+        //livingPop_GENESIS_AgeGenderLineChart.setTitle("" + areaCode + " " + title);
         livingPop_GENESIS_AgeGenderLineChart.setData(
                 pops,
                 ageIntervals,
@@ -1343,7 +1342,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                 demographicsDirectory,
                 underscore);
         for (long l = 0; l <= highestLeaf; l ++) {
-            File dir = Generic_IO.getObjectDirectory(
+            File dir = Generic_IO.getObjectDir(
                     demographicsDirectory,
                     l,
                     highestLeaf,
@@ -1454,7 +1453,7 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                     dir,
                     underscore);
             for (long l = 0; l <= highestLeaf; l++) {
-                File dir2 = Generic_IO.getObjectDirectory(
+                File dir2 = Generic_IO.getObjectDir(
                         dir,
                         l,
                         highestLeaf,
@@ -1520,12 +1519,12 @@ public class GENESIS_CompareModelDemographic extends GENESIS_AbstractModel {
                     fertilityDir,
                     underscore);
             for (long l = 0; l <= highestLeaf; l++) {
-                File dirMortality2 = Generic_IO.getObjectDirectory(
+                File dirMortality2 = Generic_IO.getObjectDir(
                         mortalityDir,
                         l,
                         highestLeaf,
                         range);
-                File dirFertility2 = Generic_IO.getObjectDirectory(
+                File dirFertility2 = Generic_IO.getObjectDir(
                         fertilityDir,
                         l,
                         highestLeaf,

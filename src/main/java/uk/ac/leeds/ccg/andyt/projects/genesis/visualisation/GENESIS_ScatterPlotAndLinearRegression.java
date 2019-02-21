@@ -6,11 +6,11 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import uk.ac.leeds.ccg.andyt.data.Generic_XYNumericalData;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.data.Data_BiNumeric;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.chart.Generic_ScatterPlotAndLinearRegression;
+import uk.ac.leeds.ccg.andyt.chart.examples.Chart_ScatterAndLinearRegression;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
 
@@ -18,7 +18,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBoun
  * An implementation of
  * <code>Generic_ScatterPlotAndLinearRegression<\code>.
  */
-public class GENESIS_ScatterPlotAndLinearRegression extends Generic_ScatterPlotAndLinearRegression {
+public class GENESIS_ScatterPlotAndLinearRegression extends Chart_ScatterAndLinearRegression {
 
     public File resultsDirectory;
     public GENESIS_Environment _GENESIS_Environment;
@@ -112,7 +112,7 @@ public class GENESIS_ScatterPlotAndLinearRegression extends Generic_ScatterPlotA
     public void setData(
             TreeMap<GENESIS_AgeBound, BigDecimal> expected,
             TreeMap<GENESIS_AgeBound, BigDecimal> observed) {
-        ArrayList<Generic_XYNumericalData> theGeneric_XYNumericalData = new ArrayList<Generic_XYNumericalData>();
+        ArrayList<Data_BiNumeric> theGeneric_XYNumericalData = new ArrayList<>();
 //        Set<GENESIS_AgeBound> keys = GENESIS_Collections.getCombined_HashSet_AgeBound(expected.keySet(), observed.keySet());
 //        Iterator<GENESIS_AgeBound> ite = keys.iterator();
         Iterator<GENESIS_AgeBound> ite = expected.keySet().iterator();
@@ -129,22 +129,20 @@ public class GENESIS_ScatterPlotAndLinearRegression extends Generic_ScatterPlotA
             if (obs == null) {
                 obs = BigDecimal.ZERO;
             }
-            Generic_XYNumericalData point = new Generic_XYNumericalData(
-                    exp,
-                    obs);
+            Data_BiNumeric point = new Data_BiNumeric(                    exp,                    obs);
             theGeneric_XYNumericalData.add(point);
         }
         setData(theGeneric_XYNumericalData);
     }
 
-    public void setData(ArrayList<Generic_XYNumericalData> theGeneric_XYNumericalData) {
+    public void setData(ArrayList<Data_BiNumeric> theGeneric_XYNumericalData) {
         Object[] data = new Object[5];
         BigDecimal maxx = BigDecimal.valueOf(Double.MIN_VALUE);
         BigDecimal minx = BigDecimal.valueOf(Double.MAX_VALUE);
         BigDecimal maxy = BigDecimal.valueOf(Double.MIN_VALUE);
         BigDecimal miny = BigDecimal.valueOf(Double.MAX_VALUE);
-        Iterator<Generic_XYNumericalData> ite = theGeneric_XYNumericalData.iterator();
-        Generic_XYNumericalData v;
+        Iterator<Data_BiNumeric> ite = theGeneric_XYNumericalData.iterator();
+        Data_BiNumeric v;
         BigDecimal x;
         BigDecimal y;
         while (ite.hasNext()) {
@@ -172,11 +170,11 @@ public class GENESIS_ScatterPlotAndLinearRegression extends Generic_ScatterPlotA
 
     @Override
     public void setOriginCol() {
-        setOriginCol(setOriginCol(
-                getMinX(),
-                getDataStartCol(),
+        setOriginCol(
+                minX,
+                dataStartCol,
                 getCellWidth(),
-                getRoundingMode()));
+                getRoundingMode());
     }
 
     public static int setOriginCol(
@@ -193,7 +191,7 @@ public class GENESIS_ScatterPlotAndLinearRegression extends Generic_ScatterPlotA
                 if (cellWidth.compareTo(BigDecimal.ZERO) == 0) {
                     originCol = dataStartCol;
                 } else {
-                    originCol = Generic_BigDecimal.divideRoundIfNecessary(
+                    originCol = Math_BigDecimal.divideRoundIfNecessary(
                             minX,
                             cellWidth,
                             0,

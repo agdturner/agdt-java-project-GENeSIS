@@ -9,7 +9,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Female;
@@ -460,7 +460,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                                 + "((no of dead) / ((no of days) / (no of days in year)) "
                                 + "consequently setting ");
                         BigDecimal dailyMortality =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 annualMortalityProbability_BigDecimal,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
                                 ge.DecimalPlacePrecisionForPopulationProbabilities,
@@ -480,12 +480,12 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            log(Level.FINEST, 
 //                    "Difference between annualMortalityProbability_BigDecimal and annualMortalityProbability_double "
 //                    + doubleComparison_BigDecimal.subtract(annualMortalityProbability_BigDecimal));
-// Currently (2011-12-02) the Generic_BigDecimal.power method throws an UnsupportedOperationException
+// Currently (2011-12-02) the Math_BigDecimal.power method throws an UnsupportedOperationException
 //            BigDecimal dayFractionOfYear = BigDecimal.ONE.divide(
 //                    new BigDecimal("" + normalDaysInYear_int),
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
 //                    GENESIS_Environment.RoundingModeForPopulationProbabilities);
-//            dailySurvivalProbability_BigDecimal = Generic_BigDecimal.power(
+//            dailySurvivalProbability_BigDecimal = Math_BigDecimal.power(
 //                    annualMortalityProbability_BigDecimal,
 //                    dayFractionOfYear,
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -493,7 +493,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            System.out.println(
 //                    "dailySurvivalProbability_BigDecimal " + dailySurvivalProbability_BigDecimal);
 // Computationally expensive but returns higher precision probablity at this stage (2011-12-02), this greater precision is deemed not to be worth it.
-//             dailySurvivalProbability_BigDecimal = Generic_BigDecimal.rootRoundIfNecessary(
+//             dailySurvivalProbability_BigDecimal = Math_BigDecimal.rootRoundIfNecessary(
 //                    annualMortalityProbability_BigDecimal,
 //                    normalDaysInYear_int,
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -525,7 +525,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            BigDecimal survival_BigDecimal = new BigDecimal("1000000");
 //            for (int i = 0; i < 365; i++) {
 //                //survival_BigDecimal = survival_BigDecimal.multiply(dailySurvivalProbability_BigDecimal);
-//                survival_BigDecimal = Generic_BigDecimal.multiplyRoundIfNecessary(
+//                survival_BigDecimal = Math_BigDecimal.multiplyRoundIfNecessary(
 //                        survival_BigDecimal,
 //                        dailySurvivalProbability_BigDecimal,
 //                        GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -598,7 +598,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
                                 + "((no of dead) / ((no of days) / (no of days in year)) "
                                 + "consequently setting ");
                         BigDecimal dailyMortality =
-                                Generic_BigDecimal.divideRoundIfNecessary(
+                                Math_BigDecimal.divideRoundIfNecessary(
                                 annualMortalityProbability_BigDecimal,
                                 GENESIS_Time.NormalDaysInYear_BigInteger,
                                 ge.DecimalPlacePrecisionForPopulationProbabilities,
@@ -617,12 +617,12 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            log(Level.FINEST, 
 //                    "Difference between annualMortalityProbability_BigDecimal and annualMortalityProbability_double "
 //                    + doubleComparison_BigDecimal.subtract(annualMortalityProbability_BigDecimal));
-// Currently (2011-12-02) the Generic_BigDecimal.power method throws an UnsupportedOperationException
+// Currently (2011-12-02) the Math_BigDecimal.power method throws an UnsupportedOperationException
 //            BigDecimal dayFractionOfYear = BigDecimal.ONE.divide(
 //                    new BigDecimal("" + normalDaysInYear_int),
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
 //                    GENESIS_Environment.RoundingModeForPopulationProbabilities);
-//            dailySurvivalProbability_BigDecimal = Generic_BigDecimal.power(
+//            dailySurvivalProbability_BigDecimal = Math_BigDecimal.power(
 //                    annualMortalityProbability_BigDecimal,
 //                    dayFractionOfYear,
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -630,7 +630,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            System.out.println(
 //                    "dailySurvivalProbability_BigDecimal " + dailySurvivalProbability_BigDecimal);
 // Computationally expensive but returns higher precision probablity at this stage (2011-12-02), this greater precision is deemed not to be worth it.
-//             dailySurvivalProbability_BigDecimal = Generic_BigDecimal.rootRoundIfNecessary(
+//             dailySurvivalProbability_BigDecimal = Math_BigDecimal.rootRoundIfNecessary(
 //                    annualMortalityProbability_BigDecimal,
 //                    normalDaysInYear_int,
 //                    GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
@@ -672,7 +672,7 @@ public class GENESIS_Mortality extends MortalityType implements Serializable {
 //            BigDecimal survival_BigDecimal = new BigDecimal("1000000");
 //            for (int i = 0; i < 365; i++) {
 //                //survival_BigDecimal = survival_BigDecimal.multiply(dailySurvivalProbability_BigDecimal);
-//                survival_BigDecimal = Generic_BigDecimal.multiplyRoundIfNecessary(
+//                survival_BigDecimal = Math_BigDecimal.multiplyRoundIfNecessary(
 //                        survival_BigDecimal,
 //                        dailySurvivalProbability_BigDecimal,
 //                        GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,

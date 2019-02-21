@@ -69,7 +69,7 @@ public class GENESIS_FemaleCollection
 //                    Type,
 //                    ge.HOOMEF);
             Directory = new File(
-                    Generic_IO.getObjectDirectory(theGENESIS_AgentCollectionManager._LivingFemaleDirectory,
+                    Generic_IO.getObjectDir(theGENESIS_AgentCollectionManager._LivingFemaleDirectory,
                     agentID,
                     indexOfLastBornFemaleCollection,
                     theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
@@ -80,7 +80,7 @@ public class GENESIS_FemaleCollection
             Long highestLeaf = Generic_IO.getArchiveHighestLeaf(
                     getAgentCollectionManager().getDeadFemaleDirectory(), "_");
             Directory = new File(
-                    Generic_IO.getObjectDirectory(theGENESIS_AgentCollectionManager.getDeadFemaleDirectory(),
+                    Generic_IO.getObjectDir(theGENESIS_AgentCollectionManager.getDeadFemaleDirectory(),
                     agentID,
                     highestLeaf,
                     theGENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),

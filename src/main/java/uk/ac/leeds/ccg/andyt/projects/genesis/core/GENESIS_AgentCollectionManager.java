@@ -430,14 +430,14 @@ public class GENESIS_AgentCollectionManager
                         getLivingFemaleDirectory(), "_");
             }
             result = new File(
-                    Generic_IO.getObjectDirectory(getLivingFemaleDirectory(),
+                    Generic_IO.getObjectDir(getLivingFemaleDirectory(),
                             a_Agent_ID,
                             maxLivingFemaleCollectionID,//getMaxLivingFemaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_IO.getObjectDirectory(getDeadFemaleDirectory(),
+                    Generic_IO.getObjectDir(getDeadFemaleDirectory(),
                             a_Agent_ID,
                             getMaxDeadFemaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
@@ -458,14 +458,14 @@ public class GENESIS_AgentCollectionManager
                         getLivingMaleDirectory(), "_");
             }
             result = new File(
-                    Generic_IO.getObjectDirectory(getLivingMaleDirectory(),
+                    Generic_IO.getObjectDir(getLivingMaleDirectory(),
                             a_Agent_ID,
                             maxLivingMaleCollectionID,//getMaxLivingMaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),
                     "" + a_Agent_ID);
         } else {
             result = new File(
-                    Generic_IO.getObjectDirectory(getDeadMaleDirectory(),
+                    Generic_IO.getObjectDir(getDeadMaleDirectory(),
                             a_Agent_ID,
                             getMaxDeadMaleCollectionID(),
                             MaximumNumberOfObjectsPerDirectory),

@@ -14,11 +14,11 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.math.stats.Generic_Statistics;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
+import uk.ac.leeds.ccg.andyt.stats.Generic_Statistics;
 import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.chart.Generic_AgeGenderBoxPlot;
+import uk.ac.leeds.ccg.andyt.chart.examples.Chart_AgeGenderBoxPlot;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_DataHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.schema.CommonFactory;
@@ -34,7 +34,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Populat
  * Population Box Plot Visualization of some default data and display it on
  * screen.
  */
-public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
+public class GENESIS_AgeGenderBoxPlot extends Chart_AgeGenderBoxPlot {
 
     public File resultsDirectory;
     public GENESIS_Environment ge;
@@ -208,7 +208,7 @@ public class GENESIS_AgeGenderBoxPlot extends Generic_AgeGenderBoxPlot {
             File resultsDirectory,
             GENESIS_Environment a_GENESIS_Environment) {
         HashSet<File> population_Files = new HashSet<File>();
-        HashSet<File> results_Files = Generic_IO.getArchiveLeafFiles(
+        HashSet<File> results_Files = Generic_IO.getArchiveLeafFilesSet(
                 resultsDirectory, "_");
         Iterator<File> ite = results_Files.iterator();
         while (ite.hasNext()) {

@@ -15,11 +15,11 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.math.stats.Generic_Statistics;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
+import uk.ac.leeds.ccg.andyt.stats.Generic_Statistics;
 import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.chart.Generic_AgeGenderLineChart;
+import uk.ac.leeds.ccg.andyt.chart.examples.Chart_AgeGenderLine;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.logging.GENESIS_Log;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
@@ -33,7 +33,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Populat
  * Population Box Plot Visualization of some default data and display it on
  * screen.
  */
-public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
+public class GENESIS_AgeGenderLineChart extends Chart_AgeGenderLine {
 
     public File resultsDirectory;
     public GENESIS_Environment ge;
@@ -213,7 +213,7 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
             File resultsDirectory,
             GENESIS_Environment a_GENESIS_Environment) {
         HashSet<File> population_Files = new HashSet<File>();
-        HashSet<File> results_Files = Generic_IO.getArchiveLeafFiles(
+        HashSet<File> results_Files = Generic_IO.getArchiveLeafFilesSet(
                 resultsDirectory, "_");
         Iterator<File> ite = results_Files.iterator();
         while (ite.hasNext()) {
@@ -389,14 +389,11 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
      */
     @Override
     public void initialiseParameters(Object[] data) {
-        BigDecimal maxX = new BigDecimal(((BigDecimal) data[2]).toString());
-        setMaxX(maxX);
-        setMinX(maxX.negate());
-        BigDecimal maxY = new BigDecimal(((BigDecimal) data[3]).toString());
+        maxX = new BigDecimal(((BigDecimal) data[2]).toString());
+        minX = maxX.negate();
+        maxY = new BigDecimal(((BigDecimal) data[3]).toString());
         maxY = maxY.add(BigDecimal.valueOf(getAgeInterval()));
-        setMaxY(maxY);
-        BigDecimal minY = new BigDecimal(((BigDecimal) data[4]).toString());
-        setMinY(minY);
+        minY = new BigDecimal(((BigDecimal) data[4]).toString());
         setCellHeight();
         setCellWidth();
         setOriginRow();
@@ -425,9 +422,6 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
             int seperationDistanceOfAxisAndData) {
         int[] result = new int[1];
         int yAxisExtraWidthLeft = 0;
-        int originCol = getOriginCol();
-        int dataStartRow = getDataStartRow();
-        int dataEndRow = getDataEndRow();
         Line2D ab;
         // Draw origin
         if (isDrawOriginLinesOnPlot()) {
@@ -454,7 +448,7 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
         if (cellHeight.compareTo(BigDecimal.ZERO) == 0) {
             barHeight = 1;
         } else {
-            barHeight = Generic_BigDecimal.divideRoundIfNecessary(
+            barHeight = Math_BigDecimal.divideRoundIfNecessary(
                     BigDecimal.valueOf(interval),
                     getCellHeight(),
                     0,
@@ -469,11 +463,11 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
         }
         String text;
         int maxTickTextWidth = 0;
-        int col = getDataStartCol();
-        int miny_int = getMinY().intValue();
+        int col = dataStartCol;
+        int miny_int = minY.intValue();
         //for (int i = miny_int; i <= startAgeOfEndYearInterval; i += increment) {
         //for (int i = miny_int; i <= getMaxY().intValue(); i += increment) {
-        for (int i = miny_int; i < getMaxY().intValue(); i += increment) {
+        for (int i = miny_int; i < maxY.intValue(); i += increment) {
 
             // int row = coordinateToScreenRow(BigDecimal.valueOf(i));
             int row = coordinateToScreenRow(BigDecimal.valueOf(i)) - barHeightdiv2;
@@ -499,7 +493,6 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
         yAxisExtraWidthLeft += scaleTickLength + scaleTickAndTextSeparation + maxTickTextWidth;
         // Y axis label
         setPaint(Color.BLACK);
-        String yAxisLabel = getyAxisLabel();
         int textWidth = getTextWidth(yAxisLabel);
         double angle = 3.0d * Math.PI / 2.0d;
         col = 3 * textHeight / 2;
@@ -507,7 +500,7 @@ public class GENESIS_AgeGenderLineChart extends Generic_AgeGenderLineChart {
                 yAxisLabel,
                 angle,
                 col,
-                getDataMiddleRow() + (textWidth / 2));
+                dataMiddleRow + (textWidth / 2));
         yAxisExtraWidthLeft += (textHeight * 2) + partTitleGap;
         result[0] = yAxisExtraWidthLeft;
         return result;

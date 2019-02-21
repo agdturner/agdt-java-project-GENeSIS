@@ -10,10 +10,10 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.generic.util.Generic_Collections;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
-import uk.ac.leeds.ccg.andyt.chart.Generic_AgeGenderBarChart;
+import uk.ac.leeds.ccg.andyt.chart.examples.Chart_AgeGenderBar;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_AgeBound;
 import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Population;
@@ -26,7 +26,7 @@ import uk.ac.leeds.ccg.andyt.projects.genesis.society.demography.GENESIS_Populat
  * Population Bar Chart Visualization of some default data and display it on
  * screen.
  */
-public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
+public class GENESIS_AgeGenderBarChart extends Chart_AgeGenderBar {
 
     public File resultsDirectory;
     public GENESIS_Environment _GENESIS_Environment;
@@ -406,14 +406,11 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
      */
     @Override
     public void initialiseParameters(Object[] data) {
-        BigDecimal maxX = new BigDecimal(((BigDecimal) data[2]).toString());
-        setMaxX(maxX);
-        setMinX(maxX.negate());
-        BigDecimal maxY = BigDecimal.valueOf((Long) data[3]);
+        maxX = new BigDecimal(((BigDecimal) data[2]).toString());
+        minX = maxX.negate();
+        maxY = BigDecimal.valueOf((Long) data[3]);
         maxY = maxY.add(BigDecimal.valueOf(getAgeInterval()));
-        setMaxY(maxY);
-        BigDecimal minY = BigDecimal.valueOf((Long) data[4]);
-        setMinY(minY);
+        minY = BigDecimal.valueOf((Long) data[4]);
         setCellHeight();
         setCellWidth();
         setOriginRow();
@@ -444,9 +441,6 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
             int seperationDistanceOfAxisAndData) {
         int[] result = new int[1];
         int yAxisExtraWidthLeft = 0;
-        int originCol = getOriginCol();
-        int dataStartRow = getDataStartRow();
-        int dataEndRow = getDataEndRow();
         Line2D ab;
         // Draw origin
         if (isDrawOriginLinesOnPlot()) {
@@ -473,7 +467,7 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
         if (cellHeight.compareTo(BigDecimal.ZERO) == 0) {
             barHeight = 1;
         } else {
-            barHeight = Generic_BigDecimal.divideRoundIfNecessary(
+            barHeight = Math_BigDecimal.divideRoundIfNecessary(
                     BigDecimal.valueOf(interval),
                     getCellHeight(),
                     0,
@@ -488,11 +482,11 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
         }
         String text;
         int maxTickTextWidth = 0;
-        int col = getDataStartCol();
-        int miny_int = getMinY().intValue();
+        int col = dataStartCol;
+        int miny_int = minY.intValue();
         //for (int i = miny_int; i <= startAgeOfEndYearInterval; i += increment) {
         //for (int i = miny_int; i <= getMaxY().intValue(); i += increment) {
-        for (int i = miny_int; i < getMaxY().intValue(); i += increment) {
+        for (int i = miny_int; i < maxY.intValue(); i += increment) {
 
             // int row = coordinateToScreenRow(BigDecimal.valueOf(i));
             int row = coordinateToScreenRow(BigDecimal.valueOf(i)) - barHeightdiv2;
@@ -518,7 +512,6 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
         yAxisExtraWidthLeft += scaleTickLength + scaleTickAndTextSeparation + maxTickTextWidth;
         // Y axis label
         setPaint(Color.BLACK);
-        String yAxisLabel = getyAxisLabel();
         int textWidth = getTextWidth(yAxisLabel);
         double angle = 3.0d * Math.PI / 2.0d;
         col = 3 * textHeight / 2;
@@ -526,7 +519,7 @@ public class GENESIS_AgeGenderBarChart extends Generic_AgeGenderBarChart {
                 yAxisLabel,
                 angle,
                 col,
-                getDataMiddleRow() + (textWidth / 2));
+                dataMiddleRow + (textWidth / 2));
         yAxisExtraWidthLeft += (textHeight * 2) + partTitleGap;
         result[0] = yAxisExtraWidthLeft;
         return result;

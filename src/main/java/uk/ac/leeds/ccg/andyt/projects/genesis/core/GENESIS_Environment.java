@@ -8,7 +8,7 @@ import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.grids.core.Grids_Dimensions;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_AbstractGridNumber;
 import uk.ac.leeds.ccg.andyt.grids.core.grid.Grids_GridDouble;
@@ -65,7 +65,7 @@ public class GENESIS_Environment
     /**
      * For mathematical uses
      */
-    public transient Generic_BigDecimal _Generic_BigDecimal;
+    public transient Math_BigDecimal _Math_BigDecimal;
     // Grids Stuff
     /**
      * A store and reference for all AbstractGrid2DSquareCell
@@ -167,7 +167,7 @@ public class GENESIS_Environment
 //        this.AgentEnvironment = new GENESIS_AgentEnvironment(
 //                a_GENESIS_Environment,
 //                a_GENESIS_Environment.AgentEnvironment);
-//        this._Generic_BigDecimal = new Generic_BigDecimal(a_GENESIS_Environment._Generic_BigDecimal);
+//        this._Math_BigDecimal = new Math_BigDecimal(a_GENESIS_Environment._Math_BigDecimal);
 //        this._Grids_Environment = new Grids_Environment(a_GENESIS_Environment._Grids_Environment);
 //        this.HOOME = a_GENESIS_Environment.HOOME;
 //        this.MemoryReserve = a_GENESIS_Environment.MemoryReserve;
@@ -181,7 +181,7 @@ public class GENESIS_Environment
         Files = new GENESIS_Files(Directory);
         AgentEnvironment = new GENESIS_AgentEnvironment(this);
         ge = new Grids_Environment(Files.getGridsDirectory());
-        _Generic_BigDecimal = new Generic_BigDecimal();
+        _Math_BigDecimal = new Math_BigDecimal();
     }
 
     public GENESIS_Environment(
@@ -235,8 +235,8 @@ public class GENESIS_Environment
         this.HOOME = handleOutOfMemoryError;
     }
 
-    private void init_Generic_BigDecimal() {
-        _Generic_BigDecimal = new Generic_BigDecimal();
+    private void init_Math_BigDecimal() {
+        _Math_BigDecimal = new Math_BigDecimal();
     }
 
     /**

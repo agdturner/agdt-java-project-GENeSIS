@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
 import uk.ac.leeds.ccg.andyt.generic.execution.Generic_Execution;
 import uk.ac.leeds.ccg.andyt.generic.visualisation.Generic_Visualisation;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.*;
@@ -427,7 +427,7 @@ public class GENESIS_ModelDemographic
         _GENESIS_AgentCollectionManager._MaximumNumberOfAgentsPerAgentCollection
                 = parameters.getMaximumNumberOfAgentsPerAgentCollection().intValue();
         _RandomSeed = randomSeed_Long;
-        ge._Generic_BigDecimal = new Generic_BigDecimal();
+        ge._Math_BigDecimal = new Math_BigDecimal();
         ge.Directory = _Directory;
 //        AgentCollectionManager = new AgentCollectionManager(
 //                _GENESIS_Environment,
@@ -636,7 +636,7 @@ public class GENESIS_ModelDemographic
             log(Level.INFO, message);
             System.out.println(message);
             _SeedDirectory_File = new File(
-                    Generic_IO.getObjectDirectory(_Directory,
+                    Generic_IO.getObjectDir(_Directory,
                             indexOfSeedPopulationRun,
                             runIndex_Long,
                             _GENESIS_AgentCollectionManager.MaximumNumberOfObjectsPerDirectory),
@@ -888,11 +888,11 @@ public class GENESIS_ModelDemographic
                  * Load previous results Random instances for continuing a
                  * simulation...
                  */
-                ge._Generic_BigDecimal
-                        = (Generic_BigDecimal) Generic_IO.readObject(
+                ge._Math_BigDecimal
+                        = (Math_BigDecimal) Generic_IO.readObject(
                                 new File(
                                         previousResultDataDirectory_File,
-                                        "GENESIS_Environment_Generic_BigDecimal.thisFile"));
+                                        "GENESIS_Environment_Math_BigDecimal.thisFile"));
                 _RandomArray
                         = (Random[]) Generic_IO.readObject(
                                 new File(
@@ -1308,11 +1308,11 @@ public class GENESIS_ModelDemographic
 //                 * Load previous results Random instances for continuing a
 //                 * simulation...
 //                 */
-//                _GENESIS_Environment._Generic_BigDecimal =
-//                        (Generic_BigDecimal) Generic_IO.readObject(
+//                _GENESIS_Environment._Math_BigDecimal =
+//                        (Math_BigDecimal) Generic_IO.readObject(
 //                        new File(
 //                        previousResultDataDirectory_File,
-//                        "GENESIS_Environment_Generic_BigDecimal.thisFile"));
+//                        "GENESIS_Environment_Math_BigDecimal.thisFile"));
 //                _RandomArray =
 //                        (Random[]) Generic_IO.readObject(
 //                        new File(
@@ -1574,13 +1574,13 @@ public class GENESIS_ModelDemographic
         //writeOutDeadCollectionNotAlreadyStoredOnFile();
         /**
          * Write out Random instances for a check point restart of a simulation:
-         * _GENESIS_Environment._Generic_BigDecimal _Random
+         * _GENESIS_Environment._Math_BigDecimal _Random
          */
         System.out.println("Write out Random instances...");
         outputFile = new File(
                 _ResultDataDirectory_File,
-                "GENESIS_Environment_Generic_BigDecimal.thisFile");
-        Generic_IO.writeObject(ge._Generic_BigDecimal,
+                "GENESIS_Environment_Math_BigDecimal.thisFile");
+        Generic_IO.writeObject(ge._Math_BigDecimal,
                 outputFile);
         outputFile = new File(
                 _ResultDataDirectory_File,
@@ -2655,7 +2655,7 @@ public class GENESIS_ModelDemographic
                 if (regionID.equalsIgnoreCase(subregionID)) {
                     GENESIS_Population subregionPopulation;
                     subregionPopulation = regionPopulation.get(subregionID);
-                    File dir = Generic_IO.getObjectDirectory(
+                    File dir = Generic_IO.getObjectDir(
                             regionInputPopulationInitialisedPopulationDirectory,
                             ID,
                             maxID,
@@ -4654,12 +4654,12 @@ public class GENESIS_ModelDemographic
         boolean result = false;
         BigDecimal a_DailyDeathRate = mortality.getDailyMortality(
                 a_Female);
-//        if (Generic_BigDecimal.randomUniformTest(
+//        if (Math_BigDecimal.randomUniformTest(
 //                _RandomArray[4],
 //                a_DailyDeathRate,
 ////                _GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
 //                _GENESIS_Environment.RoundingModeForPopulationProbabilities)) {
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[5],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[5],
                 a_DailyDeathRate,
                 ge.MathContextForPopulationProbabilities)) {
             a_Female.setTimeOfDeath(ge.Time);
@@ -4755,12 +4755,12 @@ public class GENESIS_ModelDemographic
 //                _GENESIS_Environment.HOOME);
         BigDecimal a_DailyDeathRate;
         a_DailyDeathRate = mortality.getDailyMortality(a_Male);
-//        if (Generic_BigDecimal.randomUniformTest(
+//        if (Math_BigDecimal.randomUniformTest(
 //                _RandomArray[5],
 //                a_DailyDeathRate,
 ////                _GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
 //                _GENESIS_Environment.RoundingModeForPopulationProbabilities)) {
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[5],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[5],
                 a_DailyDeathRate,
                 ge.MathContextForPopulationProbabilities)) {
             a_Male.setTimeOfDeath(ge.Time);
@@ -4835,7 +4835,7 @@ public class GENESIS_ModelDemographic
         a_DailyMigrationRate = migration.getDailyOutMigrationProbability(
                 a_Female,
                 ageBound);
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                 a_DailyMigrationRate,
                 ge.MathContextForPopulationProbabilities)) {
             result = true;
@@ -4867,7 +4867,7 @@ public class GENESIS_ModelDemographic
         a_DailyMigrationRate = migration.getDailyOutMigrationProbability(
                 a_Female,
                 ageBound);
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                 a_DailyMigrationRate,
                 ge.MathContextForPopulationProbabilities)) {
             result = true;
@@ -4901,7 +4901,7 @@ public class GENESIS_ModelDemographic
         a_DailyMigrationRate = migration.getDailyOutMigrationProbability(
                 a_Male,
                 ageBound);
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                 a_DailyMigrationRate,
                 ge.MathContextForPopulationProbabilities)) {
             result = true;
@@ -4933,7 +4933,7 @@ public class GENESIS_ModelDemographic
         a_DailyMigrationRate = migration.getDailyOutMigrationProbability(
                 a_Male,
                 ageBound);
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                 a_DailyMigrationRate,
                 ge.MathContextForPopulationProbabilities)) {
             result = true;
@@ -5025,7 +5025,7 @@ public class GENESIS_ModelDemographic
                 // for the remaining population add based on random
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
-                if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+                if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                         remainingDailyCount_BigDecimal,
                         ge.MathContextForPopulationProbabilities)) {
                     String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKFemale(
@@ -5121,7 +5121,7 @@ public class GENESIS_ModelDemographic
                 // for the remaining population add based on random
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
-                if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+                if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                         remainingDailyCount_BigDecimal,
                         ge.MathContextForPopulationProbabilities)) {
                     String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKMale(
@@ -5234,7 +5234,7 @@ public class GENESIS_ModelDemographic
 // for the remaining population add based on random
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
-                if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+                if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                         remainingDailyCount_BigDecimal,
                         ge.MathContextForPopulationProbabilities)) {
                     String subregionID = migration.getInternalMigrationSubregionDestinationFromRestOfUKFemale(
@@ -5323,7 +5323,7 @@ public class GENESIS_ModelDemographic
                 //BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.subtract(new BigDecimal(dailyCount_BigDecimal.toBigInteger()));
                 ge.checkAndMaybeFreeMemory();
                 BigDecimal remainingDailyCount_BigDecimal = dailyCount_BigDecimal.remainder(BigDecimal.ONE);
-                if (Generic_BigDecimal.randomUniformTest(_RandomArray[14],
+                if (Math_BigDecimal.randomUniformTest(_RandomArray[14],
                         remainingDailyCount_BigDecimal,
                         ge.MathContextForPopulationProbabilities)) {
 
@@ -5506,7 +5506,7 @@ public class GENESIS_ModelDemographic
         pregnancyProbability = fertility.getDailyPregnancyRate(a_Female);
         if (pregnancyProbability != null) {
             if (pregnancyProbability.compareTo(BigDecimal.ZERO) == 1) {
-                if (Generic_BigDecimal.randomUniformTest(_RandomArray[6],
+                if (Math_BigDecimal.randomUniformTest(_RandomArray[6],
                         pregnancyProbability,
                         //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
                         ge.RoundingModeForPopulationProbabilities)) {
@@ -5605,7 +5605,7 @@ public class GENESIS_ModelDemographic
 //            int debug = 1;
 //        }
         // RandomUniformTest
-        if (Generic_BigDecimal.randomUniformTest(_RandomArray[7],
+        if (Math_BigDecimal.randomUniformTest(_RandomArray[7],
                 miscarriageProbability,
                 //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
                 ge.RoundingModeForPopulationProbabilities)) {
@@ -5810,13 +5810,13 @@ public class GENESIS_ModelDemographic
 //                        int debug = 1;
 //                    }
                         if (pregnancyProbability.compareTo(BigDecimal.ZERO) == 1) {
-                            if (Generic_BigDecimal.randomUniformTest(_RandomArray[8],
+                            if (Math_BigDecimal.randomUniformTest(_RandomArray[8],
                                     pregnancyProbability,
                                     //_GENESIS_Environment.DecimalPlacePrecisionForPopulationProbabilities,
                                     ge.RoundingModeForPopulationProbabilities)) {
 
                                 // Get random value between 0 and cumulativePopulationProportions.lastKey()
-                                BigDecimal val = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal val = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                                         _RandomArray[9],
                                         ge.DecimalPlacePrecisionForPopulationProbabilities,
                                         //cumulativeProbabilities.firstKey(),

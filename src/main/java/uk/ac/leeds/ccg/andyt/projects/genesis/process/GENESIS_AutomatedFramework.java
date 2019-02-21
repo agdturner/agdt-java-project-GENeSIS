@@ -179,7 +179,7 @@ public class GENESIS_AutomatedFramework {
         File comparisonTopLevelArchivedir = comparisonDirectory.listFiles()[0];
         Long highestLeaf = Generic_IO.getArchiveHighestLeaf(comparisonTopLevelArchivedir, "_");
         Long range = Generic_IO.getArchiveRange(comparisonTopLevelArchivedir, "_");
-        File comparisonDir = Generic_IO.getObjectDirectory(
+        File comparisonDir = Generic_IO.getObjectDir(
                 comparisonDirectory, highestLeaf, highestLeaf, range);
         comparisonDir = new File(
                 comparisonDir,

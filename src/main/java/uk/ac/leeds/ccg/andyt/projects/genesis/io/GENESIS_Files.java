@@ -24,7 +24,7 @@ public class GENESIS_Files extends Generic_Files {
 
     public GENESIS_Files(File dataDir) {
         Strings = new GENESIS_Strings();
-        DataDir = dataDir;
+        this.dataDir = dataDir;
     }
 
     public final File getGridsDirectory() {

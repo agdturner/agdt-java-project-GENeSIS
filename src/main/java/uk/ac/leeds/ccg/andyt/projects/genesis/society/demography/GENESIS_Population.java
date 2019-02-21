@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigDecimal;
-import uk.ac.leeds.ccg.andyt.math.Generic_BigInteger;
+import uk.ac.leeds.ccg.andyt.math.Math_BigDecimal;
+import uk.ac.leeds.ccg.andyt.math.Math_BigInteger;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_Environment;
 import uk.ac.leeds.ccg.andyt.projects.genesis.core.GENESIS_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.projects.genesis.io.XMLConverter;
@@ -197,7 +197,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                                 maximumAgeInYears = new Long(splitline[2]);
                                 population = new BigDecimal(splitline[3]).multiply(multiplicand);
 //                                ageInYearsRange = new BigInteger("" + (maximumAgeInYears - minimumAgeInYears + 1));
-//                                populationPerYear = Generic_BigDecimal.divideRoundIfNecessary(
+//                                populationPerYear = Math_BigDecimal.divideRoundIfNecessary(
 //                                        population,
 //                                        ageInYearsRange,
 //                                        0,
@@ -307,8 +307,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                             long ageMax = ageBound.getAgeMax().getYear();
                             for (long age = ageMin; age < ageMax; age++) {
                                 GENESIS_AgeBound aAgeBound = new GENESIS_AgeBound(ageMin + age);
-                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(
-                                        ge._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal partPopulation_BigDecimal = Math_BigDecimal.getRandom(
+                                        ge._Math_BigDecimal.bi,
                                         0,
                                         BigDecimal.ZERO,
                                         remainingPopulation);
@@ -337,7 +337,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                             long ageMax = ageBound.getAgeMax().getYear();
                             for (long age = ageMin; age < ageMax; age++) {
                                 GENESIS_AgeBound aAgeBound = new GENESIS_AgeBound(ageMin + age);
-                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal partPopulation_BigDecimal = Math_BigDecimal.getRandom(ge._Math_BigDecimal.bi,
                                         0,
                                         BigDecimal.ZERO,
                                         remainingPopulation);
@@ -607,7 +607,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                int startAgeOfEndYearInterval = 99;
 //                BigDecimal maxPopulationInAnyAgeBound = pop.getMaxPopulationInAnyAgeBound();
 //                int decimalPlacePrecisionForDisplay =
-//                        Generic_BigDecimal.getDecimalPlacePrecision(
+//                        Math_BigDecimal.getDecimalPlacePrecision(
 //                        maxPopulationInAnyAgeBound, significantDigits);
 //                //int startAgeOfEndYearInterval = ((Integer) data[3]).intValue();
 //                GENESIS_AgeGenderBarChart chart = new GENESIS_AgeGenderBarChart(
@@ -700,7 +700,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                 String subregionID = ite.next();
                 GENESIS_Population pop = pops.get(subregionID);
                 pop.divide(BigDecimal.TEN, 0, RoundingMode.UP);
-                File dir2 = Generic_IO.getObjectDirectory(
+                File dir2 = Generic_IO.getObjectDir(
                         dir,
                         a_ID,
                         max_ID,
@@ -749,7 +749,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //                int startAgeOfEndYearInterval = 99;
 //                BigDecimal maxPopulationInAnyAgeBound = pop.getMaxPopulationInAnyAgeBound();
 //                int decimalPlacePrecisionForDisplay =
-//                        Generic_BigDecimal.getDecimalPlacePrecision(
+//                        Math_BigDecimal.getDecimalPlacePrecision(
 //                        maxPopulationInAnyAgeBound, significantDigits);
 //                //int startAgeOfEndYearInterval = ((Integer) data[3]).intValue();
 //                GENESIS_AgeGenderBarChart chart = new GENESIS_AgeGenderBarChart(
@@ -834,7 +834,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
 //        int startAgeOfEndYearInterval = 99;
         BigDecimal maxPopulationInAnyAgeBound = this.getMaxPopulationInAnyAgeBound();
         int decimalPlacePrecisionForDisplay
-                = Generic_BigDecimal.getDecimalPlacePrecision(
+                = Math_BigDecimal.getDecimalPlacePrecision(
                         maxPopulationInAnyAgeBound, significantDigits);
         //int startAgeOfEndYearInterval = ((Integer) data[3]).intValue();
         GENESIS_AgeGenderBarChart chart = new GENESIS_AgeGenderBarChart(
@@ -1371,7 +1371,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                     false);
         }
 //        BigInteger ageInYearsRange = new BigInteger("" + (maximumAgeInYears - minimumAgeInYears + 1));
-//        BigDecimal populationPerYear = Generic_BigDecimal.divideRoundIfNecessary(
+//        BigDecimal populationPerYear = Math_BigDecimal.divideRoundIfNecessary(
 //                population,
 //                ageInYearsRange,
 //                0,
@@ -1409,7 +1409,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                 a_File.getParentFile(),
                 a_Filename_String_prefixSuffix[0] + ".xml");
         XMLConverter.savePopulationToXMLFile(c_File, a_Population);
-        ge._Generic_BigDecimal = new Generic_BigDecimal(100);
+        ge._Math_BigDecimal = new Math_BigDecimal(100);
         GENESIS_Population c_Population = new GENESIS_Population(
                 ge,
                 c_File,
@@ -1650,7 +1650,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         while (ite.hasNext()) {
             entry = ite.next();
             ageBound = entry.getKey();
-            pop = Generic_BigDecimal.divideRoundIfNecessary(
+            pop = Math_BigDecimal.divideRoundIfNecessary(
                     entry.getValue(),
                     value,
                     decimalPlaces, roundingMode);
@@ -1662,7 +1662,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
         while (ite.hasNext()) {
             entry = ite.next();
             ageBound = entry.getKey();
-            pop = Generic_BigDecimal.divideRoundIfNecessary(
+            pop = Math_BigDecimal.divideRoundIfNecessary(
                     entry.getValue(),
                     value,
                     decimalPlaces, roundingMode);
@@ -1716,7 +1716,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             if (divisor.compareTo(BigDecimal.ZERO) == 0) {
                 result._FemaleAgeBoundPopulationCount_TreeMap.put(ageBound, BigDecimal.ZERO);
             } else {
-                BigDecimal value = Generic_BigDecimal.divideRoundIfNecessary(numerator, divisor, decimalPlaces, roundingMode);
+                BigDecimal value = Math_BigDecimal.divideRoundIfNecessary(numerator, divisor, decimalPlaces, roundingMode);
                 result._FemaleAgeBoundPopulationCount_TreeMap.put(ageBound, value);
             }
         }
@@ -1729,7 +1729,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
             if (divisor.compareTo(BigDecimal.ZERO) == 0) {
                 result._MaleAgeBoundPopulationCount_TreeMap.put(ageBound, BigDecimal.ZERO);
             } else {
-                BigDecimal value = Generic_BigDecimal.divideRoundIfNecessary(numerator, divisor, decimalPlaces, roundingMode);
+                BigDecimal value = Math_BigDecimal.divideRoundIfNecessary(numerator, divisor, decimalPlaces, roundingMode);
                 result._MaleAgeBoundPopulationCount_TreeMap.put(ageBound, value);
             }
         }
@@ -2116,7 +2116,7 @@ public class GENESIS_Population extends PopulationType implements Serializable {
     }
 
     private BigDecimal getMinPopulationInAnyAgeBound(List<AgeBoundPopulation> pop) {
-        BigDecimal min = new BigDecimal(Generic_BigInteger.Long_MAX_VALUE);
+        BigDecimal min = new BigDecimal(Math_BigInteger.LONG_MAX_VALUE);
         Iterator<AgeBoundPopulation> ite = pop.iterator();
         AgeBoundPopulation ageBoundPopulation;
         while (ite.hasNext()) {
