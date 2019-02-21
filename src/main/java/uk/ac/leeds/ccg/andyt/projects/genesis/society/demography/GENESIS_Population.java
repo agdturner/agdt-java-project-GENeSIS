@@ -307,7 +307,8 @@ public class GENESIS_Population extends PopulationType implements Serializable {
                             long ageMax = ageBound.getAgeMax().getYear();
                             for (long age = ageMin; age < ageMax; age++) {
                                 GENESIS_AgeBound aAgeBound = new GENESIS_AgeBound(ageMin + age);
-                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(ge._Generic_BigDecimal._Generic_BigInteger,
+                                BigDecimal partPopulation_BigDecimal = Generic_BigDecimal.getRandom(
+                                        ge._Generic_BigDecimal._Generic_BigInteger,
                                         0,
                                         BigDecimal.ZERO,
                                         remainingPopulation);
